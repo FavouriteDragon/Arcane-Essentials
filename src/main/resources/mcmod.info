@@ -1,0 +1,18 @@
+[
+{
+  "modid": "arcane_essentials",
+  "name": "Arcane Essentials",
+  "description": "Adds extra spells and elemental weapons to Electroblob's Wizardry!",
+  "version": "1.0",
+  "mcversion": "1.12.2",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["FavouriteDragon"],
+  "credits": "FavouriteDragon, Electroblob for creating such an awesome mod!",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": ["ebwizardry"],
+  "useDependencyInformation": "true",
+  "requiredMods": [ "ebwizardry" ]
+}
+]
