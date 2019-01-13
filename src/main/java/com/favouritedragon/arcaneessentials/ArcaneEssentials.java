@@ -51,8 +51,5 @@ public class ArcaneEssentials
 		proxy.postInit(event);
 	}
 
-	@SubscribeEvent
-	public static void register(RegistryEvent.Register<Spell> event){
-		event.getRegistry().register(new ThunderBurst());
-	}
+
 }

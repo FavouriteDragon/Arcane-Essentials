@@ -1,6 +1,8 @@
 package com.favouritedragon.arcaneessentials;
 
 import com.favouritedragon.arcaneessentials.common.entity.EntityThunderBurst;
+import com.favouritedragon.arcaneessentials.common.spell.ThunderBurst;
+import electroblob.wizardry.spell.Spell;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -9,7 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
-@Mod.EventBusSubscriber()
+@Mod.EventBusSubscriber(modid = ArcaneEssentials.MODID)
 public class RegisterHandler {
 	private static final int LIVING_UPDATE_INTERVAL = 3;
 	private static final int PROJECTILE_UPDATE_INTERVAL = 10;
@@ -57,5 +59,10 @@ public class RegisterHandler {
 		registerLoot();
 		registerEntities();
 		registerItems();
+	}
+
+	@SubscribeEvent
+	public static void register(RegistryEvent.Register<Spell> event){
+		event.getRegistry().register(new ThunderBurst());
 	}
 }
