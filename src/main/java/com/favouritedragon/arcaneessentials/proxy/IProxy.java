@@ -11,4 +11,6 @@ public interface IProxy {
 
 	public void postInit(FMLInitializationEvent event);
 
+	public void registerRender();
+
 }

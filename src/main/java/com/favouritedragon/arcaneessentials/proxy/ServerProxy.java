@@ -18,4 +18,9 @@ public class ServerProxy implements IProxy {
 	public void postInit(FMLInitializationEvent event) {
 
 	}
+
+	@Override
+	public void registerRender() {
+
+	}
 }
