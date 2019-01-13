@@ -57,9 +57,9 @@ public class EntityThunderBurst extends EntityMagicConstruct {
 						dx /= vectorLength;
 						dz /= vectorLength;
 
-						target.motionX = 0.8 * dx;
-						target.motionY = 0.02;
-						target.motionZ = 0.8 * dz;
+						target.motionX = 2 * dx;
+						target.motionY = 0.08;
+						target.motionZ = 2 * dz;
 
 						// Player motion is handled on that player's client so needs packets
 						if (target instanceof EntityPlayerMP) {
