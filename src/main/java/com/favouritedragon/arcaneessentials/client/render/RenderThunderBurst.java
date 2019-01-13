@@ -39,7 +39,9 @@ public class RenderThunderBurst extends Render<EntityThunderBurst> {
 
 		GlStateManager.translate((float)par2, (float)par4 + yOffset, (float)par6);
 
-		this.bindTexture(textures[entity.ticksExisted]);
+		int textureNumber = entity.ticksExisted < 9 ? entity.ticksExisted : 8;
+
+		this.bindTexture(textures[textureNumber]);
 		float f6 = 1.0F;
 		float f7 = 0.5F;
 		float f8 = 0.5F;

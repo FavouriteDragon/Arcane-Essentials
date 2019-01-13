@@ -51,14 +51,15 @@ public class EntityThunderBurst extends EntityMagicConstruct {
 		// centre.
 		targets.remove(this.getCaster());
 
-		for(EntityLivingBase target : targets){
+		for(EntityLivingBase target : targets) {
+			if (target != this.getCaster()) {
 
 
 				// Knockback must be removed in this instance, or the target will fall into the floor.
 				double motionX = target.motionX;
 				double motionZ = target.motionZ;
 
-				if(this.isValidTarget(target)){
+				if (this.isValidTarget(target)) {
 					target.attackEntityFrom(
 							MagicDamage.causeIndirectMagicDamage(this, this.getCaster(), MagicDamage.DamageType.SHOCK),
 							10 * this.damageMultiplier);
@@ -70,12 +71,13 @@ public class EntityThunderBurst extends EntityMagicConstruct {
 				target.motionZ = motionZ;
 
 				// Player motion is handled on that player's client so needs packets
-				if(target instanceof EntityPlayerMP){
-					((EntityPlayerMP)target).connection.sendPacket(new SPacketEntityVelocity(target));
+				if (target instanceof EntityPlayerMP) {
+					((EntityPlayerMP) target).connection.sendPacket(new SPacketEntityVelocity(target));
+				}
 			}
-		}
-		if (ticksExisted * speed > this.width) {
-			this.setDead();
+			if (ticksExisted * speed > this.width) {
+				this.setDead();
+			}
 		}
 
 	}
