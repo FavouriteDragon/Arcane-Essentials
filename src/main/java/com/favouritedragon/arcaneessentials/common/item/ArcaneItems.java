@@ -6,5 +6,4 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 @GameRegistry.ObjectHolder(ArcaneEssentials.MODID)
 public class ArcaneItems {
 
-	public static final
 }
