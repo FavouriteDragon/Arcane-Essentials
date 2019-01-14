@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.spell;
 
+import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityThunderBurst;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.SpellType;
@@ -19,7 +20,7 @@ import net.minecraft.world.World;
 public class ThunderBurst extends Spell {
 
 	public ThunderBurst() {
-		super(Tier.MASTER, 100, Element.LIGHTNING, "thunder_burst", SpellType.ATTACK, 300, EnumAction.BOW, false);
+		super(Tier.MASTER, 100, Element.LIGHTNING, "thunder_burst", SpellType.ATTACK, 300, EnumAction.BOW, false, ArcaneEssentials.MODID);
 	}
 	@Override
 	public boolean cast(World world, EntityPlayer entityPlayer, EnumHand enumHand, int i, SpellModifiers spellModifiers) {
