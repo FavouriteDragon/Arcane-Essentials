@@ -41,7 +41,7 @@ public class StormBlink extends Spell {
 			RayTraceResult result = WizardryUtilities.rayTrace(80, world, caster, false);
 			if (result != null) {
 				BlockPos pos = result.getBlockPos();
-				if (caster.attemptTeleport(pos.getX(), pos.getY(), pos.getZ())) {
+				if (caster.attemptTeleport(pos.getX(), pos.getY() + 1, pos.getZ())) {
 					WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_LIGHTNING, SoundCategory.AMBIENT, 4.0F, 2.0F);
 					List<EntityLivingBase> targets = WizardryUtilities
 							.getEntitiesWithinRadius(radius, caster.posX, caster.posY, caster.posZ, world);
@@ -104,10 +104,10 @@ public class StormBlink extends Spell {
 		float radius = 4 * modifiers.get(WizardryItems.range_upgrade);
 
 		if (!world.isRemote) {
-			RayTraceResult result = WizardryUtilities.rayTrace(80, world, caster, false);
+			RayTraceResult result = WizardryUtilities.rayTrace(60 * modifiers.get(WizardryItems.range_upgrade), world, caster, false);
 			if (result != null) {
 				BlockPos pos = result.getBlockPos();
-				if (caster.attemptTeleport(pos.getX(), pos.getY(), pos.getZ())) {
+				if (caster.attemptTeleport(pos.getX(), pos.getY() + 1, pos.getZ())) {
 					world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_LIGHTNING, SoundCategory.AMBIENT, 4.0F, 2.0F, true);
 					List<EntityLivingBase> targets = WizardryUtilities
 							.getEntitiesWithinRadius(radius, caster.posX, caster.posY, caster.posZ, world);
