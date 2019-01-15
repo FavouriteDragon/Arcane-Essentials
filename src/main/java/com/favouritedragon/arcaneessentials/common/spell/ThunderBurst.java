@@ -55,5 +55,5 @@ public class ThunderBurst extends Spell {
 		return true;
 	}
 
-	
+
 }

@@ -1,6 +1,7 @@
 package com.favouritedragon.arcaneessentials;
 
 import com.favouritedragon.arcaneessentials.common.entity.EntityThunderBurst;
+import com.favouritedragon.arcaneessentials.common.spell.StormBlink;
 import com.favouritedragon.arcaneessentials.common.spell.ThunderBurst;
 import electroblob.wizardry.spell.Spell;
 import net.minecraft.entity.Entity;
@@ -63,6 +64,7 @@ public class RegisterHandler {
 
 	@SubscribeEvent
 	public static void register(RegistryEvent.Register<Spell> event){
+		event.getRegistry().register(new StormBlink());
 		event.getRegistry().register(new ThunderBurst());
 	}
 }
