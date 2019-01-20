@@ -36,7 +36,7 @@ public class StormBlink extends Spell {
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		float radius = 2 * modifiers.get(WizardryItems.range_upgrade);
-
+		//TODO: Adjust particle amount. Add a config, and add trailing particlew when teleporting to make it feel more realistic
 		if (!world.isRemote) {
 			RayTraceResult result = WizardryUtilities.rayTrace(80, world, caster, false);
 			if (result != null) {

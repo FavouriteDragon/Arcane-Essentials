@@ -22,7 +22,7 @@ public class ThunderBurst extends Spell {
 	public ThunderBurst() {
 		super(Tier.MASTER, 100, Element.LIGHTNING, "thunder_burst", SpellType.ATTACK, 300, EnumAction.BOW, false, ArcaneEssentials.MODID);
 	}
-
+//TODO: Config for particles
 	@Override
 	public boolean cast(World world, EntityPlayer entityPlayer, EnumHand enumHand, int i, SpellModifiers spellModifiers) {
 		if (!world.isRemote) {
