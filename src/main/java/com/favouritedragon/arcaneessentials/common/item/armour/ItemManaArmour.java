@@ -21,7 +21,8 @@ public class ItemManaArmour extends ItemArmor {
 	public ItemManaArmour(ArmorMaterial materialIn, int renderIndexIn, EntityEquipmentSlot equipmentSlotIn, String unlocalizedName, String registryName) {
 		super(materialIn, renderIndexIn, equipmentSlotIn);
 
-		setUnlocalizedName(ArcaneEssentials.MODID + "." + unlocalizedName);
+		//setUnlocalizedName(ArcaneEssentials.MODID + "." + unlocalizedName);
+		setTranslationKey(ArcaneEssentials.MODID + "." + unlocalizedName);
 		setCreativeTab(WizardryTabs.WIZARDRY);
 		setRegistryName(registryName);
 
