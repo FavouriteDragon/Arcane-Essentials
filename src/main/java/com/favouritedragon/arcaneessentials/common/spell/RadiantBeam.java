@@ -44,9 +44,9 @@ public class RadiantBeam extends Spell {
 
 			if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.RADIANT, target)) {
 				target.setFire(10);
-				target.motionX += look.x * 1.5 * modifiers.get(WizardryItems.blast_upgrade);
-				target.motionY += look.y * 1.25 * modifiers.get(WizardryItems.blast_upgrade);
-				target.motionZ += look.z * 1.5 * modifiers.get(WizardryItems.blast_upgrade);
+				target.motionX += look.x * 2 * modifiers.get(WizardryItems.blast_upgrade);
+				target.motionY += look.y * 2 * modifiers.get(WizardryItems.blast_upgrade);
+				target.motionZ += look.z * 2 * modifiers.get(WizardryItems.blast_upgrade);
 				if (target.isEntityUndead()) {
 					damage += 2;
 				}
@@ -89,9 +89,9 @@ public class RadiantBeam extends Spell {
 			Vec3d vec = new Vec3d(target.posX - caster.posX, target.posY - caster.posY, target.posZ - caster.posZ).normalize();
 
 			target.setFire(10);
-			target.motionX += vec.x * 1.5 * modifiers.get(WizardryItems.blast_upgrade);
-			target.motionY += vec.y * 1.25 * modifiers.get(WizardryItems.blast_upgrade);
-			target.motionZ += vec.z * 1.5 * modifiers.get(WizardryItems.blast_upgrade);
+			target.motionX += vec.x * 2 * modifiers.get(WizardryItems.blast_upgrade);
+			target.motionY += vec.y * 2 * modifiers.get(WizardryItems.blast_upgrade);
+			target.motionZ += vec.z * 2 * modifiers.get(WizardryItems.blast_upgrade);
 			if (target.isEntityUndead()) {
 				damage += 2;
 			}
