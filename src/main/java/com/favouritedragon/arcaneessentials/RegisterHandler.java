@@ -1,6 +1,7 @@
 package com.favouritedragon.arcaneessentials;
 
 import com.favouritedragon.arcaneessentials.common.entity.EntityThunderBurst;
+import com.favouritedragon.arcaneessentials.common.spell.OceanBurst;
 import com.favouritedragon.arcaneessentials.common.spell.RadiantBeam;
 import com.favouritedragon.arcaneessentials.common.spell.StormBlink;
 import com.favouritedragon.arcaneessentials.common.spell.ThunderBurst;
@@ -65,8 +66,10 @@ public class RegisterHandler {
 
 	@SubscribeEvent
 	public static void register(RegistryEvent.Register<Spell> event){
+		event.getRegistry().register(new OceanBurst());
 		event.getRegistry().register(new RadiantBeam());
 		event.getRegistry().register(new StormBlink());
 		event.getRegistry().register(new ThunderBurst());
+
 	}
 }
