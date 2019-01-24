@@ -31,21 +31,8 @@ public class OceanBurst extends Spell {
 		}
 		//Spawn particles
 		Vec3d look = caster.getLookVec();
-		double random = world.rand.nextDouble() / 10;
-		ArcaneUtils.spawnDirectionalVortex(world, caster, look, 240, range, 240 / 1.5, WizardryParticleType.MAGIC_BUBBLE, caster.posX, caster.posY,
-				caster.posZ, random, random, random, 10);
-		/*	for (int angle = 0; angle < 180; angle++) {
-				double radius = angle / 120F;
-				double x = radius * Math.cos(angle);
-				double y = angle / (180 / range);
-				double z = radius * Math.sin(angle);
-				Vec3d pos = new Vec3d(x, y, z);
-				pos = ArcaneUtils.rotateAroundAxisX(pos, caster.rotationPitch + 90);
-				pos = ArcaneUtils.rotateAroundAxisY(pos, caster.rotationYaw);
-				Wizardry.proxy.spawnParticle(WizardryParticleType.MAGIC_BUBBLE, world, pos.x + caster.posX + look.x, pos.y + caster.posY + caster.getEyeHeight() + look.y,
-						pos.z + caster.posZ + look.z, 0, 0, 0, 10);
-			}**/
-
+		ArcaneUtils.spawnDirectionalVortex(world, caster, look.scale(0.8), 240, range, 240 / 1.5, WizardryParticleType.MAGIC_BUBBLE, caster.posX, caster.posY + 1.2,
+				caster.posZ, 0, 0, 0, 8);
 		return false;
 	}
 
