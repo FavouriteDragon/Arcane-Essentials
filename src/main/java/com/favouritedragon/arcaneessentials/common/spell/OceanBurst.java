@@ -27,19 +27,18 @@ public class OceanBurst extends Spell {
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		double range = 4 + 2 * modifiers.get(WizardryItems.range_upgrade);
 		if (!world.isRemote) {
-
-		}
-		if (world.isRemote) {
-			final double dtheta = 360.0 / (2 * Math.PI * range) - 1;
-			for (double theta = 0; theta < 360; theta += dtheta) {
-				double rtheta = Math.toRadians(theta);
-				Vec3d vec = new Vec3d(Math.cos(rtheta), 0, Math.sin(rtheta));
-				Wizardry.proxy.spawnParticle(WizardryParticleType.MAGIC_BUBBLE, world, vec.x + caster.posX, vec.y + caster.posY + caster.getEyeHeight(),
-						vec.z + caster.posZ, world.rand.nextDouble()/10, world.rand.nextDouble()/10, world.rand.nextDouble()/10, 10);
-
-			}
 			return true;
-
+		}
+		//Spawn par ticles
+		Vec3d look = caster.getLookVec();
+		double radius = 0.01;
+		for (int angle = 0; angle < 180; angle++) {
+			double x = radius * Math.cos(angle);
+			double y = 180F/angle;
+			double z = radius * Math.sin(angle);
+			radius = 90F / angle;
+			Wizardry.proxy.spawnParticle(WizardryParticleType.MAGIC_BUBBLE, world, x + caster.posX + look.x, y + caster.posY + 1 + look.y,
+					z + caster.posZ + look.z, 0, 0, 0, 10);
 		}
 		return false;
 	}
@@ -48,20 +47,16 @@ public class OceanBurst extends Spell {
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
 		double range = 4 + 2 * modifiers.get(WizardryItems.range_upgrade);
 		if (!world.isRemote) {
-
-		}
-		if (world.isRemote) {
-			final double dtheta = 360.0 / (2 * Math.PI * range) - 1;
-			for (double theta = 0; theta < 360; theta += dtheta) {
-				double rtheta = Math.toRadians(theta);
-				Vec3d vec = new Vec3d(Math.cos(rtheta), 0, Math.sin(rtheta));
-				Wizardry.proxy.spawnParticle(WizardryParticleType.SPARKLE, world, vec.x + caster.posX, vec.y + caster.posY + caster.getEyeHeight(),
-						vec.z + caster.posZ, world.rand.nextDouble()/10, world.rand.nextDouble()/10, world.rand.nextDouble()/10, 10);
-
-			}
 			return true;
-
 		}
+		//Spawn par ticles
+		for (int angle = 0; angle < 180; angle++) {
+			double x = Math.cos(angle);
+			double y = 180F/angle;
+			double z = Math.sin(angle);
+		}
+
+
 		return false;
 	}
 }
