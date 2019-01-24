@@ -1,8 +1,11 @@
-package com.favouritedragon.arcaneessentials.common;
+package com.favouritedragon.arcaneessentials.common.util;
 
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.util.WizardryParticleType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -62,6 +65,12 @@ public class ArcaneUtils {
 				Wizardry.proxy.spawnParticle(particle, world, x + posX, y + posY,
 						z + posZ, velX, velY, velZ, maxAge);
 			}
+		}
+	}
+
+	public static void applyPlayerKnockback(Entity target) {
+		if (target instanceof EntityPlayerMP) {
+			((EntityPlayerMP) target).connection.sendPacket(new SPacketEntityVelocity(target));
 		}
 	}
 }
