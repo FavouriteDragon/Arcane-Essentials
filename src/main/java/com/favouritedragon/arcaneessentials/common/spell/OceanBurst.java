@@ -33,6 +33,7 @@ public class OceanBurst extends Spell {
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		double range = 3 + 2 * modifiers.get(WizardryItems.range_upgrade);
+		//Maybe use a raytrace to determine knockback?
 		Vec3d look = caster.getLookVec();
 		//Spawn particles
 		ArcaneUtils.spawnDirectionalVortex(world, caster, look.scale(0.8), 240, range, 240 / 1.5, WizardryParticleType.MAGIC_BUBBLE, caster.posX, caster.posY + 1.2,
