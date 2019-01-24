@@ -26,22 +26,22 @@ public class OceanBurst extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		double range = 4 + 2 * modifiers.get(WizardryItems.range_upgrade);
+		double range = 3 + 2 * modifiers.get(WizardryItems.range_upgrade);
 		if (!world.isRemote) {
 			return true;
 		}
 		//Spawn particles
 		Vec3d look = caster.getLookVec();
 		for (int angle = 0; angle < 180; angle++) {
-			double radius = angle / 180F;
+			double radius = angle / 120F;
 			double x = radius * Math.cos(angle);
 			double y = angle / (180/range);
 			double z = radius * Math.sin(angle);
 			Vec3d pos = new Vec3d(x, y, z);
-			pos = ArcaneUtils.rotateAroundAxisX(pos, caster.rotationPitch);
-			//pos = ArcaneUtils.rotateAroundAxisY(pos, caster.rotationYaw);
-			Wizardry.proxy.spawnParticle(WizardryParticleType.MAGIC_BUBBLE, world, x + caster.posX + look.x, y + caster.posY + 1 + look.y,
-					z + caster.posZ + look.z, 0, 0, 0, 10);
+			pos = ArcaneUtils.rotateAroundAxisX(pos, caster.rotationPitch + 90);
+			pos = ArcaneUtils.rotateAroundAxisY(pos, caster.rotationYaw);
+			Wizardry.proxy.spawnParticle(WizardryParticleType.MAGIC_BUBBLE, world, pos.x + caster.posX + look.x, pos.y + caster.posY + caster.getEyeHeight() + look.y,
+					pos.z + caster.posZ + look.z, 0, 0, 0, 10);
 		}
 		return false;
 	}
