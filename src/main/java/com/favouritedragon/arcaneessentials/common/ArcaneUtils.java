@@ -13,18 +13,18 @@ public class ArcaneUtils {
 		return new Vec3d(v.x, y, z);
 	}
 
-	/*private Vec3d rotateAroundAxisY(Vec3d v, double angle) {
+	public static Vec3d rotateAroundAxisY(Vec3d v, double angle) {
 		angle = -angle;
 		angle = Math.toRadians(angle);
 		double x, z, cos, sin;
 		cos = Math.cos(angle);
 		sin = Math.sin(angle);
-		x = v.getX() * cos + v.getZ() * sin;
-		z = v.getX() * -sin + v.getZ() * cos;
-		return v.setX(x).setZ(z);
+		x = v.x * cos + v.z * sin;
+		z = v.x * -sin + v.z * cos;
+		return new Vec3d(x, v.y, z);
 	}
 
-	private Vec3d rotateAroundAxisZ(Vec3d v, double angle) {
+	/*private Vec3d rotateAroundAxisZ(Vec3d v, double angle) {
 		angle = Math.toRadians(angle);
 		double x, y, cos, sin;
 		cos = Math.cos(angle);
