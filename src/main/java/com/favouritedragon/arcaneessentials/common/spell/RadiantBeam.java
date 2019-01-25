@@ -42,9 +42,9 @@ public class RadiantBeam extends Spell {
 
 		if (!world.isRemote) {
 			Vec3d dist = caster.getLookVec().scale(range);
-			AxisAlignedBB hitBox = new AxisAlignedBB(caster.posX, WizardryUtilities.getPlayerEyesPos(caster), caster.posZ, caster.posX + dist.x,
+			AxisAlignedBB hitBox = new AxisAlignedBB(caster.posX, WizardryUtilities.getPlayerEyesPos(caster) - 0.4F, caster.posZ, caster.posX + dist.x,
 					WizardryUtilities.getPlayerEyesPos(caster) - 0.4 + dist.y, caster.posZ + dist.z);
-			hitBox = hitBox.shrink(0.125);
+			hitBox = hitBox.shrink(0.13);
 			List<Entity> hit = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
 			if (!hit.isEmpty()) {
 				for (Entity e : hit) {
@@ -59,17 +59,15 @@ public class RadiantBeam extends Spell {
 							}
 							e.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.RADIANT), damage);
 						} else {
-							  caster.sendMessage(new TextComponentTranslation("spell.resist",
+							caster.sendMessage(new TextComponentTranslation("spell.resist",
 									e.getName(), this.getNameForTranslationFormatted()));
 						}
 					}
 				}
 			}
 		}
-		RayTraceResult rayTrace = WizardryUtilities.standardEntityRayTrace(world, caster,
-				range, 0.5F);
+		RayTraceResult rayTrace = WizardryUtilities.standardEntityRayTrace(world, caster, range);
 
-		// Fire can damage armour stands
 		if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.ENTITY && rayTrace.entityHit instanceof EntityLivingBase) {
 
 			EntityLivingBase target = (EntityLivingBase) rayTrace.entityHit;
