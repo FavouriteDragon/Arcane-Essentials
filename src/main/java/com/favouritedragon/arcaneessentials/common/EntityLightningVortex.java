@@ -19,12 +19,15 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 
 	public EntityLightningVortex(World par1World) {
 		super(par1World);
+		this.height = 7.0f;
+		this.width = 3.0f;
 	}
 
 	public EntityLightningVortex(World world, double x, double y, double z, EntityLivingBase caster, int lifetime,
 								 float damageMultiplier) {
 		super(world, x, y, z, caster, lifetime, damageMultiplier);
-		setSize(0, 0);
+		this.height = 7.0f;
+		this.width = 3.0f;
 	}
 
 	@Override
@@ -81,8 +84,8 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 
 				}
 			}
-			ArcaneUtils.spawnSpinningVortex(world, 360, 6, 120, WizardryParticleType.SPARK,
-					new Vec3d(posX, posY, posZ), new Vec3d(0.2, 0.1, 0.2), 2, 0, 0, 0);
+			ArcaneUtils.spawnSpinningVortex(world, 360, 7, 120, WizardryParticleType.SPARK,
+					new Vec3d(posX, posY, posZ), new Vec3d(0.15, 0.05, 0.15), 2, 0, 0, 0);
 		}
 
 
