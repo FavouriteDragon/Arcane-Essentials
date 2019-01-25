@@ -1,6 +1,7 @@
 package com.favouritedragon.arcaneessentials.common.spell;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
+import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.SpellType;
@@ -33,9 +34,10 @@ public class RadiantBeam extends Spell {
 
 		Vec3d look = caster.getLookVec();
 		float damage = 4.0f * modifiers.get(SpellModifiers.DAMAGE);
+		float range = 60 + 2 * modifiers.get(WizardryItems.range_upgrade);
 
 		RayTraceResult rayTrace = WizardryUtilities.standardEntityRayTrace(world, caster,
-				60 + 2 * modifiers.get(WizardryItems.range_upgrade));
+				range);
 
 		// Fire can damage armour stands
 		if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.ENTITY && rayTrace.entityHit instanceof EntityLivingBase) {
@@ -63,14 +65,19 @@ public class RadiantBeam extends Spell {
 						+ world.rand.nextFloat() / 5 - 0.1f;
 				double z1 = caster.posZ + look.z * i / 2 + world.rand.nextFloat() / 5 - 0.1f;
 				Wizardry.proxy.spawnParticle(WizardryParticleType.SPARKLE, world, x1, y1, z1,
-						world.rand.nextDouble() / 40,
+						world.rand.nextDouble() / 60,
 						world.rand.nextDouble() / 20,
-						world.rand.nextDouble() / 40, 30, 1.0f, 1.0f, 0.3f);
+						world.rand.nextDouble() / 60, 30, 1.0f, 1.0f, 0.3f);
 				Wizardry.proxy.spawnParticle(WizardryParticleType.SPARKLE, world, x1, y1, z1,
-						world.rand.nextDouble() / 40,
+						world.rand.nextDouble() / 60,
 						world.rand.nextDouble() / 20,
-						world.rand.nextDouble() / 40, 30, 1.0f, 1.0f, 0.3f);
+						world.rand.nextDouble() / 60, 30, 1.0f, 1.0f, 0.3f);
+
 			}
+			ArcaneUtils.spawnDirectionHelix(world, caster, caster.getLookVec(), 180, range, 0.5, WizardryParticleType.SPARKLE,
+					caster.posX, caster.posY + caster.getEyeHeight() - 0.4F, caster.posZ, world.rand.nextDouble() / 60, world.rand.nextDouble() / 20,
+					world.rand.nextDouble() / 60, 30, 1.0F, 1.0F, 0.3F);
+
 		}
 		WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_HEAL, 1.5F, 1);
 		WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_SHOCKWAVE, 0.5F, 1.0f);
