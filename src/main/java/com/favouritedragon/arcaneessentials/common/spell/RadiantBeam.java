@@ -44,6 +44,7 @@ public class RadiantBeam extends Spell {
 			Vec3d dist = caster.getLookVec().scale(range);
 			AxisAlignedBB hitBox = new AxisAlignedBB(caster.posX, WizardryUtilities.getPlayerEyesPos(caster), caster.posZ, caster.posX + dist.x,
 					WizardryUtilities.getPlayerEyesPos(caster) - 0.4 + dist.y, caster.posZ + dist.z);
+			hitBox = hitBox.shrink(0.125);
 			List<Entity> hit = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
 			if (!hit.isEmpty()) {
 				for (Entity e : hit) {
@@ -66,7 +67,7 @@ public class RadiantBeam extends Spell {
 			}
 		}
 		RayTraceResult rayTrace = WizardryUtilities.standardEntityRayTrace(world, caster,
-				range, 1F);
+				range, 0.5F);
 
 		// Fire can damage armour stands
 		if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.ENTITY && rayTrace.entityHit instanceof EntityLivingBase) {
