@@ -18,11 +18,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 public class OceanBurst extends Spell {
 
@@ -33,40 +31,26 @@ public class OceanBurst extends Spell {
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		double range = 3 + 2 * modifiers.get(WizardryItems.range_upgrade);
-		//Maybe use a raytrace to determine knockback?
 		Vec3d look = caster.getLookVec();
-		//Spawn particles
-		ArcaneUtils.spawnDirectionalVortex(world, caster, look.scale(0.8), 240, range, 240 / 1.5, WizardryParticleType.MAGIC_BUBBLE, caster.posX, caster.posY + 1.2,
-				caster.posZ, 0, 0, 0, 2);
-
+		if (world.isRemote) {
+			//Spawn particles
+			ArcaneUtils.spawnDirectionalVortex(world, caster, look.scale(0.8), 240, range, 240 / 1.5, WizardryParticleType.MAGIC_BUBBLE, caster.posX, caster.posY + 1.2,
+					caster.posZ, 0, 0, 0, 0);
+		}
 		if (!world.isRemote) {
 			Vec3d startPos = look.scale(0.8).add(caster.getPositionVector());
 			Vec3d endPos = ArcaneUtils.getDirectionalVortexEndPos(caster, look.scale(0.8), 240, range, 240 / 1.5, caster.posX, caster.posY + 1.2, caster.posZ);
 			startPos = startPos.add(0, 1.2, 0);
-			ArcaneUtils.vortexEntityRaytrace(world, caster, null, startPos, endPos, 1.75F, 4 + 2 * modifiers.get(WizardryItems.blast_upgrade),
+			ArcaneUtils.vortexEntityCollision(world, caster, null, startPos, endPos, 0.75F, 4 + 2 * modifiers.get(WizardryItems.blast_upgrade),
 					look.scale(modifiers.get(WizardryItems.blast_upgrade)), MagicDamage.DamageType.BLAST, true);
-			AxisAlignedBB hitBox = new AxisAlignedBB(caster.posX, caster.posY + 1.2, caster.posZ, caster.posX + look.x, caster.posY + 1.2 + look.y, caster.posZ
-					+ look.z);
-			List<EntityLivingBase> hit = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
-			if (!hit.isEmpty()) {
-				for (EntityLivingBase e : hit) {
-					if (e != caster) {
-						e.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.MAGIC), 4 + 2 * modifiers.get(WizardryItems.blast_upgrade));
-						Vec3d knockback = caster.getLookVec().scale(range / 4);
-						e.motionX += knockback.x;
-						e.motionY += knockback.y + 0.2;
-						e.motionZ += knockback.z;
-						ArcaneUtils.applyPlayerKnockback(e);
-					}
-				}
-			}
+
 			return true;
 		}
-		WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_GENERIC_SWIM, 1.0F,
+		WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_GENERIC_SWIM, 2.0F,
 				world.rand.nextFloat() * 0.2F + 1.0F);
-		WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_ICE, 0.5F,
+		WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_ICE, 1F,
 				world.rand.nextFloat() * 0.2F + 1.0F);
-		WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_FORCE, 1.0F,
+		WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_FORCE, 2.0F,
 				world.rand.nextFloat() * 0.2F + 1.0F);
 		return false;
 	}
@@ -74,13 +58,27 @@ public class OceanBurst extends Spell {
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
 		double range = 3 + 2 * modifiers.get(WizardryItems.range_upgrade);
+		Vec3d look = caster.getLookVec();
+		if (world.isRemote) {
+			//Spawn particles
+			ArcaneUtils.spawnDirectionalVortex(world, caster, look.scale(0.8), 240, range, 240 / 1.5, WizardryParticleType.MAGIC_BUBBLE, caster.posX, caster.posY + 1.2,
+					caster.posZ, 0, 0, 0, 0);
+		}
 		if (!world.isRemote) {
+			Vec3d startPos = look.scale(0.8).add(caster.getPositionVector());
+			Vec3d endPos = ArcaneUtils.getDirectionalVortexEndPos(caster, look.scale(0.8), 240, range, 240 / 1.5, caster.posX, caster.posY + 1.2, caster.posZ);
+			startPos = startPos.add(0, 1.2, 0);
+			ArcaneUtils.vortexEntityCollision(world, caster, null, startPos, endPos, 0.75F, 4 + 2 * modifiers.get(WizardryItems.blast_upgrade),
+					look.scale(modifiers.get(WizardryItems.blast_upgrade)), MagicDamage.DamageType.BLAST, true);
+
 			return true;
 		}
-		//Spawn particles
-		Vec3d look = caster.getLookVec();
-		ArcaneUtils.spawnDirectionalVortex(world, caster, look.scale(0.8), 240, range, 240 / 1.5, WizardryParticleType.MAGIC_BUBBLE, caster.posX, caster.posY + 1.2,
-				caster.posZ, 0, 0, 0, 8);
+		world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_GENERIC_SWIM, SoundCategory.HOSTILE, 2.0F,
+				world.rand.nextFloat() * 0.2F + 1.0F, true);
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_ICE, SoundCategory.HOSTILE, 2.0F,
+				world.rand.nextFloat() * 0.2F + 1.0F, true);
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_FORCE, SoundCategory.HOSTILE, 2.0F,
+				world.rand.nextFloat() * 0.2F + 1.0F, true);
 		return false;
 	}
 }

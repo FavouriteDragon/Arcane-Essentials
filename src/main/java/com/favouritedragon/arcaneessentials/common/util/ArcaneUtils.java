@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -16,6 +17,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
+import java.util.List;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -78,30 +80,32 @@ public class ArcaneUtils {
 		}
 	}
 
-	public static void vortexEntityRaytrace(World world, EntityLivingBase entity, Entity spellEntity, Vec3d startPos, Vec3d endPos, float maxRadius,
+	public static void vortexEntityCollision(World world, EntityLivingBase entity, Entity spellEntity, Vec3d startPos, Vec3d endPos, float maxRadius,
 											float damage, Vec3d knockBack, MagicDamage.DamageType damageSource, boolean directDamage) {
 		if (entity != null) {
-			RayTraceResult result = ArcaneUtils.standardEntityRayTrace(world, entity, startPos, endPos, maxRadius);
-			if (result != null && result.entityHit != null) {
-				if (result.entityHit instanceof EntityLivingBase) {
-					EntityLivingBase hit = (EntityLivingBase) result.entityHit;
-					if (hit != entity) {
+			AxisAlignedBB hitBox = new AxisAlignedBB(startPos.x, startPos.y, startPos.z, endPos.x, endPos.y, endPos.z);
+			hitBox = hitBox.grow(maxRadius);
+			List<Entity> hit = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
+			if (!hit.isEmpty()) {
+				for (Entity e : hit) {
+					if (e != entity) {
 						if (directDamage) {
-							hit.attackEntityFrom(MagicDamage.causeDirectMagicDamage(entity, damageSource), damage);
-							hit.motionX += knockBack.x;
-							hit.motionY += knockBack.y + 0.2;
-							hit.motionZ += knockBack.z;
-							ArcaneUtils.applyPlayerKnockback(hit);
+							e.attackEntityFrom(MagicDamage.causeDirectMagicDamage(entity, damageSource), damage);
+							e.motionX += knockBack.x;
+							e.motionY += knockBack.y + 0.2;
+							e.motionZ += knockBack.z;
+							ArcaneUtils.applyPlayerKnockback(e);
 						} else if (spellEntity != null) {
-							hit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(spellEntity, entity, damageSource), damage);
-							hit.motionX += knockBack.x;
-							hit.motionY += knockBack.y + 0.2;
-							hit.motionZ += knockBack.z;
-							ArcaneUtils.applyPlayerKnockback(hit);
+							e.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(spellEntity, entity, damageSource), damage);
+							e.motionX += knockBack.x;
+							e.motionY += knockBack.y + 0.2;
+							e.motionZ += knockBack.z;
+							ArcaneUtils.applyPlayerKnockback(e);
 						}
 					}
 				}
 			}
+
 		}
 	}
 
