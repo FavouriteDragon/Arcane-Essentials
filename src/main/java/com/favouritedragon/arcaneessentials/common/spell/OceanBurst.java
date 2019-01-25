@@ -41,17 +41,18 @@ public class OceanBurst extends Spell {
 			Vec3d startPos = look.scale(0.8).add(caster.getPositionVector());
 			Vec3d endPos = ArcaneUtils.getDirectionalVortexEndPos(caster, look.scale(0.8), 240, range, 240 / 1.5, caster.posX, caster.posY + 1.2, caster.posZ);
 			startPos = startPos.add(0, 1.2, 0);
-			ArcaneUtils.vortexEntityCollision(world, caster, null, startPos, endPos, 0.75F, 4 + 2 * modifiers.get(WizardryItems.blast_upgrade),
+			ArcaneUtils.vortexEntityCollision(world, caster, null, startPos, endPos, 0.74F, 4 + 2 * modifiers.get(WizardryItems.blast_upgrade),
 					look.scale(modifiers.get(WizardryItems.blast_upgrade)), MagicDamage.DamageType.BLAST, true);
+			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_GENERIC_SWIM, 2.0F,
+					world.rand.nextFloat() * 0.2F + 1.0F);
+			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_ICE, 1F,
+					world.rand.nextFloat() * 0.2F + 1.0F);
+			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_FORCE, 2.0F,
+					world.rand.nextFloat() * 0.2F + 1.0F);
 
 			return true;
 		}
-		WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_GENERIC_SWIM, 2.0F,
-				world.rand.nextFloat() * 0.2F + 1.0F);
-		WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_ICE, 1F,
-				world.rand.nextFloat() * 0.2F + 1.0F);
-		WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_FORCE, 2.0F,
-				world.rand.nextFloat() * 0.2F + 1.0F);
+
 		return false;
 	}
 
@@ -71,14 +72,15 @@ public class OceanBurst extends Spell {
 			ArcaneUtils.vortexEntityCollision(world, caster, null, startPos, endPos, 0.75F, 4 + 2 * modifiers.get(WizardryItems.blast_upgrade),
 					look.scale(modifiers.get(WizardryItems.blast_upgrade)), MagicDamage.DamageType.BLAST, true);
 
+			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_GENERIC_SWIM, SoundCategory.HOSTILE, 2.0F,
+					world.rand.nextFloat() * 0.2F + 1.0F, true);
+			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_ICE, SoundCategory.HOSTILE, 2.0F,
+					world.rand.nextFloat() * 0.2F + 1.0F, true);
+			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_FORCE, SoundCategory.HOSTILE, 2.0F,
+					world.rand.nextFloat() * 0.2F + 1.0F, true);
 			return true;
 		}
-		world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_GENERIC_SWIM, SoundCategory.HOSTILE, 2.0F,
-				world.rand.nextFloat() * 0.2F + 1.0F, true);
-		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_ICE, SoundCategory.HOSTILE, 2.0F,
-				world.rand.nextFloat() * 0.2F + 1.0F, true);
-		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_FORCE, SoundCategory.HOSTILE, 2.0F,
-				world.rand.nextFloat() * 0.2F + 1.0F, true);
+
 		return false;
 	}
 }
