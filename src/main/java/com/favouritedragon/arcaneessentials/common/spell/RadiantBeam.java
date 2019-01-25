@@ -13,15 +13,19 @@ import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.WizardryParticleType;
 import electroblob.wizardry.util.WizardryUtilities;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class RadiantBeam extends Spell {
 
@@ -36,6 +40,31 @@ public class RadiantBeam extends Spell {
 		float damage = 4.0f * modifiers.get(SpellModifiers.DAMAGE);
 		float range = 60 + 2 * modifiers.get(WizardryItems.range_upgrade);
 
+		if (!world.isRemote) {
+			Vec3d dist = caster.getLookVec().scale(range);
+			AxisAlignedBB hitBox = new AxisAlignedBB(caster.posX, WizardryUtilities.getPlayerEyesPos(caster), caster.posZ, caster.posX + dist.x,
+					WizardryUtilities.getPlayerEyesPos(caster) - 0.4 + dist.y, caster.posZ + dist.z);
+			List<Entity> hit = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
+			if (!hit.isEmpty()) {
+				for (Entity e : hit) {
+					if (e != caster) {
+						if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.RADIANT, e)) {
+							e.setFire(10);
+							e.motionX += look.x * 2 * modifiers.get(WizardryItems.blast_upgrade);
+							e.motionY += look.y * 2 * modifiers.get(WizardryItems.blast_upgrade);
+							e.motionZ += look.z * 2 * modifiers.get(WizardryItems.blast_upgrade);
+							if (((EntityLivingBase) e).isEntityUndead()) {
+								damage += 2;
+							}
+							e.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.RADIANT), damage);
+						} else {
+							  caster.sendMessage(new TextComponentTranslation("spell.resist",
+									e.getName(), this.getNameForTranslationFormatted()));
+						}
+					}
+				}
+			}
+		}
 		RayTraceResult rayTrace = WizardryUtilities.standardEntityRayTrace(world, caster,
 				range, 1F);
 

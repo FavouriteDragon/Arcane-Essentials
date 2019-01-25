@@ -18,17 +18,18 @@ public class RenderThunderBurst extends Render<EntityThunderBurst> {
 	public void doRender(EntityThunderBurst entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 		for (double theta = 0; theta <= 180; theta += 1) {
-			double dphi = 20 / Math.sin(Math.toRadians(theta));
+			double particleScale = entity.ticksExisted / 5F > 1 ? entity.ticksExisted / 5F : 1;
+			double dphi = (20F / particleScale) / Math.sin(Math.toRadians(theta));
 
 			for (double phi = 0; phi < 360; phi += dphi) {
 				double rphi = Math.toRadians(phi);
 				double rtheta = Math.toRadians(theta);
 
-				x = entity.ticksExisted * 1 * Math.cos(rphi) * Math.sin(rtheta);
-				y = entity.ticksExisted * 1 * Math.sin(rphi) * Math.sin(rtheta);
-				z = entity.ticksExisted * 1 * Math.cos(rtheta);
+				x = entity.ticksExisted * 0.5 * Math.cos(rphi) * Math.sin(rtheta);
+				y = entity.ticksExisted * 0.5 * Math.sin(rphi) * Math.sin(rtheta);
+				z = entity.ticksExisted * 0.5 * Math.cos(rtheta);
 
-				Wizardry.proxy.spawnParticle(WizardryParticleType.SPARK, entity.world, x + entity.posX, y + entity.posY, z + entity.posZ, 0, 0, 0, 10);
+				Wizardry.proxy.spawnParticle(WizardryParticleType.SPARK, entity.world, entity.posX, entity.posY, entity.posZ, x, y, z, 10);
 
 			}
 		}
