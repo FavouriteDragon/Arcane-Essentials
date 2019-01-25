@@ -74,6 +74,7 @@ public class ArcaneUtils {
 		}
 	}
 
+	//TODO: Reduce velocity and position into a vec3d
 	public static void spawnDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double radiusScale, WizardryParticleType particle, double posX, double posY, double posZ,
 											  double velX, double velY, double velZ, int maxAge, float r, float g, float b) {
 		for (int angle = 0; angle < maxAngle; angle++) {
@@ -94,8 +95,80 @@ public class ArcaneUtils {
 		}
 	}
 
+
+	/**
+	 * Spawns a directional vortex that has rotating particles.
+	 *
+	 * @param world         World the vortex spawns in.
+	 * @param entity        Entity that's spawning the vortex.
+	 * @param direction     The direction that the vortex is spawning in. Although it's just used for proper positioning, use entity.getLookVec()
+	 *                      or some other directional Vec3d.
+	 * @param maxAngle      The amount of particles/the maximum angle that the circle ticks to. 240 would mean there are 240 particles spiraling away.
+	 * @param vortexLength  How long the vortex is. This is initially used at the height, before rotating the vortex.
+	 * @param radiusScale   The maximum radius and how much the radius increases by. Always use your value for the maxAngle here-
+	 *                      otherwise you can get some funky effects. Ex: maxAngle/1.5 would give you a max radius of 1.5 blocks.
+	 *                      Note: It might only be a diamater of 1.5 blocks- if so, uhhh... My bad.
+	 * @param particle      The wizardry particle type. I had to create two methods- for for normal particles, one for wizardry ones.
+	 * @param position      The starting/reference position of the vortex. Used along with the direction position to determine the actual starting position.
+	 * @param particleSpeed How fast the particles are spinning. You don't need to include complex maths here- that's all handled by this method.
+	 * @param maxAge        The maximum age of the particle. Wizardry particles already have a predetermined age, this just adds onto it.
+	 * @param r             The amount of red in the particle. G and B are self-explanatory (green and blue).
+	 */
+	public static void spawnSpinningDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double radiusScale, WizardryParticleType particle, Vec3d position,
+													  Vec3d particleSpeed, int maxAge, float r, float g, float b) {
+		for (int angle = 0; angle < maxAngle; angle++) {
+			double angle2 = world.rand.nextDouble() * Math.PI * 2;
+			double radius = angle / radiusScale;
+			double x = radius * cos(angle);
+			double y = angle / (maxAngle / vortexLength);
+			double z = radius * sin(angle);
+			double speed = world.rand.nextDouble() * 2 + 1;
+			double omega = Math.signum(speed * ((Math.PI * 2) / 20 - speed / (20 * radius)));
+			angle2 += omega;
+			Vec3d pos = new Vec3d(x, y, z);
+			if (entity != null && direction != null) {
+				pos = ArcaneUtils.rotateAroundAxisX(pos, entity.rotationPitch + 90);
+				pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
+				Wizardry.proxy.spawnParticle(particle, world, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
+						pos.z + position.z + direction.z, particleSpeed.x * radius * omega * Math.cos(angle2), particleSpeed.y, particleSpeed.z * radius * omega * Math.sin(angle2), maxAge, r, g, b);
+			}
+		}
+	}
+
+	/**
+	 * Spawns a directional vortex that has rotating particles.
+	 *
+	 * @param world         World the vortex spawns in.
+	 * @param maxAngle      The amount of particles/the maximum angle that the circle ticks to. 240 would mean there are 240 particles spiraling away.
+	 * @param vortexHeight  How tall the vortex is.
+	 * @param radiusScale   The maximum radius and how much the radius increases by. Always use your value for the maxAngle here-
+	 *                      otherwise you can get some funky effects. Ex: maxAngle/1.5 would give you a max radius of 1.5 blocks.
+	 *                      Note: It might only be a diamater of 1.5 blocks- if so, uhhh... My bad.
+	 * @param particle      The wizardry particle type. I had to create two methods- for for normal particles, one for wizardry ones.
+	 * @param position      The starting/reference position of the vortex. Used along with the direction position to determine the actual starting position.
+	 * @param particleSpeed How fast the particles are spinning. You don't need to include complex maths here- that's all handled by this method.
+	 * @param maxAge        The maximum age of the particle. Wizardry particles already have a predetermined age, this just adds onto it.
+	 * @param r             The amount of red in the particle. G and B are self-explanatory (green and blue).
+	 */
+	public static void spawnSpinningVortex(World world, int maxAngle, double vortexHeight, double radiusScale, WizardryParticleType particle, Vec3d position,
+										   Vec3d particleSpeed, int maxAge, float r, float g, float b) {
+		for (int angle = 0; angle < maxAngle; angle++) {
+			double angle2 = world.rand.nextDouble() * Math.PI * 2;
+			double radius = angle / radiusScale;
+			double x = radius * cos(angle);
+			double y = angle / (maxAngle / vortexHeight);
+			double z = radius * sin(angle);
+			double speed = world.rand.nextDouble() * 2 + 1;
+			double omega = Math.signum(speed * ((Math.PI * 2) / 20 - speed / (20 * radius)));
+			angle2 += omega;
+			Wizardry.proxy.spawnParticle(particle, world, x + position.x, y + position.y, z + position.z,
+					particleSpeed.x * radius * omega * Math.cos(angle2), particleSpeed.y, particleSpeed.z * radius * omega * Math.sin(angle2), maxAge, r, g, b);
+
+		}
+	}
+
 	public static void spawnDirectionalHelix(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double radius, EnumParticleTypes particle, double posX, double posY, double posZ,
-											  double velX, double velY, double velZ) {
+											 double velX, double velY, double velZ) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double x = radius * cos(angle);
 			double y = angle / (maxAngle / vortexLength);
@@ -133,7 +206,7 @@ public class ArcaneUtils {
 	}
 
 	public static void vortexEntityCollision(World world, EntityLivingBase entity, Entity spellEntity, Vec3d startPos, Vec3d endPos, float maxRadius,
-											float damage, Vec3d knockBack, MagicDamage.DamageType damageSource, boolean directDamage) {
+											 float damage, Vec3d knockBack, MagicDamage.DamageType damageSource, boolean directDamage) {
 		if (entity != null) {
 			AxisAlignedBB hitBox = new AxisAlignedBB(startPos.x, startPos.y, startPos.z, endPos.x, endPos.y, endPos.z);
 			hitBox = hitBox.grow(maxRadius);
