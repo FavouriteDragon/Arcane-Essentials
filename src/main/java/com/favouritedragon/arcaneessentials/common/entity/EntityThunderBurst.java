@@ -21,16 +21,18 @@ public class EntityThunderBurst extends EntityMagicConstruct {
 		setSize(10, 10);
 	}
 
+	@Override
+	protected void entityInit() {
+
+	}
+
 	public EntityThunderBurst(World world, double x, double y, double z, EntityLivingBase caster, int lifetime,
 							  float damageMultiplier) {
 		super(world, x, y, z, caster, lifetime, damageMultiplier);
 		setSize(1, 1);
 	}
 
-	@Override
-	protected void entityInit() {
 
-	}
 
 	@Override
 	public void onUpdate() {
@@ -76,23 +78,25 @@ public class EntityThunderBurst extends EntityMagicConstruct {
 		}
 		double x, y, z;
 		//Creates a sphere.
-		for (double theta = 0; theta <= 180; theta += 1) {
-			double dphi = 15 / Math.sin(Math.toRadians(theta));
+		/*if (ticksExisted % 2 == 0) {
+			for (double theta = 0; theta <= 180; theta += 1) {
+				double dphi = 15 / Math.sin(Math.toRadians(theta));
 
-			for (double phi = 0; phi < 360; phi += dphi) {
-				double rphi = Math.toRadians(phi);
-				double rtheta = Math.toRadians(theta);
+				for (double phi = 0; phi < 360; phi += dphi) {
+					double rphi = Math.toRadians(phi);
+					double rtheta = Math.toRadians(theta);
 
-				x = ticksExisted * 1 * Math.cos(rphi) * Math.sin(rtheta);
-				y = ticksExisted * 1 * Math.sin(rphi) * Math.sin(rtheta);
-				z = ticksExisted * 1 * Math.cos(rtheta);
+					x = ticksExisted * 1 * Math.cos(rphi) * Math.sin(rtheta);
+					y = ticksExisted * 1 * Math.sin(rphi) * Math.sin(rtheta);
+					z = ticksExisted * 1 * Math.cos(rtheta);
 
-				if (world.isRemote) {
-					Wizardry.proxy.spawnParticle(WizardryParticleType.SPARK, world, x + this.posX, y + this.posY, z + this.posZ, 0, 0, 0, 10);
+					if (world.isRemote) {
+						Wizardry.proxy.spawnParticle(WizardryParticleType.SPARK, world, x + this.posX, y + this.posY, z + this.posZ, 0, 0, 0, 10);
+					}
 				}
-			}
 
-		}
+			}
+		}**/
 	}
 
 	@Override

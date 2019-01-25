@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.proxy;
 
+import com.favouritedragon.arcaneessentials.client.render.RenderThunderBurst;
 import com.favouritedragon.arcaneessentials.common.entity.EntityThunderBurst;
 import electroblob.wizardry.client.renderer.RenderBlank;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -24,7 +25,7 @@ public class ClientProxy implements IProxy {
 
 	@Override
 	public void registerRender() {
-		RenderingRegistry.registerEntityRenderingHandler(EntityThunderBurst.class, RenderBlank::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityThunderBurst.class, RenderThunderBurst::new);
 	}
 
 
