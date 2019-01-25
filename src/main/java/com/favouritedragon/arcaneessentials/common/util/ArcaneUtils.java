@@ -16,12 +16,15 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.HashSet;
 
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+
 public class ArcaneUtils {
 	public static Vec3d rotateAroundAxisX(Vec3d v, double angle) {
 		angle = Math.toRadians(angle);
 		double y, z, cos, sin;
-		cos = Math.cos(angle);
-		sin = Math.sin(angle);
+		cos = cos(angle);
+		sin = sin(angle);
 		y = v.y * cos - v.z * sin;
 		z = v.y * sin + v.z * cos;
 		return new Vec3d(v.x, y, z);
@@ -31,8 +34,8 @@ public class ArcaneUtils {
 		angle = -angle;
 		angle = Math.toRadians(angle);
 		double x, z, cos, sin;
-		cos = Math.cos(angle);
-		sin = Math.sin(angle);
+		cos = cos(angle);
+		sin = sin(angle);
 		x = v.x * cos + v.z * sin;
 		z = v.x * -sin + v.z * cos;
 		return new Vec3d(x, v.y, z);
@@ -41,8 +44,8 @@ public class ArcaneUtils {
 	public static Vec3d rotateAroundAxisZ(Vec3d v, double angle) {
 		angle = Math.toRadians(angle);
 		double x, y, cos, sin;
-		cos = Math.cos(angle);
-		sin = Math.sin(angle);
+		cos = cos(angle);
+		sin = sin(angle);
 		x = v.x * cos - v.y * sin;
 		y = v.x * sin + v.y * cos;
 		return new Vec3d(x, y, v.z);
@@ -58,9 +61,9 @@ public class ArcaneUtils {
 		;
 		for (int angle = 0; angle < particleAmount; angle++) {
 			double radius = angle / radiusScale;
-			double x = radius * Math.cos(angle);
+			double x = radius * cos(angle);
 			double y = angle / (particleAmount / vortexLength);
-			double z = radius * Math.sin(angle);
+			double z = radius * sin(angle);
 			Vec3d pos = new Vec3d(x, y, z);
 			if (entity != null && direction != null) {
 				pos = ArcaneUtils.rotateAroundAxisX(pos, entity.rotationPitch + 90);
@@ -102,10 +105,10 @@ public class ArcaneUtils {
 		}
 	}
 
-	public static void vortexEntityRaytrace(World world, EntityLivingBase entity, Entity spellEntity, Vec3d startPos, double vortexLength, float maxRadius,
+	public static void vortexEntityRaytrace(World world, EntityLivingBase entity, Entity spellEntity, Vec3d startPos, double height, double vortexLength, float maxRadius,
 											float damage, Vec3d knockBack, MagicDamage.DamageType damageSource, boolean directDamage) {
 		if (entity != null) {
-			RayTraceResult result = ArcaneUtils.standardEntityRayTrace(world, entity, startPos, vortexLength, maxRadius);
+			RayTraceResult result = ArcaneUtils.standardEntityRayTrace(world, entity, startPos, vortexLength, height, maxRadius);
 			if (result != null && result.entityHit != null) {
 				if (result.entityHit instanceof EntityLivingBase) {
 					EntityLivingBase hit = (EntityLivingBase) result.entityHit;
@@ -141,9 +144,9 @@ public class ArcaneUtils {
 	}
 
 	@Nullable
-	public static RayTraceResult standardEntityRayTrace(World world, EntityLivingBase entity, Vec3d startPos, double range, float borderSize) {
+	public static RayTraceResult standardEntityRayTrace(World world, EntityLivingBase entity, Vec3d startPos, double range, double height, float borderSize) {
 		float dx = (float) entity.getLookVec().x * (float) range;
-		float dy = (float) entity.getLookVec().y * (float) range;
+		float dy = (float) ArcaneUtils.toRectangular(Math.toRadians(entity.rotationYaw), 0).add(0, height, 0).y * (float) range;
 		float dz = (float) entity.getLookVec().z * (float) range;
 		HashSet<Entity> hashset = new HashSet<Entity>(1);
 		hashset.add(entity);
@@ -157,5 +160,13 @@ public class ArcaneUtils {
 		if (target instanceof EntityPlayerMP) {
 			((EntityPlayerMP) target).connection.sendPacket(new SPacketEntityVelocity(target));
 		}
+	}
+
+	public Vec3d getLookRectangular(double yaw, double pitch) {
+		return toRectangular(Math.toRadians(yaw), Math.toRadians(pitch));
+	}
+
+	public static Vec3d toRectangular(double yaw, double pitch) {
+		return new Vec3d(-sin(yaw) * cos(pitch), -sin(pitch), cos(yaw) * cos(pitch));
 	}
 }

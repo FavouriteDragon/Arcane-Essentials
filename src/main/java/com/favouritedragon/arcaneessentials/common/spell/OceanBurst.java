@@ -37,12 +37,12 @@ public class OceanBurst extends Spell {
 		Vec3d look = caster.getLookVec();
 		//Spawn particles
 		ArcaneUtils.spawnDirectionalVortex(world, caster, look.scale(0.8), 240, range, 240 / 1.5, WizardryParticleType.MAGIC_BUBBLE, caster.posX, caster.posY + 1.2,
-				caster.posZ, 0, 0, 0, 8);
+				caster.posZ, 0, 0, 0, 2);
 
 		if (!world.isRemote) {
 			Vec3d startPos = look.scale(0.8).add(caster.getPositionVector());
 			startPos = startPos.add(0, 1.2, 0);
-			ArcaneUtils.vortexEntityRaytrace(world, caster, null, startPos, 0.8 + range ,1.5F, 4 + 2 * modifiers.get(WizardryItems.blast_upgrade),
+			ArcaneUtils.vortexEntityRaytrace(world, caster, null, startPos, 1.2, 0.8 + range,1.5F, 4 + 2 * modifiers.get(WizardryItems.blast_upgrade),
 					look.scale(modifiers.get(WizardryItems.blast_upgrade)), MagicDamage.DamageType.BLAST, true);
 			AxisAlignedBB hitBox = new AxisAlignedBB(caster.posX, caster.posY + 1.2, caster.posZ, caster.posX + look.x, caster.posY + 1.2 + look.y, caster.posZ
 			+ look.z);
