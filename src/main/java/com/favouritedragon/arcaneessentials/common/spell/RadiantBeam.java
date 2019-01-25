@@ -37,7 +37,7 @@ public class RadiantBeam extends Spell {
 		float range = 60 + 2 * modifiers.get(WizardryItems.range_upgrade);
 
 		RayTraceResult rayTrace = WizardryUtilities.standardEntityRayTrace(world, caster,
-				range);
+				range, 1F);
 
 		// Fire can damage armour stands
 		if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.ENTITY && rayTrace.entityHit instanceof EntityLivingBase) {
