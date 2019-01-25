@@ -24,7 +24,7 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 	public EntityLightningVortex(World world, double x, double y, double z, EntityLivingBase caster, int lifetime,
 								 float damageMultiplier) {
 		super(world, x, y, z, caster, lifetime, damageMultiplier);
-		setSize(3, 6);
+		setSize(0, 0);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if (ticksExisted % 4 == 0) {
+		if (ticksExisted % 10 == 0) {
 			world.playSound(posX, posY, posZ, WizardrySounds.SPELL_LOOP_LIGHTNING, SoundCategory.AMBIENT, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
 		}
@@ -81,7 +81,11 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 
 				}
 			}
+			ArcaneUtils.spawnSpinningVortex(world, 360, 6, 120, WizardryParticleType.SPARK,
+					new Vec3d(posX, posY, posZ), new Vec3d(0.2, 0.1, 0.2), 2, 0, 0, 0);
 		}
+
+
 
 	}
 }

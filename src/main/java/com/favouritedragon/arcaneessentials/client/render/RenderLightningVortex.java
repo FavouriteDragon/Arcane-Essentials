@@ -20,8 +20,7 @@ public class RenderLightningVortex extends Render<EntityLightningVortex> {
 	public void doRender(EntityLightningVortex entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 
-		ArcaneUtils.spawnSpinningVortex(entity.world, 360, 6, 120, WizardryParticleType.SPARK,
-					new Vec3d(entity.posX, entity.posY, entity.posZ), new Vec3d(0.3, 0.1, 0.3), 2, 0, 0, 0);
+
 
 	}
 
