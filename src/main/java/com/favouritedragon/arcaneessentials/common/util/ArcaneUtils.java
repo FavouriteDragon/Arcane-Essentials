@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -91,8 +92,7 @@ public class ArcaneUtils {
 							hit.motionY += knockBack.y + 0.2;
 							hit.motionZ += knockBack.z;
 							ArcaneUtils.applyPlayerKnockback(hit);
-						}
-						else if (spellEntity != null){
+						} else if (spellEntity != null) {
 							hit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(spellEntity, entity, damageSource), damage);
 							hit.motionX += knockBack.x;
 							hit.motionY += knockBack.y + 0.2;
@@ -105,10 +105,10 @@ public class ArcaneUtils {
 		}
 	}
 
-	public static void vortexEntityRaytrace(World world, EntityLivingBase entity, Entity spellEntity, Vec3d startPos, double height, double vortexLength, float maxRadius,
+	public static void vortexEntityRaytrace(World world, EntityLivingBase entity, Entity spellEntity, Vec3d startPos, double vortexLength, float maxRadius,
 											float damage, Vec3d knockBack, MagicDamage.DamageType damageSource, boolean directDamage) {
 		if (entity != null) {
-			RayTraceResult result = ArcaneUtils.standardEntityRayTrace(world, entity, startPos, vortexLength, height, maxRadius);
+			RayTraceResult result = ArcaneUtils.standardEntityRayTrace(world, entity, startPos, vortexLength, maxRadius);
 			if (result != null && result.entityHit != null) {
 				if (result.entityHit instanceof EntityLivingBase) {
 					EntityLivingBase hit = (EntityLivingBase) result.entityHit;
@@ -119,8 +119,7 @@ public class ArcaneUtils {
 							hit.motionY += knockBack.y + 0.2;
 							hit.motionZ += knockBack.z;
 							ArcaneUtils.applyPlayerKnockback(hit);
-						}
-						else if (spellEntity != null){
+						} else if (spellEntity != null) {
 							hit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(spellEntity, entity, damageSource), damage);
 							hit.motionX += knockBack.x;
 							hit.motionY += knockBack.y + 0.2;
@@ -135,24 +134,24 @@ public class ArcaneUtils {
 
 	@Nullable
 	public static RayTraceResult standardEntityRayTrace(World world, EntityLivingBase entity, Vec3d startPos, Vec3d endPos, float borderSize) {
-		HashSet<Entity> hashset = new HashSet<Entity>(1);
+		HashSet<Entity> hashset = new HashSet<>(1);
 		hashset.add(entity);
 		return WizardryUtilities.tracePath(world, (float) startPos.x,
 				(float) startPos.y, (float) startPos.z,
-				(float) endPos.x, (float) endPos.y,(float) endPos.z,
+				(float) endPos.x, (float) endPos.y, (float) endPos.z,
 				borderSize, hashset, false);
 	}
 
 	@Nullable
-	public static RayTraceResult standardEntityRayTrace(World world, EntityLivingBase entity, Vec3d startPos, double range, double height, float borderSize) {
+	public static RayTraceResult standardEntityRayTrace(World world, EntityLivingBase entity, Vec3d startPos, double range, float borderSize) {
 		float dx = (float) entity.getLookVec().x * (float) range;
-		float dy = (float) ArcaneUtils.toRectangular(Math.toRadians(entity.rotationYaw), 0).add(0, height, 0).y * (float) range;
+		float dy = (float) entity.getLookVec().y * (float) range;
 		float dz = (float) entity.getLookVec().z * (float) range;
-		HashSet<Entity> hashset = new HashSet<Entity>(1);
+		HashSet<Entity> hashset = new HashSet<>(1);
 		hashset.add(entity);
 		return WizardryUtilities.tracePath(world, (float) startPos.x,
 				(float) startPos.y, (float) startPos.z,
-				(float) startPos.x + dx, (float) startPos.y + dy,(float) startPos.z + dz,
+				(float) startPos.x + dx, (float) startPos.y + dy, (float) startPos.z + dz,
 				borderSize, hashset, false);
 	}
 
@@ -162,11 +161,27 @@ public class ArcaneUtils {
 		}
 	}
 
-	public Vec3d getLookRectangular(double yaw, double pitch) {
-		return toRectangular(Math.toRadians(yaw), Math.toRadians(pitch));
+	public static Vec3d getVectorForRotation(float pitch, float yaw) {
+		float f = MathHelper.cos(-yaw * 0.017453292F - (float) Math.PI);
+		float f1 = MathHelper.sin(-yaw * 0.017453292F - (float) Math.PI);
+		float f2 = -MathHelper.cos(-pitch * 0.017453292F);
+		float f3 = MathHelper.sin(-pitch * 0.017453292F);
+		return new Vec3d((double) (f1 * f2), (double) f3, (double) (f * f2));
 	}
 
-	public static Vec3d toRectangular(double yaw, double pitch) {
-		return new Vec3d(-sin(yaw) * cos(pitch), -sin(pitch), cos(yaw) * cos(pitch));
+	public static Vec3d getDirectionalVortexEndPos(EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double radiusScale, double posX, double posY, double posZ) {
+		double radius = maxAngle / radiusScale;
+		double x = radius * cos(maxAngle);
+		double z = radius * sin(maxAngle);
+		Vec3d pos = new Vec3d(x, vortexLength, z);
+		if (entity != null && direction != null) {
+			pos = ArcaneUtils.rotateAroundAxisX(pos, entity.rotationPitch + 90);
+			pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
+			return new Vec3d(pos.x + posX + direction.x, pos.y + posY + direction.y,
+					pos.z + posZ + direction.z);
+		} else {
+			return new Vec3d(x + posX, vortexLength + posY, z + posZ);
+		}
 	}
 }
+

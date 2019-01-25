@@ -41,17 +41,18 @@ public class OceanBurst extends Spell {
 
 		if (!world.isRemote) {
 			Vec3d startPos = look.scale(0.8).add(caster.getPositionVector());
+			Vec3d endPos = ArcaneUtils.getDirectionalVortexEndPos(caster, look.scale(0.8), 240, range, 240 / 1.5, caster.posX, caster.posY + 1.2, caster.posZ);
 			startPos = startPos.add(0, 1.2, 0);
-			ArcaneUtils.vortexEntityRaytrace(world, caster, null, startPos, 1.2, 0.8 + range,1.5F, 4 + 2 * modifiers.get(WizardryItems.blast_upgrade),
+			ArcaneUtils.vortexEntityRaytrace(world, caster, null, startPos, endPos, 1.75F, 4 + 2 * modifiers.get(WizardryItems.blast_upgrade),
 					look.scale(modifiers.get(WizardryItems.blast_upgrade)), MagicDamage.DamageType.BLAST, true);
 			AxisAlignedBB hitBox = new AxisAlignedBB(caster.posX, caster.posY + 1.2, caster.posZ, caster.posX + look.x, caster.posY + 1.2 + look.y, caster.posZ
-			+ look.z);
+					+ look.z);
 			List<EntityLivingBase> hit = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
 			if (!hit.isEmpty()) {
 				for (EntityLivingBase e : hit) {
-					if (e != caster)  {
-						e.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.MAGIC),4 + 2 * modifiers.get(WizardryItems.blast_upgrade));
-						Vec3d knockback = caster.getLookVec().scale(range/4);
+					if (e != caster) {
+						e.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.MAGIC), 4 + 2 * modifiers.get(WizardryItems.blast_upgrade));
+						Vec3d knockback = caster.getLookVec().scale(range / 4);
 						e.motionX += knockback.x;
 						e.motionY += knockback.y + 0.2;
 						e.motionZ += knockback.z;
