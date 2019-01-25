@@ -74,10 +74,38 @@ public class ArcaneUtils {
 		}
 	}
 
-	public static void vortexEntityRaytrace(World world, EntityLivingBase entity, Entity spellEntity, double vortexLength, float maxRadius,
+	public static void vortexEntityRaytrace(World world, EntityLivingBase entity, Entity spellEntity, Vec3d startPos, Vec3d endPos, float maxRadius,
 											float damage, Vec3d knockBack, MagicDamage.DamageType damageSource, boolean directDamage) {
 		if (entity != null) {
-			RayTraceResult result = WizardryUtilities.standardEntityRayTrace(world, entity, vortexLength, maxRadius);
+			RayTraceResult result = ArcaneUtils.standardEntityRayTrace(world, entity, startPos, endPos, maxRadius);
+			if (result != null && result.entityHit != null) {
+				if (result.entityHit instanceof EntityLivingBase) {
+					EntityLivingBase hit = (EntityLivingBase) result.entityHit;
+					if (hit != entity) {
+						if (directDamage) {
+							hit.attackEntityFrom(MagicDamage.causeDirectMagicDamage(entity, damageSource), damage);
+							hit.motionX += knockBack.x;
+							hit.motionY += knockBack.y + 0.2;
+							hit.motionZ += knockBack.z;
+							ArcaneUtils.applyPlayerKnockback(hit);
+						}
+						else if (spellEntity != null){
+							hit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(spellEntity, entity, damageSource), damage);
+							hit.motionX += knockBack.x;
+							hit.motionY += knockBack.y + 0.2;
+							hit.motionZ += knockBack.z;
+							ArcaneUtils.applyPlayerKnockback(hit);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public static void vortexEntityRaytrace(World world, EntityLivingBase entity, Entity spellEntity, Vec3d startPos, double vortexLength, float maxRadius,
+											float damage, Vec3d knockBack, MagicDamage.DamageType damageSource, boolean directDamage) {
+		if (entity != null) {
+			RayTraceResult result = ArcaneUtils.standardEntityRayTrace(world, entity, startPos, vortexLength, maxRadius);
 			if (result != null && result.entityHit != null) {
 				if (result.entityHit instanceof EntityLivingBase) {
 					EntityLivingBase hit = (EntityLivingBase) result.entityHit;
@@ -109,6 +137,19 @@ public class ArcaneUtils {
 		return WizardryUtilities.tracePath(world, (float) startPos.x,
 				(float) startPos.y, (float) startPos.z,
 				(float) endPos.x, (float) endPos.y,(float) endPos.z,
+				borderSize, hashset, false);
+	}
+
+	@Nullable
+	public static RayTraceResult standardEntityRayTrace(World world, EntityLivingBase entity, Vec3d startPos, double range, float borderSize) {
+		float dx = (float) entity.getLookVec().x * (float) range;
+		float dy = (float) entity.getLookVec().y * (float) range;
+		float dz = (float) entity.getLookVec().z * (float) range;
+		HashSet<Entity> hashset = new HashSet<Entity>(1);
+		hashset.add(entity);
+		return WizardryUtilities.tracePath(world, (float) startPos.x,
+				(float) startPos.y, (float) startPos.z,
+				(float) startPos.x + dx, (float) startPos.y + dy,(float) startPos.z + dz,
 				borderSize, hashset, false);
 	}
 
