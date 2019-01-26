@@ -315,9 +315,46 @@ public class ArcaneUtils {
 		}
 	}
 
-	public static void handlePiercingBeamCollision(World world, EntityLivingBase entity, Vec3d startPos, Vec3d endPos, float borderSize, MagicDamage.DamageType damageType,
-												   double damage, Vec3d knockBack) {
-		
+	/**
+	 * @param world        The world the raytrace is in.
+	 * @param caster       The caster of the spell. This is so mobs don't attack each other when you use raytraces from mobs.
+	 *                     All damage is done by the caster.
+	 * @param entity       The entity spawning the raytrace. This is so you don't infinitely damage one entity and lag the game,
+	 *                     and so you can achieve the desire affect of "piercing/raytrace chaining".
+	 * @param startPos     Where the raytrace starts.
+	 * @param endPos       Where the raytrace ends.
+	 * @param borderSize   The width of the raytrace.
+	 * @param spellEntity  The entity that's using this method, if applicable. If this method is directly used in a spell, just make this null.
+	 * @param directDamage If the damage caused should be direct or not. Set to true if this method is directly used by the caster in a spell.
+	 * @param damageType   The damagetype of the damage.
+	 * @param damage       The amount of damage.
+	 * @param knockBack    The amount of knockback.
+	 * @param setFire      Whether to set an enemy on fire.
+	 * @param fireTime     How long to set an enemy on fire.
+	 */
+
+	public static void handlePiercingBeamCollision(World world, EntityLivingBase caster, EntityLivingBase entity, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, boolean directDamage, MagicDamage.DamageType damageType,
+												   float damage, Vec3d knockBack, boolean setFire, int fireTime) {
+		RayTraceResult result = standardEntityRayTrace(world, entity, startPos, endPos, borderSize);
+		if (result != null && result.entityHit instanceof EntityLivingBase) {
+			EntityLivingBase hit = (EntityLivingBase) result.entityHit;
+			if (!MagicDamage.isEntityImmune(damageType, hit)) {
+				if (setFire) {
+					hit.setFire(fireTime);
+				}
+				if (directDamage) {
+					hit.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, damageType), damage);
+				} else if (spellEntity != null) {
+					hit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(spellEntity, caster, damageType), damage);
+				}
+				hit.motionX += knockBack.x;
+				hit.motionY += knockBack.y;
+				hit.motionZ += knockBack.z;
+				applyPlayerKnockback(hit);
+			}
+			handlePiercingBeamCollision(world, caster, hit, result.hitVec, endPos, borderSize, spellEntity, directDamage,
+					damageType, damage, knockBack, setFire, fireTime);
+		}
 	}
 }
 
