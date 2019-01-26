@@ -314,5 +314,10 @@ public class ArcaneUtils {
 			return new Vec3d(x + posX, vortexLength + posY, z + posZ);
 		}
 	}
+
+	public static void handlePiercingBeamCollision(World world, EntityLivingBase entity, Vec3d startPos, Vec3d endPos, float borderSize, MagicDamage.DamageType damageType,
+												   double damage, Vec3d knockBack) {
+		
+	}
 }
 

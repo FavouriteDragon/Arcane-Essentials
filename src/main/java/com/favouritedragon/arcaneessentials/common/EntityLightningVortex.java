@@ -61,6 +61,9 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 		if (belowBlock != Blocks.AIR && world.getBlockState(getPosition().add(0, 1, 0)).getBlock() != Blocks.AIR && motionY < 0) {
 			motionY *= -1;
 		}
+		if (belowBlock == Blocks.LAVA || belowBlock == Blocks.FIRE) {
+			this.setFire(60);
+		}
 		this.move(MoverType.SELF, motionX, motionY / 2, motionZ);
 		if (ticksExisted % 10 == 0) {
 			world.playSound(posX, posY, posZ, WizardrySounds.SPELL_LOOP_LIGHTNING, SoundCategory.AMBIENT, 2.0F,

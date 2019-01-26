@@ -45,6 +45,7 @@ public class RadiantBeam extends Spell {
 			AxisAlignedBB hitBox = new AxisAlignedBB(caster.posX, WizardryUtilities.getPlayerEyesPos(caster) - 0.4F, caster.posZ, caster.posX + dist.x,
 					WizardryUtilities.getPlayerEyesPos(caster) - 0.4 + dist.y, caster.posZ + dist.z);
 			hitBox = hitBox.shrink(0.13);
+			//TODO: Fix this ultra wack collision. Maybe raytrace chaining? I'll need a method for that though
 			List<Entity> hit = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
 			if (!hit.isEmpty()) {
 				for (Entity e : hit) {
