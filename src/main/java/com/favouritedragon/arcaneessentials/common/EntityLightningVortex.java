@@ -6,7 +6,10 @@ import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.WizardryParticleType;
 import electroblob.wizardry.util.WizardryUtilities;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.MoverType;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
@@ -23,11 +26,14 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 		this.width = 3.0f;
 	}
 
-	public EntityLightningVortex(World world, double x, double y, double z, EntityLivingBase caster, int lifetime,
+	public EntityLightningVortex(World world, double x, double y, double z, Vec3d velocity, EntityLivingBase caster, int lifetime,
 								 float damageMultiplier) {
 		super(world, x, y, z, caster, lifetime, damageMultiplier);
 		this.height = 7.0f;
 		this.width = 3.0f;
+		this.motionX = velocity.x;
+		this.motionY = velocity.y;
+		this.motionZ = velocity.z;
 	}
 
 	@Override
@@ -48,6 +54,14 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
+		Block belowBlock = world.getBlockState(getPosition()).getBlock();
+		if (belowBlock != Blocks.AIR && motionY != 0) {
+			motionY = 0;
+		}
+		if (belowBlock != Blocks.AIR && world.getBlockState(getPosition().add(0, 1, 0)).getBlock() != Blocks.AIR && motionY < 0) {
+			motionY *= -1;
+		}
+		this.move(MoverType.SELF, motionX, motionY / 2, motionZ);
 		if (ticksExisted % 10 == 0) {
 			world.playSound(posX, posY, posZ, WizardrySounds.SPELL_LOOP_LIGHTNING, SoundCategory.AMBIENT, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
@@ -84,10 +98,9 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 
 				}
 			}
-			ArcaneUtils.spawnSpinningVortex(world, 360, 7, 120, WizardryParticleType.SPARK,
-					new Vec3d(posX, posY, posZ), new Vec3d(0.15, 0.05, 0.15), 2, 0, 0, 0);
+			ArcaneUtils.spawnSpinningVortex(world, 240, 7, 80, WizardryParticleType.SPARK,
+					new Vec3d(posX, posY, posZ), new Vec3d(0.15, 0.05, 0.15), new Vec3d(motionX, motionY, motionZ), 2, 0, 0, 0);
 		}
-
 
 
 	}

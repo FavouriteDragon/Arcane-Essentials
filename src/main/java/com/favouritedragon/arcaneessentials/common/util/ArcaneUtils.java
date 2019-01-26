@@ -147,11 +147,13 @@ public class ArcaneUtils {
 	 * @param particle      The wizardry particle type. I had to create two methods- for for normal particles, one for wizardry ones.
 	 * @param position      The starting/reference position of the vortex. Used along with the direction position to determine the actual starting position.
 	 * @param particleSpeed How fast the particles are spinning. You don't need to include complex maths here- that's all handled by this method.
+	 * @param entitySpeed   The speed of the entity that is spawning the particles. If this is used for a quickburst, just make this 0. This is so
+	 *                      particles move with the entity that's directly spawning it.
 	 * @param maxAge        The maximum age of the particle. Wizardry particles already have a predetermined age, this just adds onto it.
 	 * @param r             The amount of red in the particle. G and B are self-explanatory (green and blue).
 	 */
 	public static void spawnSpinningVortex(World world, int maxAngle, double vortexHeight, double radiusScale, WizardryParticleType particle, Vec3d position,
-										   Vec3d particleSpeed, int maxAge, float r, float g, float b) {
+										   Vec3d particleSpeed, Vec3d entitySpeed, int maxAge, float r, float g, float b) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double angle2 = world.rand.nextDouble() * Math.PI * 2;
 			double radius = angle / radiusScale;
@@ -162,7 +164,7 @@ public class ArcaneUtils {
 			double omega = Math.signum(speed * ((Math.PI * 2) / 20 - speed / (20 * radius)));
 			angle2 += omega;
 			Wizardry.proxy.spawnParticle(particle, world, x + position.x, y + position.y, z + position.z,
-					particleSpeed.x * radius * omega * Math.cos(angle2), particleSpeed.y, particleSpeed.z * radius * omega * Math.sin(angle2), maxAge, r, g, b);
+					(particleSpeed.x * radius * omega * Math.cos(angle2)) + entitySpeed.x, particleSpeed.y + entitySpeed.y, (particleSpeed.z * radius * omega * Math.sin(angle2)) + entitySpeed.z, maxAge, r, g, b);
 
 		}
 	}
