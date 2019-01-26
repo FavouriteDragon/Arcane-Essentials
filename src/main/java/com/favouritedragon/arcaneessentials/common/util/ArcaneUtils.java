@@ -352,8 +352,32 @@ public class ArcaneUtils {
 				hit.motionZ += knockBack.z;
 				applyPlayerKnockback(hit);
 			}
-			handlePiercingBeamCollision(world, caster, hit, result.hitVec, endPos, borderSize, spellEntity, directDamage,
-					damageType, damage, knockBack, setFire, fireTime);
+			Vec3d pos = result.hitVec;
+			AxisAlignedBB hitBox = new AxisAlignedBB(pos.x + 0.25, pos.y + 0.25, pos.z + 0.25, pos.x - 0.25, pos.y - 0.25, pos.z - 0.25);
+			List<Entity> nearby = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
+			if (nearby.isEmpty()) {
+				handlePiercingBeamCollision(world, caster, hit, pos, endPos, borderSize, spellEntity, directDamage,
+						damageType, damage, knockBack, setFire, fireTime);
+			} else {
+				for (Entity e : nearby) {
+					if (e != caster && e != hit) {
+						if (!MagicDamage.isEntityImmune(damageType, e)) {
+							if (setFire) {
+								e.setFire(fireTime);
+							}
+							if (directDamage) {
+								e.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, damageType), damage);
+							} else if (spellEntity != null) {
+								e.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(spellEntity, caster, damageType), damage);
+							}
+							e.motionX += knockBack.x;
+							e.motionY += knockBack.y;
+							e.motionZ += knockBack.z;
+							applyPlayerKnockback(e);
+						}
+					}
+				}
+			}
 		}
 	}
 }
