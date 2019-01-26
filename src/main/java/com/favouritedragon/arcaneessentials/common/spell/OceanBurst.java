@@ -35,7 +35,7 @@ public class OceanBurst extends Spell {
 		//TODO: multiple hitoxes???
 		if (world.isRemote) {
 			//Spawn particles
-			ArcaneUtils.spawnDirectionalVortex(world, caster, look.scale(0.8), 240, range, 240 / 1.5, WizardryParticleType.MAGIC_BUBBLE, caster.posX, caster.posY + 1.2,
+			ArcaneUtils.spawnDirectionalVortex(world, caster, look.scale(0.8), 240, range, 0.05, 240 / 1.5, WizardryParticleType.MAGIC_BUBBLE, caster.posX, caster.posY + 1.2,
 					caster.posZ, 0, 0, 0, 0, 0, 0, 0);
 		}
 		if (!world.isRemote) {
@@ -63,7 +63,7 @@ public class OceanBurst extends Spell {
 		Vec3d look = caster.getLookVec();
 		if (world.isRemote) {
 			//Spawn particles
-			ArcaneUtils.spawnDirectionalVortex(world, caster, look.scale(0.8), 240, range, 240 / 1.5, WizardryParticleType.MAGIC_BUBBLE, caster.posX, caster.posY + 1.2,
+			ArcaneUtils.spawnDirectionalVortex(world, caster, look.scale(0.8), 240, range, 0.05,240 / 1.5, WizardryParticleType.MAGIC_BUBBLE, caster.posX, caster.posY + 1.2,
 					caster.posZ, 0, 0, 0, 0, 0, 0, 0);
 		}
 		if (!world.isRemote) {

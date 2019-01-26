@@ -54,10 +54,10 @@ public class ArcaneUtils {
 		return new Vec3d(x, y, v.z);
 	}
 
-	public static void spawnDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int particleAmount, double vortexLength, double radiusScale, EnumParticleTypes particle, double posX, double posY, double posZ,
+	public static void spawnDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int particleAmount, double vortexLength, double minRadius, double radiusScale, EnumParticleTypes particle, double posX, double posY, double posZ,
 											  double velX, double velY, double velZ) {
 		for (int angle = 0; angle < particleAmount; angle++) {
-			double radius = angle / radiusScale;
+			double radius = minRadius + (angle / radiusScale);
 			double x = radius * cos(angle);
 			double y = angle / (particleAmount / vortexLength);
 			double z = radius * sin(angle);
@@ -75,10 +75,10 @@ public class ArcaneUtils {
 	}
 
 	//TODO: Reduce velocity and position into a vec3d
-	public static void spawnDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double radiusScale, WizardryParticleType particle, double posX, double posY, double posZ,
+	public static void spawnDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double minRadius, double radiusScale, WizardryParticleType particle, double posX, double posY, double posZ,
 											  double velX, double velY, double velZ, int maxAge, float r, float g, float b) {
 		for (int angle = 0; angle < maxAngle; angle++) {
-			double radius = angle / radiusScale;
+			double radius = minRadius + (angle / radiusScale);
 			double x = radius * cos(angle);
 			double y = angle / (maxAngle / vortexLength);
 			double z = radius * sin(angle);
@@ -114,11 +114,11 @@ public class ArcaneUtils {
 	 * @param maxAge        The maximum age of the particle. Wizardry particles already have a predetermined age, this just adds onto it.
 	 * @param r             The amount of red in the particle. G and B are self-explanatory (green and blue).
 	 */
-	public static void spawnSpinningDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double radiusScale, WizardryParticleType particle, Vec3d position,
+	public static void spawnSpinningDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double minRadius, double radiusScale, WizardryParticleType particle, Vec3d position,
 													  Vec3d particleSpeed, int maxAge, float r, float g, float b) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double angle2 = world.rand.nextDouble() * Math.PI * 2;
-			double radius = angle / radiusScale;
+			double radius = minRadius + (angle / radiusScale);
 			double x = radius * cos(angle);
 			double y = angle / (maxAngle / vortexLength);
 			double z = radius * sin(angle);
@@ -152,11 +152,11 @@ public class ArcaneUtils {
 	 * @param maxAge        The maximum age of the particle. Wizardry particles already have a predetermined age, this just adds onto it.
 	 * @param r             The amount of red in the particle. G and B are self-explanatory (green and blue).
 	 */
-	public static void spawnSpinningVortex(World world, int maxAngle, double vortexHeight, double radiusScale, WizardryParticleType particle, Vec3d position,
+	public static void spawnSpinningVortex(World world, int maxAngle, double vortexHeight, double minRadius, double radiusScale, WizardryParticleType particle, Vec3d position,
 										   Vec3d particleSpeed, Vec3d entitySpeed, int maxAge, float r, float g, float b) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double angle2 = world.rand.nextDouble() * Math.PI * 2;
-			double radius = angle / radiusScale;
+			double radius = minRadius + (angle / radiusScale);
 			double x = radius * cos(angle);
 			double y = angle / (maxAngle / vortexHeight);
 			double z = radius * sin(angle);

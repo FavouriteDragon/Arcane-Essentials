@@ -98,7 +98,7 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 
 				}
 			}
-			ArcaneUtils.spawnSpinningVortex(world, 240, 7, 80, WizardryParticleType.SPARK,
+			ArcaneUtils.spawnSpinningVortex(world, 240, 7, 0.25, 80, WizardryParticleType.SPARK,
 					new Vec3d(posX, posY, posZ), new Vec3d(0.15, 0.05, 0.15), new Vec3d(motionX, motionY, motionZ), 2, 0, 0, 0);
 		}
 
