@@ -34,6 +34,14 @@ public class RadiantBeam extends Spell {
 		float damage = 4.0f * modifiers.get(SpellModifiers.DAMAGE);
 		float range = 60 + 2 * modifiers.get(WizardryItems.range_upgrade);
 
+		if (!world.isRemote) {
+			Vec3d startPos = new Vec3d(caster.posX, WizardryUtilities.getPlayerEyesPos(caster) - 0.4F, caster.posZ);
+			Vec3d endPos = caster.getLookVec().scale(range).add(startPos);
+			Vec3d knockBack = new Vec3d(look.x * 2 * modifiers.get(WizardryItems.blast_upgrade), look.y * 2 * modifiers.get(WizardryItems.blast_upgrade), look.z * 2 * modifiers.get(WizardryItems.blast_upgrade));
+			ArcaneUtils.handlePiercingBeamCollision(world, caster, caster, startPos, endPos, 10F, null, true,
+					MagicDamage.DamageType.RADIANT, damage, knockBack, true, 10, 0.25F);
+		}
+
 		if (world.isRemote) {
 			for (int i = 0; i < 80; i++) {
 				double x1 = caster.posX + look.x * i / 2 + world.rand.nextFloat() / 5 - 0.1f;
@@ -54,12 +62,6 @@ public class RadiantBeam extends Spell {
 					caster.posX, caster.posY + caster.getEyeHeight() - 0.4F, caster.posZ, world.rand.nextDouble() / 60, world.rand.nextDouble() / 20,
 					world.rand.nextDouble() / 60, 30, 1.0F, 1.0F, 0.3F);
 
-		}
-		if (!world.isRemote) {
-			Vec3d startPos = new Vec3d(caster.posX, WizardryUtilities.getPlayerEyesPos(caster) - 0.4F, caster.posZ);
-			Vec3d knockBack = new Vec3d(look.x * 2 * modifiers.get(WizardryItems.blast_upgrade), look.y * 2 * modifiers.get(WizardryItems.blast_upgrade), look.z * 2 * modifiers.get(WizardryItems.blast_upgrade));
-			ArcaneUtils.handlePiercingBeamCollision(world, caster, caster, startPos, caster.getLookVec().scale(range).add(startPos), 0.4F, null, true,
-					MagicDamage.DamageType.RADIANT, damage, knockBack, true, 10);
 		}
 
 		WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_HEAL, 1.5F, 1);

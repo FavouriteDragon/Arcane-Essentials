@@ -334,7 +334,7 @@ public class ArcaneUtils {
 	 */
 
 	public static void handlePiercingBeamCollision(World world, EntityLivingBase caster, EntityLivingBase entity, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, boolean directDamage, MagicDamage.DamageType damageType,
-												   float damage, Vec3d knockBack, boolean setFire, int fireTime) {
+												   float damage, Vec3d knockBack, boolean setFire, int fireTime, float radius) {
 		RayTraceResult result = standardEntityRayTrace(world, entity, startPos, endPos, borderSize);
 		if (result != null && result.entityHit instanceof EntityLivingBase) {
 			EntityLivingBase hit = (EntityLivingBase) result.entityHit;
@@ -353,11 +353,13 @@ public class ArcaneUtils {
 				applyPlayerKnockback(hit);
 			}
 			Vec3d pos = result.hitVec;
-			AxisAlignedBB hitBox = new AxisAlignedBB(pos.x + 0.25, pos.y + 0.25, pos.z + 0.25, pos.x - 0.25, pos.y - 0.25, pos.z - 0.25);
+			AxisAlignedBB hitBox = new AxisAlignedBB(pos.x + radius, pos.y + radius, pos.z + radius, pos.x - radius, pos.y - radius, pos.z - radius);
 			List<Entity> nearby = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
+			nearby.remove(hit);
+			//This is so it doesn't count the entity that was hit by the raytrace and mess up the chain
 			if (nearby.isEmpty()) {
-				handlePiercingBeamCollision(world, caster, hit, pos, endPos, borderSize, spellEntity, directDamage,
-						damageType, damage, knockBack, setFire, fireTime);
+				handlePiercingBeamCollision(world, caster, hit, result.hitVec, endPos, borderSize, spellEntity, directDamage,
+						damageType, damage, knockBack, setFire, fireTime, radius);
 			} else {
 				for (Entity e : nearby) {
 					if (e != caster && e != hit) {
@@ -377,7 +379,9 @@ public class ArcaneUtils {
 						}
 					}
 				}
+
 			}
+
 		}
 	}
 }
