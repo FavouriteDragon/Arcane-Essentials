@@ -429,7 +429,7 @@ public class ArcaneUtils {
 		}
 		Entity closestHitEntity = null;
 		float closestHit = maxDistance;
-		float currentHit = 0.f;
+		float currentHit;
 		AxisAlignedBB entityBb;// = ent.getBoundingBox();
 		RayTraceResult intercept;
 		for (Entity ent : allEntities) {
