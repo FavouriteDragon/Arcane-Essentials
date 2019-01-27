@@ -60,6 +60,7 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
+		this.setSize(this.width, 7);
 		Block belowBlock = world.getBlockState(getPosition()).getBlock();
 		if (belowBlock != Blocks.AIR && motionY != 0) {
 			motionY = 0;

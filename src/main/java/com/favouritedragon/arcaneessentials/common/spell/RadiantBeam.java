@@ -59,7 +59,7 @@ public class RadiantBeam extends Spell {
 						b ? world.rand.nextDouble() / 60 : -world.rand.nextDouble()/60, 30, 1.0f, 1.0f, 0.3f);
 
 			}
-			ArcaneUtils.spawnDirectionHelix(world, caster, caster.getLookVec(), 180, range, 0.5, WizardryParticleType.SPARKLE,
+			ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), 180, range, 0.5, WizardryParticleType.SPARKLE,
 					caster.posX, caster.posY + caster.getEyeHeight() - 0.4F, caster.posZ, world.rand.nextDouble() / 60, world.rand.nextDouble() / 20,
 					world.rand.nextDouble() / 60, 30, 1.0F, 1.0F, 0.3F);
 

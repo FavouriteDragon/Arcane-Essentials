@@ -14,7 +14,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public class InfernoPillar extends Spell {
-	
+
 	public InfernoPillar() {
 		super(Tier.ADVANCED, 80, Element.FIRE, "inferno_pillar", SpellType.DEFENCE, 200, EnumAction.BOW, false, ArcaneEssentials.MODID);
 	}
