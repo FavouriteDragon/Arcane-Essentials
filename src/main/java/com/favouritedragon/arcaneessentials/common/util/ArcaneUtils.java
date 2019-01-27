@@ -383,13 +383,17 @@ public class ArcaneUtils {
 			}
 
 		}
+		else if (result != null && !world.getBlockState(result.getBlockPos()).isFullBlock()) {
+			handlePiercingBeamCollision(world, caster, caster, result.hitVec, endPos, borderSize, spellEntity, directDamage,
+					damageType, damage, knockBack, setFire, fireTime, radius);
+		}
 	}
 
 	/**
 	 * Method for ray tracing entities (the useless default method doesn't work, despite EnumHitType having an ENTITY
 	 * field...) You can also use this for seeking.
 	 *
-	 * @param world
+	 * @param world The world the raytrace is in.
 	 * @param x startX
 	 * @param y startY
 	 * @param z startZ
