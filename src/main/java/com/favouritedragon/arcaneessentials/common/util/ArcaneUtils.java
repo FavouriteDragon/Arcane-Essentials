@@ -264,13 +264,13 @@ public class ArcaneUtils {
 	}
 
 	@Nullable
-	public static RayTraceResult standardEntityRayTrace(World world, EntityLivingBase entity, Vec3d startPos, Vec3d endPos, float borderSize) {
+	public static RayTraceResult standardEntityRayTrace(World world, EntityLivingBase entity, Vec3d startPos, Vec3d endPos, float borderSize, boolean transparentBlocks) {
 		HashSet<Entity> hashset = new HashSet<>(1);
 		hashset.add(entity);
 		return tracePath(world, (float) startPos.x,
 				(float) startPos.y, (float) startPos.z,
 				(float) endPos.x, (float) endPos.y, (float) endPos.z,
-				borderSize, hashset, false);
+				borderSize, hashset, false, transparentBlocks);
 	}
 
 	@Nullable
@@ -335,7 +335,7 @@ public class ArcaneUtils {
 
 	public static void handlePiercingBeamCollision(World world, EntityLivingBase caster, EntityLivingBase entity, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, boolean directDamage, MagicDamage.DamageType damageType,
 												   float damage, Vec3d knockBack, boolean setFire, int fireTime, float radius) {
-		RayTraceResult result = standardEntityRayTrace(world, entity, startPos, endPos, borderSize);
+		RayTraceResult result = standardEntityRayTrace(world, entity, startPos, endPos, borderSize, false);
 		if (result != null && result.entityHit instanceof EntityLivingBase) {
 			EntityLivingBase hit = (EntityLivingBase) result.entityHit;
 			if (!MagicDamage.isEntityImmune(damageType, hit)) {
@@ -383,31 +383,27 @@ public class ArcaneUtils {
 			}
 
 		}
-		else if (result != null && !world.getBlockState(result.getBlockPos()).isFullBlock()) {
-			handlePiercingBeamCollision(world, caster, caster, result.hitVec, endPos, borderSize, spellEntity, directDamage,
-					damageType, damage, knockBack, setFire, fireTime, radius);
-		}
 	}
 
 	/**
 	 * Method for ray tracing entities (the useless default method doesn't work, despite EnumHitType having an ENTITY
 	 * field...) You can also use this for seeking.
 	 *
-	 * @param world The world the raytrace is in.
-	 * @param x startX
-	 * @param y startY
-	 * @param z startZ
-	 * @param tx endX
-	 * @param ty endY
-	 * @param tz endZ
+	 * @param world      The world the raytrace is in.
+	 * @param x          startX
+	 * @param y          startY
+	 * @param z          startZ
+	 * @param tx         endX
+	 * @param ty         endY
+	 * @param tz         endZ
 	 * @param borderSize extra area to examine around line for entities
-	 * @param excluded any excluded entities (the player, etc)
+	 * @param excluded   any excluded entities (the player, etc)
 	 * @return a RayTraceResult of either the block hit (no entity hit), the entity hit (hit an entity), or null for
-	 *         nothing hit
+	 * nothing hit
 	 */
 	@Nullable
 	public static RayTraceResult tracePath(World world, float x, float y, float z, float tx, float ty, float tz,
-										   float borderSize, HashSet<Entity> excluded, boolean collideablesOnly){
+										   float borderSize, HashSet<Entity> excluded, boolean collideablesOnly, boolean raytraceNonSolidBlocks) {
 
 		Vec3d startVec = new Vec3d(x, y, z);
 		// Vec3d lookVec = new Vec3d(tx-x, ty-y, tz-z);
@@ -422,35 +418,38 @@ public class ArcaneUtils {
 				borderSize);
 		List<Entity> allEntities = world.getEntitiesWithinAABBExcludingEntity(null, bb);
 		RayTraceResult blockHit = world.rayTraceBlocks(startVec, endVec);
+		if (blockHit != null && !world.getBlockState(blockHit.getBlockPos()).isFullBlock() && !raytraceNonSolidBlocks) {
+			blockHit = null;
+		}
 		startVec = new Vec3d(x, y, z);
 		endVec = new Vec3d(tx, ty, tz);
-		float maxDistance = (float)endVec.distanceTo(startVec);
-		if(blockHit != null){
-			maxDistance = (float)blockHit.hitVec.distanceTo(startVec);
+		float maxDistance = (float) endVec.distanceTo(startVec);
+		if (blockHit != null) {
+			maxDistance = (float) blockHit.hitVec.distanceTo(startVec);
 		}
 		Entity closestHitEntity = null;
 		float closestHit = maxDistance;
 		float currentHit = 0.f;
 		AxisAlignedBB entityBb;// = ent.getBoundingBox();
 		RayTraceResult intercept;
-		for(Entity ent : allEntities){
-			if((ent.canBeCollidedWith() || !collideablesOnly)
+		for (Entity ent : allEntities) {
+			if ((ent.canBeCollidedWith() || !collideablesOnly)
 					&& (excluded == null || !excluded.contains(ent))) {
 				float entBorder = ent.getCollisionBorderSize();
 				entityBb = ent.getEntityBoundingBox();
 				entityBb = entityBb.grow(entBorder, entBorder, entBorder);
 				if (borderSize != 0) entityBb = entityBb.grow(borderSize, borderSize, borderSize);
-					intercept = entityBb.calculateIntercept(startVec, endVec);
-					if (intercept != null) {
-						currentHit = (float) intercept.hitVec.distanceTo(startVec);
-						if (currentHit < closestHit || currentHit == 0) {
-							closestHit = currentHit;
-							closestHitEntity = ent;
-						}
+				intercept = entityBb.calculateIntercept(startVec, endVec);
+				if (intercept != null) {
+					currentHit = (float) intercept.hitVec.distanceTo(startVec);
+					if (currentHit < closestHit || currentHit == 0) {
+						closestHit = currentHit;
+						closestHitEntity = ent;
 					}
 				}
+			}
 		}
-		if(closestHitEntity != null){
+		if (closestHitEntity != null) {
 			blockHit = new RayTraceResult(closestHitEntity);
 		}
 		return blockHit;
