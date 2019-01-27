@@ -31,7 +31,7 @@ public class RadiantBeam extends Spell {
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 
 		Vec3d look = caster.getLookVec();
-		float damage = 4.0f + 1* modifiers.get(SpellModifiers.DAMAGE);
+		float damage = 4.0f + 1 * modifiers.get(SpellModifiers.DAMAGE);
 		float range = 60 + 2 * modifiers.get(WizardryItems.range_upgrade);
 
 		if (!world.isRemote) {
@@ -50,18 +50,18 @@ public class RadiantBeam extends Spell {
 						+ world.rand.nextFloat() / 5 - 0.1f;
 				double z1 = caster.posZ + look.z * i / 2 + world.rand.nextFloat() / 5 - 0.1f;
 				Wizardry.proxy.spawnParticle(WizardryParticleType.SPARKLE, world, x1, y1, z1,
-						 b ? world.rand.nextDouble() / 60 : -world.rand.nextDouble()/60,
-						world.rand.nextDouble() / 20,
-						b ? world.rand.nextDouble() / 60 : -world.rand.nextDouble()/60, 30, 1.0f, 1.0f, 0.3f);
+						b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 80,
+						world.rand.nextDouble() / 40,
+						b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 80, 30, 1.0f, 1.0f, 0.3f);
 				Wizardry.proxy.spawnParticle(WizardryParticleType.SPARKLE, world, x1, y1, z1,
-						b ? world.rand.nextDouble() / 60 : -world.rand.nextDouble()/60,
-						world.rand.nextDouble() / 20,
-						b ? world.rand.nextDouble() / 60 : -world.rand.nextDouble()/60, 30, 1.0f, 1.0f, 0.3f);
+						b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 60,
+						world.rand.nextDouble() / 40,
+						b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 60, 30, 1.0f, 1.0f, 0.3f);
 
 			}
 			ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), 180, range, 0.5, WizardryParticleType.SPARKLE,
-					caster.posX, caster.posY + caster.getEyeHeight() - 0.4F, caster.posZ, world.rand.nextDouble() / 60, world.rand.nextDouble() / 20,
-					world.rand.nextDouble() / 60, 30, 1.0F, 1.0F, 0.3F);
+					caster.posX, caster.posY + caster.getEyeHeight() - 0.4F, caster.posZ, world.rand.nextDouble() / 80, world.rand.nextDouble() / 40,
+					world.rand.nextDouble() / 80, 30, 1.0F, 1.0F, 0.3F);
 
 		}
 
@@ -89,29 +89,31 @@ public class RadiantBeam extends Spell {
 
 
 		if (world.isRemote) {
-				for (int i = 0; i < 60; i++) {
-					double x1 = caster.posX + look.x * i / 2 + world.rand.nextFloat() / 5 - 0.1f;
-					double y1 = caster.posY + caster.getEyeHeight() - 0.4f + look.y * i / 2 + world.rand.nextFloat() / 5
-							- 0.1f;
-					double z1 = caster.posZ + look.z * i / 2 + world.rand.nextFloat() / 5 - 0.1f;
-					Wizardry.proxy.spawnParticle(WizardryParticleType.SPARKLE_ROTATING, world, x1, y1, z1,
-							world.rand.nextDouble() / 40,
-							world.rand.nextDouble() / 20,
-							world.rand.nextDouble() / 40, 30, 1.0f, 1.0f, 0.3f);
-					Wizardry.proxy.spawnParticle(WizardryParticleType.SPARKLE, world, x1, y1, z1,
-							world.rand.nextDouble() / 40,
-							world.rand.nextDouble() / 20,
-							world.rand.nextDouble() / 40, 30, 1.0f, 1.0f, 0.3f);
-				}
+			for (int i = 0; i < 60; i++) {
+				double x1 = caster.posX + look.x * i / 2 + world.rand.nextFloat() / 5 - 0.1f;
+				double y1 = caster.posY + caster.getEyeHeight() - 0.4f + look.y * i / 2 + world.rand.nextFloat() / 5
+						- 0.1f;
+				double z1 = caster.posZ + look.z * i / 2 + world.rand.nextFloat() / 5 - 0.1f;
+				Wizardry.proxy.spawnParticle(WizardryParticleType.SPARKLE_ROTATING, world, x1, y1, z1,
+						world.rand.nextDouble() / 80,
+						world.rand.nextDouble() / 40,
+						world.rand.nextDouble() / 80, 30, 1.0f, 1.0f, 0.3f);
+				Wizardry.proxy.spawnParticle(WizardryParticleType.SPARKLE, world, x1, y1, z1,
+						world.rand.nextDouble() / 80,
+						world.rand.nextDouble() / 40,
+						world.rand.nextDouble() / 80, 30, 1.0f, 1.0f, 0.3f);
 			}
-
-			caster.playSound(WizardrySounds.SPELL_HEAL, 1.5F, 1);
-			caster.playSound(WizardrySounds.SPELL_SHOCKWAVE, 0.5F, 1.0f);
-
-
-			return true;
+			ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), 180, range, 0.5, WizardryParticleType.SPARKLE,
+					caster.posX, caster.posY + caster.getEyeHeight() - 0.4F, caster.posZ, world.rand.nextDouble() / 80, world.rand.nextDouble() / 40,
+					world.rand.nextDouble() / 80, 30, 1.0F, 1.0F, 0.3F);
 		}
 
+		caster.playSound(WizardrySounds.SPELL_HEAL, 1.5F, 1);
+		caster.playSound(WizardrySounds.SPELL_SHOCKWAVE, 0.5F, 1.0f);
+
+
+		return true;
+	}
 
 
 	@Override
