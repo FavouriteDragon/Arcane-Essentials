@@ -31,7 +31,7 @@ public class RadiantBeam extends Spell {
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 
 		Vec3d look = caster.getLookVec();
-		float damage = 4.0f * modifiers.get(SpellModifiers.DAMAGE);
+		float damage = 4.0f + 1* modifiers.get(SpellModifiers.DAMAGE);
 		float range = 60 + 2 * modifiers.get(WizardryItems.range_upgrade);
 
 		if (!world.isRemote) {
@@ -75,26 +75,25 @@ public class RadiantBeam extends Spell {
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target,
 						SpellModifiers modifiers) {
 
-		float damage = 4.0f * modifiers.get(SpellModifiers.DAMAGE);
-		if (target != null) {
+		Vec3d look = caster.getLookVec();
+		float damage = 4.0f + 1 * modifiers.get(SpellModifiers.DAMAGE);
+		float range = 60 + 2 * modifiers.get(WizardryItems.range_upgrade);
 
-			Vec3d vec = new Vec3d(target.posX - caster.posX, target.posY - caster.posY, target.posZ - caster.posZ).normalize();
+		if (!world.isRemote) {
+			Vec3d startPos = new Vec3d(caster.posX, caster.getEntityBoundingBox().minY + caster.getEyeHeight() - 0.4F, caster.posZ);
+			Vec3d endPos = caster.getLookVec().scale(range).add(startPos);
+			Vec3d knockBack = new Vec3d(look.x * 2 * modifiers.get(WizardryItems.blast_upgrade), look.y * 2 * modifiers.get(WizardryItems.blast_upgrade), look.z * 2 * modifiers.get(WizardryItems.blast_upgrade));
+			ArcaneUtils.handlePiercingBeamCollision(world, caster, caster, startPos, endPos, 0.5F, null, true,
+					MagicDamage.DamageType.RADIANT, damage, knockBack, true, 10, 0.25F);
+		}
 
-			target.setFire(10);
-			target.motionX += vec.x * 2 * modifiers.get(WizardryItems.blast_upgrade);
-			target.motionY += vec.y * 2 * modifiers.get(WizardryItems.blast_upgrade);
-			target.motionZ += vec.z * 2 * modifiers.get(WizardryItems.blast_upgrade);
-			if (target.isEntityUndead()) {
-				damage += 2;
-			}
-			target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.RADIANT), damage);
 
-			if (world.isRemote) {
+		if (world.isRemote) {
 				for (int i = 0; i < 60; i++) {
-					double x1 = caster.posX + vec.x * i / 2 + world.rand.nextFloat() / 5 - 0.1f;
-					double y1 = caster.posY + caster.getEyeHeight() - 0.4f + vec.y * i / 2 + world.rand.nextFloat() / 5
+					double x1 = caster.posX + look.x * i / 2 + world.rand.nextFloat() / 5 - 0.1f;
+					double y1 = caster.posY + caster.getEyeHeight() - 0.4f + look.y * i / 2 + world.rand.nextFloat() / 5
 							- 0.1f;
-					double z1 = caster.posZ + vec.z * i / 2 + world.rand.nextFloat() / 5 - 0.1f;
+					double z1 = caster.posZ + look.z * i / 2 + world.rand.nextFloat() / 5 - 0.1f;
 					Wizardry.proxy.spawnParticle(WizardryParticleType.SPARKLE_ROTATING, world, x1, y1, z1,
 							world.rand.nextDouble() / 40,
 							world.rand.nextDouble() / 20,
@@ -113,8 +112,7 @@ public class RadiantBeam extends Spell {
 			return true;
 		}
 
-		return false;
-	}
+
 
 	@Override
 	public boolean canBeCastByNPCs() {
