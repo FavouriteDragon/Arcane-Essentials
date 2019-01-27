@@ -53,6 +53,11 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 	}
 
 	@Override
+	public boolean canRenderOnFire() {
+		return isBurning();
+	}
+
+	@Override
 	public void onUpdate() {
 		super.onUpdate();
 		Block belowBlock = world.getBlockState(getPosition()).getBlock();
@@ -63,10 +68,10 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 			motionY *= -1;
 		}
 		if (belowBlock == Blocks.LAVA || belowBlock == Blocks.FIRE) {
-			this.setFire(60);
+			this.setFire(100);
 		}
-		if (this.isBurning()) 	ArcaneUtils.spawnSpinningVortex(world, 60, 7, 0.25, 20, WizardryParticleType.MAGIC_FIRE,
-				new Vec3d(posX, posY, posZ), new Vec3d(0.15, 0.05, 0.15), new Vec3d(motionX, motionY, motionZ), 2, 1, 1, 1);
+		if (this.isBurning()) 	ArcaneUtils.spawnSpinningVortex(world, 120, 7, 0.25, 40, WizardryParticleType.MAGIC_FIRE,
+				new Vec3d(posX, posY, posZ), new Vec3d(0.3, 0.1, 0.3), new Vec3d(motionX, motionY, motionZ), 10, 1, 0, 0);
 
 		this.move(MoverType.SELF, motionX, motionY / 2, motionZ);
 		if (ticksExisted % 10 == 0) {
