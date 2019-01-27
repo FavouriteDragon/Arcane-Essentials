@@ -267,7 +267,7 @@ public class ArcaneUtils {
 	public static RayTraceResult standardEntityRayTrace(World world, EntityLivingBase entity, Vec3d startPos, Vec3d endPos, float borderSize) {
 		HashSet<Entity> hashset = new HashSet<>(1);
 		hashset.add(entity);
-		return WizardryUtilities.tracePath(world, (float) startPos.x,
+		return tracePath(world, (float) startPos.x,
 				(float) startPos.y, (float) startPos.z,
 				(float) endPos.x, (float) endPos.y, (float) endPos.z,
 				borderSize, hashset, false);
@@ -383,6 +383,73 @@ public class ArcaneUtils {
 			}
 
 		}
+	}
+
+	/**
+	 * Method for ray tracing entities (the useless default method doesn't work, despite EnumHitType having an ENTITY
+	 * field...) You can also use this for seeking.
+	 *
+	 * @param world
+	 * @param x startX
+	 * @param y startY
+	 * @param z startZ
+	 * @param tx endX
+	 * @param ty endY
+	 * @param tz endZ
+	 * @param borderSize extra area to examine around line for entities
+	 * @param excluded any excluded entities (the player, etc)
+	 * @return a RayTraceResult of either the block hit (no entity hit), the entity hit (hit an entity), or null for
+	 *         nothing hit
+	 */
+	@Nullable
+	public static RayTraceResult tracePath(World world, float x, float y, float z, float tx, float ty, float tz,
+										   float borderSize, HashSet<Entity> excluded, boolean collideablesOnly){
+
+		Vec3d startVec = new Vec3d(x, y, z);
+		// Vec3d lookVec = new Vec3d(tx-x, ty-y, tz-z);
+		Vec3d endVec = new Vec3d(tx, ty, tz);
+		float minX = x < tx ? x : tx;
+		float minY = y < ty ? y : ty;
+		float minZ = z < tz ? z : tz;
+		float maxX = x > tx ? x : tx;
+		float maxY = y > ty ? y : ty;
+		float maxZ = z > tz ? z : tz;
+		AxisAlignedBB bb = new AxisAlignedBB(minX, minY, minZ, maxX, maxY, maxZ).grow(borderSize, borderSize,
+				borderSize);
+		List<Entity> allEntities = world.getEntitiesWithinAABBExcludingEntity(null, bb);
+		RayTraceResult blockHit = world.rayTraceBlocks(startVec, endVec);
+		startVec = new Vec3d(x, y, z);
+		endVec = new Vec3d(tx, ty, tz);
+		float maxDistance = (float)endVec.distanceTo(startVec);
+		if(blockHit != null){
+			maxDistance = (float)blockHit.hitVec.distanceTo(startVec);
+		}
+		Entity closestHitEntity = null;
+		float closestHit = maxDistance;
+		float currentHit = 0.f;
+		AxisAlignedBB entityBb;// = ent.getBoundingBox();
+		RayTraceResult intercept;
+		for(Entity ent : allEntities){
+			if((ent.canBeCollidedWith() || !collideablesOnly)
+					&& (excluded == null || !excluded.contains(ent))) {
+				float entBorder = ent.getCollisionBorderSize();
+				entityBb = ent.getEntityBoundingBox();
+				entityBb = entityBb.grow(entBorder, entBorder, entBorder);
+				if (borderSize != 0) entityBb = entityBb.grow(borderSize, borderSize, borderSize);
+					intercept = entityBb.calculateIntercept(startVec, endVec);
+					if (intercept != null) {
+						currentHit = (float) intercept.hitVec.distanceTo(startVec);
+						if (currentHit < closestHit || currentHit == 0) {
+							closestHit = currentHit;
+							closestHitEntity = ent;
+						}
+					}
+				}
+		}
+		if(closestHitEntity != null){
+			blockHit = new RayTraceResult(closestHitEntity);
+		}
+		return blockHit;
 	}
 }
 

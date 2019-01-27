@@ -38,24 +38,25 @@ public class RadiantBeam extends Spell {
 			Vec3d startPos = new Vec3d(caster.posX, WizardryUtilities.getPlayerEyesPos(caster) - 0.4F, caster.posZ);
 			Vec3d endPos = caster.getLookVec().scale(range).add(startPos);
 			Vec3d knockBack = new Vec3d(look.x * 2 * modifiers.get(WizardryItems.blast_upgrade), look.y * 2 * modifiers.get(WizardryItems.blast_upgrade), look.z * 2 * modifiers.get(WizardryItems.blast_upgrade));
-			ArcaneUtils.handlePiercingBeamCollision(world, caster, caster, startPos, endPos, 10F, null, true,
+			ArcaneUtils.handlePiercingBeamCollision(world, caster, caster, startPos, endPos, 0.25F, null, true,
 					MagicDamage.DamageType.RADIANT, damage, knockBack, true, 10, 0.25F);
 		}
 
 		if (world.isRemote) {
 			for (int i = 0; i < 80; i++) {
+				boolean b = world.rand.nextBoolean();
 				double x1 = caster.posX + look.x * i / 2 + world.rand.nextFloat() / 5 - 0.1f;
 				double y1 = WizardryUtilities.getPlayerEyesPos(caster) - 0.4f + look.y * i / 2
 						+ world.rand.nextFloat() / 5 - 0.1f;
 				double z1 = caster.posZ + look.z * i / 2 + world.rand.nextFloat() / 5 - 0.1f;
 				Wizardry.proxy.spawnParticle(WizardryParticleType.SPARKLE, world, x1, y1, z1,
-						world.rand.nextDouble() / 60,
+						 b ? world.rand.nextDouble() / 60 : -world.rand.nextDouble()/60,
 						world.rand.nextDouble() / 20,
-						world.rand.nextDouble() / 60, 30, 1.0f, 1.0f, 0.3f);
+						b ? world.rand.nextDouble() / 60 : -world.rand.nextDouble()/60, 30, 1.0f, 1.0f, 0.3f);
 				Wizardry.proxy.spawnParticle(WizardryParticleType.SPARKLE, world, x1, y1, z1,
-						world.rand.nextDouble() / 60,
+						b ? world.rand.nextDouble() / 60 : -world.rand.nextDouble()/60,
 						world.rand.nextDouble() / 20,
-						world.rand.nextDouble() / 60, 30, 1.0f, 1.0f, 0.3f);
+						b ? world.rand.nextDouble() / 60 : -world.rand.nextDouble()/60, 30, 1.0f, 1.0f, 0.3f);
 
 			}
 			ArcaneUtils.spawnDirectionHelix(world, caster, caster.getLookVec(), 180, range, 0.5, WizardryParticleType.SPARKLE,
