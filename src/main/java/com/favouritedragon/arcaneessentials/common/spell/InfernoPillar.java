@@ -25,7 +25,7 @@ public class InfernoPillar extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		world.spawnEntity(new EntityFlamePillar(world, caster.posX, caster.posY, caster.posZ, caster, 100,
+		world.spawnEntity(new EntityFlamePillar(world, caster.posX, caster.posY, caster.posZ, caster, 60,
 				1 * modifiers.get(WizardryItems.blast_upgrade)));
 		if (!world.isRemote) {
 			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_LOOP_FIRE, 1 + world.rand.nextFloat()/10, 0.5F + world.rand.nextFloat()/10);
