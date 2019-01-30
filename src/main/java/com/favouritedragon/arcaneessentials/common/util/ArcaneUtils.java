@@ -313,7 +313,7 @@ public class ArcaneUtils {
 	}
 
 	@Nullable
-	public static RayTraceResult standardEntityRayTrace(World world, EntityLivingBase entity, Entity spellEntity, Vec3d startPos, Vec3d endPos, float borderSize, boolean transparentBlocks) {
+	public static RayTraceResult standardEntityRayTrace(World world, Entity entity, Entity spellEntity, Vec3d startPos, Vec3d endPos, float borderSize, boolean transparentBlocks) {
 		HashSet<Entity> hashset = new HashSet<>(2);
 		hashset.add(entity);
 		if (spellEntity != null) {
@@ -385,7 +385,7 @@ public class ArcaneUtils {
 	 * @param fireTime     How long to set an enemy on fire.
 	 */
 
-	public static void handlePiercingBeamCollision(World world, EntityLivingBase caster, EntityLivingBase entity, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, boolean directDamage, MagicDamage.DamageType damageType,
+	public static void handlePiercingBeamCollision(World world, EntityLivingBase caster, Entity entity, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, boolean directDamage, MagicDamage.DamageType damageType,
 												   float damage, Vec3d knockBack, boolean setFire, int fireTime, float radius) {
 		RayTraceResult result = standardEntityRayTrace(world, entity, spellEntity, startPos, endPos, borderSize, false);
 		if (result != null && result.entityHit instanceof EntityLivingBase) {

@@ -17,7 +17,7 @@ public class EntityFlamePillar extends EntityMagicConstruct {
 
 	public EntityFlamePillar(World world, double x, double y, double z, EntityLivingBase caster, int lifetime, float damageMultiplier) {
 		super(world, x, y, z, caster, lifetime, damageMultiplier);
-		setSize(3, 10);
+		setSize(2, 10);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class EntityFlamePillar extends EntityMagicConstruct {
 			world.playSound(posX, posY, posZ, WizardrySounds.SPELL_LOOP_FIRE, SoundCategory.HOSTILE, 1 + world.rand.nextFloat()/10, 0.5F + world.rand.nextFloat()/10, false);
 		}
 		assert getCaster() != null;
-		ArcaneUtils.handlePiercingBeamCollision(world, getCaster(), getCaster(), getPositionVector(), getPositionVector().add(0, 10, 0), 1.5F,
-				this, false, MagicDamage.DamageType.FIRE, 0.5F * damageMultiplier, new Vec3d(0.05, 0.3, 0.05), true, 20, 1.5F);
+	//	ArcaneUtils.handlePiercingBeamCollision(world, getCaster(), this, getPositionVector(), getPositionVector().add(0, 10, 0), 1.5F,
+	//			this, false, MagicDamage.DamageType.FIRE, 0.5F * damageMultiplier, new Vec3d(0.05, 0.3, 0.05), true, 20, 1.5F);
 	}
 }
