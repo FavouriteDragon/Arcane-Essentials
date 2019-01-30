@@ -241,6 +241,21 @@ public class ArcaneUtils {
 		}
 	}
 
+	public static void spawnSpinningHelix(World world, int maxAngle, double vortexLength, double radius, EnumParticleTypes particle, Vec3d position,
+										  Vec3d particleSpeed, Vec3d entitySpeed) {
+		for (int angle = 0; angle < maxAngle; angle++) {
+			double angle2 = world.rand.nextDouble() * Math.PI * 2;
+			double x = radius * cos(angle);
+			double y = angle / (maxAngle / vortexLength);
+			double z = radius * sin(angle);
+			double speed = world.rand.nextDouble() * 2 + 1;
+			double omega = Math.signum(speed * ((Math.PI * 2) / 20 - speed / (20 * radius)));
+			angle2 += omega;
+			world.spawnParticle(particle, x + position.x, y + position.y,
+					z + position.z,(particleSpeed.x * radius * omega * Math.cos(angle2)) + entitySpeed.x, particleSpeed.y + entitySpeed.y, (particleSpeed.z * radius * omega * Math.sin(angle2)) + entitySpeed.z);
+		}
+	}
+
 	public static void vortexEntityCollision(World world, EntityLivingBase entity, Entity spellEntity, Vec3d startPos, Vec3d endPos, float maxRadius,
 											 float damage, Vec3d knockBack, MagicDamage.DamageType damageSource, boolean directDamage) {
 		if (entity != null) {

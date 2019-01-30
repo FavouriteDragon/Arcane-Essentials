@@ -1,11 +1,15 @@
 package com.favouritedragon.arcaneessentials.common.spell;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
+import com.favouritedragon.arcaneessentials.common.entity.EntityFlamePillar;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.SpellType;
 import electroblob.wizardry.constants.Tier;
+import electroblob.wizardry.registry.WizardryItems;
+import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
+import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +25,13 @@ public class InfernoPillar extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		return false;
+		world.spawnEntity(new EntityFlamePillar(world, caster.posX, caster.posY, caster.posZ, caster, 100,
+				1 * modifiers.get(WizardryItems.blast_upgrade)));
+		if (!world.isRemote) {
+			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_LOOP_FIRE, 1 + world.rand.nextFloat()/10, 0.5F + world.rand.nextFloat()/10);
+			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_SUMMONING, 1 + world.rand.nextFloat()/10, 0.5F + world.rand.nextFloat()/10);
+		}
+		return true;
 	}
 
 	@Override
