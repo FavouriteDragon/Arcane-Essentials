@@ -1,27 +1,45 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
-import com.favouritedragon.arcaneessentials.ArcaneEssentials;
-import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
+import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
-import electroblob.wizardry.util.WizardryParticleType;
-import electroblob.wizardry.util.WizardryUtilities;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class EntityFlamePillar extends EntityMagicConstruct {
 
-	public EntityFlamePillar(World world, double x, double y, double z, EntityLivingBase caster, int lifetime, float damageMultiplier) {
+	private static final DataParameter<Float> SYNC_RADIUS = EntityDataManager.createKey(EntityFlamePillar.class, DataSerializers.FLOAT);
+
+	public EntityFlamePillar(World world, double x, double y, double z, EntityLivingBase caster, int lifetime, float damageMultiplier, float radius) {
 		super(world, x, y, z, caster, lifetime, damageMultiplier);
-		setSize(2, 10);
+		setSize(1, 1);
+		setRadius(radius);
+
+	}
+
+	public float getRadius() {
+		return dataManager.get(SYNC_RADIUS);
+	}
+
+	public void setRadius(float radius) {
+		dataManager.set(SYNC_RADIUS, radius);
 	}
 
 	@Override
 	protected void entityInit() {
+		dataManager.register(SYNC_RADIUS, 1F);
 
 	}
 
@@ -38,11 +56,28 @@ public class EntityFlamePillar extends EntityMagicConstruct {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if (!world.isRemote) {
-			world.playSound(posX, posY, posZ, WizardrySounds.SPELL_LOOP_FIRE, SoundCategory.HOSTILE, 1 + world.rand.nextFloat()/10, 0.5F + world.rand.nextFloat()/10, false);
-		}
+
+		world.playSound(posX, posY, posZ, WizardrySounds.SPELL_LOOP_FIRE, SoundCategory.HOSTILE, 1 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10, false);
 		assert getCaster() != null;
-	//	ArcaneUtils.handlePiercingBeamCollision(world, getCaster(), this, getPositionVector(), getPositionVector().add(0, 10, 0), 1.5F,
-	//			this, false, MagicDamage.DamageType.FIRE, 0.5F * damageMultiplier, new Vec3d(0.05, 0.3, 0.05), true, 20, 1.5F);
+		AxisAlignedBB hitBox = new AxisAlignedBB(this.posX, this.posY, this.posZ, this.posX, this.posY + 15, this.posZ);
+		hitBox = hitBox.grow(getRadius(), 0, getRadius());
+		List<Entity> hit = world.getEntitiesWithinAABB(Entity.class, hitBox);
+		if (!hit.isEmpty()) {
+			for (Entity e : hit) {
+				if (this.isValidTarget(e)) {
+					if (e instanceof EntityLivingBase) {
+						if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.FIRE, e)) {
+							e.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(this, getCaster()), 0.5F * damageMultiplier);
+							e.motionX += 0.025;
+							e.motionY += 0.25;
+							e.motionZ += 0.025;
+						}
+					}
+					if (e instanceof EntityMagicProjectile || e instanceof EntityThrowable || e instanceof EntityArrow) {
+						e.setVelocity(e.motionX * -1.1, e.motionY, e.motionZ * -1.1);
+					}
+				}
+			}
+		}
 	}
 }
