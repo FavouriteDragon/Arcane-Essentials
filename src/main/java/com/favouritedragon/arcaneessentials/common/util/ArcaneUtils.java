@@ -409,10 +409,7 @@ public class ArcaneUtils {
 			List<Entity> nearby = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
 			nearby.remove(hit);
 			//This is so it doesn't count the entity that was hit by the raytrace and mess up the chain
-			if (nearby.isEmpty()) {
-				handlePiercingBeamCollision(world, caster, hit, result.hitVec, endPos, borderSize, spellEntity, directDamage,
-						damageType, damage, knockBack, setFire, fireTime, radius);
-			} else {
+			if (!nearby.isEmpty()) {
 				for (Entity e : nearby) {
 					if (e != caster && e != hit) {
 						if (!MagicDamage.isEntityImmune(damageType, e)) {
@@ -431,6 +428,9 @@ public class ArcaneUtils {
 						}
 					}
 				}
+			} else {
+				handlePiercingBeamCollision(world, caster, hit, result.hitVec, endPos, borderSize, spellEntity, directDamage,
+						damageType, damage, knockBack, setFire, fireTime, radius);
 
 			}
 
