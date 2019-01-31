@@ -60,7 +60,7 @@ public class EntityFlamePillar extends EntityMagicConstruct {
 		world.playSound(posX, posY, posZ, WizardrySounds.SPELL_LOOP_FIRE, SoundCategory.HOSTILE, 1 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10, false);
 		assert getCaster() != null;
 		AxisAlignedBB hitBox = new AxisAlignedBB(this.posX, this.posY, this.posZ, this.posX, this.posY + 15, this.posZ);
-		hitBox = hitBox.grow(getRadius(), 0, getRadius());
+		hitBox = hitBox.grow(getRadius() * 1.1, 0, getRadius() * 1.1);
 		List<Entity> hit = world.getEntitiesWithinAABB(Entity.class, hitBox);
 		if (!hit.isEmpty()) {
 			for (Entity e : hit) {
@@ -69,8 +69,9 @@ public class EntityFlamePillar extends EntityMagicConstruct {
 						if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.FIRE, e)) {
 							e.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(this, getCaster()), 0.5F * damageMultiplier);
 							e.motionX += 0.025;
-							e.motionY += 0.25;
+							e.motionY += 0.1;
 							e.motionZ += 0.025;
+							e.setEntityInvulnerable(false);
 						}
 					}
 					if (e instanceof EntityMagicProjectile || e instanceof EntityThrowable || e instanceof EntityArrow) {
