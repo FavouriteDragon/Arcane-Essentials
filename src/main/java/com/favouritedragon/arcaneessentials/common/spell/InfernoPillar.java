@@ -15,6 +15,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
 public class InfernoPillar extends Spell {
@@ -36,7 +37,15 @@ public class InfernoPillar extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
-		return super.cast(world, caster, hand, ticksInUse, target, modifiers);
+		world.spawnEntity(new EntityFlamePillar(world, caster.posX, caster.posY, caster.posZ, caster, 60 + 2 * (int)modifiers.get(WizardryItems.duration_upgrade),
+				1 * modifiers.get(WizardryItems.blast_upgrade), 1.5F * modifiers.get(WizardryItems.range_upgrade)));
+		if (!world.isRemote) {
+			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_LOOP_FIRE, SoundCategory.NEUTRAL,
+					1 + world.rand.nextFloat()/10, 0.5F + world.rand.nextFloat()/10, true);
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_SUMMONING, SoundCategory.NEUTRAL,
+				1 + world.rand.nextFloat()/10, 0.5F + world.rand.nextFloat()/10, true);
+		}
+		return true;
 	}
 
 	@Override
