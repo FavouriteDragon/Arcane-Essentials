@@ -1,7 +1,7 @@
 package com.favouritedragon.arcaneessentials.common.spell;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
-import com.favouritedragon.arcaneessentials.common.EntityLightningVortex;
+import com.favouritedragon.arcaneessentials.common.entity.EntityLightningVortex;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.SpellType;
 import electroblob.wizardry.constants.Tier;

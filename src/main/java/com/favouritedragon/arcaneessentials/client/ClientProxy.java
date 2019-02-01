@@ -2,7 +2,7 @@ package com.favouritedragon.arcaneessentials.client;
 
 import com.favouritedragon.arcaneessentials.client.render.RenderFirePillar;
 import com.favouritedragon.arcaneessentials.client.render.RenderThunderBurst;
-import com.favouritedragon.arcaneessentials.common.EntityLightningVortex;
+import com.favouritedragon.arcaneessentials.common.entity.EntityLightningVortex;
 import com.favouritedragon.arcaneessentials.common.entity.EntityFlamePillar;
 import com.favouritedragon.arcaneessentials.common.entity.EntityThunderBurst;
 import com.favouritedragon.arcaneessentials.proxy.IProxy;

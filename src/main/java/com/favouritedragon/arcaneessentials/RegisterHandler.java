@@ -2,7 +2,6 @@ package com.favouritedragon.arcaneessentials;
 
 import com.favouritedragon.arcaneessentials.common.entity.EntityThunderBurst;
 import com.favouritedragon.arcaneessentials.common.spell.*;
-import electroblob.wizardry.spell.Light;
 import electroblob.wizardry.spell.Spell;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.crafting.IRecipe;

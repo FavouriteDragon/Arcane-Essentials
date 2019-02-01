@@ -1,16 +1,11 @@
 package com.favouritedragon.arcaneessentials;
 
-import com.favouritedragon.arcaneessentials.common.spell.ThunderBurst;
 import com.favouritedragon.arcaneessentials.proxy.IProxy;
-import electroblob.wizardry.spell.Spell;
-import net.minecraft.init.Blocks;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.logging.log4j.Logger;
 
 @Mod(modid = ArcaneEssentials.MODID, name = ArcaneEssentials.NAME, version = ArcaneEssentials.VERSION, dependencies="required-after:ebwizardry")

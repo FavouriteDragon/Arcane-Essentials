@@ -1,4 +1,4 @@
-package com.favouritedragon.arcaneessentials.common;
+package com.favouritedragon.arcaneessentials.common.entity;
 
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
