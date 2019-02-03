@@ -429,7 +429,7 @@ public class ArcaneUtils {
 					}
 				}
 			} else {
-				handlePiercingBeamCollision(world, caster, hit, result.hitVec, endPos, borderSize, spellEntity, directDamage,
+				handlePiercingBeamCollision(world, caster, hit, pos, endPos, borderSize, spellEntity, directDamage,
 						damageType, damage, knockBack, setFire, fireTime, radius);
 
 			}
