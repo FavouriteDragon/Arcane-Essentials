@@ -189,7 +189,7 @@ public class ArcaneUtils {
 	}
 
 	public static void spawnDirectionalHelix(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double radius, WizardryParticleType particle, double posX, double posY, double posZ,
-										   double velX, double velY, double velZ, int maxAge, float r, float g, float b) {
+											 double velX, double velY, double velZ, int maxAge, float r, float g, float b) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double x = radius * cos(angle);
 			double y = angle / (maxAngle / vortexLength);
@@ -208,7 +208,7 @@ public class ArcaneUtils {
 	}
 
 	public static void spawnSpinningDirectionalHelix(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double radius, WizardryParticleType particle, double posX, double posY, double posZ,
-										   double velX, double velY, double velZ, int maxAge, float r, float g, float b) {
+													 double velX, double velY, double velZ, int maxAge, float r, float g, float b) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double x = radius * cos(angle);
 			double y = angle / (maxAngle / vortexLength);
@@ -237,7 +237,7 @@ public class ArcaneUtils {
 			double omega = Math.signum(speed * ((Math.PI * 2) / 20 - speed / (20 * radius)));
 			angle2 += omega;
 			Wizardry.proxy.spawnParticle(particle, world, x + position.x, y + position.y,
-					z + position.z,(particleSpeed.x * radius * omega * Math.cos(angle2)) + entitySpeed.x, particleSpeed.y + entitySpeed.y, (particleSpeed.z * radius * omega * Math.sin(angle2)) + entitySpeed.z, maxAge);
+					z + position.z, (particleSpeed.x * radius * omega * Math.cos(angle2)) + entitySpeed.x, particleSpeed.y + entitySpeed.y, (particleSpeed.z * radius * omega * Math.sin(angle2)) + entitySpeed.z, maxAge);
 		}
 	}
 
@@ -252,7 +252,7 @@ public class ArcaneUtils {
 			double omega = Math.signum(speed * ((Math.PI * 2) / 20 - speed / (20 * radius)));
 			angle2 += omega;
 			world.spawnParticle(particle, x + position.x, y + position.y,
-					z + position.z,(particleSpeed.x * radius * omega * Math.cos(angle2)) + entitySpeed.x, particleSpeed.y + entitySpeed.y, (particleSpeed.z * radius * omega * Math.sin(angle2)) + entitySpeed.z);
+					z + position.z, (particleSpeed.x * radius * omega * Math.cos(angle2)) + entitySpeed.x, particleSpeed.y + entitySpeed.y, (particleSpeed.z * radius * omega * Math.sin(angle2)) + entitySpeed.z);
 		}
 	}
 
@@ -313,16 +313,16 @@ public class ArcaneUtils {
 	}
 
 	@Nullable
-	public static RayTraceResult standardEntityRayTrace(World world, Entity entity, Entity spellEntity, Vec3d startPos, Vec3d endPos, float borderSize, boolean transparentBlocks) {
-		HashSet<Entity> hashset = new HashSet<>(2);
-		hashset.add(entity);
+	public static RayTraceResult standardEntityRayTrace(World world, Entity entity, Entity spellEntity, Vec3d startPos, Vec3d endPos, float borderSize, boolean transparentBlocks, HashSet<Entity> excluded) {
+		//HashSet<Entity> hashset = new HashSet<>(2);
+		excluded.add(entity);
 		if (spellEntity != null) {
-			hashset.add(spellEntity);
+			excluded.add(spellEntity);
 		}
 		return tracePath(world, (float) startPos.x,
 				(float) startPos.y, (float) startPos.z,
 				(float) endPos.x, (float) endPos.y, (float) endPos.z,
-				borderSize, hashset, false, transparentBlocks);
+				borderSize, excluded, false, transparentBlocks);
 	}
 
 	@Nullable
@@ -371,8 +371,6 @@ public class ArcaneUtils {
 	 * @param world        The world the raytrace is in.
 	 * @param caster       The caster of the spell. This is so mobs don't attack each other when you use raytraces from mobs.
 	 *                     All damage is done by the caster.
-	 * @param entity       The entity spawning the raytrace. This is so you don't infinitely damage one entity and lag the game,
-	 *                     and so you can achieve the desire affect of "piercing/raytrace chaining".
 	 * @param startPos     Where the raytrace starts.
 	 * @param endPos       Where the raytrace ends.
 	 * @param borderSize   The width of the raytrace.
@@ -385,9 +383,10 @@ public class ArcaneUtils {
 	 * @param fireTime     How long to set an enemy on fire.
 	 */
 
-	public static void handlePiercingBeamCollision(World world, EntityLivingBase caster, Entity entity, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, boolean directDamage, MagicDamage.DamageType damageType,
+	public static void handlePiercingBeamCollision(World world, EntityLivingBase caster, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, boolean directDamage, MagicDamage.DamageType damageType,
 												   float damage, Vec3d knockBack, boolean setFire, int fireTime, float radius) {
-		RayTraceResult result = standardEntityRayTrace(world, entity, spellEntity, startPos, endPos, borderSize, false);
+		HashSet<Entity> excluded = new HashSet<>();
+		RayTraceResult result = standardEntityRayTrace(world, caster, spellEntity, startPos, endPos, borderSize, false, excluded);
 		if (result != null && result.entityHit instanceof EntityLivingBase) {
 			EntityLivingBase hit = (EntityLivingBase) result.entityHit;
 			if (!MagicDamage.isEntityImmune(damageType, hit)) {
@@ -407,11 +406,12 @@ public class ArcaneUtils {
 			Vec3d pos = result.hitVec;
 			AxisAlignedBB hitBox = new AxisAlignedBB(pos.x + radius, pos.y + radius, pos.z + radius, pos.x - radius, pos.y - radius, pos.z - radius);
 			List<Entity> nearby = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
-			nearby.remove(hit);
+			excluded.add(hit);
+			nearby.remove(excluded);
 			//This is so it doesn't count the entity that was hit by the raytrace and mess up the chain
 			if (!nearby.isEmpty()) {
 				for (Entity e : nearby) {
-					if (e != caster && e != hit) {
+					if (e != caster && e != hit && !excluded.contains(e)) {
 						if (!MagicDamage.isEntityImmune(damageType, e)) {
 							if (setFire) {
 								e.setFire(fireTime);
@@ -425,11 +425,12 @@ public class ArcaneUtils {
 							e.motionY += knockBack.y;
 							e.motionZ += knockBack.z;
 							applyPlayerKnockback(e);
+							excluded.add(e);
 						}
 					}
 				}
 			} else {
-				handlePiercingBeamCollision(world, caster, hit, result.hitVec, endPos, borderSize, spellEntity, directDamage,
+				handlePiercingBeamCollision(world, caster, pos, endPos, borderSize, spellEntity, directDamage,
 						damageType, damage, knockBack, setFire, fireTime, radius);
 
 			}

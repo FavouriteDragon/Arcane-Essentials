@@ -21,12 +21,12 @@ import net.minecraft.world.World;
 public class InfernoPillar extends Spell {
 
 	public InfernoPillar() {
-		super(Tier.ADVANCED, 80, Element.FIRE, "inferno_pillar", SpellType.DEFENCE, 200, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(Tier.ADVANCED, 60, Element.FIRE, "inferno_pillar", SpellType.DEFENCE, 180, EnumAction.BOW, false, ArcaneEssentials.MODID);
 	}
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		world.spawnEntity(new EntityFlamePillar(world, caster.posX, caster.posY, caster.posZ, caster, 60 + 2 * (int)modifiers.get(WizardryItems.duration_upgrade),
+		world.spawnEntity(new EntityFlamePillar(world, caster.posX, caster.posY, caster.posZ, caster, 80 + 2 * (int)modifiers.get(WizardryItems.duration_upgrade),
 				1 * modifiers.get(WizardryItems.blast_upgrade), 1.5F * modifiers.get(WizardryItems.range_upgrade)));
 		if (!world.isRemote) {
 			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_LOOP_FIRE, 1 + world.rand.nextFloat()/10, 0.5F + world.rand.nextFloat()/10);
