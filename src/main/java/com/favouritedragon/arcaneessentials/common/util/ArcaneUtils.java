@@ -237,7 +237,8 @@ public class ArcaneUtils {
 			double omega = Math.signum(speed * ((Math.PI * 2) / 20 - speed / (20 * radius)));
 			angle2 += omega;
 			Wizardry.proxy.spawnParticle(particle, world, x + position.x, y + position.y,
-					z + position.z, (particleSpeed.x * radius * omega * Math.cos(angle2)) + entitySpeed.x, particleSpeed.y + entitySpeed.y, (particleSpeed.z * radius * omega * Math.sin(angle2)) + entitySpeed.z, maxAge);
+					z + position.z, (particleSpeed.x * radius * omega * Math.cos(angle2)) + entitySpeed.x, particleSpeed.y + entitySpeed.y,
+					(particleSpeed.z * radius * omega * Math.sin(angle2)) + entitySpeed.z, maxAge, r, g, b);
 		}
 	}
 

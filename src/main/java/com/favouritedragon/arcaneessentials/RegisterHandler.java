@@ -62,10 +62,11 @@ public class RegisterHandler {
 	}
 
 	@SubscribeEvent
-	public static void register(RegistryEvent.Register<Spell> event){
+	public static void register(RegistryEvent.Register<Spell> event) {
 		event.getRegistry().register(new InfernoPillar());
 		event.getRegistry().register(new LightningVortex());
 		event.getRegistry().register(new OceanBurst());
+		event.getRegistry().register(new RadianceStorm());
 		event.getRegistry().register(new RadiantBeam());
 		event.getRegistry().register(new StormBlink());
 		event.getRegistry().register(new ThunderBurst());
