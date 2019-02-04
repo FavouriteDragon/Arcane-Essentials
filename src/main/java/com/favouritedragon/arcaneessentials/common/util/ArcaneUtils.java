@@ -412,7 +412,7 @@ public class ArcaneUtils {
 			//This is so it doesn't count the entity that was hit by the raytrace and mess up the chain
 			if (!nearby.isEmpty()) {
 				for (Entity e : nearby) {
-					if (e != caster && e != hit && !excluded.contains(e)) {
+					if (e != caster && e != hit && !excluded.contains(e) && e.getTeam() != caster.getTeam()) {
 						if (!MagicDamage.isEntityImmune(damageType, e)) {
 							if (setFire) {
 								e.setFire(fireTime);
@@ -427,6 +427,13 @@ public class ArcaneUtils {
 							e.motionZ += knockBack.z;
 							applyPlayerKnockback(e);
 							excluded.add(e);
+						}
+					}
+					if (e.getTeam() == caster.getTeam()) {
+						if (damageType == MagicDamage.DamageType.RADIANT) {
+							if (e instanceof EntityLivingBase) {
+								((EntityLivingBase) e).heal(damage);
+							}
 						}
 					}
 				}
