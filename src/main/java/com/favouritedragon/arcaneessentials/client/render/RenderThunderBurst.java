@@ -18,7 +18,6 @@ public class RenderThunderBurst extends Render<EntityThunderBurst> {
 	public void doRender(EntityThunderBurst entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 		for (double theta = 0; theta <= 180; theta += 1) {
-			//double particleScale = entity.ticksExisted / 5F > 1 ? entity.ticksExisted / 5F : 1;
 			double dphi = 20 / Math.sin(Math.toRadians(theta));
 
 			for (double phi = 0; phi < 360; phi += dphi) {
