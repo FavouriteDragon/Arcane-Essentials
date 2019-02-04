@@ -21,12 +21,6 @@ import java.util.List;
 
 public class EntityLightningVortex extends EntityMagicConstruct {
 
-	public EntityLightningVortex(World par1World) {
-		super(par1World);
-		this.height = 7.0f;
-		this.width = 3.0f;
-	}
-
 	public EntityLightningVortex(World world, double x, double y, double z, Vec3d velocity, EntityLivingBase caster, int lifetime,
 								 float damageMultiplier) {
 		super(world, x, y, z, caster, lifetime, damageMultiplier);

@@ -31,29 +31,17 @@ public class RadianceStorm extends Spell {
 		int fireTime = 10 + 2 * (int) modifiers.get(WizardryItems.duration_upgrade);
 
 		//TODO: Add an explosion for when the beams hit the ground
-		for(int r = 0; r < 10; r++) {
+		for (int r = 0; r < 8; r++) {
 			float radius = 4 + world.rand.nextFloat() * 6 * modifiers.get(WizardryItems.blast_upgrade);
 			double angle = world.rand.nextDouble() * Math.PI * 2;
 			double x = caster.posX + radius * Math.cos(angle);
 			double z = caster.posZ + radius * Math.sin(angle);
-			double y = WizardryUtilities.getNearestFloorLevel(world, new BlockPos(x, caster.posY, z), 6 + 2 *(int) modifiers.get(WizardryItems.range_upgrade));
+			double y = WizardryUtilities.getNearestFloorLevel(world, new BlockPos(x, caster.posY, z), 6 + 2 * (int) modifiers.get(WizardryItems.range_upgrade));
 			Vec3d startPos = new Vec3d(x, caster.getEntityBoundingBox().minY + 30, z);
 			Vec3d endPos = new Vec3d(x, y, z);
 			Vec3d direction = endPos.subtract(startPos);
 			spawnRadiantBeam(world, caster, startPos, endPos, radius, damage, direction, fireTime);
 		}
-		/*for (int i = 0; i < 6; i++) {
-			boolean pX = world.rand.nextBoolean();
-			double x = world.rand.nextInt(4) + 1;
-			boolean pZ = world.rand.nextBoolean();
-			double z = world.rand.nextInt(4) + 1;
-			x = pX ? x : -x;
-			z = pZ ? z : -z;
-			Vec3d startPos = new Vec3d(caster.posX + x, caster.getEntityBoundingBox().minY + 30, caster.posZ + z);
-			Vec3d endPos = new Vec3d(caster.posX + x, caster.getEntityBoundingBox().minY, caster.posZ + z);
-			Vec3d direction = endPos.subtract(startPos);
-			spawnRadiantBeam(world, caster, startPos, endPos, radius, damage, direction, fireTime);
-		}**/
 		return true;
 	}
 
@@ -69,7 +57,7 @@ public class RadianceStorm extends Spell {
 		}
 		if (world.isRemote) {
 			ArcaneUtils.spawnSpinningHelix(world, 480, 30, radius, WizardryParticleType.SPARKLE, endPos,
-					new Vec3d(0.025, -0.0025, 0.025), Vec3d.ZERO, 30, 1.0F, 1.0F, 0.3F);
+					new Vec3d(0.0075, -0.0025, 0.0075), Vec3d.ZERO, 30, 1.0F, 1.0F, 0.3F);
 		}
 	}
 }
