@@ -2,7 +2,6 @@ package com.favouritedragon.arcaneessentials.common.spell;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
-import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.SpellType;
 import electroblob.wizardry.constants.Tier;
@@ -49,7 +48,7 @@ public class RadianceStorm extends Spell {
 				Vec3d endPos = new Vec3d(x, y, z);
 				Vec3d direction = endPos.subtract(startPos);
 				spawnRadiantBeam(world, caster, startPos, endPos, beamRadius, damage, direction, fireTime);
-				spawnSphericalExplosion(world, caster, endPos, beamRadius * 2, damage,
+				handleSphericalExplosion(world, caster, endPos, beamRadius * 2, damage,
 						new Vec3d(2, 0.1, 2).scale(modifiers.get(WizardryItems.blast_upgrade)), fireTime);
 			}
 			return true;
@@ -73,7 +72,7 @@ public class RadianceStorm extends Spell {
 				Vec3d endPos = new Vec3d(x, y, z);
 				Vec3d direction = endPos.subtract(startPos);
 				spawnRadiantBeam(world, caster, startPos, endPos, beamRadius, damage, direction, fireTime);
-				spawnSphericalExplosion(world, caster, endPos, beamRadius * 2, damage,
+				handleSphericalExplosion(world, caster, endPos, beamRadius * 1.5F, damage,
 						new Vec3d(2, 0.1, 2).scale(modifiers.get(WizardryItems.blast_upgrade)), fireTime);
 			}
 			return true;
@@ -88,19 +87,13 @@ public class RadianceStorm extends Spell {
 		}
 		if (world.isRemote) {
 			ArcaneUtils.spawnSpinningHelix(world, 420, 30, radius, WizardryParticleType.SPARKLE, endPos,
-					new Vec3d(0.025, -0.0025, 0.025), Vec3d.ZERO, 30, 1.0F, 1.0F, 0.3F);
+					new Vec3d(0.0075, -0.0025, 0.0075), Vec3d.ZERO, 30, 1.0F, 1.0F, 0.3F);
 		}
 		world.playSound(endPos.x, endPos.y, endPos.z, WizardrySounds.SPELL_HEAL, SoundCategory.HOSTILE, 1.5F, 1F, true);
 		world.playSound(endPos.x, endPos.y, endPos.z, WizardrySounds.SPELL_SHOCKWAVE, SoundCategory.HOSTILE, 1.5F, 1F, true);
 	}
 
-	private void spawnSphericalExplosion(World world, EntityLivingBase caster, Vec3d position, float radius, float damage, Vec3d knockBackScale, int fireTime) {
-		if (world.isRemote) {
-			for (int i = 0; i < 200; i++) {
-				Wizardry.proxy.spawnParticle(WizardryParticleType.SPARKLE, world, position.x, position.y, position.z, world.rand.nextBoolean() ? radius / 20 : -radius / 20,
-						radius / 20, world.rand.nextBoolean() ? radius / 20 : -radius / 20, 30, 1.0F, 1.0F, 0.3F);
-			}
-		}
+	private void handleSphericalExplosion(World world, EntityLivingBase caster, Vec3d position, float radius, float damage, Vec3d knockBackScale, int fireTime) {
 		if (!world.isRemote) {
 			AxisAlignedBB hitBox = new AxisAlignedBB(position.x - radius, position.y - radius, position.z - radius, position.x + radius, position.y + radius, position.z + radius);
 			List<Entity> hit = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
