@@ -1,5 +1,8 @@
 package com.favouritedragon.arcaneessentials;
 
+import com.favouritedragon.arcaneessentials.common.entity.EntityFlamePillar;
+import com.favouritedragon.arcaneessentials.common.entity.EntityFlamePillarSpawner;
+import com.favouritedragon.arcaneessentials.common.entity.EntityLightningVortex;
 import com.favouritedragon.arcaneessentials.common.entity.EntityThunderBurst;
 import com.favouritedragon.arcaneessentials.common.spell.*;
 import electroblob.wizardry.spell.Spell;
@@ -46,7 +49,10 @@ public class RegisterHandler {
 
 	public static void registerEntities() {
 		int id = 0;
-		registerEntity(EntityThunderBurst.class, "Thunder Burst", id, 128, LIVING_UPDATE_INTERVAL, true);
+		registerEntity(EntityThunderBurst.class, "Thunder Burst", id++, 128, LIVING_UPDATE_INTERVAL, false);
+		registerEntity(EntityLightningVortex.class, "Lightning Vortex", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
+		registerEntity(EntityFlamePillar.class, "Flame Pillar", id++, 128, LIVING_UPDATE_INTERVAL, false);
+		registerEntity(EntityFlamePillarSpawner.class, "Flame Pillar Spawner", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
 
 
 	}
@@ -63,6 +69,7 @@ public class RegisterHandler {
 
 	@SubscribeEvent
 	public static void register(RegistryEvent.Register<Spell> event) {
+		event.getRegistry().register(new FirePledge());
 		event.getRegistry().register(new InfernoPillar());
 		event.getRegistry().register(new LightningVortex());
 		event.getRegistry().register(new OceanBurst());

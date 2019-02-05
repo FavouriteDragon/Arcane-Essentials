@@ -226,7 +226,7 @@ public class ArcaneUtils {
 		}
 	}
 
-	public static void spawnSpinningHelix(World world, int maxAngle, double vortexLength, double radius, WizardryParticleType particle, Vec3d position,
+	public static void spawnSpinningHelix(World world, float maxAngle, double vortexLength, double radius, WizardryParticleType particle, Vec3d position,
 										  Vec3d particleSpeed, Vec3d entitySpeed, int maxAge, float r, float g, float b) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double angle2 = world.rand.nextDouble() * Math.PI * 2;
@@ -242,7 +242,7 @@ public class ArcaneUtils {
 		}
 	}
 
-	public static void spawnSpinningHelix(World world, int maxAngle, double vortexLength, double radius, EnumParticleTypes particle, Vec3d position,
+	public static void spawnSpinningHelix(World world, float maxAngle, double vortexLength, double radius, EnumParticleTypes particle, Vec3d position,
 										  Vec3d particleSpeed, Vec3d entitySpeed) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double angle2 = world.rand.nextDouble() * Math.PI * 2;

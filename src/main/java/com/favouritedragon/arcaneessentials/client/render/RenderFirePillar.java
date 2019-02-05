@@ -20,9 +20,9 @@ public class RenderFirePillar extends Render<EntityFlamePillar> {
 	@Override
 	public void doRender(EntityFlamePillar entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
-		ArcaneUtils.spawnSpinningHelix(entity.world, 180, 15, entity.getRadius(), EnumParticleTypes.FLAME, entity.getPositionVector(),
+		ArcaneUtils.spawnSpinningHelix(entity.world, 120 * entity.getRadius(), 15, entity.getRadius(), EnumParticleTypes.FLAME, entity.getPositionVector(),
 				new Vec3d(0.04, 0.1, 0.04), Vec3d.ZERO);
-		ArcaneUtils.spawnSpinningHelix(entity.world, 120, 15, entity.getRadius(), WizardryParticleType.MAGIC_FIRE, entity.getPositionVector(),
+		ArcaneUtils.spawnSpinningHelix(entity.world, 80 * entity.getRadius(), 15, entity.getRadius(), WizardryParticleType.MAGIC_FIRE, entity.getPositionVector(),
 				new Vec3d(0.04, 0.1, 0.04), Vec3d.ZERO, 10, 1.0F, 1.0F, 1.0F);
 	}
 
