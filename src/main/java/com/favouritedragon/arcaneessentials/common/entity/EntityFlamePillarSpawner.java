@@ -3,8 +3,10 @@ package com.favouritedragon.arcaneessentials.common.entity;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
 public class EntityFlamePillarSpawner extends EntityMagicConstruct {
@@ -42,13 +44,14 @@ public class EntityFlamePillarSpawner extends EntityMagicConstruct {
 		if (!solid || inSolid) {
 			this.setDead();
 		}
-
 		if (this.collided) {
 			this.setDead();
 		}
 		assert getCaster() != null;
 		if (ticksExisted % 7 == 0) {
-			world.spawnEntity(new EntityFlamePillar(world, posX, posY, posZ, getCaster(), lifetime / 2, damageMultiplier, 0.75F));
+			world.spawnEntity(new EntityFlamePillar(world, posX, posY, posZ, getCaster(), lifetime / 2, damageMultiplier, 1F, 8, 90));
+			world.playSound(getCaster().posX, getCaster().posY, getCaster().posZ, SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.HOSTILE,
+					1 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10, true);
 		}
 	}
 
