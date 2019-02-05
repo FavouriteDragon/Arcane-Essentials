@@ -63,11 +63,11 @@ public class RadianceStorm extends Spell {
 			int fireTime = 10 + 2 * (int) modifiers.get(WizardryItems.duration_upgrade);
 			float beamRadius = 1 * modifiers.get(WizardryItems.blast_upgrade);
 			for (int r = 0; r < 6; r++) {
-				float radius = world.rand.nextInt((4 + 2 * (int) modifiers.get(WizardryItems.range_upgrade))) + world.rand.nextFloat() * modifiers.get(WizardryItems.blast_upgrade);
+				float radius = world.rand.nextInt((4 + 2 * (int) modifiers.get(WizardryItems.range_upgrade))) * 1.5F + world.rand.nextFloat() * modifiers.get(WizardryItems.blast_upgrade);
 				double angle = world.rand.nextDouble() * Math.PI * 2;
 				double x = caster.posX + radius * Math.cos(angle);
 				double z = caster.posZ + radius * Math.sin(angle);
-				double y = WizardryUtilities.getNearestFloorLevel(world, new BlockPos(x, caster.posY, z), 3 + 2 * (int) modifiers.get(WizardryItems.range_upgrade));
+				double y = WizardryUtilities.getNearestFloorLevel(world, new BlockPos(x, caster.posY, z), 4 + 2 * (int) modifiers.get(WizardryItems.range_upgrade));
 				Vec3d startPos = new Vec3d(x, caster.getEntityBoundingBox().minY + 30, z);
 				Vec3d endPos = new Vec3d(x, y, z);
 				Vec3d direction = endPos.subtract(startPos);
