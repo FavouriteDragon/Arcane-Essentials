@@ -88,5 +88,10 @@ public class LightningVortex extends Spell {
 			return true;
 		}
 	}
+
+	@Override
+	public boolean canBeCastByNPCs() {
+		return true;
+	}
 }
 

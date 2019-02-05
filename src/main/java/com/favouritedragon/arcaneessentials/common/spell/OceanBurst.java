@@ -84,4 +84,9 @@ public class OceanBurst extends Spell {
 
 		return false;
 	}
+
+	@Override
+	public boolean canBeCastByNPCs() {
+		return true;
+	}
 }
