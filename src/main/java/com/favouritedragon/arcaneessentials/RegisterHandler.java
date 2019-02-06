@@ -1,9 +1,6 @@
 package com.favouritedragon.arcaneessentials;
 
-import com.favouritedragon.arcaneessentials.common.entity.EntityFlamePillar;
-import com.favouritedragon.arcaneessentials.common.entity.EntityFlamePillarSpawner;
-import com.favouritedragon.arcaneessentials.common.entity.EntityLightningVortex;
-import com.favouritedragon.arcaneessentials.common.entity.EntityThunderBurst;
+import com.favouritedragon.arcaneessentials.common.entity.*;
 import com.favouritedragon.arcaneessentials.common.spell.*;
 import electroblob.wizardry.spell.Spell;
 import net.minecraft.entity.Entity;
@@ -53,6 +50,7 @@ public class RegisterHandler {
 		registerEntity(EntityLightningVortex.class, "Lightning Vortex", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
 		registerEntity(EntityFlamePillar.class, "Flame Pillar", id++, 128, LIVING_UPDATE_INTERVAL, false);
 		registerEntity(EntityFlamePillarSpawner.class, "Flame Pillar Spawner", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
+		registerEntity(EntityMagicSpawner.class, "Magic Spawner", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
 
 
 	}
