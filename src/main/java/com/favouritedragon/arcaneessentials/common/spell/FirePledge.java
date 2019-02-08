@@ -29,7 +29,7 @@ public class FirePledge extends Spell {
 		if (world.getBlockState(caster.getPosition().offset(EnumFacing.DOWN)).getBlock() != Blocks.AIR) {
 			Vec3d look = caster.getLookVec();
 			EntityFlamePillarSpawner spawner = new EntityFlamePillarSpawner(world, caster.posX + look.x * 0.25, caster.posY, caster.posZ + look.z * 0.25, caster,
-					80 + 2 * (int) modifiers.get(WizardryItems.duration_upgrade), 1F * modifiers.get(WizardryItems.blast_upgrade));
+					80 + 2 * (int) modifiers.get(WizardryItems.duration_upgrade), 5F * modifiers.get(WizardryItems.blast_upgrade));
 			look.scale(2);
 			spawner.setVelocity(look.x, 0, look.z);
 			world.spawnEntity(spawner);
