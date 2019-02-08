@@ -29,7 +29,7 @@ import java.util.List;
 
 public class RadianceStorm extends Spell {
 	public RadianceStorm() {
-		super(Tier.MASTER, 300, Element.HEALING, "radiance_storm", SpellType.ATTACK, 300, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(Tier.MASTER, 125, Element.HEALING, "radiance_storm", SpellType.ATTACK, 300, EnumAction.BOW, false, ArcaneEssentials.MODID);
 	}
 
 	@Override

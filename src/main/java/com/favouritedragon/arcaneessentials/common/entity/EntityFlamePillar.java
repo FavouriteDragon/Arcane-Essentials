@@ -109,7 +109,8 @@ public class EntityFlamePillar extends EntityMagicConstruct {
 							}
 						}
 						if (e instanceof EntityMagicProjectile || e instanceof EntityThrowable || e instanceof EntityArrow) {
-							e.setVelocity(e.motionX * -1.1, e.motionY, e.motionZ * -1.1);
+							e.motionX *= -1.1;
+							e.motionZ *= -1.1;
 						}
 					}
 				}

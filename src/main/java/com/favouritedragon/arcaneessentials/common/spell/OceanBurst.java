@@ -25,7 +25,7 @@ import net.minecraft.world.World;
 public class OceanBurst extends Spell {
 
 	public OceanBurst() {
-		super(Tier.APPRENTICE, 40, Element.EARTH, "ocean_burst", SpellType.ATTACK, 80, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(Tier.APPRENTICE, 35, Element.EARTH, "ocean_burst", SpellType.ATTACK, 80, EnumAction.BOW, false, ArcaneEssentials.MODID);
 	}
 
 	@Override

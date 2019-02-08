@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 public class LightningVortex extends Spell {
 
 	public LightningVortex() {
-		super(Tier.ADVANCED, 200, Element.LIGHTNING, "lightning_vortex", SpellType.ATTACK, 150, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(Tier.ADVANCED, 75, Element.LIGHTNING, "lightning_vortex", SpellType.ATTACK, 150, EnumAction.BOW, false, ArcaneEssentials.MODID);
 	}
 
 	@Override

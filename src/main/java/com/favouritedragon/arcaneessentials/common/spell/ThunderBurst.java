@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 public class ThunderBurst extends Spell {
 
 	public ThunderBurst() {
-		super(Tier.MASTER, 100, Element.LIGHTNING, "thunder_burst", SpellType.ATTACK, 300, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(Tier.MASTER, 80, Element.LIGHTNING, "thunder_burst", SpellType.ATTACK, 300, EnumAction.BOW, false, ArcaneEssentials.MODID);
 	}
 //TODO: Config for particles
 	@Override
