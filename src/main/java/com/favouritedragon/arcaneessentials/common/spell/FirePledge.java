@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 public class FirePledge extends Spell {
 
 	public FirePledge() {
-		super(Tier.MASTER, 90, Element.FIRE, "fire_pledge", SpellType.ATTACK, 150, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(Tier.MASTER, 70, Element.FIRE, "fire_pledge", SpellType.ATTACK, 150, EnumAction.BOW, false, ArcaneEssentials.MODID);
 	}
 
 	@Override
