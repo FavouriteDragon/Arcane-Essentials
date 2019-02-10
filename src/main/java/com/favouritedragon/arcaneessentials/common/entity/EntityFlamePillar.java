@@ -105,6 +105,7 @@ public class EntityFlamePillar extends EntityMagicConstruct {
 								e.motionX += 0.025;
 								e.motionY += 0.1;
 								e.motionZ += 0.025;
+								e.setFire(4);
 								e.setEntityInvulnerable(false);
 							}
 						}

@@ -35,8 +35,8 @@ public class EntityFlamePillarSpawner extends EntityMagicSpawner {
 	public void onUpdate() {
 		super.onUpdate();
 		assert getCaster() != null;
-		if (ticksExisted % 7 == 0) {
-			world.spawnEntity(new EntityFlamePillar(world, posX, posY, posZ, getCaster(), lifetime / 2, damageMultiplier, 1F, 8, 81));
+		if (ticksExisted % 5 == 0) {
+			world.spawnEntity(new EntityFlamePillar(world, posX, posY, posZ, getCaster(), lifetime / 2, damageMultiplier, 1F, 7, 60));
 			world.playSound(posX, posY, posZ, SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.HOSTILE,
 					1 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10, true);
 		}
