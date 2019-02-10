@@ -1,4 +1,4 @@
-package com.favouritedragon.arcaneessentials.common.spell;
+package com.favouritedragon.arcaneessentials.common.spell.fire;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityFlamePillarSpawner;

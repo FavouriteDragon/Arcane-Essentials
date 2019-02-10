@@ -1,4 +1,4 @@
-package com.favouritedragon.arcaneessentials.common.spell;
+package com.favouritedragon.arcaneessentials.common.spell.water;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;

@@ -1,7 +1,14 @@
 package com.favouritedragon.arcaneessentials;
 
 import com.favouritedragon.arcaneessentials.common.entity.*;
-import com.favouritedragon.arcaneessentials.common.spell.*;
+import com.favouritedragon.arcaneessentials.common.spell.divine.RadianceStorm;
+import com.favouritedragon.arcaneessentials.common.spell.divine.RadiantBeam;
+import com.favouritedragon.arcaneessentials.common.spell.fire.FirePledge;
+import com.favouritedragon.arcaneessentials.common.spell.fire.InfernoPillar;
+import com.favouritedragon.arcaneessentials.common.spell.storm.LightningVortex;
+import com.favouritedragon.arcaneessentials.common.spell.storm.StormBlink;
+import com.favouritedragon.arcaneessentials.common.spell.storm.ThunderBurst;
+import com.favouritedragon.arcaneessentials.common.spell.water.OceanBurst;
 import electroblob.wizardry.spell.Spell;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.crafting.IRecipe;
