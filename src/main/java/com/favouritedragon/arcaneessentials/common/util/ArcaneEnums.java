@@ -9,7 +9,12 @@ import net.minecraftforge.common.util.EnumHelper;
 import electroblob.wizardry.constants.Element;**/
 
 
+import electroblob.wizardry.util.MagicDamage;
+import net.minecraftforge.common.util.EnumHelper;
+
+
+
 public class ArcaneEnums {
-	//public static final WizardryParticleType MAGICAL_FIRE = EnumHelper.addEnum(WizardryParticleType.class, "magical_fire",
-	//		new Class[]{});
+	public static final MagicDamage.DamageType WATER = EnumHelper.addEnum(MagicDamage.DamageType.class, "WATER",
+			new Class[]{});
 }

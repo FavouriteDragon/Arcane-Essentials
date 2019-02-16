@@ -22,6 +22,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import static com.favouritedragon.arcaneessentials.common.util.ArcaneEnums.WATER;
+
 public class OceanBurst extends Spell {
 
 	public OceanBurst() {
@@ -43,7 +45,7 @@ public class OceanBurst extends Spell {
 			Vec3d endPos = ArcaneUtils.getDirectionalVortexEndPos(caster, look.scale(0.8), 240, range, 240 / 1.5, caster.posX, caster.posY + 1.2, caster.posZ);
 			startPos = startPos.add(0, 1.2, 0);
 			ArcaneUtils.vortexEntityCollision(world, caster, null, startPos, endPos, 0.74F, 4 + 2 * modifiers.get(WizardryItems.blast_upgrade),
-					look.scale(2 + 1 * modifiers.get(WizardryItems.blast_upgrade)), MagicDamage.DamageType.BLAST, true);
+					look.scale(2 + 1 * modifiers.get(WizardryItems.blast_upgrade)), WATER, true);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_GENERIC_SWIM, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_ICE, 1F,
