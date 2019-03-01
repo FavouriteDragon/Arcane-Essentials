@@ -458,16 +458,15 @@ public class ArcaneUtils {
 	 * @param ty         endY
 	 * @param tz         endZ
 	 * @param borderSize extra area to examine around line for entities
-	 * @param excluded   any excluded entities (the player, etc)
+	 * @param excluded   any excluded entities (the player, spell entities, previously hit entities, etc)
+	 * @param raytraceNonSolidBlocks This controls whether or not the raytrace goes through non-solid blocks, such as grass, fences, trapdoors, cobwebs, e.t.c.
 	 * @return a RayTraceResult of either the block hit (no entity hit), the entity hit (hit an entity), or null for
 	 * nothing hit
 	 */
 	@Nullable
 	public static RayTraceResult tracePath(World world, float x, float y, float z, float tx, float ty, float tz,
 										   float borderSize, HashSet<Entity> excluded, boolean collideablesOnly, boolean raytraceNonSolidBlocks) {
-
 		Vec3d startVec = new Vec3d(x, y, z);
-		// Vec3d lookVec = new Vec3d(tx-x, ty-y, tz-z);
 		Vec3d endVec = new Vec3d(tx, ty, tz);
 		float minX = x < tx ? x : tx;
 		float minY = y < ty ? y : ty;
