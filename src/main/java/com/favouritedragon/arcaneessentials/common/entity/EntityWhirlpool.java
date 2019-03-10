@@ -95,7 +95,7 @@ public class EntityWhirlpool extends EntityMagicConstruct {
 					}
 
 					target.motionX = dx / 4;
-					target.motionY = velY + 0.2;
+					target.motionY = velY + 0.05;
 					target.motionZ = dz / 4;
 
 					ArcaneUtils.applyPlayerKnockback(target);
