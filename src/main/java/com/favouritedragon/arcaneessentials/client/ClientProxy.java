@@ -3,10 +3,7 @@ package com.favouritedragon.arcaneessentials.client;
 import com.favouritedragon.arcaneessentials.client.render.RenderFirePillar;
 import com.favouritedragon.arcaneessentials.client.render.RenderFirePillarSpawner;
 import com.favouritedragon.arcaneessentials.client.render.RenderThunderBurst;
-import com.favouritedragon.arcaneessentials.common.entity.EntityFlamePillar;
-import com.favouritedragon.arcaneessentials.common.entity.EntityFlamePillarSpawner;
-import com.favouritedragon.arcaneessentials.common.entity.EntityLightningVortex;
-import com.favouritedragon.arcaneessentials.common.entity.EntityThunderBurst;
+import com.favouritedragon.arcaneessentials.common.entity.*;
 import com.favouritedragon.arcaneessentials.proxy.IProxy;
 import electroblob.wizardry.client.renderer.RenderBlank;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -35,6 +32,7 @@ public class ClientProxy implements IProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlamePillarSpawner.class, RenderFirePillarSpawner::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityLightningVortex.class, RenderBlank::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityThunderBurst.class, RenderThunderBurst::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityWhirlpool.class, RenderBlank::new);
 
 }
 

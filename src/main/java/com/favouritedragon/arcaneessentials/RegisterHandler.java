@@ -9,6 +9,7 @@ import com.favouritedragon.arcaneessentials.common.spell.storm.LightningVortex;
 import com.favouritedragon.arcaneessentials.common.spell.storm.StormBlink;
 import com.favouritedragon.arcaneessentials.common.spell.storm.ThunderBurst;
 import com.favouritedragon.arcaneessentials.common.spell.water.OceanBurst;
+import com.favouritedragon.arcaneessentials.common.spell.water.Whirlpool;
 import electroblob.wizardry.spell.Spell;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.crafting.IRecipe;
@@ -58,6 +59,7 @@ public class RegisterHandler {
 		registerEntity(EntityFlamePillar.class, "Flame Pillar", id++, 128, LIVING_UPDATE_INTERVAL, false);
 		registerEntity(EntityFlamePillarSpawner.class, "Flame Pillar Spawner", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
 		registerEntity(EntityMagicSpawner.class, "Magic Spawner", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
+		registerEntity(EntityWhirlpool.class, "Whirlpool", id++, 128, LIVING_UPDATE_INTERVAL, false);
 
 
 	}
@@ -82,6 +84,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new RadiantBeam());
 		event.getRegistry().register(new StormBlink());
 		event.getRegistry().register(new ThunderBurst());
+		event.getRegistry().register(new Whirlpool());
 
 	}
 }
