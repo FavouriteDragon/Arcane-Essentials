@@ -82,6 +82,46 @@ public class EntityWhirlpool extends EntityMagicConstruct {
 
 					double velY = target.motionY;
 
+					double dx = this.posX - target.posX > 0 ? 0.5 - (target.posX - this.posX) / 8
+							: -0.5 - (this.posX - target.posX) / 8;
+					double dz = this.posZ - target.posZ > 0 ? 0.5 - (target.posZ - this.posZ) / 8
+							: -0.5 - (this.posZ - target.posZ) / 8;
+					if (this.getCaster() != null) {
+						target.attackEntityFrom(
+								MagicDamage.causeIndirectMagicDamage(this, getCaster(), WATER),
+								1 * damageMultiplier);
+					} else {
+						target.attackEntityFrom(DamageSource.DROWN, 0.25F * damageMultiplier);
+					}
+
+					target.motionX = dx / 4;
+					target.motionY = velY + 0.2;
+					target.motionZ = dz / 4;
+
+					ArcaneUtils.applyPlayerKnockback(target);
+
+				}
+			}
+			ArcaneUtils.spawnSpinningVortex(world, 180, 2, 0.25, 60, WizardryParticleType.MAGIC_BUBBLE,
+					new Vec3d(posX, posY, posZ), new Vec3d(0.15, 0.05, 0.15), Vec3d.ZERO, 2, 0, 0, 0);
+
+		}
+
+
+	}
+
+	@Override
+	public void despawn() {
+		if (!world.isRemote) {
+			List<EntityLivingBase> targets = WizardryUtilities.getEntitiesWithinRadius(3.0d, this.posX, this.posY,
+					this.posZ, this.world);
+
+			for (EntityLivingBase target : targets) {
+
+				if (this.isValidTarget(target)) {
+
+					double velY = target.motionY;
+
 					double dx = this.posX - target.posX > 0 ? 0.5 - (this.posX - target.posX) / 8
 							: -0.5 - (this.posX - target.posX) / 8;
 					double dz = this.posZ - target.posZ > 0 ? 0.5 - (this.posZ - target.posZ) / 8
@@ -93,32 +133,16 @@ public class EntityWhirlpool extends EntityMagicConstruct {
 					} else {
 						target.attackEntityFrom(DamageSource.DROWN, 0.25F * damageMultiplier);
 					}
-					if (this.ticksExisted < lifetime - 1) {
-
-						target.motionX = -dx / 2;
-						target.motionY = -velY + 0.2;
-						target.motionZ = -dz / 2;
-					}
-					else {
-						target.motionX = dx * 2;
-						target.motionY = velY + 0.2;
-						target.motionZ = dz * 2;
-					}
+					target.motionX = dx * 2;
+					target.motionY = velY + 0.2;
+					target.motionZ = dz * 2;
 					ArcaneUtils.applyPlayerKnockback(target);
-
+					ArcaneUtils.spawnSpinningVortex(world, 180, 5, 0.25, 60, WizardryParticleType.MAGIC_BUBBLE,
+							new Vec3d(posX, posY, posZ), new Vec3d(0.4, 0.2, 0.4), Vec3d.ZERO, 20, 0, 0, 0);
 				}
-			}
-			if (ticksExisted < ticksExisted - 1) {
-				ArcaneUtils.spawnSpinningVortex(world, 180, 2, 0.25, 60, WizardryParticleType.MAGIC_BUBBLE,
-						new Vec3d(posX, posY, posZ), new Vec3d(0.15, 0.05, 0.15), Vec3d.ZERO, 2, 0, 0, 0);
-			}
-			else {
-				ArcaneUtils.spawnSpinningVortex(world, 180, 5, 0.25, 60, WizardryParticleType.MAGIC_BUBBLE,
-						new Vec3d(posX, posY, posZ), new Vec3d(0.4, 0.2, 0.4), Vec3d.ZERO, 20, 0, 0, 0);
+
 			}
 		}
-
-
+		this.setDead();
 	}
-	
 }
