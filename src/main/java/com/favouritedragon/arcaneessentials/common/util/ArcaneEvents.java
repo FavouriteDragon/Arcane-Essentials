@@ -10,7 +10,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import static com.favouritedragon.arcaneessentials.common.util.DamageSources.WATER;
+import static com.favouritedragon.arcaneessentials.common.util.DamageSources.SPLASH;
 
 @Mod.EventBusSubscriber(modid = ArcaneEssentials.MODID)
 public class ArcaneEvents {
@@ -18,7 +18,7 @@ public class ArcaneEvents {
 	@SubscribeEvent
 	public static void onHurtEvent(LivingHurtEvent event) {
 		if (event.getSource() instanceof IElementalDamage) {
-			if (((IElementalDamage) event.getSource()).getType() == WATER) {
+			if (((IElementalDamage) event.getSource()).getType() == SPLASH) {
 				if (event.getEntity() instanceof EntityEnderman) {
 					event.setAmount(event.getAmount() * 1.5F);
 				}

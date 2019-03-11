@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-import static com.favouritedragon.arcaneessentials.common.util.DamageSources.WATER;
+import static com.favouritedragon.arcaneessentials.common.util.DamageSources.SPLASH;
 
 public class EntityWhirlpool extends EntityMagicConstruct {
 
@@ -88,7 +88,7 @@ public class EntityWhirlpool extends EntityMagicConstruct {
 							: -0.5 - (this.posZ - target.posZ) / 8;
 					if (this.getCaster() != null) {
 						target.attackEntityFrom(
-								MagicDamage.causeIndirectMagicDamage(this, getCaster(), WATER),
+								MagicDamage.causeIndirectMagicDamage(this, getCaster(), SPLASH),
 								1 * damageMultiplier);
 					} else {
 						target.attackEntityFrom(DamageSource.DROWN, 0.25F * damageMultiplier);
@@ -128,7 +128,7 @@ public class EntityWhirlpool extends EntityMagicConstruct {
 							: -0.5 - (this.posZ - target.posZ) / 8;
 					if (this.getCaster() != null) {
 						target.attackEntityFrom(
-								MagicDamage.causeIndirectMagicDamage(this, getCaster(), WATER),
+								MagicDamage.causeIndirectMagicDamage(this, getCaster(), SPLASH),
 								1 * damageMultiplier);
 					} else {
 						target.attackEntityFrom(DamageSource.DROWN, 1F * damageMultiplier);

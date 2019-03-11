@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class DamageSources extends MagicDamage implements IElementalDamage {
 	//TODO: Implement a new damage source
 
-	public static final MagicDamage.DamageType WATER = EnumHelper.addEnum(MagicDamage.DamageType.class, "WATER",
+	public static final MagicDamage.DamageType SPLASH = EnumHelper.addEnum(MagicDamage.DamageType.class, "splash",
 			new Class[]{});
 
 	public DamageSources(String name, Entity caster, DamageType type, boolean isRetaliatory) {

@@ -2,7 +2,6 @@ package com.favouritedragon.arcaneessentials.common.spell.water;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
-import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.SpellType;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.registry.WizardryItems;
@@ -22,12 +21,13 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import static com.favouritedragon.arcaneessentials.common.util.DamageSources.WATER;
+import static com.favouritedragon.arcaneessentials.common.util.ArcaneEnums.WATER;
+import static com.favouritedragon.arcaneessentials.common.util.DamageSources.SPLASH;
 
 public class OceanBurst extends Spell {
 
 	public OceanBurst() {
-		super(Tier.APPRENTICE, 35, Element.EARTH, "ocean_burst", SpellType.ATTACK, 80, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(Tier.APPRENTICE, 35, WATER, "ocean_burst", SpellType.ATTACK, 80, EnumAction.BOW, false, ArcaneEssentials.MODID);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class OceanBurst extends Spell {
 			Vec3d endPos = ArcaneUtils.getDirectionalVortexEndPos(caster, look.scale(0.8), 240, range, 240 / 1.5, caster.posX, caster.posY + 1.2, caster.posZ);
 			startPos = startPos.add(0, 1.2, 0);
 			ArcaneUtils.vortexEntityCollision(world, caster, null, startPos, endPos, 0.74F, 4 + 2 * modifiers.get(WizardryItems.blast_upgrade),
-					look.scale(2 + 1 * modifiers.get(WizardryItems.blast_upgrade)), WATER, true);
+					look.scale(2 + 1 * modifiers.get(WizardryItems.blast_upgrade)), SPLASH, true);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_GENERIC_SWIM, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_ICE, 1F,
@@ -65,8 +65,8 @@ public class OceanBurst extends Spell {
 		Vec3d look = caster.getLookVec();
 		if (world.isRemote) {
 			//Spawn particles
-			ArcaneUtils.spawnSpinningDirectionalVortex(world, caster, look.scale(0.8), 240, range, 0.05,240 / 1.5, WizardryParticleType.MAGIC_BUBBLE, new Vec3d( caster.posX, caster.posY + 1.2,
-					caster.posZ), new Vec3d(1.5, 1, 1.5), Vec3d.ZERO,0, 0, 0, 0);
+			ArcaneUtils.spawnSpinningDirectionalVortex(world, caster, look.scale(0.8), 240, range, 0.05, 240 / 1.5, WizardryParticleType.MAGIC_BUBBLE, new Vec3d(caster.posX, caster.posY + 1.2,
+					caster.posZ), new Vec3d(1.5, 1, 1.5), Vec3d.ZERO, 0, 0, 0, 0);
 		}
 		if (!world.isRemote) {
 			Vec3d startPos = look.scale(0.8).add(caster.getPositionVector());

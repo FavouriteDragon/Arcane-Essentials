@@ -34,7 +34,7 @@ public class ClientProxy implements IProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityThunderBurst.class, RenderThunderBurst::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityWhirlpool.class, RenderBlank::new);
 
-}
+	}
 
 
 }
