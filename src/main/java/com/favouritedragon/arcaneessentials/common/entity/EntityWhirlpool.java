@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-import static com.favouritedragon.arcaneessentials.common.util.ArcaneEnums.WATER;
+import static com.favouritedragon.arcaneessentials.common.util.DamageSources.WATER;
 
 public class EntityWhirlpool extends EntityMagicConstruct {
 

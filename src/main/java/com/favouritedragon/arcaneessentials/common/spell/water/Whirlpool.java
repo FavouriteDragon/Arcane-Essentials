@@ -1,7 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.spell.water;
 
 import com.favouritedragon.arcaneessentials.common.entity.EntityWhirlpool;
-import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.SpellType;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.registry.WizardryItems;
@@ -19,10 +18,12 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import static com.favouritedragon.arcaneessentials.common.util.ArcaneEnums.WATER;
+
 public class Whirlpool extends Spell {
 
 	public Whirlpool() {
-		super(Tier.ADVANCED, 55, Element.EARTH, "whirlpool", SpellType.DEFENCE, 100, EnumAction.BOW, false);
+		super(Tier.ADVANCED, 55, WATER, "whirlpool", SpellType.DEFENCE, 100, EnumAction.BOW, false);
 	}
 
 	@Override

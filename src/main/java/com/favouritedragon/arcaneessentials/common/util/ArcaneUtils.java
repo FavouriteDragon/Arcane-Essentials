@@ -4,6 +4,7 @@ import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.WizardryParticleType;
 import electroblob.wizardry.util.WizardryUtilities;
+import javafx.scene.shape.Arc;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -111,11 +112,13 @@ public class ArcaneUtils {
 	 * @param particle      The wizardry particle type. I had to create two methods- for for normal particles, one for wizardry ones.
 	 * @param position      The starting/reference position of the vortex. Used along with the direction position to determine the actual starting position.
 	 * @param particleSpeed How fast the particles are spinning. You don't need to include complex maths here- that's all handled by this method.
+	 * @param entitySpeed	The speed of the entity that is rendering these particles. If the player/entity spawns a tornado, this is the speed of the tornado. If there's no entity,
+	 *                      do Vec3d.ZERO.
 	 * @param maxAge        The maximum age of the particle. Wizardry particles already have a predetermined age, this just adds onto it.
 	 * @param r             The amount of red in the particle. G and B are self-explanatory (green and blue).
 	 */
 	public static void spawnSpinningDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double minRadius, double radiusScale, WizardryParticleType particle, Vec3d position,
-													  Vec3d particleSpeed, int maxAge, float r, float g, float b) {
+													  Vec3d particleSpeed, Vec3d entitySpeed, int maxAge, float r, float g, float b) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double angle2 = world.rand.nextDouble() * Math.PI * 2;
 			double radius = minRadius + (angle / radiusScale);
@@ -127,10 +130,13 @@ public class ArcaneUtils {
 			angle2 += omega;
 			Vec3d pos = new Vec3d(x, y, z);
 			if (entity != null && direction != null) {
+				Vec3d pVel = new Vec3d(particleSpeed.x * radius * omega * Math.cos(angle2), particleSpeed.y, particleSpeed.z * radius * omega * Math.sin(angle2));
+				pVel = ArcaneUtils.rotateAroundAxisX(pVel, entity.rotationPitch - 90);
+				pVel = ArcaneUtils.rotateAroundAxisY(pVel, entity.rotationYaw);
 				pos = ArcaneUtils.rotateAroundAxisX(pos, entity.rotationPitch + 90);
 				pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
 				Wizardry.proxy.spawnParticle(particle, world, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
-						pos.z + position.z + direction.z, particleSpeed.x * radius * omega * Math.cos(angle2), particleSpeed.y, particleSpeed.z * radius * omega * Math.sin(angle2), maxAge, r, g, b);
+						pos.z + position.z + direction.z, pVel.x + entitySpeed.x, pVel.y + entitySpeed.y, pVel.z + entitySpeed.z, maxAge, r, g, b);
 			}
 		}
 	}
@@ -168,6 +174,7 @@ public class ArcaneUtils {
 
 		}
 	}
+
 
 	public static void spawnDirectionalHelix(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double radius, EnumParticleTypes particle, double posX, double posY, double posZ,
 											 double velX, double velY, double velZ) {

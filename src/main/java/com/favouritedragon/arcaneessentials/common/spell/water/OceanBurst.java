@@ -22,7 +22,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import static com.favouritedragon.arcaneessentials.common.util.ArcaneEnums.WATER;
+import static com.favouritedragon.arcaneessentials.common.util.DamageSources.WATER;
 
 public class OceanBurst extends Spell {
 
@@ -66,7 +66,7 @@ public class OceanBurst extends Spell {
 		if (world.isRemote) {
 			//Spawn particles
 			ArcaneUtils.spawnSpinningDirectionalVortex(world, caster, look.scale(0.8), 240, range, 0.05,240 / 1.5, WizardryParticleType.MAGIC_BUBBLE, new Vec3d( caster.posX, caster.posY + 1.2,
-					caster.posZ), new Vec3d(1.5, 1, 1.5), 0, 0, 0, 0);
+					caster.posZ), new Vec3d(1.5, 1, 1.5), Vec3d.ZERO,0, 0, 0, 0);
 		}
 		if (!world.isRemote) {
 			Vec3d startPos = look.scale(0.8).add(caster.getPositionVector());

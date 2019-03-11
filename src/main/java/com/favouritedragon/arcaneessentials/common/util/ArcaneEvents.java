@@ -10,7 +10,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import static com.favouritedragon.arcaneessentials.common.util.ArcaneEnums.WATER;
+import static com.favouritedragon.arcaneessentials.common.util.DamageSources.WATER;
 
 @Mod.EventBusSubscriber(modid = ArcaneEssentials.MODID)
 public class ArcaneEvents {
