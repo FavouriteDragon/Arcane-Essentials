@@ -111,7 +111,7 @@ public class EntityWhirlpool extends EntityMagicConstruct {
 	}
 
 	@Override
-	public void despawn() {
+	public void setDead() {
 		if (!world.isRemote) {
 			List<EntityLivingBase> targets = WizardryUtilities.getEntitiesWithinRadius(3.0d, this.posX, this.posY,
 					this.posZ, this.world);
@@ -131,7 +131,7 @@ public class EntityWhirlpool extends EntityMagicConstruct {
 								MagicDamage.causeIndirectMagicDamage(this, getCaster(), WATER),
 								1 * damageMultiplier);
 					} else {
-						target.attackEntityFrom(DamageSource.DROWN, 0.25F * damageMultiplier);
+						target.attackEntityFrom(DamageSource.DROWN, 1F * damageMultiplier);
 					}
 					target.motionX = dx * 2;
 					target.motionY = velY + 0.2;
@@ -143,6 +143,7 @@ public class EntityWhirlpool extends EntityMagicConstruct {
 
 			}
 		}
-		this.setDead();
+		this.isDead = true;
 	}
+
 }

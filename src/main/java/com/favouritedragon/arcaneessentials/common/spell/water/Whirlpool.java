@@ -33,7 +33,7 @@ public class Whirlpool extends Spell {
 		if (result != null) {
 			Vec3d pos = result.hitVec;
 			world.spawnEntity(new EntityWhirlpool(world, pos.x, pos.y, pos.z,
-					caster, 100 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage, 3, 2));
+					caster, 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage, 3, 3));
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.BLOCK_WATER_AMBIENT, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_PLAYER_SPLASH, 1F,
@@ -44,7 +44,7 @@ public class Whirlpool extends Spell {
 		} else {
 			Vec3d pos = caster.getPositionVector();
 			world.spawnEntity(new EntityWhirlpool(world, pos.x, pos.y, pos.z,
-					caster, 100 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage, 3, 2));
+					caster, 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage, 3, 3));
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.BLOCK_WATER_AMBIENT, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_PLAYER_SPLASH, 1F,
@@ -63,7 +63,7 @@ public class Whirlpool extends Spell {
 		if (result != null) {
 			Vec3d pos = result.hitVec;
 			world.spawnEntity(new EntityWhirlpool(world, pos.x, pos.y, pos.z,
-					caster, 100 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage, 3, 2));
+					caster, 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage, 3, 3));
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.BLOCK_WATER_AMBIENT, SoundCategory.HOSTILE, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.HOSTILE, 1F,
@@ -74,7 +74,7 @@ public class Whirlpool extends Spell {
 		} else {
 			Vec3d pos = caster.getPositionVector();
 			world.spawnEntity(new EntityWhirlpool(world, pos.x, pos.y, pos.z,
-					caster, 100 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage, 3, 2));
+					caster, 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage, 3, 3));
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.BLOCK_WATER_AMBIENT, SoundCategory.HOSTILE, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.HOSTILE, 1F,
