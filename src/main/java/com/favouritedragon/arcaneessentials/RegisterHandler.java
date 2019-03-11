@@ -1,6 +1,7 @@
 package com.favouritedragon.arcaneessentials;
 
 import com.favouritedragon.arcaneessentials.common.entity.*;
+import com.favouritedragon.arcaneessentials.common.spell.air.CycloneBolt;
 import com.favouritedragon.arcaneessentials.common.spell.divine.RadianceStorm;
 import com.favouritedragon.arcaneessentials.common.spell.divine.RadiantBeam;
 import com.favouritedragon.arcaneessentials.common.spell.fire.FirePledge;
@@ -60,6 +61,8 @@ public class RegisterHandler {
 		registerEntity(EntityFlamePillarSpawner.class, "Flame Pillar Spawner", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
 		registerEntity(EntityMagicSpawner.class, "Magic Spawner", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
 		registerEntity(EntityWhirlpool.class, "Whirlpool", id++, 128, LIVING_UPDATE_INTERVAL, false);
+		registerEntity(EntityMagicBolt.class, "Magic Bolt", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
+		registerEntity(EntityCycloneBolt.class, "Cyclone Bolt", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
 
 
 	}
@@ -76,6 +79,7 @@ public class RegisterHandler {
 
 	@SubscribeEvent
 	public static void register(RegistryEvent.Register<Spell> event) {
+		event.getRegistry().register(new CycloneBolt());
 		event.getRegistry().register(new FirePledge());
 		event.getRegistry().register(new InfernoPillar());
 		event.getRegistry().register(new LightningVortex());
