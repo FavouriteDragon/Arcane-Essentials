@@ -25,13 +25,13 @@ import static com.favouritedragon.arcaneessentials.common.util.ArcaneEnums.WATER
 public class Whirlpool extends Spell {
 
 	public Whirlpool() {
-		super(Tier.ADVANCED, 55, Element.EARTH, "whirlpool", SpellType.DEFENCE, 100, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(Tier.APPRENTICE, 35, Element.EARTH, "whirlpool", SpellType.DEFENCE, 100, EnumAction.BOW, false, ArcaneEssentials.MODID);
 	}
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		double range = 3 + 1 * modifiers.get(WizardryItems.range_upgrade);
-		float damage = 3 + 1 * modifiers.get(WizardryItems.blast_upgrade);
+		float damage = 0.5F + modifiers.get(WizardryItems.blast_upgrade);
 		RayTraceResult result = WizardryUtilities.rayTrace(range, world, caster, true);
 		if (result != null) {
 			Vec3d pos = result.hitVec;

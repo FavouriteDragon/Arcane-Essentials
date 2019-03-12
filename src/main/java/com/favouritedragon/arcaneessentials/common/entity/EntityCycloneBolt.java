@@ -64,5 +64,8 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 		if (this.motionX == 0 && motionY == 0 && motionZ == 0) {
 			setDead();
 		}
+		if (this.ticksExisted >= 150) {
+			setDead();
+		}
 	}
 }
