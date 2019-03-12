@@ -25,6 +25,7 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 	public EntityCycloneBolt(World world, EntityLivingBase caster, float speed, float damageMultiplier, int knockBackStrength) {
 		super(world, caster, speed, damageMultiplier);
 		this.setKnockbackStrength(knockBackStrength);
+		setSize(1, 1);
 	}
 
 	@Override
