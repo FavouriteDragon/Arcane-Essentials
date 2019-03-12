@@ -2,6 +2,7 @@ package com.favouritedragon.arcaneessentials.common.spell.water;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
+import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.SpellType;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.registry.WizardryItems;
@@ -27,7 +28,7 @@ import static com.favouritedragon.arcaneessentials.common.util.DamageSources.SPL
 public class OceanBurst extends Spell {
 
 	public OceanBurst() {
-		super(Tier.APPRENTICE, 35, WATER, "ocean_burst", SpellType.ATTACK, 80, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(Tier.APPRENTICE, 35, Element.EARTH, "ocean_burst", SpellType.ATTACK, 80, EnumAction.BOW, false, ArcaneEssentials.MODID);
 	}
 
 	@Override

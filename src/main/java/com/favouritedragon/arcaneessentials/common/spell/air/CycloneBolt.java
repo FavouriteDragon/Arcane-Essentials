@@ -2,6 +2,7 @@ package com.favouritedragon.arcaneessentials.common.spell.air;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityCycloneBolt;
+import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.SpellType;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.registry.WizardryItems;
@@ -19,7 +20,7 @@ import static com.favouritedragon.arcaneessentials.common.util.ArcaneEnums.AIR;
 public class CycloneBolt extends Spell {
 
 	public CycloneBolt() {
-		super(Tier.APPRENTICE, 10, AIR, "cyclone_bolt", SpellType.ATTACK, 20, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(Tier.APPRENTICE, 10, Element.EARTH, "cyclone_bolt", SpellType.ATTACK, 20, EnumAction.BOW, false, ArcaneEssentials.MODID);
 	}
 
 	@Override
