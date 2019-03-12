@@ -145,6 +145,50 @@ public class ArcaneUtils {
 	 * Spawns a directional vortex that has rotating particles.
 	 *
 	 * @param world         World the vortex spawns in.
+	 * @param entity        Entity that's spawning the vortex.
+	 * @param direction     The direction that the vortex is spawning in. Although it's just used for proper positioning, use entity.getLookVec()
+	 *                      or some other directional Vec3d.
+	 * @param maxAngle      The amount of particles/the maximum angle that the circle ticks to. 240 would mean there are 240 particles spiraling away.
+	 * @param vortexLength  How long the vortex is. This is initially used at the height, before rotating the vortex.
+	 * @param radiusScale   The maximum radius and how much the radius increases by. Always use your value for the maxAngle here-
+	 *                      otherwise you can get some funky effects. Ex: maxAngle/1.5 would give you a max radius of 1.5 blocks.
+	 *                      Note: It might only be a diamater of 1.5 blocks- if so, uhhh... My bad.
+	 * @param particle      The wizardry particle type. I had to create two methods- for for normal particles, one for wizardry ones.
+	 * @param position      The starting/reference position of the vortex. Used along with the direction position to determine the actual starting position.
+	 * @param particleSpeed How fast the particles are spinning. You don't need to include complex maths here- that's all handled by this method.
+	 * @param entitySpeed	The speed of the entity that is rendering these particles. If the player/entity spawns a tornado, this is the speed of the tornado. If there's no entity,
+	 *                      do Vec3d.ZERO.
+	 * @param maxAge        The maximum age of the particle. Wizardry particles already have a predetermined age, this just adds onto it.
+	 * @param r             The amount of red in the particle. G and B are self-explanatory (green and blue).
+	 */
+	public static void spawnSpinningDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double minRadius, double radiusScale, EnumParticleTypes particle, Vec3d position,
+													  Vec3d particleSpeed, Vec3d entitySpeed) {
+		for (int angle = 0; angle < maxAngle; angle++) {
+			double angle2 = world.rand.nextDouble() * Math.PI * 2;
+			double radius = minRadius + (angle / radiusScale);
+			double x = radius * cos(angle);
+			double y = angle / (maxAngle / vortexLength);
+			double z = radius * sin(angle);
+			double speed = world.rand.nextDouble() * 2 + 1;
+			double omega = Math.signum(speed * ((Math.PI * 2) / 20 - speed / (20 * radius)));
+			angle2 += omega;
+			Vec3d pos = new Vec3d(x, y, z);
+			if (entity != null && direction != null) {
+				Vec3d pVel = new Vec3d(particleSpeed.x * radius * omega * Math.cos(angle2), particleSpeed.y, particleSpeed.z * radius * omega * Math.sin(angle2));
+				pVel = ArcaneUtils.rotateAroundAxisX(pVel, entity.rotationPitch - 90);
+				pVel = ArcaneUtils.rotateAroundAxisY(pVel, entity.rotationYaw);
+				pos = ArcaneUtils.rotateAroundAxisX(pos, entity.rotationPitch + 90);
+				pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
+				world.spawnParticle(particle, true, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
+						pos.z + position.z + direction.z, pVel.x + entitySpeed.x, pVel.y + entitySpeed.y, pVel.z + entitySpeed.z);
+			}
+		}
+	}
+
+	/**
+	 * Spawns a directional vortex that has rotating particles.
+	 *
+	 * @param world         World the vortex spawns in.
 	 * @param maxAngle      The amount of particles/the maximum angle that the circle ticks to. 240 would mean there are 240 particles spiraling away.
 	 * @param vortexHeight  How tall the vortex is.
 	 * @param radiusScale   The maximum radius and how much the radius increases by. Always use your value for the maxAngle here-

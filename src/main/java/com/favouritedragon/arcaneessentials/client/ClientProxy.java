@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.client;
 
+import com.favouritedragon.arcaneessentials.client.render.RenderCycloneBolt;
 import com.favouritedragon.arcaneessentials.client.render.RenderFirePillar;
 import com.favouritedragon.arcaneessentials.client.render.RenderFirePillarSpawner;
 import com.favouritedragon.arcaneessentials.client.render.RenderThunderBurst;
@@ -28,6 +29,7 @@ public class ClientProxy implements IProxy {
 
 	@Override
 	public void registerRender() {
+		RenderingRegistry.registerEntityRenderingHandler(EntityCycloneBolt.class, RenderCycloneBolt::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlamePillar.class, RenderFirePillar::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlamePillarSpawner.class, RenderFirePillarSpawner::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityLightningVortex.class, RenderBlank::new);

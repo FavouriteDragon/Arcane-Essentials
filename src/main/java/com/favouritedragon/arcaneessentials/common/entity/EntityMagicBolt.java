@@ -131,7 +131,7 @@ public abstract class EntityMagicBolt extends Entity implements IProjectile, IEn
 		this.motionZ = (double)(MathHelper.cos(this.rotationYaw / 180.0F * (float)Math.PI)
 				* MathHelper.cos(this.rotationPitch / 180.0F * (float)Math.PI));
 		this.motionY = (double)(-MathHelper.sin(this.rotationPitch / 180.0F * (float)Math.PI));
-		this.shoot(this.motionX, this.motionY, this.motionZ, speed * 1.5F, 1.0F);
+		this.shoot(this.motionX, this.motionY, this.motionZ, speed * 1.5F, 0);
 	}
 
 	/** Subclasses must override this to set their own base damage. */
