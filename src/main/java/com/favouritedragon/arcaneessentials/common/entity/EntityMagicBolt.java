@@ -361,9 +361,9 @@ public abstract class EntityMagicBolt extends Entity implements IProjectile, IEn
 
 								if(f4 > 0.0F){
 									raytraceresult.entityHit.addVelocity(
-											this.motionX * (double)this.knockbackStrength * 0.6000000238418579D
+											this.motionX / 2 * (double)this.knockbackStrength * 0.6000000238418579D
 													/ (double)f4,
-											0.1D, this.motionZ * (double)this.knockbackStrength * 0.6000000238418579D
+											0.1D, this.motionZ / 2 * (double)this.knockbackStrength * 0.6000000238418579D
 													/ (double)f4);
 								}
 							}

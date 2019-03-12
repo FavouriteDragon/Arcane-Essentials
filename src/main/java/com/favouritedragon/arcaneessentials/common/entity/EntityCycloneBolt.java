@@ -3,8 +3,6 @@ package com.favouritedragon.arcaneessentials.common.entity;
 import electroblob.wizardry.util.MagicDamage;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 
 import static com.favouritedragon.arcaneessentials.common.util.DamageSources.PRESSURE;
@@ -56,19 +54,14 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 
 	@Override
 	public void onBlockHit() {
-		// Adds a particle effect when the cyclone bolt hits a block.
-		if (this.world.isRemote) {
-			for (int j = 0; j < 10; j++) {
-				double x = this.posX - 0.25d + (rand.nextDouble() / 2);
-				double y = this.posY - 0.25d + (rand.nextDouble() / 2);
-				double z = this.posZ - 0.25d + (rand.nextDouble() / 2);
-				world.spawnParticle(EnumParticleTypes.CLOUD, true, posX, posY, posZ, x * 4, y * 4, z * 4);
-			}
-		}
-		// Parameters for sound: sound event name, volume, pitch.
-		this.playSound(SoundEvents.ENTITY_FIREWORK_BLAST, 1.5F, rand.nextFloat() * 0.4F + 1.2F);
 		setDead();
-
 	}
 
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+		if (this.motionX == 0 && motionY == 0 && motionZ == 0) {
+			setDead();
+		}
+	}
 }

@@ -19,8 +19,8 @@ public class RenderCycloneBolt extends Render<EntityCycloneBolt> {
 	@Override
 	public void doRender(EntityCycloneBolt entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
-		ArcaneUtils.spawnSpinningDirectionalVortex(entity.world, entity.getShootingEntity(), Vec3d.ZERO, 36, 1, 0.025, 72,
-				EnumParticleTypes.CLOUD, entity.getPositionVector(), new Vec3d(0.1, 0.05, 0.1), new Vec3d(entity.motionX, entity.motionY, entity.motionZ));
+		ArcaneUtils.spawnSpinningDirectionalVortex(entity.world, entity.getShootingEntity(), Vec3d.ZERO, 24, 1, 0, 72,
+				EnumParticleTypes.EXPLOSION_NORMAL, entity.getPositionVector(), new Vec3d(0.4, 0.1, 0.4), new Vec3d(entity.motionX, entity.motionY, entity.motionZ));
 	}
 
 	@Nullable
