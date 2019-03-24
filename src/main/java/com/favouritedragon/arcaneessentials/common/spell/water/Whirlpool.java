@@ -25,7 +25,7 @@ import static com.favouritedragon.arcaneessentials.common.util.ArcaneEnums.WATER
 public class Whirlpool extends Spell {
 
 	public Whirlpool() {
-		super(Tier.APPRENTICE, 35, Element.EARTH, "whirlpool", SpellType.DEFENCE, 100, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(Tier.ADVANCED, 40, Element.EARTH, "whirlpool", SpellType.DEFENCE, 100, EnumAction.BOW, false, ArcaneEssentials.MODID);
 	}
 
 	@Override
