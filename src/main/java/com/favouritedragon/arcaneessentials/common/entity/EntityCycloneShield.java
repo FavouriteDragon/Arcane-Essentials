@@ -35,7 +35,7 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 			double x = shield.posX;
 			double y = shield.posY + shield.getCaster().getEyeHeight();
 			double z = shield.posZ;
-			List<EntityLivingBase> targets = WizardryUtilities.getEntitiesWithinRadius(shield.getRadius(), x, y,
+			List<EntityLivingBase> targets = WizardryUtilities.getEntitiesWithinRadius(shield.getRadius() * 1.25F, x, y,
 					z, shield.world);
 			for (EntityLivingBase target : targets) {
 				if (shield.isValidTarget(target)) {
@@ -97,11 +97,15 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 					z, world);
 			for (EntityLivingBase target : targets) {
 				if (this.isValidTarget(target)) {
-					int i = world.rand.nextBoolean() ? 1 : -1;
-					double multiplier = (getRadius() - target.getDistance(x, y, z)) * 0.005 * i;
-					target.addVelocity((target.posX - x) * multiplier,
-							(target.posY - (y)) * multiplier, (target.posZ - z) * multiplier);
-					// Player motion is handled on that player's client so needs packets
+					boolean b = world.rand.nextBoolean();
+					double multiplier = (getRadius() - target.getDistance(x, y, z)) * 0.005;
+					if (b) {
+						target.addVelocity((target.posX - x) * multiplier,
+								(target.posY - (y)) * multiplier, (target.posZ - z) * multiplier);
+					} else{
+						target.addVelocity((x - target.posX) * multiplier,
+								(target.posY - (y)) * multiplier, (z - target.posZ) * multiplier);
+					}
 					if (!MagicDamage.isEntityImmune(PRESSURE, target)) {
 						target.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(this, getCaster(), PRESSURE), 0.1F * damageMultiplier);
 					}
@@ -109,15 +113,18 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 					ArcaneUtils.applyPlayerKnockback(target);
 				}
 			}
-			if (ticksExisted % 2 == 0) {
-				world.playSound(getCaster().posX, getCaster().posY, getCaster().posZ, WizardrySounds.SPELL_LOOP_WIND, SoundCategory.WEATHER, 1.0F + world.rand.nextFloat() / 10, 2.0F + world.rand.nextFloat() / 10, true);
-			}
+
+		}
+		if (ticksExisted % 4 == 0 && getCaster() != null) {
+			world.playSound(getCaster().posX, getCaster().posY, getCaster().posZ, WizardrySounds.SPELL_LOOP_WIND, SoundCategory.WEATHER, 0.5F + world.rand.nextFloat() / 20, 2.0F + world.rand.nextFloat() / 20, true);
 		}
 	}
 
 	@Override
 	public void setDead() {
-		Dissipate(this);
+		if (!world.isRemote) {
+			Dissipate(this);
+		}
 		this.isDead = true;
 
 	}

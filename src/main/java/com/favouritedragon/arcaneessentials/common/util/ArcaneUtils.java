@@ -222,6 +222,23 @@ public class ArcaneUtils {
 		}
 	}
 
+	public static void spawnSpinningVortex(World world, int maxAngle, double vortexHeight, double minRadius, double radiusScale, EnumParticleTypes particle, Vec3d position,
+										   Vec3d particleSpeed, Vec3d entitySpeed) {
+		for (int angle = 0; angle < maxAngle; angle++) {
+			double angle2 = world.rand.nextDouble() * Math.PI * 2;
+			double radius = minRadius + (angle / radiusScale);
+			double x = radius * cos(angle);
+			double y = angle / (maxAngle / vortexHeight);
+			double z = radius * sin(angle);
+			double speed = world.rand.nextDouble() * 2 + 1;
+			double omega = Math.signum(speed * ((Math.PI * 2) / 20 - speed / (20 * radius)));
+			angle2 += omega;
+			world.spawnParticle(particle, false, x + position.x, y + position.y, z + position.z,
+					(particleSpeed.x * radius * omega * Math.cos(angle2)) + entitySpeed.x, particleSpeed.y + entitySpeed.y, (particleSpeed.z * radius * omega * Math.sin(angle2)) + entitySpeed.z);
+
+		}
+	}
+
 
 	public static void spawnDirectionalHelix(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double radius, EnumParticleTypes particle, double posX, double posY, double posZ,
 											 double velX, double velY, double velZ) {
@@ -311,7 +328,7 @@ public class ArcaneUtils {
 		}
 	}
 
-	public static void spawnSpinningCircles(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, int maxCircles, double pillarHeight, double radius, EnumParticleTypes particle, Vec3d position,
+	/*public static void spawnSpinningCircles(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, int maxCircles, double pillarHeight, double radius, EnumParticleTypes particle, Vec3d position,
 											Vec3d particleSpeed, Vec3d entitySpeed, boolean isDirectional) {
 		for (int circle = 0; circle < maxCircles; circle += pillarHeight/maxCircles) {
 			for (int angle = 0; angle < maxAngle; angle++) {
@@ -341,7 +358,7 @@ public class ArcaneUtils {
 			}
 		}
 
-	}
+	}**/
 
 	public static void vortexEntityCollision(World world, EntityLivingBase entity, Entity spellEntity, Vec3d startPos, Vec3d endPos, float maxRadius,
 											 float damage, Vec3d knockBack, MagicDamage.DamageType damageSource, boolean directDamage) {

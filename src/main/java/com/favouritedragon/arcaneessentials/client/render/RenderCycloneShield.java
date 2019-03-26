@@ -9,7 +9,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 
 import javax.annotation.Nullable;
-import javax.swing.text.html.parser.Entity;
 
 public class RenderCycloneShield extends Render<EntityCycloneShield> {
 
@@ -20,8 +19,8 @@ public class RenderCycloneShield extends Render<EntityCycloneShield> {
 	@Override
 	public void doRender(EntityCycloneShield entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
-		ArcaneUtils.spawnSpinningCircles(entity.world, null, Vec3d.ZERO, 4, 6, 5.75, entity.getRadius(), EnumParticleTypes.CLOUD, entity.getPositionVector(),
-				new Vec3d(0.1, 0, 0.1), Vec3d.ZERO, false);
+		ArcaneUtils.spawnSpinningVortex(entity.world, 60, entity.getRadius() + 1.75, entity.getRadius(), 60, EnumParticleTypes.CLOUD, entity.getPositionVector(),
+				new Vec3d(0.05, 0, 0.05), Vec3d.ZERO);
 	}
 
 	@Nullable
