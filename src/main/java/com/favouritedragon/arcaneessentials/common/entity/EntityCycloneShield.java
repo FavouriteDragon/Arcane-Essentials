@@ -39,11 +39,11 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 					z, shield.world);
 			for (EntityLivingBase target : targets) {
 				if (shield.isValidTarget(target)) {
-					target.addVelocity((target.posX - x) * 2,
-							(target.posY - (y)) * 0.5, (target.posZ - z) * 2);
+					target.addVelocity((target.posX - x),
+							(target.posY - (y)) + 0.1, (target.posZ - z));
 					// Player motion is handled on that player's client so needs packets
 					if (!MagicDamage.isEntityImmune(PRESSURE, target)) {
-						target.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(shield, shield.getCaster(), PRESSURE), 2 * shield.damageMultiplier);
+						target.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(shield, shield.getCaster(), PRESSURE), 4 * shield.damageMultiplier);
 					}
 					target.setEntityInvulnerable(false);
 					ArcaneUtils.applyPlayerKnockback(target);
@@ -107,7 +107,7 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 								(target.posY - (y)) * multiplier, (z - target.posZ) * multiplier);
 					}
 					if (!MagicDamage.isEntityImmune(PRESSURE, target)) {
-						target.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(this, getCaster(), PRESSURE), 0.1F * damageMultiplier);
+						target.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(this, getCaster(), PRESSURE), 0.5F * damageMultiplier);
 					}
 					target.setEntityInvulnerable(false);
 					ArcaneUtils.applyPlayerKnockback(target);
