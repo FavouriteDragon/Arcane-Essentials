@@ -1,9 +1,6 @@
 package com.favouritedragon.arcaneessentials.client;
 
-import com.favouritedragon.arcaneessentials.client.render.RenderCycloneBolt;
-import com.favouritedragon.arcaneessentials.client.render.RenderFirePillar;
-import com.favouritedragon.arcaneessentials.client.render.RenderFirePillarSpawner;
-import com.favouritedragon.arcaneessentials.client.render.RenderThunderBurst;
+import com.favouritedragon.arcaneessentials.client.render.*;
 import com.favouritedragon.arcaneessentials.common.entity.*;
 import com.favouritedragon.arcaneessentials.proxy.IProxy;
 import electroblob.wizardry.client.renderer.RenderBlank;
@@ -30,6 +27,7 @@ public class ClientProxy implements IProxy {
 	@Override
 	public void registerRender() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityCycloneBolt.class, RenderCycloneBolt::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityCycloneShield.class, RenderCycloneShield::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlamePillar.class, RenderFirePillar::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlamePillarSpawner.class, RenderFirePillarSpawner::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityLightningVortex.class, RenderBlank::new);

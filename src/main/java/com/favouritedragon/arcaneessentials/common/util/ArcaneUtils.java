@@ -24,6 +24,9 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
 public class ArcaneUtils {
+	//NOTE: ONLY USE ENUMPARTICLETYPE SPAWN METHODS IN RENDERING FILES. DUE TO VANILLA'S WEIRD PARTICLE SPAWNING SYSTEM,
+	//YOU CANNOT SPAWN PARTICLES IN ENTITY CLASSES AND SUCH RELIABLY. CUSTOM PARTICLES IN THIS CASE ARE FINE, THOUGH.
+
 	public static Vec3d rotateAroundAxisX(Vec3d v, double angle) {
 		angle = Math.toRadians(angle);
 		double y, z, cos, sin;
@@ -55,6 +58,8 @@ public class ArcaneUtils {
 		return new Vec3d(x, y, v.z);
 	}
 
+	//NOTE: ONLY USE ENUMPARTICLETYPE SPAWN METHODS IN RENDERING FILES. DUE TO VANILLA'S WEIRD PARTICLE SPAWNING SYSTEM,
+	//YOU CANNOT SPAWN PARTICLES IN ENTITY CLASSES AND SUCH RELIABLY. CUSTOM PARTICLES IN THIS CASE ARE FINE, THOUGH.
 	public static void spawnDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int particleAmount, double vortexLength, double minRadius, double radiusScale, EnumParticleTypes particle, double posX, double posY, double posZ,
 											  double velX, double velY, double velZ) {
 		for (int angle = 0; angle < particleAmount; angle++) {
@@ -158,8 +163,6 @@ public class ArcaneUtils {
 	 * @param particleSpeed How fast the particles are spinning. You don't need to include complex maths here- that's all handled by this method.
 	 * @param entitySpeed	The speed of the entity that is rendering these particles. If the player/entity spawns a tornado, this is the speed of the tornado. If there's no entity,
 	 *                      do Vec3d.ZERO.
-	 * @param maxAge        The maximum age of the particle. Wizardry particles already have a predetermined age, this just adds onto it.
-	 * @param r             The amount of red in the particle. G and B are self-explanatory (green and blue).
 	 */
 	public static void spawnSpinningDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double minRadius, double radiusScale, EnumParticleTypes particle, Vec3d position,
 													  Vec3d particleSpeed, Vec3d entitySpeed) {
@@ -308,6 +311,38 @@ public class ArcaneUtils {
 		}
 	}
 
+	public static void spawnSpinningCircles(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, int maxCircles, double pillarHeight, double radius, EnumParticleTypes particle, Vec3d position,
+											Vec3d particleSpeed, Vec3d entitySpeed, boolean isDirectional) {
+		for (int circle = 0; circle < maxCircles; circle += pillarHeight/maxCircles) {
+			for (int angle = 0; angle < maxAngle; angle++) {
+				double angle2 = world.rand.nextDouble() * Math.PI * 2;
+				double x = radius * cos(angle);
+				double z = radius * sin(angle);
+				double speed = world.rand.nextDouble() * 2 + 1;
+				double omega = Math.signum(speed * ((Math.PI * 2) / 20 - speed / (20 * radius)));
+				angle2 += omega;
+				Vec3d pos = new Vec3d(x, circle, z);
+				if (entity != null && direction != null && isDirectional) {
+					Vec3d pVel = new Vec3d(particleSpeed.x * radius * omega * Math.cos(angle2), particleSpeed.y, particleSpeed.z * radius * omega * Math.sin(angle2));
+					pVel = ArcaneUtils.rotateAroundAxisX(pVel, entity.rotationPitch - 90);
+					pVel = ArcaneUtils.rotateAroundAxisY(pVel, entity.rotationYaw);
+					pos = ArcaneUtils.rotateAroundAxisX(pos, entity.rotationPitch + 90);
+					pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
+					world.spawnParticle(particle, true, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
+							pos.z + position.z + direction.z, pVel.x + entitySpeed.x, pVel.y + entitySpeed.y, pVel.z + entitySpeed.z);
+				}
+				else {
+					if (direction != null) {
+						Vec3d pVel = new Vec3d(particleSpeed.x * radius * omega * Math.cos(angle2), particleSpeed.y, particleSpeed.z * radius * omega * Math.sin(angle2));
+						world.spawnParticle(particle, true, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
+								pos.z + position.z + direction.z, pVel.x + entitySpeed.x, pVel.y + entitySpeed.y, pVel.z + entitySpeed.z);
+					}
+				}
+			}
+		}
+
+	}
+
 	public static void vortexEntityCollision(World world, EntityLivingBase entity, Entity spellEntity, Vec3d startPos, Vec3d endPos, float maxRadius,
 											 float damage, Vec3d knockBack, MagicDamage.DamageType damageSource, boolean directDamage) {
 		if (entity != null) {
@@ -366,7 +401,6 @@ public class ArcaneUtils {
 
 	@Nullable
 	public static RayTraceResult standardEntityRayTrace(World world, Entity entity, Entity spellEntity, Vec3d startPos, Vec3d endPos, float borderSize, boolean transparentBlocks, HashSet<Entity> excluded) {
-		//HashSet<Entity> hashset = new HashSet<>(2);
 		excluded.add(entity);
 		if (spellEntity != null) {
 			excluded.add(spellEntity);
