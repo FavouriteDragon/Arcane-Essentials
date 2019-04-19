@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 public class SolarBeam extends Spell {
 
 	public SolarBeam(Tier tier, int cost, Element element, String name, SpellType type, int cooldown, EnumAction action, boolean isContinuous) {
-		super(Tier.APPRENTICE, 50, Element.EARTH, "solar_beam", type, cooldown, action, isContinuous);
+		super(Tier.APPRENTICE, 50, Element.EARTH, "solar_beam", SpellType.ATTACK, cooldown, EnumAction.BOW, false);
 	}
 
 	@Override

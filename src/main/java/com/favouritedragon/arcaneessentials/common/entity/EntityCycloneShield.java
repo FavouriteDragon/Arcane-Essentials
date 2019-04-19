@@ -98,7 +98,7 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 			for (EntityLivingBase target : targets) {
 				if (this.isValidTarget(target)) {
 					boolean b = world.rand.nextBoolean();
-					double multiplier = (getRadius() - target.getDistance(x, y, z)) * 0.005;
+					double multiplier = (getRadius() - target.getDistance(x, y, z)) * 0.0025;
 					if (b) {
 						target.addVelocity((target.posX - x) * multiplier,
 								(target.posY - (y)) * multiplier, (target.posZ - z) * multiplier);

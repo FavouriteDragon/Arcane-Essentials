@@ -19,6 +19,8 @@ public class DamageSources extends MagicDamage implements IElementalDamage {
 			new Class[]{});
 	public static final MagicDamage.DamageType PRESSURE = EnumHelper.addEnum(MagicDamage.DamageType.class, "pressure",
 			new Class[]{});
+	public static final MagicDamage.DamageType EARTH = EnumHelper.addEnum(MagicDamage.DamageType.class, "earth",
+			new Class[]{});
 
 	public DamageSources(String name, Entity caster, DamageType type, boolean isRetaliatory) {
 		super(name, caster, type, isRetaliatory);

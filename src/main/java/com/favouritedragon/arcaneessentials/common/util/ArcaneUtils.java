@@ -4,11 +4,11 @@ import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.WizardryParticleType;
 import electroblob.wizardry.util.WizardryUtilities;
-import javafx.scene.shape.Arc;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
@@ -117,7 +117,7 @@ public class ArcaneUtils {
 	 * @param particle      The wizardry particle type. I had to create two methods- for for normal particles, one for wizardry ones.
 	 * @param position      The starting/reference position of the vortex. Used along with the direction position to determine the actual starting position.
 	 * @param particleSpeed How fast the particles are spinning. You don't need to include complex maths here- that's all handled by this method.
-	 * @param entitySpeed	The speed of the entity that is rendering these particles. If the player/entity spawns a tornado, this is the speed of the tornado. If there's no entity,
+	 * @param entitySpeed   The speed of the entity that is rendering these particles. If the player/entity spawns a tornado, this is the speed of the tornado. If there's no entity,
 	 *                      do Vec3d.ZERO.
 	 * @param maxAge        The maximum age of the particle. Wizardry particles already have a predetermined age, this just adds onto it.
 	 * @param r             The amount of red in the particle. G and B are self-explanatory (green and blue).
@@ -161,7 +161,7 @@ public class ArcaneUtils {
 	 * @param particle      The wizardry particle type. I had to create two methods- for for normal particles, one for wizardry ones.
 	 * @param position      The starting/reference position of the vortex. Used along with the direction position to determine the actual starting position.
 	 * @param particleSpeed How fast the particles are spinning. You don't need to include complex maths here- that's all handled by this method.
-	 * @param entitySpeed	The speed of the entity that is rendering these particles. If the player/entity spawns a tornado, this is the speed of the tornado. If there's no entity,
+	 * @param entitySpeed   The speed of the entity that is rendering these particles. If the player/entity spawns a tornado, this is the speed of the tornado. If there's no entity,
 	 *                      do Vec3d.ZERO.
 	 */
 	public static void spawnSpinningDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double minRadius, double radiusScale, EnumParticleTypes particle, Vec3d position,
@@ -549,18 +549,77 @@ public class ArcaneUtils {
 	}
 
 	/**
+	 * This method is like the other method, it just uses vanilla damage sources.
+	 *
+	 * @param world        The world the raytrace is in.
+	 * @param caster       The caster of the spell. This is so mobs don't attack each other when you use raytraces from mobs.
+	 *                     All damage is done by the caster.
+	 * @param startPos     Where the raytrace starts.
+	 * @param endPos       Where the raytrace ends.
+	 * @param borderSize   The width of the raytrace.
+	 * @param spellEntity  The entity that's using this method, if applicable. If this method is directly used in a spell, just make this null.
+	 * @param damageSource The damage source.
+	 * @param damage       The amount of damage.
+	 * @param knockBack    The amount of knockback.
+	 * @param setFire      Whether to set an enemy on fire.
+	 * @param fireTime     How long to set an enemy on fire.
+	 */
+
+	public static void handlePiercingBeamCollision(World world, EntityLivingBase caster, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, DamageSource damageSource,
+												   float damage, Vec3d knockBack, boolean setFire, int fireTime, float radius) {
+		HashSet<Entity> excluded = new HashSet<>();
+		RayTraceResult result = standardEntityRayTrace(world, caster, spellEntity, startPos, endPos, borderSize, false, excluded);
+		if (result != null && result.entityHit instanceof EntityLivingBase) {
+			EntityLivingBase hit = (EntityLivingBase) result.entityHit;
+			if (setFire) {
+				hit.setFire(fireTime);
+			}
+			hit.attackEntityFrom(damageSource, damage);
+			hit.motionX += knockBack.x;
+			hit.motionY += knockBack.y;
+			hit.motionZ += knockBack.z;
+			applyPlayerKnockback(hit);
+			Vec3d pos = result.hitVec;
+			AxisAlignedBB hitBox = new AxisAlignedBB(pos.x + radius, pos.y + radius, pos.z + radius, pos.x - radius, pos.y - radius, pos.z - radius);
+			List<Entity> nearby = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
+			excluded.add(hit);
+			nearby.remove(excluded);
+			//This is so it doesn't count the entity that was hit by the raytrace and mess up the chain
+			if (!nearby.isEmpty()) {
+				for (Entity e : nearby) {
+					if (e != caster && e != hit && !excluded.contains(e) && e.getTeam() != caster.getTeam()) {
+						if (setFire) {
+							e.setFire(fireTime);
+						}
+						e.attackEntityFrom(damageSource, damage);
+						e.motionX += knockBack.x;
+						e.motionY += knockBack.y;
+						e.motionZ += knockBack.z;
+						applyPlayerKnockback(e);
+						excluded.add(e);
+					}
+				}
+			} else {
+				handlePiercingBeamCollision(world, caster, pos, endPos, borderSize, spellEntity, damageSource, damage, knockBack, setFire, fireTime, radius);
+
+			}
+
+		}
+	}
+
+	/**
 	 * Method for ray tracing entities (the useless default method doesn't work, despite EnumHitType having an ENTITY
 	 * field...) You can also use this for seeking.
 	 *
-	 * @param world      The world the raytrace is in.
-	 * @param x          startX
-	 * @param y          startY
-	 * @param z          startZ
-	 * @param tx         endX
-	 * @param ty         endY
-	 * @param tz         endZ
-	 * @param borderSize extra area to examine around line for entities
-	 * @param excluded   any excluded entities (the player, spell entities, previously hit entities, etc)
+	 * @param world                  The world the raytrace is in.
+	 * @param x                      startX
+	 * @param y                      startY
+	 * @param z                      startZ
+	 * @param tx                     endX
+	 * @param ty                     endY
+	 * @param tz                     endZ
+	 * @param borderSize             extra area to examine around line for entities
+	 * @param excluded               any excluded entities (the player, spell entities, previously hit entities, etc)
 	 * @param raytraceNonSolidBlocks This controls whether or not the raytrace goes through non-solid blocks, such as grass, fences, trapdoors, cobwebs, e.t.c.
 	 * @return a RayTraceResult of either the block hit (no entity hit), the entity hit (hit an entity), or null for
 	 * nothing hit
