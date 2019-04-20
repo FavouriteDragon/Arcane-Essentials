@@ -26,7 +26,7 @@ spell.arcane_essentials:thunder_burst=Thunder Burst
 spell.arcane_essentials:thunder_burst.desc=Unleash a shockwave of raw lightning that blasts enemies away!
 
 spell.arcane_essentials:whirlpool=Whirlpool
-spell.arcane_essentias:whirlpool.desc=Creating a swirling vortex of water where you're looking within a couple block radius OR around you! Draws enemies inwards and slowly damanges them- great for trapping mobs for EXPLOSIONS!
+spell.arcane_essentials:whirlpool.desc=Creating a swirling vortex of water where you're looking within a couple block radius OR around you! Draws enemies inwards and slowly damanges them- great for trapping mobs for EXPLOSIONS!
 
 element.water=Water
 element.air=AIR
