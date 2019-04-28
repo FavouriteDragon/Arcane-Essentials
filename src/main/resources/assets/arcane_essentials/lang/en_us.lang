@@ -1,6 +1,9 @@
 spell.arcane_essentials:cyclone_bolt=Cyclone Bolt
 spell.arcane_essentials:cyclone_bolt.desc=Shoot a spinning arrow of air in the direction you're looking!
 
+spell.arcane_essentials:cyclone_shield=Cyclone Shield
+spell.arcane_essentials:cyclone_shield.desc=Create a spinning tornado of air around where you're standing! Deflects projectiles, slowly hits enemies repeatedly, then shoots all nearby enemies away on death.
+
 spell.arcane_essentials:fire_pledge=Fire Pledge
 spell.arcane_essentials:fire_pledge.desc=BBBBBBBBBBBBBBBBBBBBBBUUUUUUUUUUUUUUUURRRRRRNNNNNNNNNNNNNNNN Summon geysers of fire in front of you, like the pokemon move! Gen 6, anybody?
 
@@ -26,7 +29,7 @@ spell.arcane_essentials:thunder_burst=Thunder Burst
 spell.arcane_essentials:thunder_burst.desc=Unleash a shockwave of raw lightning that blasts enemies away!
 
 spell.arcane_essentials:whirlpool=Whirlpool
-spell.arcane_essentials:whirlpool.desc=Creating a swirling vortex of water where you're looking within a couple block radius OR around you! Draws enemies inwards and slowly damanges them- great for trapping mobs for EXPLOSIONS!
+spell.arcane_essentials:whirlpool.desc=Create a swirling vortex of water where you're looking within a couple blocks, OR around you! Draws enemies inwards and slowly damanges them- great for trapping mobs for EXPLOSIONS!
 
 element.water=Water
 element.air=Air
