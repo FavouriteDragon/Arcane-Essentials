@@ -2,11 +2,14 @@ package com.favouritedragon.arcaneessentials.common.entity;
 
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
+import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -55,8 +58,9 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 					y - shield.getRadius() * 1.25F, z - shield.getRadius() * 1.25F);
 			List<Entity> projectiles = shield.world.getEntitiesWithinAABB(Entity.class, box);
 			for (Entity projectile : projectiles) {
-				if(projectile.canBeCollidedWith() && projectile.canBePushed()) {
-					projectile.addVelocity((projectile.posX - x),
+				if((projectile.canBeCollidedWith() && projectile.canBePushed() || projectile instanceof EntityArrow || projectile instanceof EntityThrowable) &&
+						!(projectile instanceof EntityLivingBase)) {
+					projectile.setVelocity((projectile.posX - x),
 							(projectile.posY - (y)), (projectile.posZ - z));
 				}
 			}
@@ -128,9 +132,10 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 					y - getRadius() * 1.25F, z - getRadius() * 1.25F);
 			List<Entity> projectiles = world.getEntitiesWithinAABB(Entity.class, box);
 			for (Entity projectile : projectiles) {
-				if(projectile.canBeCollidedWith() && projectile.canBePushed()) {
+				if((projectile.canBeCollidedWith() && projectile.canBePushed() || projectile instanceof EntityArrow || projectile instanceof EntityThrowable) &&
+						!(projectile instanceof EntityLivingBase)) {
 					double multiplier = (getRadius() - projectile.getDistance(x, y, z)) * 0.0025;
-					projectile.addVelocity((projectile.posX - x) * multiplier,
+					projectile.setVelocity((projectile.posX - x) * multiplier,
 							(projectile.posY - (y)) * multiplier, (projectile.posZ - z) * multiplier);
 				}
 			}
