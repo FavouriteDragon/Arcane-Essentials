@@ -5,12 +5,14 @@ import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.WizardryUtilities;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -47,6 +49,15 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 					}
 					target.setEntityInvulnerable(false);
 					ArcaneUtils.applyPlayerKnockback(target);
+				}
+			}
+			AxisAlignedBB box = new AxisAlignedBB(x + shield.getRadius() * 1.25F, y + shield.getRadius() * 1.25F, z + shield.getRadius() * 1.25F, x - shield.getRadius() * 1.25F,
+					y - shield.getRadius() * 1.25F, z - shield.getRadius() * 1.25F);
+			List<Entity> projectiles = shield.world.getEntitiesWithinAABB(Entity.class, box);
+			for (Entity projectile : projectiles) {
+				if(projectile.canBeCollidedWith() && projectile.canBePushed()) {
+					projectile.addVelocity((projectile.posX - x),
+							(projectile.posY - (y)), (projectile.posZ - z));
 				}
 			}
 		}
@@ -111,6 +122,16 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 					}
 					target.setEntityInvulnerable(false);
 					ArcaneUtils.applyPlayerKnockback(target);
+				}
+			}
+			AxisAlignedBB box = new AxisAlignedBB(x + getRadius() * 1.25F, y + getRadius() * 1.25F, z + getRadius() * 1.25F, x - getRadius() * 1.25F,
+					y - getRadius() * 1.25F, z - getRadius() * 1.25F);
+			List<Entity> projectiles = world.getEntitiesWithinAABB(Entity.class, box);
+			for (Entity projectile : projectiles) {
+				if(projectile.canBeCollidedWith() && projectile.canBePushed()) {
+					double multiplier = (getRadius() - projectile.getDistance(x, y, z)) * 0.0025;
+					projectile.addVelocity((projectile.posX - x) * multiplier,
+							(projectile.posY - (y)) * multiplier, (projectile.posZ - z) * multiplier);
 				}
 			}
 
