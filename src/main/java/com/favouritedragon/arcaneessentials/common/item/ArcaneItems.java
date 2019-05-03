@@ -2,7 +2,6 @@ package com.favouritedragon.arcaneessentials.common.item;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.item.armour.ItemManaArmour;
-import javafx.scene.paint.Material;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
