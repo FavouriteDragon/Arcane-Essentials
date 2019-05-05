@@ -240,8 +240,8 @@ public class ArcaneUtils {
 	}
 
 
-	public static void spawnDirectionalHelix(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double radius, EnumParticleTypes particle, double posX, double posY, double posZ,
-											 double velX, double velY, double velZ) {
+	public static void spawnDirectionalHelix(World world, Entity entity, Vec3d direction, int maxAngle, double vortexLength, double radius, EnumParticleTypes particle, Vec3d position,
+											Vec3d particleSpeed) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double x = radius * cos(angle);
 			double y = angle / (maxAngle / vortexLength);
@@ -250,17 +250,17 @@ public class ArcaneUtils {
 			if (entity != null && direction != null) {
 				pos = ArcaneUtils.rotateAroundAxisX(pos, entity.rotationPitch + 90);
 				pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
-				world.spawnParticle(particle, true, pos.x + posX + direction.x, pos.y + posY + direction.y,
-						pos.z + posZ + direction.z, velX, velY, velZ);
+				world.spawnParticle(particle, true, pos.x + position.x + direction.x, pos.y + position.z + direction.y,
+						pos.z + position.z + direction.z, particleSpeed.z, particleSpeed.y, particleSpeed.z);
 			} else {
-				world.spawnParticle(particle, false, x + posX, y + posY,
-						z + posZ, velX, velY, velZ);
+				world.spawnParticle(particle, false, x + position.x, y + position.y,
+						z + position.z, particleSpeed.z, particleSpeed.y, particleSpeed.z);
 			}
 		}
 	}
 
-	public static void spawnDirectionalHelix(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double radius, WizardryParticleType particle, double posX, double posY, double posZ,
-											 double velX, double velY, double velZ, int maxAge, float r, float g, float b) {
+	public static void spawnDirectionalHelix(World world, Entity entity, Vec3d direction, int maxAngle, double vortexLength, double radius, WizardryParticleType particle, Vec3d position,
+											 Vec3d particleSpeed, int maxAge, float r, float g, float b) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double x = radius * cos(angle);
 			double y = angle / (maxAngle / vortexLength);
@@ -269,11 +269,11 @@ public class ArcaneUtils {
 			if (entity != null && direction != null) {
 				pos = ArcaneUtils.rotateAroundAxisX(pos, entity.rotationPitch + 90);
 				pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
-				Wizardry.proxy.spawnParticle(particle, world, pos.x + posX + direction.x, pos.y + posY + direction.y,
-						pos.z + posZ + direction.z, velX, velY, velZ, maxAge, r, g, b);
+				Wizardry.proxy.spawnParticle(particle, world, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
+						pos.z + position.z + direction.z, particleSpeed.z, particleSpeed.y, particleSpeed.z, maxAge, r, g, b);
 			} else {
-				Wizardry.proxy.spawnParticle(particle, world, x + posX, y + posY,
-						z + posZ, velX, velY, velZ, maxAge);
+				Wizardry.proxy.spawnParticle(particle, world, x + position.x, y + position.y,
+						z + position.z, particleSpeed.z, particleSpeed.y, particleSpeed.z, maxAge);
 			}
 		}
 	}
