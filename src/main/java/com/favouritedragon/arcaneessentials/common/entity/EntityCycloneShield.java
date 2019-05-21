@@ -60,8 +60,9 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 			for (Entity projectile : projectiles) {
 				if((projectile.canBeCollidedWith() && projectile.canBePushed() || projectile instanceof EntityArrow || projectile instanceof EntityThrowable) &&
 						!(projectile instanceof EntityLivingBase)) {
-					projectile.setVelocity((projectile.posX - x),
-							(projectile.posY - (y)), (projectile.posZ - z));
+					projectile.motionX = projectile.posX - x;
+					projectile.motionY = projectile.posY - y;
+					projectile.motionZ = projectile.posZ - z;
 				}
 			}
 		}
