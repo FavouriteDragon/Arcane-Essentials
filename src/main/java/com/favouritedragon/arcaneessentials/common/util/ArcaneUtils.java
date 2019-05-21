@@ -278,8 +278,8 @@ public class ArcaneUtils {
 		}
 	}
 
-	public static void spawnSpinningDirectionalHelix(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double radius, WizardryParticleType particle, double posX, double posY, double posZ,
-													 double velX, double velY, double velZ, int maxAge, float r, float g, float b) {
+	public static void spawnSpinningDirectionalHelix(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double radius, WizardryParticleType particle, Vec3d position,
+													 Vec3d particleSpeed, int maxAge, float r, float g, float b) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double x = radius * cos(angle);
 			double y = angle / (maxAngle / vortexLength);
@@ -291,8 +291,8 @@ public class ArcaneUtils {
 				Wizardry.proxy.spawnParticle(particle, world, pos.x + posX + direction.x, pos.y + posY + direction.y,
 						pos.z + posZ + direction.z, velX, velY, velZ, maxAge, r, g, b);
 			} else {
-				Wizardry.proxy.spawnParticle(particle, world, x + posX, y + posY,
-						z + posZ, velX, velY, velZ, maxAge);
+				Wizardry.proxy.spawnParticle(particle, world, x + position.x, y + position.y,
+						z + position.z, particleSpeed.x, particleSpeed.y, particleSpeed.z, maxAge);
 			}
 		}
 	}
