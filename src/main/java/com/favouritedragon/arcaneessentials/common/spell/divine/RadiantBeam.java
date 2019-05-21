@@ -59,9 +59,8 @@ public class RadiantBeam extends Spell {
 						b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 60, 30, 1.0f, 1.0f, 0.3f);
 
 			}
-			ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), 180, range, 0.5, WizardryParticleType.SPARKLE,
-					caster.posX, caster.posY + caster.getEyeHeight() - 0.4F, caster.posZ, world.rand.nextDouble() / 80, world.rand.nextDouble() / 40,
-					world.rand.nextDouble() / 80, 30, 1.0F, 1.0F, 0.3F);
+			ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), 180, range, 0.5, WizardryParticleType.SPARKLE, new Vec3d(caster.posX, caster.posY + caster.getEyeHeight() - 0.4F, caster.posZ),
+					new Vec3d(world.rand.nextDouble() / 80, world.rand.nextDouble() / 40, world.rand.nextDouble() / 80), 30, 1.0F, 1.0F, 0.3F);
 
 		}
 
@@ -103,9 +102,9 @@ public class RadiantBeam extends Spell {
 						world.rand.nextDouble() / 40,
 						world.rand.nextDouble() / 80, 30, 1.0f, 1.0f, 0.3f);
 			}
-			ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), 180, range, 0.5, WizardryParticleType.SPARKLE,
-					caster.posX, caster.posY + caster.getEyeHeight() - 0.4F, caster.posZ, world.rand.nextDouble() / 80, world.rand.nextDouble() / 40,
-					world.rand.nextDouble() / 80, 30, 1.0F, 1.0F, 0.3F);
+			ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), 180, range, 0.5, WizardryParticleType.SPARKLE, new Vec3d(caster.posX, caster.posY + caster.getEyeHeight() - 0.4F, caster.posZ),
+					new Vec3d(world.rand.nextDouble() / 80, world.rand.nextDouble() / 40, world.rand.nextDouble() / 80), 30, 1.0F, 1.0F, 0.3F);
+
 		}
 
 		caster.playSound(WizardrySounds.SPELL_HEAL, 1.5F, 1);

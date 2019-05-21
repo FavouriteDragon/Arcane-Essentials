@@ -5,6 +5,7 @@ import com.favouritedragon.arcaneessentials.common.spell.air.CycloneBolt;
 import com.favouritedragon.arcaneessentials.common.spell.air.CycloneShield;
 import com.favouritedragon.arcaneessentials.common.spell.divine.RadianceStorm;
 import com.favouritedragon.arcaneessentials.common.spell.divine.RadiantBeam;
+import com.favouritedragon.arcaneessentials.common.spell.earth.SolarBeam;
 import com.favouritedragon.arcaneessentials.common.spell.fire.FirePledge;
 import com.favouritedragon.arcaneessentials.common.spell.fire.InfernoPillar;
 import com.favouritedragon.arcaneessentials.common.spell.storm.LightningVortex;
@@ -65,6 +66,7 @@ public class RegisterHandler {
 		registerEntity(EntityMagicBolt.class, "Magic Bolt", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
 		registerEntity(EntityCycloneBolt.class, "Cyclone Bolt", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
 		registerEntity(EntityCycloneShield.class, "Cylone Shield", id++, 128, LIVING_UPDATE_INTERVAL, false);
+		registerEntity(EntitySolarBeam.class, "Solar Beam", id++, 128, LIVING_UPDATE_INTERVAL, false);
 
 
 	}
@@ -89,6 +91,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new OceanBurst());
 		event.getRegistry().register(new RadianceStorm());
 		event.getRegistry().register(new RadiantBeam());
+		event.getRegistry().register(new SolarBeam());
 		event.getRegistry().register(new StormBlink());
 		event.getRegistry().register(new ThunderBurst());
 		event.getRegistry().register(new Whirlpool());

@@ -109,7 +109,7 @@ public class EntityFlamePillar extends EntityMagicConstruct {
 								e.setEntityInvulnerable(false);
 							}
 						}
-						if (e instanceof EntityMagicProjectile || e instanceof EntityThrowable || e instanceof EntityArrow) {
+						if (e instanceof EntityThrowable || e instanceof EntityArrow) {
 							e.motionX *= -1.1;
 							e.motionZ *= -1.1;
 						}
