@@ -27,7 +27,7 @@ public class SolarBeam extends Spell {
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		Vec3d look = caster.getLookVec();
-		look.scale(1.15).add(caster.getPositionVector());
+		look = look.scale(1.15).add(caster.getPositionVector());
 		if (world.getBlockState(new BlockPos(look.x, look.y, look.z)).getBlock() == Blocks.AIR) {
 			double damageMult = 1.0 * modifiers.get(WizardryItems.blast_upgrade);
 			float range = 20 + 5 * modifiers.get(WizardryItems.range_upgrade);
@@ -48,7 +48,7 @@ public class SolarBeam extends Spell {
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
 		Vec3d look = caster.getLookVec();
-		look.scale(1.15);
+		look = look.scale(1.15).add(caster.getPositionVector());
 		if (world.getBlockState(new BlockPos(look.x, look.y, look.z)).getBlock() == Blocks.AIR) {
 			double damageMult = 1.0 * modifiers.get(WizardryItems.blast_upgrade);
 			float range = 20 + 5 * modifiers.get(WizardryItems.range_upgrade);
