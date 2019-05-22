@@ -501,7 +501,7 @@ public class ArcaneUtils {
 				} else if (spellEntity != null) {
 					hit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(spellEntity, caster, damageType), damage);
 				}
-				Vec3d kM = endPos.subtract(startPos);
+				Vec3d kM = endPos.subtract(startPos).scale(.01);
 				hit.motionX += knockBack.x * kM.x;
 				hit.motionY += knockBack.y * kM.y;
 				hit.motionZ += knockBack.z * kM.z;

@@ -46,8 +46,8 @@ public class RadianceStorm extends Spell {
 				double y = WizardryUtilities.getNearestFloorLevel(world, new BlockPos(x, caster.posY, z), 3 + 2 * (int) modifiers.get(WizardryItems.range_upgrade));
 				Vec3d startPos = new Vec3d(x, caster.getEntityBoundingBox().minY + 30, z);
 				Vec3d endPos = new Vec3d(x, y, z);
-				Vec3d direction = endPos.subtract(startPos);
-				spawnRadiantBeam(world, caster, startPos, endPos, beamRadius, damage, direction, fireTime);
+				Vec3d knockBack = new Vec3d(0.5, 0.2, 0.5);
+				spawnRadiantBeam(world, caster, startPos, endPos, beamRadius, damage,knockBack, fireTime);
 				handleSphericalExplosion(world, caster, endPos, beamRadius * 2, damage,
 						new Vec3d(2, 0.1, 2).scale(modifiers.get(WizardryItems.blast_upgrade)), fireTime);
 			}
@@ -70,8 +70,8 @@ public class RadianceStorm extends Spell {
 				double y = WizardryUtilities.getNearestFloorLevel(world, new BlockPos(x, caster.posY, z), 4 + 2 * (int) modifiers.get(WizardryItems.range_upgrade));
 				Vec3d startPos = new Vec3d(x, caster.getEntityBoundingBox().minY + 30, z);
 				Vec3d endPos = new Vec3d(x, y, z);
-				Vec3d direction = endPos.subtract(startPos);
-				spawnRadiantBeam(world, caster, startPos, endPos, beamRadius, damage, direction, fireTime);
+				Vec3d knockBack = new Vec3d(0.5, 0.2, 0.5);
+				spawnRadiantBeam(world, caster, startPos, endPos, beamRadius, damage, knockBack, fireTime);
 				handleSphericalExplosion(world, caster, endPos, beamRadius * 1.5F, damage,
 						new Vec3d(2, 0.1, 2).scale(modifiers.get(WizardryItems.blast_upgrade)), fireTime);
 			}
