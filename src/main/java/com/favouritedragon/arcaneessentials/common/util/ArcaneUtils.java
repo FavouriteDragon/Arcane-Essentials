@@ -278,21 +278,24 @@ public class ArcaneUtils {
 		}
 	}
 
-	public static void spawnSpinningDirectionalHelix(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double radius, WizardryParticleType particle, Vec3d position,
+	public static void spawnSpinningDirectionalHelix(World world, Entity entity, Vec3d direction, Vec3d entitySpeed, int maxAngle, double vortexLength, double radius, WizardryParticleType particle, Vec3d position,
 													 Vec3d particleSpeed, int maxAge, float r, float g, float b) {
 		for (int angle = 0; angle < maxAngle; angle++) {
+			double angle2 = world.rand.nextDouble() * Math.PI * 2;
 			double x = radius * cos(angle);
 			double y = angle / (maxAngle / vortexLength);
 			double z = radius * sin(angle);
+			double speed = world.rand.nextDouble() * 2 + 1;
+			double omega = Math.signum(speed * ((Math.PI * 2) / 20 - speed / (20 * radius)));
+			angle2 += omega;
 			Vec3d pos = new Vec3d(x, y, z);
 			if (entity != null && direction != null) {
+				Vec3d pVel = new Vec3d(particleSpeed.x * radius * omega * Math.cos(angle2), particleSpeed.y, particleSpeed.z * radius * omega * Math.sin(angle2));
+				pVel = ArcaneUtils.rotateAroundAxisX(pVel, entity.rotationPitch - 90);
 				pos = ArcaneUtils.rotateAroundAxisX(pos, entity.rotationPitch + 90);
 				pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
-				Wizardry.proxy.spawnParticle(particle, world, pos.x + posX + direction.x, pos.y + posY + direction.y,
-						pos.z + posZ + direction.z, velX, velY, velZ, maxAge, r, g, b);
-			} else {
-				Wizardry.proxy.spawnParticle(particle, world, x + position.x, y + position.y,
-						z + position.z, particleSpeed.x, particleSpeed.y, particleSpeed.z, maxAge);
+				Wizardry.proxy.spawnParticle(particle, world, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
+						pos.z + position.z + direction.z, pVel.x + entitySpeed.x, pVel.y + entitySpeed.y, pVel.z + entitySpeed.z, maxAge, r, g, b);
 			}
 		}
 	}
@@ -482,28 +485,27 @@ public class ArcaneUtils {
 	 * @param damageType   The damagetype of the damage.
 	 * @param damage       The amount of damage.
 	 * @param knockBack    The amount of knockback.
-	 * @param setFire      Whether to set an enemy on fire.
 	 * @param fireTime     How long to set an enemy on fire.
 	 */
 
 	public static void handlePiercingBeamCollision(World world, EntityLivingBase caster, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, boolean directDamage, MagicDamage.DamageType damageType,
-												   float damage, Vec3d knockBack, boolean setFire, int fireTime, float radius) {
+												   float damage, Vec3d knockBack, boolean invulnerable, int fireTime, float radius) {
 		HashSet<Entity> excluded = new HashSet<>();
 		RayTraceResult result = standardEntityRayTrace(world, caster, spellEntity, startPos, endPos, borderSize, false, excluded);
 		if (result != null && result.entityHit instanceof EntityLivingBase) {
 			EntityLivingBase hit = (EntityLivingBase) result.entityHit;
 			if (!MagicDamage.isEntityImmune(damageType, hit)) {
-				if (setFire) {
-					hit.setFire(fireTime);
-				}
+				hit.setFire(fireTime);
 				if (directDamage) {
 					hit.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, damageType), damage);
 				} else if (spellEntity != null) {
 					hit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(spellEntity, caster, damageType), damage);
 				}
-				hit.motionX += knockBack.x;
-				hit.motionY += knockBack.y;
-				hit.motionZ += knockBack.z;
+				Vec3d kM = endPos.subtract(startPos);
+				hit.motionX += knockBack.x * kM.x;
+				hit.motionY += knockBack.y * kM.y;
+				hit.motionZ += knockBack.z * kM.z;
+				hit.setEntityInvulnerable(invulnerable);
 				applyPlayerKnockback(hit);
 			}
 			Vec3d pos = result.hitVec;
@@ -516,9 +518,7 @@ public class ArcaneUtils {
 				for (Entity e : nearby) {
 					if (e != caster && e != hit && !excluded.contains(e) && e.getTeam() != caster.getTeam()) {
 						if (!MagicDamage.isEntityImmune(damageType, e)) {
-							if (setFire) {
-								e.setFire(fireTime);
-							}
+							e.setFire(fireTime);
 							if (directDamage) {
 								e.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, damageType), damage);
 							} else if (spellEntity != null) {
@@ -541,7 +541,7 @@ public class ArcaneUtils {
 				}
 			} else {
 				handlePiercingBeamCollision(world, caster, pos, endPos, borderSize, spellEntity, directDamage,
-						damageType, damage, knockBack, setFire, fireTime, radius);
+						damageType, damage, knockBack, invulnerable, fireTime, radius);
 
 			}
 

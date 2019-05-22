@@ -2,7 +2,6 @@ package com.favouritedragon.arcaneessentials.common.entity;
 
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
-import electroblob.wizardry.util.WizardryParticleType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -28,23 +27,21 @@ public class EntitySolarBeam extends EntityMagicConstruct {
 		super(world, x, y, z, caster, lifetime, damageMultiplier);
 	}
 
-	public void setRadius(float radius) {
-		dataManager.set(SYNC_RADIUS, radius);
-	}
-
-	public void setRange(float range) {
-		dataManager.set(SYNC_RANGE, range);
-	}
-
 	public float getRadius() {
 		return dataManager.get(SYNC_RADIUS);
+	}
+
+	public void setRadius(float radius) {
+		dataManager.set(SYNC_RADIUS, radius);
 	}
 
 	public float getRange() {
 		return dataManager.get(SYNC_RANGE);
 	}
 
-
+	public void setRange(float range) {
+		dataManager.set(SYNC_RANGE, range);
+	}
 
 	@Override
 	protected void entityInit() {
@@ -68,7 +65,7 @@ public class EntitySolarBeam extends EntityMagicConstruct {
 		if (!world.isRemote && getCaster() != null) {
 			Vec3d endpos = getLookVec().scale(getRange()).add(getPositionVector());
 			ArcaneUtils.handlePiercingBeamCollision(world, getCaster(), getPositionVector(), endpos, getRadius(), this, false, EARTH, 0.25F * damageMultiplier,
-					new Vec3d(0.25, 0.1, 0.25), false, 0, getRadius());
+					new Vec3d(0.0005, 0.00025, 0.0005), false, 0, getRadius());
 		}
 	}
 

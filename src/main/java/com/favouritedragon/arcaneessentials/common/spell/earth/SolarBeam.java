@@ -32,7 +32,7 @@ public class SolarBeam extends Spell {
 			double damageMult = 1.0 * modifiers.get(WizardryItems.blast_upgrade);
 			float range = 20 + 5 * modifiers.get(WizardryItems.range_upgrade);
 			double size = 2.0 + 1.0 * modifiers.get(WizardryItems.blast_upgrade);
-			EntitySolarBeam beam = new EntitySolarBeam(world, look.x, look.y, look.z, caster, 100, (float) damageMult);
+			EntitySolarBeam beam = new EntitySolarBeam(world, look.x, look.y, look.z, caster, 80, (float) damageMult);
 			beam.setRadius((float) size / 2);
 			beam.setRange(range);
 			beam.rotationPitch = caster.rotationPitch;
@@ -53,7 +53,7 @@ public class SolarBeam extends Spell {
 			double damageMult = 1.0 * modifiers.get(WizardryItems.blast_upgrade);
 			float range = 20 + 5 * modifiers.get(WizardryItems.range_upgrade);
 			double size = 2.0 + 1.0 * modifiers.get(WizardryItems.blast_upgrade);
-			EntitySolarBeam beam = new EntitySolarBeam(world, look.x, look.y, look.z, caster, 100, (float) damageMult);
+			EntitySolarBeam beam = new EntitySolarBeam(world, look.x, look.y, look.z, caster, 80, (float) damageMult);
 			beam.setRadius((float) size / 2);
 			beam.setRange(range);
 			beam.rotationPitch = caster.rotationPitch;

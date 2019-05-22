@@ -21,8 +21,8 @@ public class RenderSolarBeam extends Render<EntitySolarBeam> {
 	public void doRender(EntitySolarBeam entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 		if (entity.ticksExisted  == 2) {
-			ArcaneUtils.spawnSpinningDirectionalHelix(entity.world, entity, Vec3d.ZERO, 240, entity.getRange(), entity.getRadius(), WizardryParticleType.SPARKLE, entity.getPositionVector(),
-					new Vec3d(0.5, 0.05, 0.5), 40, 0.1F, 1.0F, 0.4F);
+			ArcaneUtils.spawnSpinningDirectionalHelix(entity.world, entity, Vec3d.ZERO, Vec3d.ZERO, 240, entity.getRange(), entity.getRadius(), WizardryParticleType.SPARKLE, entity.getPositionVector(),
+					new Vec3d(0.025, 0, 0.025), 100, 0.1F, 1.0F, 0.4F);
 		}
 	}
 
