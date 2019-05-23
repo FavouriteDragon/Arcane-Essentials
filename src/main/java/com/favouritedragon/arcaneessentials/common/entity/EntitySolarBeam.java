@@ -62,6 +62,9 @@ public class EntitySolarBeam extends EntityMagicConstruct {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
+		if (ticksExisted  == 1) {
+			setSize(0.1F, 0.1F);
+		}
 		if (!world.isRemote && getCaster() != null) {
 			Vec3d endpos = getLookVec().scale(getRange()).add(getPositionVector());
 			ArcaneUtils.handlePiercingBeamCollision(world, getCaster(), getPositionVector(), endpos, getRadius(), this, false, EARTH, 0.25F * damageMultiplier,

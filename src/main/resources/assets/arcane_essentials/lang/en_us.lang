@@ -26,7 +26,7 @@ spell.arcane_essentials:storm_blink=Storm Blink
 spell.arcane_essentials:storm_blink.desc=Teleport to where you're looking within a 60 block radius, unleashing a small burst of lightning at your target.
 
 spell.arcane_essentials:solar_beam=Solar Beam
-spell.arcane_essentials_solar_beam.desc=Unleash a massive mult-hitting laser in the direction you're looking! Use the powers of nature to crush your enemies!
+spell.arcane_essentials:solar_beam.desc=Unleash a massive mult-hitting laser in the direction you're looking! Use the powers of nature to crush your enemies!
 
 spell.arcane_essentials:thunder_burst=Thunder Burst
 spell.arcane_essentials:thunder_burst.desc=Unleash a shockwave of raw lightning that blasts enemies away!
