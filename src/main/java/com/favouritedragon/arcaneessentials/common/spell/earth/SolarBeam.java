@@ -6,13 +6,16 @@ import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.SpellType;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.registry.WizardryItems;
+import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -27,6 +30,9 @@ public class SolarBeam extends Spell {
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		Vec3d look = caster.getLookVec();
 		look = look.scale(0.5).add(caster.getPositionVector());
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_EARTHQUAKE, SoundCategory.HOSTILE, 0.5F + world.rand.nextFloat() / 20, 2.0F + world.rand.nextFloat() / 10, true);
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_SHOCKWAVE, SoundCategory.HOSTILE, 0.5F + world.rand.nextFloat() / 20, 2.0F + world.rand.nextFloat() / 10, true);
+		world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ITEM_TOTEM_USE, SoundCategory.HOSTILE, 0.5F + world.rand.nextFloat() / 20, 2.0F + world.rand.nextFloat() / 10, true);
 		if (!world.isRemote) {
 			double damageMult = 1.0 * modifiers.get(WizardryItems.blast_upgrade);
 			float range = 20 + 5 * modifiers.get(WizardryItems.range_upgrade);
@@ -50,6 +56,9 @@ public class SolarBeam extends Spell {
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
 		Vec3d look = caster.getLookVec();
 		look = look.scale(0.5).add(caster.getPositionVector());
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_EARTHQUAKE, SoundCategory.HOSTILE, 0.5F + world.rand.nextFloat() / 20, 2.0F + world.rand.nextFloat() / 10, true);
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_SHOCKWAVE, SoundCategory.HOSTILE, 0.5F + world.rand.nextFloat() / 20, 2.0F + world.rand.nextFloat() / 10, true);
+		world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ITEM_TOTEM_USE, SoundCategory.HOSTILE, 0.5F + world.rand.nextFloat() / 20, 2.0F + world.rand.nextFloat() / 10, true);
 		if (!world.isRemote) {
 			double damageMult = 1.0 * modifiers.get(WizardryItems.blast_upgrade);
 			float range = 20 + 5 * modifiers.get(WizardryItems.range_upgrade);
