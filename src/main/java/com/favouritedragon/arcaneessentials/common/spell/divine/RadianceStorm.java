@@ -47,7 +47,7 @@ public class RadianceStorm extends Spell {
 				Vec3d startPos = new Vec3d(x, caster.getEntityBoundingBox().minY + 30, z);
 				Vec3d endPos = new Vec3d(x, y, z);
 				Vec3d knockBack = new Vec3d(0.5, 0.2, 0.5);
-				spawnRadiantBeam(world, caster, startPos, endPos, beamRadius, damage,knockBack, fireTime);
+				spawnRadiantBeam(world, caster, startPos, endPos, beamRadius, damage, knockBack, fireTime);
 				handleSphericalExplosion(world, caster, endPos, beamRadius * 2, damage,
 						new Vec3d(2, 0.1, 2).scale(modifiers.get(WizardryItems.blast_upgrade)), fireTime);
 			}
