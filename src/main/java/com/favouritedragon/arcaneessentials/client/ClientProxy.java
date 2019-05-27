@@ -3,7 +3,6 @@ package com.favouritedragon.arcaneessentials.client;
 import com.favouritedragon.arcaneessentials.client.render.*;
 import com.favouritedragon.arcaneessentials.common.entity.*;
 import com.favouritedragon.arcaneessentials.proxy.IProxy;
-import electroblob.wizardry.client.renderer.RenderBlank;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
