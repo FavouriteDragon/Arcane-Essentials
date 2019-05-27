@@ -102,8 +102,6 @@ public class EntityWhirlpool extends EntityMagicConstruct {
 
 				}
 			}
-			ArcaneUtils.spawnSpinningVortex(world, 180, 2, 0.25, 60, WizardryParticleType.MAGIC_BUBBLE,
-					new Vec3d(posX, posY, posZ), new Vec3d(0.15, 0.05, 0.15), Vec3d.ZERO, 2, 0, 0, 0);
 
 		}
 
