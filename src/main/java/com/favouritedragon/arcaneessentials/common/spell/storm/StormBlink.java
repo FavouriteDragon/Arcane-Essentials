@@ -19,7 +19,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumAction;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -76,24 +75,26 @@ public class StormBlink extends Spell {
 
 						}
 					}
-					double x, y, z;
-					for (double theta = 0; theta <= 180; theta += 1) {
-						double dphi = 15 / Math.sin(Math.toRadians(theta));
 
-						for (double phi = 0; phi < 360; phi += dphi) {
-							double rphi = Math.toRadians(phi);
-							double rtheta = Math.toRadians(theta);
-
-							x = radius * Math.cos(rphi) * Math.sin(rtheta);
-							y = radius * Math.sin(rphi) * Math.sin(rtheta);
-							z = radius * Math.cos(rtheta);
-
-							Wizardry.proxy.spawnParticle(WizardryParticleType.SPARK, world, x + caster.posX, y + caster.posY, z + caster.posZ, 0, 0, 0, 10);
-						}
-
-					}
 				}
 				return true;
+			}
+		} else {
+			double x, y, z;
+			for (double theta = 0; theta <= 180; theta += 1) {
+				double dphi = 15 / Math.sin(Math.toRadians(theta));
+
+				for (double phi = 0; phi < 360; phi += dphi) {
+					double rphi = Math.toRadians(phi);
+					double rtheta = Math.toRadians(theta);
+
+					x = radius * Math.cos(rphi) * Math.sin(rtheta);
+					y = radius * Math.sin(rphi) * Math.sin(rtheta);
+					z = radius * Math.cos(rtheta);
+
+					Wizardry.proxy.spawnParticle(WizardryParticleType.SPARK, world, x + caster.posX, y + caster.posY, z + caster.posZ, 0, 0, 0, 10);
+				}
+
 			}
 		}
 
@@ -142,24 +143,27 @@ public class StormBlink extends Spell {
 
 						}
 					}
-					double x, y, z;
-					for (double theta = 0; theta <= 180; theta += 1) {
-						double dphi = 15 / Math.sin(Math.toRadians(theta));
 
-						for (double phi = 0; phi < 360; phi += dphi) {
-							double rphi = Math.toRadians(phi);
-							double rtheta = Math.toRadians(theta);
-
-							x = radius * Math.cos(rphi) * Math.sin(rtheta);
-							y = radius * Math.sin(rphi) * Math.sin(rtheta);
-							z = radius * Math.cos(rtheta);
-
-							Wizardry.proxy.spawnParticle(WizardryParticleType.SPARK, world, x + caster.posX, y + caster.posY, z + caster.posZ, 0, 0, 0, 10);
-						}
-
-					}
 				}
 				return true;
+			}
+		}
+		else {
+			double x, y, z;
+			for (double theta = 0; theta <= 180; theta += 1) {
+				double dphi = 15 / Math.sin(Math.toRadians(theta));
+
+				for (double phi = 0; phi < 360; phi += dphi) {
+					double rphi = Math.toRadians(phi);
+					double rtheta = Math.toRadians(theta);
+
+					x = radius * Math.cos(rphi) * Math.sin(rtheta);
+					y = radius * Math.sin(rphi) * Math.sin(rtheta);
+					z = radius * Math.cos(rtheta);
+
+					Wizardry.proxy.spawnParticle(WizardryParticleType.SPARK, world, x + caster.posX, y + caster.posY, z + caster.posZ, 0, 0, 0, 10);
+				}
+
 			}
 		}
 		return false;
