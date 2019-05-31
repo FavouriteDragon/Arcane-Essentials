@@ -15,7 +15,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import scala.tools.nsc.backend.icode.Members;
 
 import java.util.List;
 
@@ -69,7 +68,7 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 		if (belowBlock == Blocks.LAVA || belowBlock == Blocks.FIRE) {
 			this.setFire(100);
 		}
-		if (this.isBurning()) 	ArcaneUtils.spawnSpinningVortex(world, 120, 7, 0.25, 40, WizardryParticleType.MAGIC_FIRE,
+		if (this.isBurning()) ArcaneUtils.spawnSpinningVortex(world, 120, 7, 0.25, 40, WizardryParticleType.MAGIC_FIRE,
 				new Vec3d(posX, posY, posZ), new Vec3d(0.3, 0.1, 0.3), new Vec3d(motionX, motionY, motionZ), 10, 1, 0, 0);
 
 		this.move(MoverType.SELF, motionX, motionY / 2, motionZ);
@@ -111,8 +110,6 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 			}
 
 		}
-
-
 
 
 	}

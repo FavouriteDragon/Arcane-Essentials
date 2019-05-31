@@ -54,8 +54,8 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 					ArcaneUtils.applyPlayerKnockback(target);
 				}
 			}
-			AxisAlignedBB box = new AxisAlignedBB(x + shield.getRadius() * 1.25F, y + shield.getRadius() * 1.25F, z + shield.getRadius() * 1.25F, x - shield.getRadius() * 1.25F,
-					y - shield.getRadius() * 1.25F, z - shield.getRadius() * 1.25F);
+			AxisAlignedBB box = new AxisAlignedBB(x + shield.getRadius() * 1.5F, y + shield.getRadius() * 1.5F, z + shield.getRadius() * 1.5F, x - shield.getRadius() * 1.5F,
+					y - shield.getRadius() * 1.5F, z - shield.getRadius() * 1.5F);
 			List<Entity> projectiles = shield.world.getEntitiesWithinAABB(Entity.class, box);
 			for (Entity projectile : projectiles) {
 				if((projectile.canBeCollidedWith() && projectile.canBePushed() || projectile instanceof EntityArrow || projectile instanceof EntityThrowable) &&

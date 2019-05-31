@@ -1,7 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
-import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
 import net.minecraft.entity.Entity;

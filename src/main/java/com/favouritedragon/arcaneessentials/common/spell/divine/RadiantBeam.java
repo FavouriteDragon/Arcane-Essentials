@@ -39,7 +39,7 @@ public class RadiantBeam extends Spell {
 			Vec3d endPos = caster.getLookVec().scale(range).add(startPos);
 			Vec3d knockBack = new Vec3d(6 * modifiers.get(WizardryItems.blast_upgrade), 6 * modifiers.get(WizardryItems.blast_upgrade), 6 * modifiers.get(WizardryItems.blast_upgrade));
 			ArcaneUtils.handlePiercingBeamCollision(world, caster, startPos, endPos, 0.5F, null, true,
-					MagicDamage.DamageType.RADIANT, damage, knockBack, true, 10, 0.5F);
+					MagicDamage.DamageType.RADIANT, damage, knockBack, true, 10, 0.5F, 0);
 		}
 
 		if (world.isRemote) {
@@ -83,7 +83,7 @@ public class RadiantBeam extends Spell {
 			Vec3d endPos = caster.getLookVec().scale(range).add(startPos);
 			Vec3d knockBack = new Vec3d(6 * modifiers.get(WizardryItems.blast_upgrade),  6 * modifiers.get(WizardryItems.blast_upgrade), 6 * modifiers.get(WizardryItems.blast_upgrade));
 			ArcaneUtils.handlePiercingBeamCollision(world, caster, startPos, endPos, 0.5F, null, true,
-					MagicDamage.DamageType.RADIANT, damage, knockBack, true, 10, 0.25F);
+					MagicDamage.DamageType.RADIANT, damage, knockBack, true, 10, 0.25F, 0);
 		}
 
 

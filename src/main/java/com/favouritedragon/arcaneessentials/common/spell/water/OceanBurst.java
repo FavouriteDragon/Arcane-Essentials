@@ -22,7 +22,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import static com.favouritedragon.arcaneessentials.common.util.ArcaneEnums.WATER;
 import static com.favouritedragon.arcaneessentials.common.util.DamageSources.SPLASH;
 
 public class OceanBurst extends Spell {

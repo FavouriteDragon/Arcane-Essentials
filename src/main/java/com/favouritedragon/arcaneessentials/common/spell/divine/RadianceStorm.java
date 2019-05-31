@@ -83,7 +83,7 @@ public class RadianceStorm extends Spell {
 	private void spawnRadiantBeam(World world, EntityLivingBase caster, Vec3d startPos, Vec3d endPos, float radius, float damage, Vec3d knockBack, int fireTime) {
 		if (!world.isRemote) {
 			ArcaneUtils.handlePiercingBeamCollision(world, caster, startPos, endPos, radius, null, true, MagicDamage.DamageType.RADIANT,
-					damage, knockBack, true, fireTime, radius);
+					damage, knockBack, true, fireTime, radius, 0);
 		}
 		if (world.isRemote) {
 			ArcaneUtils.spawnSpinningHelix(world, 420, 30, radius, WizardryParticleType.SPARKLE, endPos,

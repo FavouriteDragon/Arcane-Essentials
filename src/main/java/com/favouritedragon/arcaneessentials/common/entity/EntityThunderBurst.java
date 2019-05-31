@@ -1,9 +1,7 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
-import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.util.MagicDamage;
-import electroblob.wizardry.util.WizardryParticleType;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -21,18 +19,16 @@ public class EntityThunderBurst extends EntityMagicConstruct {
 		setSize(10, 10);
 	}
 
-	@Override
-	protected void entityInit() {
-
-	}
-
 	public EntityThunderBurst(World world, double x, double y, double z, EntityLivingBase caster, int lifetime,
 							  float damageMultiplier) {
 		super(world, x, y, z, caster, lifetime, damageMultiplier);
 		setSize(1, 1);
 	}
 
+	@Override
+	protected void entityInit() {
 
+	}
 
 	@Override
 	public void onUpdate() {

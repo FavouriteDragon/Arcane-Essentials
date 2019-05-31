@@ -486,20 +486,23 @@ public class ArcaneUtils {
 	 * @param damage       The amount of damage.
 	 * @param knockBack    The amount of knockback.
 	 * @param fireTime     How long to set an enemy on fire.
+	 * @param lifeSteal	   The percent of damage to heal the caster by. Between 0 and 1.
 	 */
 
 	public static void handlePiercingBeamCollision(World world, EntityLivingBase caster, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, boolean directDamage, MagicDamage.DamageType damageType,
-												   float damage, Vec3d knockBack, boolean invulnerable, int fireTime, float radius) {
+												   float damage, Vec3d knockBack, boolean invulnerable, int fireTime, float radius, float lifeSteal) {
 		HashSet<Entity> excluded = new HashSet<>();
 		RayTraceResult result = standardEntityRayTrace(world, caster, spellEntity, startPos, endPos, borderSize, false, excluded);
 		if (result != null && result.entityHit instanceof EntityLivingBase) {
 			EntityLivingBase hit = (EntityLivingBase) result.entityHit;
 			if (!MagicDamage.isEntityImmune(damageType, hit)) {
 				hit.setFire(fireTime);
+				caster.heal(damage * lifeSteal);
 				if (directDamage) {
 					hit.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, damageType), damage);
 				} else if (spellEntity != null) {
 					hit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(spellEntity, caster, damageType), damage);
+
 				}
 				Vec3d kM = endPos.subtract(startPos).scale(.01);
 				hit.motionX += knockBack.x * kM.x;
@@ -541,7 +544,7 @@ public class ArcaneUtils {
 				}
 			} else {
 				handlePiercingBeamCollision(world, caster, pos, endPos, borderSize, spellEntity, directDamage,
-						damageType, damage, knockBack, invulnerable, fireTime, radius);
+						damageType, damage, knockBack, invulnerable, fireTime, radius, lifeSteal);
 
 			}
 
