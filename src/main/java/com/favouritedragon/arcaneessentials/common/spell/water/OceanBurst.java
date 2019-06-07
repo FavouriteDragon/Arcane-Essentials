@@ -34,7 +34,7 @@ public class OceanBurst extends Spell {
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		double range = 3 + 2 * modifiers.get(WizardryItems.range_upgrade);
 		Vec3d look = caster.getLookVec();
-		//TODO: multiple hitoxes???
+		//TODO: multiple hitboxes???
 		if (world.isRemote) {
 			//Spawn particles
 			ArcaneUtils.spawnDirectionalVortex(world, caster, look.scale(0.8), 240, range, 0.05, 240 / 1.5, WizardryParticleType.MAGIC_BUBBLE, caster.posX, caster.posY + 1.2,
