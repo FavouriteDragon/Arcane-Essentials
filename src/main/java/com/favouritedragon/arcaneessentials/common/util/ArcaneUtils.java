@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -677,6 +678,11 @@ public class ArcaneUtils {
 			blockHit = new RayTraceResult(closestHitEntity);
 		}
 		return blockHit;
+	}
+
+	public static int getRandomNumberInRange(int min, int max) {
+		Random r = new Random();
+		return r.nextInt((max - min) + 1) + min;
 	}
 }
 

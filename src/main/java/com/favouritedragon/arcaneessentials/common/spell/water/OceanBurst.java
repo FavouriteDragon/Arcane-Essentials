@@ -2,13 +2,13 @@ package com.favouritedragon.arcaneessentials.common.spell.water;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
+import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.SpellType;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
-import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.WizardryParticleType;
 import electroblob.wizardry.util.WizardryUtilities;
@@ -34,16 +34,36 @@ public class OceanBurst extends Spell {
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		double range = 3 + 2 * modifiers.get(WizardryItems.range_upgrade);
 		Vec3d look = caster.getLookVec();
-		//TODO: multiple hitboxes???
+		double mult = modifiers.get(WizardryItems.range_upgrade) > 0 ? 0.6 + 0.2 * modifiers.get(WizardryItems.range_upgrade) : 0.6;
 		if (world.isRemote) {
 			//Spawn particles
-			ArcaneUtils.spawnDirectionalVortex(world, caster, look.scale(0.8), 240, range, 0.05, 240 / 1.5, WizardryParticleType.MAGIC_BUBBLE, caster.posX, caster.posY + 1.2,
-					caster.posZ, 0, 0, 0, 0, 0, 0, 0);
+				for(int i = 0; i < 40; i++) {
+					double x1 = caster.posX + look.x + world.rand.nextFloat() / 3 - 0.1f;
+					double y1 = WizardryUtilities.getPlayerEyesPos(caster) - 0.4f + world.rand.nextFloat() / 5 - 0.1f;
+					double z1 = caster.posZ + look.z + world.rand.nextFloat() / 3 - 0.1f;
+
+					//Using the random function each time ensures a different number for every value, making the ability "feel" better.
+					Wizardry.proxy.spawnParticle(WizardryParticleType.MAGIC_BUBBLE, world, x1, y1, z1,
+							look.x * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 25
+									+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 10F,
+							look.y * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 25
+									+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 10F,
+							look.z * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 25
+									+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 10F,
+							0);
+					Wizardry.proxy.spawnParticle(WizardryParticleType.MAGIC_BUBBLE, world, x1, y1, z1,
+							look.x * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 25
+									+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 10F,
+							look.y * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 25
+									+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 10F,
+							look.z * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 25
+									+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 10F,
+							0);
+				}
 		}
 		if (!world.isRemote) {
-			Vec3d startPos = look.scale(0.8).add(caster.getPositionVector());
-			Vec3d endPos = ArcaneUtils.getDirectionalVortexEndPos(caster, look.scale(0.8), 240, range, 240 / 1.5, caster.posX, caster.posY + 1.2, caster.posZ);
-			startPos = startPos.add(0, 1.2, 0);
+			Vec3d startPos = new Vec3d(caster.posX, WizardryUtilities.getPlayerEyesPos(caster), caster.posZ);
+			Vec3d endPos = startPos.add(caster.getLookVec().scale(mult * 4 * range));
 			ArcaneUtils.vortexEntityCollision(world, caster, null, startPos, endPos, 0.74F, 4 + 2 * modifiers.get(WizardryItems.blast_upgrade),
 					look.scale(2 + 1 * modifiers.get(WizardryItems.blast_upgrade)), SPLASH, true);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_GENERIC_SWIM, 2.0F,
@@ -63,18 +83,38 @@ public class OceanBurst extends Spell {
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
 		double range = 3 + 2 * modifiers.get(WizardryItems.range_upgrade);
 		Vec3d look = caster.getLookVec();
+		double mult = modifiers.get(WizardryItems.range_upgrade) > 0 ? 0.6 + 0.2 * modifiers.get(WizardryItems.range_upgrade) : 0.6;
 		if (world.isRemote) {
 			//Spawn particles
-			ArcaneUtils.spawnSpinningDirectionalVortex(world, caster, look.scale(0.8), 240, range, 0.05, 240 / 1.5, WizardryParticleType.MAGIC_BUBBLE, new Vec3d(caster.posX, caster.posY + 1.2,
-					caster.posZ), new Vec3d(1.5, 1, 1.5), Vec3d.ZERO, 0, 0, 0, 0);
+			for(int i = 0; i < 40; i++) {
+				double x1 = caster.posX + look.x + world.rand.nextFloat() / 3 - 0.1f;
+				double y1 = caster.getEyeHeight() + caster.getEntityBoundingBox().minY - 0.4f + world.rand.nextFloat() / 5 - 0.1f;
+				double z1 = caster.posZ + look.z + world.rand.nextFloat() / 3 - 0.1f;
+
+				//Using the random function each time ensures a different number for every value, making the ability "feel" better.
+				Wizardry.proxy.spawnParticle(WizardryParticleType.MAGIC_BUBBLE, world, x1, y1, z1,
+						look.x * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 25
+								+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 10F,
+						look.y * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 25
+								+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 10F,
+						look.z * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 25
+								+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 10F,
+						0);
+				Wizardry.proxy.spawnParticle(WizardryParticleType.MAGIC_BUBBLE, world, x1, y1, z1,
+						look.x * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 25
+								+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 10F,
+						look.y * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 25
+								+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 10F,
+						look.z * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 25
+								+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 10F,
+						0);
+			}
 		}
 		if (!world.isRemote) {
-			Vec3d startPos = look.scale(0.8).add(caster.getPositionVector());
-			Vec3d endPos = ArcaneUtils.getDirectionalVortexEndPos(caster, look.scale(0.8), 240, range, 240 / 1.5, caster.posX, caster.posY + 1.2, caster.posZ);
-			startPos = startPos.add(0, 1.2, 0);
-			ArcaneUtils.vortexEntityCollision(world, caster, null, startPos, endPos, 0.75F, 4 + 2 * modifiers.get(WizardryItems.blast_upgrade),
-					look.scale(modifiers.get(WizardryItems.blast_upgrade)), MagicDamage.DamageType.BLAST, true);
-
+			Vec3d startPos = new Vec3d(caster.posX, caster.getEyeHeight() + caster.getEntityBoundingBox().minY, caster.posZ);
+			Vec3d endPos = startPos.add(caster.getLookVec().scale(mult * 4 * range));
+			ArcaneUtils.vortexEntityCollision(world, caster, null, startPos, endPos, 0.74F, 4 + 2 * modifiers.get(WizardryItems.blast_upgrade),
+					look.scale(2 + 1 * modifiers.get(WizardryItems.blast_upgrade)), SPLASH, true);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_GENERIC_SWIM, SoundCategory.HOSTILE, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
 			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_ICE, SoundCategory.HOSTILE, 2.0F,
