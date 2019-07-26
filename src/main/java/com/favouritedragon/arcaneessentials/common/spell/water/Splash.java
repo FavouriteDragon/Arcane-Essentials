@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 public class Splash extends Spell {
 	public Splash(Tier tier, int cost, Element element, String name, SpellType type, int cooldown, EnumAction action, boolean isContinuous, String modID) {
-		super(Tier.APPRENTICE, 40, Element.EARTH, "splash", SpellType.ATTACK, 20, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(Tier.BASIC, 40, Element.EARTH, "splash", SpellType.ATTACK, 20, EnumAction.BOW, false, ArcaneEssentials.MODID);
 	}
 
 	@Override
