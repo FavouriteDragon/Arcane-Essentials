@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.spell.water;
 
+import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.SpellType;
 import electroblob.wizardry.constants.Tier;
@@ -10,9 +11,9 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public class WaterBolt extends Spell {
-	public WaterBolt(Tier tier, int cost, Element element, String name, SpellType type, int cooldown, EnumAction action, boolean isContinuous, String modID) {
-		super(tier, cost, element, name, type, cooldown, action, isContinuous, modID);
+public class Splash extends Spell {
+	public Splash(Tier tier, int cost, Element element, String name, SpellType type, int cooldown, EnumAction action, boolean isContinuous, String modID) {
+		super(Tier.APPRENTICE, 40, Element.EARTH, "splash", SpellType.ATTACK, 20, EnumAction.BOW, false, ArcaneEssentials.MODID);
 	}
 
 	@Override
