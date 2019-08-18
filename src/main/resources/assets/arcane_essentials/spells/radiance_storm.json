@@ -20,6 +20,7 @@
     "damage": 8,
     "burn_duration": 10,
     "blast_radius": 1,
-    "range": 5
+    "range": 5,
+    "knockback_mult": 1
   }
 }

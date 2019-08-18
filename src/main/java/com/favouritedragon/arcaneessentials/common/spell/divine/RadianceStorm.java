@@ -1,14 +1,14 @@
 package com.favouritedragon.arcaneessentials.common.spell.divine;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
+import com.favouritedragon.arcaneessentials.common.entity.EntityMagicBolt;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
+import electroblob.wizardry.entity.construct.EntityMagicConstruct;
+import electroblob.wizardry.entity.living.EntitySummonedCreature;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
-import electroblob.wizardry.util.MagicDamage;
-import electroblob.wizardry.util.ParticleBuilder;
-import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
+import electroblob.wizardry.util.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -25,10 +25,11 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class RadianceStorm extends Spell {
+	public static final String KNOCKBACK_MULT = "knockback_mult";
 	public RadianceStorm() {
 		//super(Tier.MASTER, 125, Element.HEALING, "radiance_storm", SpellType.ATTACK, 300, EnumAction.BOW, false, ArcaneEssentials.MODID);
 		super(ArcaneEssentials.MODID, "radiance_storm", EnumAction.BOW, false);
-		addProperties(DAMAGE, BLAST_RADIUS, BURN_DURATION, RANGE);
+		addProperties(DAMAGE, BLAST_RADIUS, BURN_DURATION, RANGE, KNOCKBACK_MULT);
 	}
 
 	@Override
@@ -45,7 +46,7 @@ public class RadianceStorm extends Spell {
 				double y = WizardryUtilities.getNearestFloorLevel(world, new BlockPos(x, caster.posY, z), 3 + 2 * (int) modifiers.get(WizardryItems.range_upgrade));
 				Vec3d startPos = new Vec3d(x, caster.getEntityBoundingBox().minY + 30, z);
 				Vec3d endPos = new Vec3d(x, y, z);
-				Vec3d knockBack = new Vec3d(0.5, 0.2, 0.5);
+				Vec3d knockBack = new Vec3d(0.5, 0.2, 0.5).scale(getProperty(KNOCKBACK_MULT).floatValue());
 				spawnRadiantBeam(world, caster, startPos, endPos, beamRadius, damage, knockBack, fireTime);
 				handleSphericalExplosion(world, caster, endPos, beamRadius * 2, damage,
 						new Vec3d(2, 0.1, 2).scale(modifiers.get(WizardryItems.blast_upgrade)), fireTime);
@@ -58,20 +59,20 @@ public class RadianceStorm extends Spell {
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
 		if (world.canBlockSeeSky(new BlockPos(caster))) {
-			float damage = 8 + 2 * modifiers.get(WizardryItems.blast_upgrade);
-			int fireTime = 10 + 2 * (int) modifiers.get(WizardryItems.duration_upgrade);
-			float beamRadius = 1 * modifiers.get(WizardryItems.blast_upgrade);
-			for (int r = 0; r < 6; r++) {
-				float radius = world.rand.nextInt((4 + 2 * (int) modifiers.get(WizardryItems.range_upgrade))) * 1.5F + world.rand.nextFloat() * modifiers.get(WizardryItems.blast_upgrade);
+			float damage = getProperty(DAMAGE).floatValue() + 2 * modifiers.get(WizardryItems.blast_upgrade);
+			int fireTime = getProperty(BURN_DURATION).intValue() + 2 * (int) modifiers.get(WizardryItems.duration_upgrade);
+			float beamRadius = getProperty(BLAST_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade);
+			for (int r = 0; r < 7; r++) {
+				float radius = world.rand.nextInt((getProperty(RANGE).intValue() + 2 * (int) modifiers.get(WizardryItems.range_upgrade))) + world.rand.nextFloat() * modifiers.get(WizardryItems.blast_upgrade);
 				double angle = world.rand.nextDouble() * Math.PI * 2;
 				double x = caster.posX + radius * Math.cos(angle);
 				double z = caster.posZ + radius * Math.sin(angle);
-				double y = WizardryUtilities.getNearestFloorLevel(world, new BlockPos(x, caster.posY, z), 4 + 2 * (int) modifiers.get(WizardryItems.range_upgrade));
+				double y = WizardryUtilities.getNearestFloorLevel(world, new BlockPos(x, caster.posY, z), 3 + 2 * (int) modifiers.get(WizardryItems.range_upgrade));
 				Vec3d startPos = new Vec3d(x, caster.getEntityBoundingBox().minY + 30, z);
 				Vec3d endPos = new Vec3d(x, y, z);
-				Vec3d knockBack = new Vec3d(0.5, 0.2, 0.5);
+				Vec3d knockBack = new Vec3d(0.5, 0.2, 0.5).scale(getProperty(KNOCKBACK_MULT).floatValue());
 				spawnRadiantBeam(world, caster, startPos, endPos, beamRadius, damage, knockBack, fireTime);
-				handleSphericalExplosion(world, caster, endPos, beamRadius * 1.5F, damage,
+				handleSphericalExplosion(world, caster, endPos, beamRadius * 2, damage,
 						new Vec3d(2, 0.1, 2).scale(modifiers.get(WizardryItems.blast_upgrade)), fireTime);
 			}
 			return true;
@@ -98,7 +99,7 @@ public class RadianceStorm extends Spell {
 			List<Entity> hit = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
 			if (!hit.isEmpty()) {
 				for (Entity e : hit) {
-				//	if (WizardryUtilities.(caster, e)) {
+					if (AllyDesignationSystem.isValidTarget(caster, e)) {
 						if (e != caster) {
 							if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.RADIANT, e)) {
 								double dx = e.posX - caster.posX;
@@ -117,7 +118,7 @@ public class RadianceStorm extends Spell {
 								e.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.RADIANT), damage);
 								ArcaneUtils.applyPlayerKnockback(e);
 							}
-						//}
+						}
 					}
 				}
 			}
