@@ -4,8 +4,10 @@ import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
+import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.block.Block;
+import net.minecraft.enchantment.EnchantmentProtection;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
@@ -29,13 +31,12 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 	public EntityLightningVortex(World world, double x, double y, double z, Vec3d velocity, EntityLivingBase caster, int lifetime,
 								 float damageMultiplier) {
 		super(world);
-		this.posX = x;
-		this.posY = y;
-		this.posZ = z;
+		this.setPosition(x, y, z);
 		this.setCaster(caster);
 		this.lifetime = lifetime;
 		this.height = 7.0f;
 		this.width = 3.0f;
+		this.damageMultiplier = damageMultiplier;
 		this.motionX = velocity.x;
 		this.motionY = velocity.y;
 		this.motionZ = velocity.z;
@@ -75,12 +76,12 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 		if (belowBlock == Blocks.LAVA || belowBlock == Blocks.FIRE) {
 			this.setFire(100);
 		}
-		if (this.isBurning()) ArcaneUtils.spawnSpinningVortex(world, 120, 7, 0.25, 40, WizardryParticleType.MAGIC_FIRE,
+		if (this.isBurning()) ArcaneUtils.spawnSpinningVortex(world, 120, 7, 0.25, 40, ParticleBuilder.Type.MAGIC_FIRE,
 				new Vec3d(posX, posY, posZ), new Vec3d(0.3, 0.1, 0.3), new Vec3d(motionX, motionY, motionZ), 10, 1, 0, 0);
 
 		this.move(MoverType.SELF, motionX, motionY / 2, motionZ);
 		if (ticksExisted % 10 == 0) {
-			world.playSound(posX, posY, posZ, WizardrySounds.SPELL_LOOP_LIGHTNING, SoundCategory.AMBIENT, 2.0F,
+			world.playSound(posX, posY, posZ, WizardrySounds.ENTITY_LIGHTNING_DISC_HIT, SoundCategory.AMBIENT, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
 		}
 		if (!this.world.isRemote) {

@@ -33,6 +33,10 @@ public class EntityFlamePillar extends EntityMagicConstruct {
 	public EntityFlamePillar(World world, double x, double y, double z, EntityLivingBase caster, int lifetime, float damageMultiplier, float radius,
 							 float vortexHeight, int particleAmount) {
 		super(world);
+		this.setPosition(x, y, z);
+		this.setCaster(caster);
+		this.lifetime = lifetime;
+		this.damageMultiplier = damageMultiplier;
 		setSize(1, 1);
 		setRadius(radius);
 		setVortexHeight(vortexHeight);
@@ -87,7 +91,7 @@ public class EntityFlamePillar extends EntityMagicConstruct {
 		super.onUpdate();
 
 		if (ticksExisted % 5 == 0) {
-			world.playSound(posX, posY, posZ, WizardrySounds.SPELL_LOOP_FIRE, SoundCategory.HOSTILE, 1 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10, false);
+			world.playSound(posX, posY, posZ, WizardrySounds.ENTITY_FIRE_RING_AMBIENT, WizardrySounds.SPELLS, 1 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10, false);
 		}
 		if (ticksExisted % 60 == 0) {
 			world.playSound(posX, posY, posZ, SoundEvents.BLOCK_FIRE_AMBIENT, SoundCategory.HOSTILE, 1 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10, false);

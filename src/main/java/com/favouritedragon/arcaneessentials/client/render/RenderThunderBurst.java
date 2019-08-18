@@ -1,8 +1,7 @@
 package com.favouritedragon.arcaneessentials.client.render;
 
 import com.favouritedragon.arcaneessentials.common.entity.EntityThunderBurst;
-import electroblob.wizardry.Wizardry;
-import electroblob.wizardry.util.WizardryParticleType;
+import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
@@ -28,7 +27,8 @@ public class RenderThunderBurst extends Render<EntityThunderBurst> {
 				y = entity.ticksExisted * 0.4 * Math.sin(rphi) * Math.sin(rtheta);
 				z = entity.ticksExisted * 0.4 * Math.cos(rtheta);
 
-				Wizardry.proxy.spawnParticle(WizardryParticleType.SPARK, entity.world, entity.posX, entity.posY, entity.posZ, x, y, z, 10);
+				ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING).pos(entity.getPositionVector()).spin(entity.ticksExisted * 0.4, 0.8)
+						.vel(x, y, z).spawn(entity.world);
 
 			}
 		}

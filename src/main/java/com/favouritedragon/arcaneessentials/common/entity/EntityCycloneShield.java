@@ -2,7 +2,6 @@ package com.favouritedragon.arcaneessentials.common.entity;
 
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
-import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.WizardryUtilities;
@@ -14,7 +13,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
@@ -34,6 +32,10 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 
 	public EntityCycloneShield(World world, double x, double y, double z, EntityLivingBase caster, int lifetime, float damageMultiplier, float radius) {
 		super(world);
+		this.setPosition(x, y, z);
+		this.setCaster(caster);
+		this.lifetime = lifetime;
+		this.damageMultiplier = damageMultiplier;
 		setRadius(radius);
 	}
 
@@ -145,7 +147,7 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 
 		}
 		if (ticksExisted % 4 == 0 && getCaster() != null) {
-			world.playSound(getCaster().posX, getCaster().posY, getCaster().posZ, WizardrySounds.SPELL_LOOP_WIND, SoundCategory.WEATHER, 0.5F + world.rand.nextFloat() / 20, 2.0F + world.rand.nextFloat() / 20, true);
+			world.playSound(getCaster().posX, getCaster().posY, getCaster().posZ, WizardrySounds.ENTITY_BLIZZARD_AMBIENT, WizardrySounds.SPELLS, 0.5F + world.rand.nextFloat() / 20, 2.0F + world.rand.nextFloat() / 20, true);
 		}
 	}
 

@@ -1,6 +1,5 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
-import electroblob.wizardry.entity.projectile.EntityMagicArrow;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.WizardryUtilities;
 import io.netty.buffer.ByteBuf;

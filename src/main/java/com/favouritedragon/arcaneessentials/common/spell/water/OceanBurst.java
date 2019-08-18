@@ -10,7 +10,6 @@ import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryParticleType;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,7 +26,7 @@ import static com.favouritedragon.arcaneessentials.common.util.DamageSources.SPL
 public class OceanBurst extends Spell {
 
 	public OceanBurst() {
-		super(Tier.APPRENTICE, 35, Element.EARTH, "ocean_burst", SpellType.ATTACK, 80, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(ArcaneEssentials.MODID, "ocean_burst", EnumAction.BOW, false);
 	}
 
 	@Override
