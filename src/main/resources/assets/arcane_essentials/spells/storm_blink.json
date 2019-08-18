@@ -11,8 +11,8 @@
     "looting": true
   },
   "tier": "master",
-  "element": "LIGHTNING",
-  "type": "UTILITY",
+  "element": "lightning",
+  "type": "utility",
   "cost": 75,
   "chargeup": 0,
   "cooldown": 280,

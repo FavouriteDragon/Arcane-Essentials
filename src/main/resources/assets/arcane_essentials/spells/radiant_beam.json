@@ -11,10 +11,10 @@
     "looting": true
   },
   "tier": "advanced",
-  "element": "HEALING",
-  "type": "ATTACK",
+  "element": "healing",
+  "type": "attack",
   "cost": 40,
-  "chargeup": 0,
-  "cooldown": 80,
+  "chargeup": 10,
+  "cooldown": 70,
   "base_properties": {}
 }

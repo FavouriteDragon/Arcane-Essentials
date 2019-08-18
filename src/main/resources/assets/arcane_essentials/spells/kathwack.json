@@ -11,10 +11,14 @@
     "looting": true
   },
   "tier": "master",
-  "element": "lightning",
+  "element": "necromancy",
   "type": "attack",
-  "cost": 80,
+  "cost": 120,
   "chargeup": 0,
   "cooldown": 300,
-  "base_properties": {}
+  "base_properties": {
+    "death_chance": 20,
+    "damage": 4,
+    "blast_radius": 8
+  }
 }

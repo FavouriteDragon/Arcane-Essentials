@@ -11,8 +11,8 @@
     "looting": true
   },
   "tier": "advanced",
-  "element": "EARTH",
-  "type": "DEFENCE",
+  "element": "earth",
+  "type": "defence",
   "cost": 40,
   "chargeup": 0,
   "cooldown": 100,
