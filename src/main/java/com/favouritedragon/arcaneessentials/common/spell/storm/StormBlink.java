@@ -30,7 +30,7 @@ import java.util.List;
 
 public class StormBlink extends Spell {
 	public StormBlink() {
-		super(Tier.MASTER, 75, Element.LIGHTNING, "storm_blink", SpellType.UTILITY, 280, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(ArcaneEssentials.MODID, "storm_blink", EnumAction.BOW, false);
 	}
 
 	@Override

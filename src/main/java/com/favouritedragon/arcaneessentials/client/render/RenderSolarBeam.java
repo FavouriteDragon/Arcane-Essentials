@@ -2,7 +2,7 @@ package com.favouritedragon.arcaneessentials.client.render;
 
 import com.favouritedragon.arcaneessentials.common.entity.EntitySolarBeam;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
-import electroblob.wizardry.util.WizardryParticleType;
+
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;

@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public class StormSmash extends Spell {
 
 	public StormSmash() {
-		super(Tier.MASTER, 60, Element.LIGHTNING, "storm_smash", SpellType.ATTACK, 150, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(ArcaneEssentials.MODID, "storm_smash", EnumAction.BOW, false);
 	}
 
 	@Override

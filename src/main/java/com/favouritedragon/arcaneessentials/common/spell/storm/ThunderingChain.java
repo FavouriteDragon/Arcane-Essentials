@@ -12,8 +12,8 @@ import net.minecraft.world.World;
 
 public class ThunderingChain extends Spell {
 
-	public ThunderingChain(Tier tier, int cost, Element element, String name, SpellType type, int cooldown, EnumAction action, boolean isContinuous) {
-		super(Tier.ADVANCED, cost, element, name, type, cooldown, action, isContinuous);
+	public ThunderingChain(String name, EnumAction action, boolean isContinuous) {
+		super(name, action, isContinuous);
 	}
 
 	@Override
