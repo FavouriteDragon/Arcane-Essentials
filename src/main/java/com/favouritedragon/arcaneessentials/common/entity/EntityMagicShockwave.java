@@ -1,9 +1,13 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
+import java.util.UUID;
 
 public class EntityMagicShockwave extends EntityMagicConstruct {
 
@@ -28,5 +32,17 @@ public class EntityMagicShockwave extends EntityMagicConstruct {
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {
 
+	}
+
+	@Nullable
+	@Override
+	public UUID getOwnerId() {
+		return null;
+	}
+
+	@Nullable
+	@Override
+	public Entity getOwner() {
+		return null;
 	}
 }

@@ -11,10 +11,12 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public class SonicStream extends Spell {
-	//This spell just gives you a massive speed boost, a way better jump, and a melee buff
-	public SonicStream(Tier tier, int cost, Element element, String name, SpellType type, int cooldown, EnumAction action, boolean isContinuous) {
-		super(tier, cost, element, name, type, cooldown, action, isContinuous);
+
+	public SonicStream(String name, EnumAction action, boolean isContinuous) {
+		super(name, action, isContinuous);
 	}
+	//This spell just gives you a massive speed boost, a way better jump, and a melee buff
+
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
