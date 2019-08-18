@@ -11,10 +11,10 @@
     "looting": true
   },
   "tier": "advanced",
-  "element": "LIGHTNING",
-  "type": "ATTACK",
+  "element": "lightning",
+  "type": "attack",
   "cost": 75,
-  "chargeup": 0,
-  "cooldown": 150,
+  "chargeup": 10,
+  "cooldown": 140,
   "base_properties": {}
 }

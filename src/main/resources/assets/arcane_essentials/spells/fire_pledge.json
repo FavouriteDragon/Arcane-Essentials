@@ -11,10 +11,10 @@
     "looting": true
   },
   "tier": "advanced",
-  "element": "FIRE",
-  "type": "ATTACK",
-  "cost": 70,
-  "chargeup": 0,
-  "cooldown": 150,
+  "element": "fire",
+  "type": "attack",
+  "cost": 65,
+  "chargeup": 20,
+  "cooldown": 130,
   "base_properties": {}
 }

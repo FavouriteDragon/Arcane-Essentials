@@ -11,8 +11,8 @@
     "looting": true
   },
   "tier": "advanced",
-  "element": "FIRE",
-  "type": "DEFENCE",
+  "element": "fire",
+  "type": "defence",
   "cost": 50,
   "chargeup": 0,
   "cooldown": 180,

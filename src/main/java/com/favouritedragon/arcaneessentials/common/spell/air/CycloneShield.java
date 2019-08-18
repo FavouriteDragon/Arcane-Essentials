@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 
 public class CycloneShield extends Spell {
 	public CycloneShield() {
-		super(Tier.ADVANCED, 40, Element.EARTH, "cyclone_shield", SpellType.DEFENCE, 100, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(ArcaneEssentials.MODID, "cyclone_shield", EnumAction.BOW, false);
 	}
 
 	@Override

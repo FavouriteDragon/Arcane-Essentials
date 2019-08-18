@@ -11,8 +11,8 @@
     "looting": true
   },
   "tier": "apprentice",
-  "element": "EARTH",
-  "type": "ATTACK",
+  "element": "earth",
+  "type": "attack",
   "cost": 35,
   "chargeup": 0,
   "cooldown": 80,
