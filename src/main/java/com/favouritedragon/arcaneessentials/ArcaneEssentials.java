@@ -1,12 +1,19 @@
 package com.favouritedragon.arcaneessentials;
 
 import com.favouritedragon.arcaneessentials.proxy.IProxy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import electroblob.wizardry.spell.Spell;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
+
+import java.io.FileWriter;
+import java.io.IOException;
 
 @Mod(modid = ArcaneEssentials.MODID, name = ArcaneEssentials.NAME, version = ArcaneEssentials.VERSION, dependencies="required-after:ebwizardry")
 public class ArcaneEssentials
@@ -39,7 +46,43 @@ public class ArcaneEssentials
     @EventHandler
     public void init(FMLInitializationEvent event) {
         proxy.Init(event);
-    }
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+		for(Spell spell : Spell.getSpells(Spell.allSpells)) {
+
+			try {
+
+				FileWriter writer = new FileWriter("generated\\" + spell.getRegistryName().getPath() + ".json");
+
+				JsonObject json = new JsonObject();
+
+				JsonObject enabled = new JsonObject();
+
+				for (SpellProperties.Context context : Spell.Context.values()) {
+					enabled.addProperty(context.name, true);
+				}
+
+				json.add("enabled", enabled);
+
+				json.addProperty("tier", spell.tier.getUnlocalisedName());
+				json.addProperty("element", spell.element.name());
+				json.addProperty("type", spell.type.name());
+
+				json.addProperty("cost", spell.cost);
+				json.addProperty("chargeup", 0);
+				json.addProperty("cooldown", spell.cooldown);
+
+				json.add("base_properties", new JsonObject());
+
+				gson.toJson(json, writer);
+
+				writer.close();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		}
 
     @EventHandler
 	public void postInit(FMLInitializationEvent event) {
