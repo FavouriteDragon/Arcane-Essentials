@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 public class InfernoPillar extends Spell {
 
 	public InfernoPillar() {
-		super(Tier.ADVANCED, 50, Element.FIRE, "inferno_pillar", SpellType.DEFENCE, 180, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(ArcaneEssentials.MODID, "inferno_pillar", EnumAction.BOW, false);
 	}
 
 	@Override

@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 public class RadiantBeam extends Spell {
 
 	public RadiantBeam() {
-		super(Tier.ADVANCED, 40, Element.HEALING, "radiant_beam", SpellType.ATTACK, 80, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(ArcaneEssentials.MODID, "radiant_beam", EnumAction.BOW, false);
 	}
 
 	@Override

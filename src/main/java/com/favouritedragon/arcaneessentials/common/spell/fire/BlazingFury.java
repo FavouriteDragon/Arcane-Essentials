@@ -11,10 +11,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public class BlazingFury extends Spell {
-	//Lowers cooldowns for a duration, increases power, increases power by the next attack that hits you.
-	public BlazingFury(Tier tier, int cost, Element element, String name, SpellType type, int cooldown, EnumAction action, boolean isContinuous) {
-		super(tier, cost, element, name, type, cooldown, action, isContinuous);
+	public BlazingFury(String name, EnumAction action, boolean isContinuous) {
+		super(name, action, isContinuous);
 	}
+	//Lowers cooldowns for a duration, increases power, increases power by the next attack that hits you.
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {

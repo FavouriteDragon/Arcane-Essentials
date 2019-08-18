@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 public class SolarBeam extends Spell {
 
 	public SolarBeam() {
-		super(Tier.ADVANCED, 40, Element.EARTH, "solar_beam", SpellType.ATTACK, 140, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(ArcaneEssentials.MODID, "solar_beam", EnumAction.BOW, false);
 	}
 
 	@Override
