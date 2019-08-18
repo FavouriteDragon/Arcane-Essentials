@@ -2,7 +2,7 @@ package com.favouritedragon.arcaneessentials.common.util;
 
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.util.MagicDamage;
-import electroblob.wizardry.util.WizardryParticleType;
+import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -10,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -82,7 +83,7 @@ public class ArcaneUtils {
 	}
 
 	//TODO: Reduce velocity and position into a vec3d
-	public static void spawnDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double minRadius, double radiusScale, WizardryParticleType particle, double posX, double posY, double posZ,
+	public static void spawnDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double minRadius, double radiusScale, ResourceLocation particle, double posX, double posY, double posZ,
 											  double velX, double velY, double velZ, int maxAge, float r, float g, float b) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double radius = minRadius + (angle / radiusScale);
@@ -93,11 +94,11 @@ public class ArcaneUtils {
 			if (entity != null && direction != null) {
 				pos = ArcaneUtils.rotateAroundAxisX(pos, entity.rotationPitch + 90);
 				pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
-				Wizardry.proxy.spawnParticle(particle, world, pos.x + posX + direction.x, pos.y + posY + direction.y,
-						pos.z + posZ + direction.z, velX, velY, velZ, maxAge, r, g, b);
+				//Wizardry.proxy.spawnParticle(particle, world, pos.x + posX + direction.x, pos.y + posY + direction.y,
+				//		pos.z + posZ + direction.z, velX, velY, velZ, maxAge, r, g, b);
 			} else {
-				Wizardry.proxy.spawnParticle(particle, world, x + posX, y + posY,
-						z + posZ, velX, velY, velZ, maxAge, r, g, b);
+			//	Wizardry.proxy.spawnParticle(particle, world, x + posX, y + posY,
+			//			z + posZ, velX, velY, velZ, maxAge, r, g, b);
 			}
 		}
 	}
@@ -123,7 +124,7 @@ public class ArcaneUtils {
 	 * @param maxAge        The maximum age of the particle. Wizardry particles already have a predetermined age, this just adds onto it.
 	 * @param r             The amount of red in the particle. G and B are self-explanatory (green and blue).
 	 */
-	public static void spawnSpinningDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double minRadius, double radiusScale, WizardryParticleType particle, Vec3d position,
+	public static void spawnSpinningDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double minRadius, double radiusScale, ResourceLocation particle, Vec3d position,
 													  Vec3d particleSpeed, Vec3d entitySpeed, int maxAge, float r, float g, float b) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double angle2 = world.rand.nextDouble() * Math.PI * 2;
@@ -141,8 +142,8 @@ public class ArcaneUtils {
 				pVel = ArcaneUtils.rotateAroundAxisY(pVel, entity.rotationYaw);
 				pos = ArcaneUtils.rotateAroundAxisX(pos, entity.rotationPitch + 90);
 				pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
-				Wizardry.proxy.spawnParticle(particle, world, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
-						pos.z + position.z + direction.z, pVel.x + entitySpeed.x, pVel.y + entitySpeed.y, pVel.z + entitySpeed.z, maxAge, r, g, b);
+			//	Wizardry.proxy.spawnParticle(particle, world, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
+					//	pos.z + position.z + direction.z, pVel.x + entitySpeed.x, pVel.y + entitySpeed.y, pVel.z + entitySpeed.z, maxAge, r, g, b);
 			}
 		}
 	}
@@ -206,7 +207,7 @@ public class ArcaneUtils {
 	 * @param maxAge        The maximum age of the particle. Wizardry particles already have a predetermined age, this just adds onto it.
 	 * @param r             The amount of red in the particle. G and B are self-explanatory (green and blue).
 	 */
-	public static void spawnSpinningVortex(World world, int maxAngle, double vortexHeight, double minRadius, double radiusScale, WizardryParticleType particle, Vec3d position,
+	public static void spawnSpinningVortex(World world, int maxAngle, double vortexHeight, double minRadius, double radiusScale, ResourceLocation particle, Vec3d position,
 										   Vec3d particleSpeed, Vec3d entitySpeed, int maxAge, float r, float g, float b) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double angle2 = world.rand.nextDouble() * Math.PI * 2;
@@ -217,8 +218,8 @@ public class ArcaneUtils {
 			double speed = world.rand.nextDouble() * 2 + 1;
 			double omega = Math.signum(speed * ((Math.PI * 2) / 20 - speed / (20 * radius)));
 			angle2 += omega;
-			Wizardry.proxy.spawnParticle(particle, world, x + position.x, y + position.y, z + position.z,
-					(particleSpeed.x * radius * omega * Math.cos(angle2)) + entitySpeed.x, particleSpeed.y + entitySpeed.y, (particleSpeed.z * radius * omega * Math.sin(angle2)) + entitySpeed.z, maxAge, r, g, b);
+			//Wizardry.proxy.spawnParticle(particle, world, x + position.x, y + position.y, z + position.z,
+				//	(particleSpeed.x * radius * omega * Math.cos(angle2)) + entitySpeed.x, particleSpeed.y + entitySpeed.y, (particleSpeed.z * radius * omega * Math.sin(angle2)) + entitySpeed.z, maxAge, r, g, b);
 
 		}
 	}
@@ -260,7 +261,7 @@ public class ArcaneUtils {
 		}
 	}
 
-	public static void spawnDirectionalHelix(World world, Entity entity, Vec3d direction, int maxAngle, double vortexLength, double radius, WizardryParticleType particle, Vec3d position,
+	public static void spawnDirectionalHelix(World world, Entity entity, Vec3d direction, int maxAngle, double vortexLength, double radius, ResourceLocation type, Vec3d position,
 											 Vec3d particleSpeed, int maxAge, float r, float g, float b) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double x = radius * cos(angle);
@@ -270,16 +271,16 @@ public class ArcaneUtils {
 			if (entity != null && direction != null) {
 				pos = ArcaneUtils.rotateAroundAxisX(pos, entity.rotationPitch + 90);
 				pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
-				Wizardry.proxy.spawnParticle(particle, world, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
-						pos.z + position.z + direction.z, particleSpeed.z, particleSpeed.y, particleSpeed.z, maxAge, r, g, b);
+			//	Wizardry.proxy.spawnParticle(particle, world, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
+			//			pos.z + position.z + direction.z, particleSpeed.z, particleSpeed.y, particleSpeed.z, maxAge, r, g, b);
 			} else {
-				Wizardry.proxy.spawnParticle(particle, world, x + position.x, y + position.y,
-						z + position.z, particleSpeed.z, particleSpeed.y, particleSpeed.z, maxAge);
+			//	Wizardry.proxy.spawnParticle(particle, world, x + position.x, y + position.y,
+				//		z + position.z, particleSpeed.z, particleSpeed.y, particleSpeed.z, maxAge);
 			}
 		}
 	}
 
-	public static void spawnSpinningDirectionalHelix(World world, Entity entity, Vec3d direction, Vec3d entitySpeed, int maxAngle, double vortexLength, double radius, WizardryParticleType particle, Vec3d position,
+	public static void spawnSpinningDirectionalHelix(World world, Entity entity, Vec3d direction, Vec3d entitySpeed, int maxAngle, double vortexLength, double radius, ResourceLocation particle, Vec3d position,
 													 Vec3d particleSpeed, int maxAge, float r, float g, float b) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double angle2 = world.rand.nextDouble() * Math.PI * 2;
@@ -295,25 +296,21 @@ public class ArcaneUtils {
 				pVel = ArcaneUtils.rotateAroundAxisX(pVel, entity.rotationPitch - 90);
 				pos = ArcaneUtils.rotateAroundAxisX(pos, entity.rotationPitch + 90);
 				pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
-				Wizardry.proxy.spawnParticle(particle, world, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
-						pos.z + position.z + direction.z, pVel.x + entitySpeed.x, pVel.y + entitySpeed.y, pVel.z + entitySpeed.z, maxAge, r, g, b);
+			//	Wizardry.proxy.spawnParticle(particle, world, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
+				//		pos.z + position.z + direction.z, pVel.x + entitySpeed.x, pVel.y + entitySpeed.y, pVel.z + entitySpeed.z, maxAge, r, g, b);
 			}
 		}
 	}
 
-	public static void spawnSpinningHelix(World world, int maxAngle, double vortexLength, double radius, WizardryParticleType particle, Vec3d position,
-										  Vec3d particleSpeed, Vec3d entitySpeed, int maxAge, float r, float g, float b) {
+	public static void spawnSpinningHelix(World world, int maxAngle, double vortexLength, double radius, ResourceLocation particle, Vec3d position,
+										  double particleSpeed, Vec3d entitySpeed, int maxAge, float r, float g, float b) {
 		for (int angle = 0; angle < maxAngle; angle++) {
-			double angle2 = world.rand.nextDouble() * Math.PI * 2;
 			double x = radius * cos(angle);
 			double y = angle / (maxAngle / vortexLength);
 			double z = radius * sin(angle);
-			double speed = world.rand.nextDouble() * 2 + 1;
-			double omega = Math.signum(speed * ((Math.PI * 2) / 20 - speed / (20 * radius)));
-			angle2 += omega;
-			Wizardry.proxy.spawnParticle(particle, world, x + position.x, y + position.y,
-					z + position.z, (particleSpeed.x * radius * omega * Math.cos(angle2)) + entitySpeed.x, particleSpeed.y + entitySpeed.y,
-					(particleSpeed.z * radius * omega * Math.sin(angle2)) + entitySpeed.z, maxAge, r, g, b);
+			ParticleBuilder.create(particle).pos(x + position.x, y + position.y, z + position.z).clr(r, g, b).spin(radius, particleSpeed)
+					.vel(entitySpeed.scale(particleSpeed)).time(maxAge).spawn(world);
+
 		}
 	}
 
