@@ -2,6 +2,7 @@ package com.favouritedragon.arcaneessentials.common.spell.storm;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityLightningVortex;
+import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.SpellType;
 import electroblob.wizardry.constants.Tier;
@@ -24,7 +25,7 @@ import net.minecraft.world.World;
 public class LightningVortex extends Spell {
 
 	public LightningVortex() {
-		super(Tier.ADVANCED, 75, Element.LIGHTNING, "lightning_vortex", SpellType.ATTACK, 150, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(ArcaneEssentials.MODID, "lightning_vortex", EnumAction.BOW, false);
 	}
 
 	@Override

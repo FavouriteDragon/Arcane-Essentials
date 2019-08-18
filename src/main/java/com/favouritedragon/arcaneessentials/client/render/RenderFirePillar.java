@@ -2,7 +2,7 @@ package com.favouritedragon.arcaneessentials.client.render;
 
 import com.favouritedragon.arcaneessentials.common.entity.EntityFlamePillar;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
-import electroblob.wizardry.util.WizardryParticleType;
+import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.EnumParticleTypes;
@@ -22,8 +22,8 @@ public class RenderFirePillar extends Render<EntityFlamePillar> {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 		ArcaneUtils.spawnSpinningHelix(entity.world, entity.getParticleAmount(), entity.getVortexHeight(), entity.getRadius(), EnumParticleTypes.FLAME, entity.getPositionVector(),
 				new Vec3d(0.03, 0.075, 0.03), Vec3d.ZERO);
-		ArcaneUtils.spawnSpinningHelix(entity.world, entity.getParticleAmount() * 2/3, entity.getVortexHeight(), entity.getRadius(), WizardryParticleType.MAGIC_FIRE, entity.getPositionVector(),
-				new Vec3d(0.03, 0.075, 0.03), Vec3d.ZERO, 20, 1.0F, 1.0F, 1.0F);
+		ArcaneUtils.spawnSpinningHelix(entity.world, entity.getParticleAmount() * 2/3, entity.getVortexHeight(), entity.getRadius(), ParticleBuilder.Type.MAGIC_FIRE, entity.getPositionVector(),
+				1, Vec3d.ZERO, 20, 1.0F, 1.0F, 1.0F);
 	}
 
 	@Nullable

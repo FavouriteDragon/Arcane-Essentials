@@ -4,7 +4,6 @@ import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
-import electroblob.wizardry.util.WizardryParticleType;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
