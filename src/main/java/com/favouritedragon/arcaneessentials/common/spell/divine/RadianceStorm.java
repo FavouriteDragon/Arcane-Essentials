@@ -28,16 +28,17 @@ public class RadianceStorm extends Spell {
 	public RadianceStorm() {
 		//super(Tier.MASTER, 125, Element.HEALING, "radiance_storm", SpellType.ATTACK, 300, EnumAction.BOW, false, ArcaneEssentials.MODID);
 		super(ArcaneEssentials.MODID, "radiance_storm", EnumAction.BOW, false);
+		addProperties(DAMAGE, BLAST_RADIUS, BURN_DURATION, RANGE);
 	}
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		if (world.canBlockSeeSky(new BlockPos(caster))) {
-			float damage = 8 + 2 * modifiers.get(WizardryItems.blast_upgrade);
-			int fireTime = 10 + 2 * (int) modifiers.get(WizardryItems.duration_upgrade);
-			float beamRadius = 1 * modifiers.get(WizardryItems.blast_upgrade);
+			float damage = getProperty(DAMAGE).floatValue() + 2 * modifiers.get(WizardryItems.blast_upgrade);
+			int fireTime = getProperty(BURN_DURATION).intValue() + 2 * (int) modifiers.get(WizardryItems.duration_upgrade);
+			float beamRadius = getProperty(BLAST_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade);
 			for (int r = 0; r < 7; r++) {
-				float radius = world.rand.nextInt((4 + 2 * (int) modifiers.get(WizardryItems.range_upgrade))) + world.rand.nextFloat() * modifiers.get(WizardryItems.blast_upgrade);
+				float radius = world.rand.nextInt((getProperty(RANGE).intValue() + 2 * (int) modifiers.get(WizardryItems.range_upgrade))) + world.rand.nextFloat() * modifiers.get(WizardryItems.blast_upgrade);
 				double angle = world.rand.nextDouble() * Math.PI * 2;
 				double x = caster.posX + radius * Math.cos(angle);
 				double z = caster.posZ + radius * Math.sin(angle);

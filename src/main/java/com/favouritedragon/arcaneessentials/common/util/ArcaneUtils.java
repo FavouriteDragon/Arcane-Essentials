@@ -3,6 +3,7 @@ package com.favouritedragon.arcaneessentials.common.util;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
+import electroblob.wizardry.util.RayTracer;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -393,7 +394,7 @@ public class ArcaneUtils {
 	public static void vortexEntityRaytrace(World world, EntityLivingBase entity, Entity spellEntity, Vec3d startPos, double vortexLength, float maxRadius,
 											float damage, Vec3d knockBack, MagicDamage.DamageType damageSource, boolean directDamage) {
 		if (entity != null) {
-			RayTraceResult result = ArcaneUtils.standardEntityRayTrace(world, entity, startPos, vortexLength, maxRadius);
+			RayTraceResult result = ArcaneUtils.standardEntityRayTrace(world, entity, spellEntity, startPos, vortexLength, false, maxRadius, true, false);
 			if (result != null && result.entityHit != null) {
 				if (result.entityHit instanceof EntityLivingBase) {
 					EntityLivingBase hit = (EntityLivingBase) result.entityHit;
@@ -430,16 +431,14 @@ public class ArcaneUtils {
 	}
 
 	@Nullable
-	public static RayTraceResult standardEntityRayTrace(World world, EntityLivingBase entity, Vec3d startPos, double range, float borderSize) {
+	public static RayTraceResult standardEntityRayTrace(World world, EntityLivingBase entity, Entity spellEntity, Vec3d startPos, double range,
+														boolean hitLiquids, float borderSize, boolean ignoreUncollidables, boolean returnLastUncollidable) {
 		float dx = (float) entity.getLookVec().x * (float) range;
 		float dy = (float) entity.getLookVec().y * (float) range;
 		float dz = (float) entity.getLookVec().z * (float) range;
-		HashSet<Entity> hashset = new HashSet<>(1);
-		hashset.add(entity);
-		return WizardryUtilities.tracePath(world, (float) startPos.x,
-				(float) startPos.y, (float) startPos.z,
-				(float) startPos.x + dx, (float) startPos.y + dy, (float) startPos.z + dz,
-				borderSize, hashset, false);
+		return RayTracer.rayTrace(world, startPos,
+				new Vec3d(startPos.x  + dx, startPos.y + dy, startPos.z + dz), borderSize,
+				hitLiquids, ignoreUncollidables, returnLastUncollidable, Entity.class, entity1 -> entity1 != entity && entity1 != spellEntity);
 	}
 
 	public static void applyPlayerKnockback(Entity target) {
