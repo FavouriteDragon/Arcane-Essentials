@@ -2,15 +2,14 @@ package com.favouritedragon.arcaneessentials.common.spell.divine;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
-import electroblob.wizardry.constants.Element;
-import electroblob.wizardry.constants.SpellType;
-import electroblob.wizardry.constants.Tier;
+import electroblob.wizardry.client.particle.ParticleSparkle;
+import electroblob.wizardry.client.particle.ParticleWizardry;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.MagicDamage;
+import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryParticleType;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -29,7 +28,8 @@ import java.util.List;
 
 public class RadianceStorm extends Spell {
 	public RadianceStorm() {
-		super(Tier.MASTER, 125, Element.HEALING, "radiance_storm", SpellType.ATTACK, 300, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		//super(Tier.MASTER, 125, Element.HEALING, "radiance_storm", SpellType.ATTACK, 300, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(ArcaneEssentials.MODID, "radiance_storm", EnumAction.BOW, false);
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class RadianceStorm extends Spell {
 					damage, knockBack, true, fireTime, radius, 0);
 		}
 		if (world.isRemote) {
-			ArcaneUtils.spawnSpinningHelix(world, 420, 30, radius, WizardryParticleType.SPARKLE, endPos,
+			ArcaneUtils.spawnSpinningHelix(world, 420, 30, radius, ParticleBuilder.create(ParticleBuilder.Type.SPARKLE), endPos,
 					new Vec3d(0.0075, -0.0025, 0.0075), Vec3d.ZERO, 30, 1.0F, 1.0F, 0.3F);
 		}
 		world.playSound(endPos.x, endPos.y, endPos.z, WizardrySounds.SPELL_HEAL, SoundCategory.HOSTILE, 1.5F, 1F, true);
@@ -99,7 +99,7 @@ public class RadianceStorm extends Spell {
 			List<Entity> hit = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
 			if (!hit.isEmpty()) {
 				for (Entity e : hit) {
-					if (WizardryUtilities.isValidTarget(caster, e)) {
+				//	if (WizardryUtilities.(caster, e)) {
 						if (e != caster) {
 							if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.RADIANT, e)) {
 								double dx = e.posX - caster.posX;
@@ -118,7 +118,7 @@ public class RadianceStorm extends Spell {
 								e.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.RADIANT), damage);
 								ArcaneUtils.applyPlayerKnockback(e);
 							}
-						}
+						//}
 					}
 				}
 			}

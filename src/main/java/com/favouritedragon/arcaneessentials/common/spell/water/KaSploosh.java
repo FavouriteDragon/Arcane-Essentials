@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.spell.water;
 
+import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.SpellType;
 import electroblob.wizardry.constants.Tier;
@@ -12,8 +13,8 @@ import net.minecraft.world.World;
 
 public class KaSploosh extends Spell {
 
-	public KaSploosh(Tier tier, int cost, Element element, String name, SpellType type, int cooldown, EnumAction action, boolean isContinuous) {
-		super(Tier.ADVANCED, cost, element, name, type, cooldown, action, isContinuous);
+	public KaSploosh() {
+		super(ArcaneEssentials.MODID, "kasploosh", EnumAction.BOW, false);
 	}
 
 	@Override
