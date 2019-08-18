@@ -2,13 +2,10 @@ package com.favouritedragon.arcaneessentials.common.spell.storm;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityLightningVortex;
-import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
-import electroblob.wizardry.constants.Element;
-import electroblob.wizardry.constants.SpellType;
-import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.util.RayTracer;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLiving;
@@ -33,27 +30,27 @@ public class LightningVortex extends Spell {
 		double range = 3 + 1 * modifiers.get(WizardryItems.range_upgrade);
 		float damage = 3 + 1 * modifiers.get(WizardryItems.blast_upgrade);
 		Vec3d vel = caster.getLookVec().scale(range / 10);
-		RayTraceResult result = WizardryUtilities.rayTrace(range, world, caster, true);
+		RayTraceResult result = RayTracer.standardBlockRayTrace(world, caster, range,true);
 		if (result != null) {
 			Vec3d pos = result.hitVec;
 			world.spawnEntity(new EntityLightningVortex(world, pos.x, pos.y, pos.z, vel,
 					caster, 100 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage));
-			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_LIGHTNING, 2.0F,
+			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_LIGHTNING_SIGIL_TRIGGER, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_LIGHTNING_THUNDER, 1F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
-			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_FORCE, 2.0F,
+			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_HAMMER_THROW, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			return true;
 		} else {
 			Vec3d pos = caster.getLookVec().scale(1.5).add(caster.getPositionVector());
 			world.spawnEntity(new EntityLightningVortex(world, pos.x, pos.y, pos.z, vel,
 					caster, 100 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage));
-			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_LIGHTNING, 2.0F,
+			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_LIGHTNING_SIGIL_TRIGGER, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_LIGHTNING_THUNDER, 1F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
-			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.SPELL_FORCE, 2.0F,
+			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_HAMMER_THROW, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			return true;
 		}
@@ -64,27 +61,27 @@ public class LightningVortex extends Spell {
 		double range = 3 + 1 * modifiers.get(WizardryItems.range_upgrade);
 		float damage = 3 + 1 * modifiers.get(WizardryItems.blast_upgrade);
 		Vec3d vel = caster.getLookVec().scale(range / 10);
-		RayTraceResult result = WizardryUtilities.rayTrace(range, world, caster, true);
+		RayTraceResult result = RayTracer.standardBlockRayTrace(world, caster, range,true);
 		if (result != null) {
 			Vec3d pos = result.hitVec;
 			world.spawnEntity(new EntityLightningVortex(world, pos.x, pos.y, pos.z, vel,
 					caster, 100 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage));
-			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_LIGHTNING, SoundCategory.HOSTILE, 2.0F,
+			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_LIGHTNING_SIGIL_TRIGGER, SoundCategory.HOSTILE, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_LIGHTNING_THUNDER, SoundCategory.HOSTILE, 1F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
-			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_FORCE, SoundCategory.HOSTILE, 2.0F,
+			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_HAMMER_THROW, SoundCategory.HOSTILE, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
 			return true;
 		} else {
 			Vec3d pos = caster.getLookVec().scale(1.5).add(caster.getPositionVector());
 			world.spawnEntity(new EntityLightningVortex(world, pos.x, pos.y, pos.z, vel,
 					caster, 100 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage));
-			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_LIGHTNING, SoundCategory.HOSTILE, 2.0F,
+			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_LIGHTNING_SIGIL_TRIGGER, SoundCategory.HOSTILE, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_LIGHTNING_THUNDER, SoundCategory.HOSTILE, 1F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
-			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_FORCE, SoundCategory.HOSTILE, 2.0F,
+			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_HAMMER_THROW, SoundCategory.HOSTILE, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
 			return true;
 		}

@@ -2,9 +2,6 @@ package com.favouritedragon.arcaneessentials.common.spell.storm;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityThunderBurst;
-import electroblob.wizardry.constants.Element;
-import electroblob.wizardry.constants.SpellType;
-import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
@@ -27,10 +24,13 @@ public class ThunderBurst extends Spell {
 	public boolean cast(World world, EntityPlayer entityPlayer, EnumHand enumHand, int i, SpellModifiers spellModifiers) {
 		if (!world.isRemote) {
 			entityPlayer.swingArm(enumHand);
-			WizardryUtilities.playSoundAtPlayer(entityPlayer, WizardrySounds.SPELL_LIGHTNING, 1.0f, 1.0f);
-			WizardryUtilities.playSoundAtPlayer(entityPlayer, WizardrySounds.SPELL_SHOCKWAVE, 2.0f, 1.0f);
-			world.spawnEntity(new EntityThunderBurst(world, entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ,
-					entityPlayer, 30, 1));
+			WizardryUtilities.playSoundAtPlayer(entityPlayer, WizardrySounds.ENTITY_LIGHTNING_SIGIL_TRIGGER, 1.0f, 1.0f);
+			WizardryUtilities.playSoundAtPlayer(entityPlayer, WizardrySounds.ENTITY_HAMMER_EXPLODE, 2.0f, 1.0f);
+			EntityThunderBurst burst = new EntityThunderBurst(world);
+			burst.setPosition(entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ);
+			burst.setCaster(entityPlayer);
+			burst.lifetime = 30;
+			world.spawnEntity(burst);
 			return true;
 		}
 		return false;
@@ -40,10 +40,13 @@ public class ThunderBurst extends Spell {
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
 		if (!world.isRemote) {
 			caster.swingArm(hand);
-			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_LIGHTNING, SoundCategory.HOSTILE, 1.0f, 1.0f, false);
-			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.SPELL_SHOCKWAVE, SoundCategory.HOSTILE, 2.0f, 1.0f, true);
-			world.spawnEntity(new EntityThunderBurst(world, caster.posX, caster.posY, caster.posZ,
-					caster, 30, 1));
+			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_LIGHTNING_SIGIL_TRIGGER, SoundCategory.HOSTILE, 1.0f, 1.0f, false);
+			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_HAMMER_EXPLODE, SoundCategory.HOSTILE, 2.0f, 1.0f, true);
+			EntityThunderBurst burst = new EntityThunderBurst(world);
+			burst.setPosition(caster.posX, caster.posY, caster.posZ);
+			burst.setCaster(caster);
+			burst.lifetime = 30;
+			world.spawnEntity(burst);
 			return true;
 
 		}
