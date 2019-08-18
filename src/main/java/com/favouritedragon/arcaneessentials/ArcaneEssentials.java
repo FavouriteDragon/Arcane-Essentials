@@ -39,7 +39,7 @@ public class ArcaneEssentials
     @EventHandler
     public void init(FMLInitializationEvent event) {
         proxy.Init(event);
-    }
+		}
 
     @EventHandler
 	public void postInit(FMLInitializationEvent event) {
