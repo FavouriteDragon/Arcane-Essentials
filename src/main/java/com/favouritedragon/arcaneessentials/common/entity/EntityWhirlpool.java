@@ -3,9 +3,10 @@ package com.favouritedragon.arcaneessentials.common.entity;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.util.MagicDamage;
-import electroblob.wizardry.util.WizardryParticleType;
+import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
@@ -15,7 +16,9 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.List;
+import java.util.UUID;
 
 import static com.favouritedragon.arcaneessentials.common.util.DamageSources.SPLASH;
 
@@ -27,12 +30,7 @@ public class EntityWhirlpool extends EntityMagicConstruct {
 		this.width = 1F;
 	}
 
-	public EntityWhirlpool(World world, double x, double y, double z, EntityLivingBase caster, int lifetime,
-						   float damageMultiplier, float width, float height) {
-		super(world, x, y, z, caster, lifetime, damageMultiplier);
-		this.height = height;
-		this.width = width;
-	}
+
 
 	@Override
 	protected void entityInit() {
@@ -135,7 +133,7 @@ public class EntityWhirlpool extends EntityMagicConstruct {
 					target.motionY = velY + 0.2;
 					target.motionZ = dz * 2;
 					ArcaneUtils.applyPlayerKnockback(target);
-					ArcaneUtils.spawnSpinningVortex(world, 180, 5, 0.25, 60, WizardryParticleType.MAGIC_BUBBLE,
+					ArcaneUtils.spawnSpinningVortex(world, 180, 5, 0.25, 60, ParticleBuilder.Type.MAGIC_BUBBLE,
 							new Vec3d(posX, posY, posZ), new Vec3d(0.4, 0.2, 0.4), Vec3d.ZERO, 20, 0, 0, 0);
 				}
 
@@ -144,4 +142,15 @@ public class EntityWhirlpool extends EntityMagicConstruct {
 		this.isDead = true;
 	}
 
+	@Nullable
+	@Override
+	public UUID getOwnerId() {
+		return getCaster().getUniqueID();
+	}
+
+	@Nullable
+	@Override
+	public Entity getOwner() {
+		return getCaster();
+	}
 }

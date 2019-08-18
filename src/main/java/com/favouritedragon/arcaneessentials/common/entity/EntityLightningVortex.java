@@ -4,9 +4,9 @@ import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
-import electroblob.wizardry.util.WizardryParticleType;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
 import net.minecraft.init.Blocks;
@@ -16,7 +16,9 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.List;
+import java.util.UUID;
 
 public class EntityLightningVortex extends EntityMagicConstruct {
 
@@ -26,7 +28,12 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 
 	public EntityLightningVortex(World world, double x, double y, double z, Vec3d velocity, EntityLivingBase caster, int lifetime,
 								 float damageMultiplier) {
-		super(world, x, y, z, caster, lifetime, damageMultiplier);
+		super(world);
+		this.posX = x;
+		this.posY = y;
+		this.posZ = z;
+		this.setCaster(caster);
+		this.lifetime = lifetime;
 		this.height = 7.0f;
 		this.width = 3.0f;
 		this.motionX = velocity.x;
@@ -112,5 +119,17 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 		}
 
 
+	}
+
+	@Nullable
+	@Override
+	public UUID getOwnerId() {
+		return getCaster().getUniqueID();
+	}
+
+	@Nullable
+	@Override
+	public Entity getOwner() {
+		return getCaster();
 	}
 }

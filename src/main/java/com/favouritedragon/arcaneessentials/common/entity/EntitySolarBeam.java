@@ -2,13 +2,16 @@ package com.favouritedragon.arcaneessentials.common.entity;
 
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
+import java.util.UUID;
 
 import static com.favouritedragon.arcaneessentials.common.util.DamageSources.EARTH;
 
@@ -23,9 +26,6 @@ public class EntitySolarBeam extends EntityMagicConstruct {
 		super(par1World);
 	}
 
-	public EntitySolarBeam(World world, double x, double y, double z, EntityLivingBase caster, int lifetime, float damageMultiplier) {
-		super(world, x, y, z, caster, lifetime, damageMultiplier);
-	}
 
 	public float getRadius() {
 		return dataManager.get(SYNC_RADIUS);
@@ -73,5 +73,16 @@ public class EntitySolarBeam extends EntityMagicConstruct {
 	}
 
 
+	@Nullable
+	@Override
+	public UUID getOwnerId() {
+		return getCaster().getUniqueID();
+	}
+
+	@Nullable
+	@Override
+	public Entity getOwner() {
+		return getCaster();
+	}
 }
 

@@ -3,6 +3,7 @@ package com.favouritedragon.arcaneessentials.common.entity;
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.WizardryUtilities;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,18 +11,14 @@ import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.List;
+import java.util.UUID;
 
 public class EntityThunderBurst extends EntityMagicConstruct {
 
 	public EntityThunderBurst(World world) {
 		super(world);
-		setSize(10, 10);
-	}
-
-	public EntityThunderBurst(World world, double x, double y, double z, EntityLivingBase caster, int lifetime,
-							  float damageMultiplier) {
-		super(world, x, y, z, caster, lifetime, damageMultiplier);
 		setSize(1, 1);
 	}
 
@@ -84,5 +81,17 @@ public class EntityThunderBurst extends EntityMagicConstruct {
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {
 
+	}
+
+	@Nullable
+	@Override
+	public UUID getOwnerId() {
+		return getCaster().getUniqueID();
+	}
+
+	@Nullable
+	@Override
+	public Entity getOwner() {
+		return getCaster();
 	}
 }

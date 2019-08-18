@@ -11,12 +11,9 @@ import java.util.UUID;
 
 public class EntityMagicShockwave extends EntityMagicConstruct {
 
-	public EntityMagicShockwave(World par1World) {
-		super(par1World);
-	}
 
-	public EntityMagicShockwave(World world, double x, double y, double z, EntityLivingBase caster, int lifetime, float damageMultiplier) {
-		super(world, x, y, z, caster, lifetime, damageMultiplier);
+	public EntityMagicShockwave(World world) {
+		super(world);
 	}
 
 	@Override
@@ -37,12 +34,12 @@ public class EntityMagicShockwave extends EntityMagicConstruct {
 	@Nullable
 	@Override
 	public UUID getOwnerId() {
-		return null;
+		return getCaster().getUniqueID();
 	}
 
 	@Nullable
 	@Override
 	public Entity getOwner() {
-		return null;
+		return getCaster();
 	}
 }

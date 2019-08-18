@@ -10,5 +10,5 @@ import net.minecraftforge.common.util.EnumHelper;
 public class ArcaneMaterials {
 
 	public static final ItemArmor.ArmorMaterial MANA_ARMOUR = EnumHelper.addArmorMaterial(ArcaneEssentials.MODID + ":mana_armour", ArcaneEssentials.MODID
-			+ ":mana", 300, new int[]{400, 600, 500, 300}, 20, WizardrySounds.SPELL_MAGIC, 3);
+			+ ":mana", 300, new int[]{400, 600, 500, 300}, 20, WizardrySounds.ITEM_WAND_LEVELUP, 3);
 }
