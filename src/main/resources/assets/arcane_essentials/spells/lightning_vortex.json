@@ -1,7 +1,7 @@
 {
   "enabled": {
-    "books": true,
-    "scrolls": true,
+    "book": true,
+    "scroll": true,
     "wands": true,
     "npcs": true,
     "dispensers": true,
