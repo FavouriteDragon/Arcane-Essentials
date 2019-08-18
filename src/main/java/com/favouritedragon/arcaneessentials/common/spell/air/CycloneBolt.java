@@ -22,18 +22,18 @@ import static com.favouritedragon.arcaneessentials.common.util.ArcaneEnums.AIR;
 
 public class CycloneBolt extends Spell {
 
+	public static final String SPEED = "speed";
 	public CycloneBolt() {
 		//super(Tier.APPRENTICE, 10, Element.EARTH, "cyclone_bolt", SpellType.ATTACK, 20, EnumAction.BOW, false, ArcaneEssentials.MODID);
 		super(ArcaneEssentials.MODID, "cyclone_bolt", EnumAction.BOW, false);
-		addProperties(DAMAGE);
-		addProperties(RANGE);
+		addProperties(DAMAGE, SPEED);
 	}
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		if (!world.isRemote) {
 			caster.swingArm(hand);
-			float speed = 0.5F * modifiers.get(WizardryItems.range_upgrade) + getProperty(RANGE).floatValue();
+			float speed = 0.5F * modifiers.get(WizardryItems.range_upgrade) + getProperty(SPEED).floatValue();
 			int knockBackStrength = 3 + (int) modifiers.get(WizardryItems.blast_upgrade);
 			float damageMultiplier = 1 * modifiers.get(WizardryItems.blast_upgrade);
 			world.spawnEntity(new EntityCycloneBolt(world, caster, speed, damageMultiplier, knockBackStrength));

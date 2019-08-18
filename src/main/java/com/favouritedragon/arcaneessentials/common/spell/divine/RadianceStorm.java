@@ -89,8 +89,8 @@ public class RadianceStorm extends Spell {
 			ArcaneUtils.spawnSpinningHelix(world, 420, 30, radius, ParticleBuilder.create(ParticleBuilder.Type.SPARKLE), endPos,
 					new Vec3d(0.0075, -0.0025, 0.0075), Vec3d.ZERO, 30, 1.0F, 1.0F, 0.3F);
 		}
-		world.playSound(endPos.x, endPos.y, endPos.z, WizardrySounds.SPELL_HEAL, SoundCategory.HOSTILE, 1.5F, 1F, true);
-		world.playSound(endPos.x, endPos.y, endPos.z, WizardrySounds.SPELL_SHOCKWAVE, SoundCategory.HOSTILE, 1.5F, 1F, true);
+		world.playSound(endPos.x, endPos.y, endPos.z, WizardrySounds.BLOCK_ARCANE_WORKBENCH_SPELLBIND, SoundCategory.HOSTILE, 1.5F, 1F, true);
+		world.playSound(endPos.x, endPos.y, endPos.z, WizardrySounds.ENTITY_HAMMER_LAND, WizardrySounds.SPELLS, 1.5F, 1F, true);
 	}
 
 	private void handleSphericalExplosion(World world, EntityLivingBase caster, Vec3d position, float radius, float damage, Vec3d knockBackScale, int fireTime) {

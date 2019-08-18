@@ -17,6 +17,6 @@
   "cooldown": 20,
   "base_properties": {
     "damage": "3",
-    "range": "10"
+    "speed": "10"
   }
 }
