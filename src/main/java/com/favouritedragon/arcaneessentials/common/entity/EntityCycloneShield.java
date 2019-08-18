@@ -18,7 +18,9 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.List;
+import java.util.UUID;
 
 import static com.favouritedragon.arcaneessentials.common.util.DamageSources.PRESSURE;
 
@@ -31,7 +33,7 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 	}
 
 	public EntityCycloneShield(World world, double x, double y, double z, EntityLivingBase caster, int lifetime, float damageMultiplier, float radius) {
-		super(world, x, y, z, caster, lifetime, damageMultiplier);
+		super(world);
 		setRadius(radius);
 	}
 
@@ -154,5 +156,17 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 		}
 		this.isDead = true;
 
+	}
+
+	@Nullable
+	@Override
+	public UUID getOwnerId() {
+		return getCaster().getUniqueID();
+	}
+
+	@Nullable
+	@Override
+	public Entity getOwner() {
+		return getCaster();
 	}
 }

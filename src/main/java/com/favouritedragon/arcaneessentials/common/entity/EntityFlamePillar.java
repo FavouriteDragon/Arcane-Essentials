@@ -16,7 +16,9 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.List;
+import java.util.UUID;
 
 public class EntityFlamePillar extends EntityMagicConstruct {
 
@@ -30,7 +32,7 @@ public class EntityFlamePillar extends EntityMagicConstruct {
 
 	public EntityFlamePillar(World world, double x, double y, double z, EntityLivingBase caster, int lifetime, float damageMultiplier, float radius,
 							 float vortexHeight, int particleAmount) {
-		super(world, x, y, z, caster, lifetime, damageMultiplier);
+		super(world);
 		setSize(1, 1);
 		setRadius(radius);
 		setVortexHeight(vortexHeight);
@@ -116,5 +118,17 @@ public class EntityFlamePillar extends EntityMagicConstruct {
 				}
 			}
 		}
+	}
+
+	@Nullable
+	@Override
+	public UUID getOwnerId() {
+		return getCaster().getUniqueID();
+	}
+
+	@Nullable
+	@Override
+	public Entity getOwner() {
+		return getCaster();
 	}
 }
