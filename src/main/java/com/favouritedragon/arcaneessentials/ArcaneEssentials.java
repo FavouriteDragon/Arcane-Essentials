@@ -58,9 +58,15 @@ public class ArcaneEssentials
 
 				JsonObject enabled = new JsonObject();
 
-				for (SpellProperties.Context context : Spell.Context.values()) {
-					enabled.addProperty(context.name, true);
-				}
+				enabled.addProperty("books", true);
+				enabled.addProperty("scrolls", true);
+				enabled.addProperty("wands", true);
+				enabled.addProperty("npcs", true);
+				enabled.addProperty("dispensers", true);
+				enabled.addProperty("commands", true);
+				enabled.addProperty("treasure", true);
+				enabled.addProperty("trades", true);
+				enabled.addProperty("looting", true);
 
 				json.add("enabled", enabled);
 
