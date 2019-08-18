@@ -2,11 +2,9 @@ package com.favouritedragon.arcaneessentials.common.spell.water;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityWhirlpool;
-import electroblob.wizardry.constants.Element;
-import electroblob.wizardry.constants.SpellType;
-import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.util.RayTracer;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLiving;
@@ -20,23 +18,27 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import static com.favouritedragon.arcaneessentials.common.util.ArcaneEnums.WATER;
-
 public class Whirlpool extends Spell {
 
 	public Whirlpool() {
-		super(Tier.ADVANCED, 40, Element.EARTH, "whirlpool", SpellType.DEFENCE, 100, EnumAction.BOW, false, ArcaneEssentials.MODID);
+		super(ArcaneEssentials.MODID, "whirlpool", EnumAction.BOW, false);
 	}
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		double range = 3 + 1 * modifiers.get(WizardryItems.range_upgrade);
 		float damage = 0.5F + modifiers.get(WizardryItems.blast_upgrade);
-		RayTraceResult result = WizardryUtilities.rayTrace(range, world, caster, true);
+		RayTraceResult result = RayTracer.standardBlockRayTrace(world, caster, range,true);
 		if (result != null) {
 			Vec3d pos = result.hitVec;
-			world.spawnEntity(new EntityWhirlpool(world, pos.x, pos.y, pos.z,
-					caster, 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage, 3, 3));
+			EntityWhirlpool pool = new EntityWhirlpool(world);
+			pool.setPosition(pos.x, pos.y, pos.z);
+			pool.setCaster(caster);
+			pool.lifetime = 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade);
+			pool.damageMultiplier = damage;
+			pool.height = 3;
+			pool.width = 3;
+			world.spawnEntity(pool);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.BLOCK_WATER_AMBIENT, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_PLAYER_SPLASH, 1F,
@@ -46,8 +48,14 @@ public class Whirlpool extends Spell {
 			return true;
 		} else {
 			Vec3d pos = caster.getPositionVector();
-			world.spawnEntity(new EntityWhirlpool(world, pos.x, pos.y, pos.z,
-					caster, 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage, 3, 3));
+			EntityWhirlpool pool = new EntityWhirlpool(world);
+			pool.setPosition(pos.x, pos.y, pos.z);
+			pool.setCaster(caster);
+			pool.lifetime = 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade);
+			pool.damageMultiplier = damage;
+			pool.height = 3;
+			pool.width = 3;
+			world.spawnEntity(pool);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.BLOCK_WATER_AMBIENT, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_PLAYER_SPLASH, 1F,
@@ -62,11 +70,17 @@ public class Whirlpool extends Spell {
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
 		double range = 3 + 1 * modifiers.get(WizardryItems.range_upgrade);
 		float damage = 3 + 1 * modifiers.get(WizardryItems.blast_upgrade);
-		RayTraceResult result = WizardryUtilities.rayTrace(range, world, caster, true);
+		RayTraceResult result = RayTracer.standardBlockRayTrace(world, caster, range,true);
 		if (result != null) {
 			Vec3d pos = result.hitVec;
-			world.spawnEntity(new EntityWhirlpool(world, pos.x, pos.y, pos.z,
-					caster, 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage, 3, 3));
+			EntityWhirlpool pool = new EntityWhirlpool(world);
+			pool.setPosition(pos.x, pos.y, pos.z);
+			pool.setCaster(caster);
+			pool.lifetime = 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade);
+			pool.damageMultiplier = damage;
+			pool.height = 3;
+			pool.width = 3;
+			world.spawnEntity(pool);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.BLOCK_WATER_AMBIENT, SoundCategory.HOSTILE, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.HOSTILE, 1F,
@@ -76,8 +90,14 @@ public class Whirlpool extends Spell {
 			return true;
 		} else {
 			Vec3d pos = caster.getPositionVector();
-			world.spawnEntity(new EntityWhirlpool(world, pos.x, pos.y, pos.z,
-					caster, 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage, 3, 3));
+			EntityWhirlpool pool = new EntityWhirlpool(world);
+			pool.setPosition(pos.x, pos.y, pos.z);
+			pool.setCaster(caster);
+			pool.lifetime = 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade);
+			pool.damageMultiplier = damage;
+			pool.height = 3;
+			pool.width = 3;
+			world.spawnEntity(pool);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.BLOCK_WATER_AMBIENT, SoundCategory.HOSTILE, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.HOSTILE, 1F,

@@ -11,8 +11,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public class Sploosh extends Spell {
-	public Sploosh(Tier tier, int cost, Element element, String name, SpellType type, int cooldown, EnumAction action, boolean isContinuous, String modID) {
-		super(Tier.APPRENTICE, cost, element, name, type, cooldown, action, isContinuous, modID);
+
+
+	public Sploosh(String name, EnumAction action, boolean isContinuous) {
+		super(name, action, isContinuous);
 	}
 
 	@Override

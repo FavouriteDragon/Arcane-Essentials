@@ -12,8 +12,9 @@ import net.minecraft.world.World;
 
 public class TidalBomb extends Spell {
 
-	public TidalBomb(Tier tier, int cost, Element element, String name, SpellType type, int cooldown, EnumAction action, boolean isContinuous) {
-		super(tier, cost, element, name, type, cooldown, action, isContinuous);
+
+	public TidalBomb(String name, EnumAction action, boolean isContinuous) {
+		super(name, action, isContinuous);
 	}
 
 	@Override

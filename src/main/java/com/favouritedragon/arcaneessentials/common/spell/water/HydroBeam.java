@@ -12,8 +12,9 @@ import net.minecraft.world.World;
 
 public class HydroBeam extends Spell {
 
-	public HydroBeam(Tier tier, int cost, Element element, String name, SpellType type, int cooldown, EnumAction action, boolean isContinuous) {
-		super(tier, cost, element, name, type, cooldown, action, isContinuous);
+
+	public HydroBeam(String name, EnumAction action, boolean isContinuous) {
+		super(name, action, isContinuous);
 	}
 
 	@Override
