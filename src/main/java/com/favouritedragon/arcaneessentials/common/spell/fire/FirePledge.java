@@ -23,11 +23,11 @@ public class FirePledge extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		if (world.getBlockState(caster.getPosition().offset(EnumFacing.DOWN)).getBlock() != Blocks.AIR) {
+		if (world.getBlockState(caster.getPosition().offset(EnumFacing.DOWN)).getBlock() != Blocks.AIR && !world.isRemote) {
 			Vec3d look = caster.getLookVec();
 			EntityFlamePillarSpawner spawner = new EntityFlamePillarSpawner(world, caster.posX + look.x * 0.25, caster.getEntityBoundingBox().minY, caster.posZ + look.z * 0.25, caster,
 					80 + 2 * (int) modifiers.get(WizardryItems.duration_upgrade), 5F * modifiers.get(WizardryItems.blast_upgrade));
-			look.scale(2);
+			look.scale(50);
 			spawner.setOwner(caster);
 			spawner.motionX = look.x;
 			spawner.motionY = 0;
@@ -40,9 +40,16 @@ public class FirePledge extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
-		if (world.getBlockState(caster.getPosition().offset(EnumFacing.DOWN)).getBlock() != Blocks.AIR) {
-			world.spawnEntity(new EntityFlamePillarSpawner(world, caster.posX, caster.getEntityBoundingBox().minY, caster.posZ, caster,
-					40 + 2 * (int) modifiers.get(WizardryItems.duration_upgrade), 1F * modifiers.get(WizardryItems.blast_upgrade)));
+		if (world.getBlockState(caster.getPosition().offset(EnumFacing.DOWN)).getBlock() != Blocks.AIR && !world.isRemote) {
+			Vec3d look = caster.getLookVec();
+			EntityFlamePillarSpawner spawner = new EntityFlamePillarSpawner(world, caster.posX + look.x * 0.25, caster.getEntityBoundingBox().minY, caster.posZ + look.z * 0.25, caster,
+					80 + 2 * (int) modifiers.get(WizardryItems.duration_upgrade), 5F * modifiers.get(WizardryItems.blast_upgrade));
+			look.scale(50);
+			spawner.setOwner(caster);
+			spawner.motionX = look.x;
+			spawner.motionY = 0;
+			spawner.motionZ = look.z;
+			world.spawnEntity(spawner);
 			return true;
 		}
 		return false;

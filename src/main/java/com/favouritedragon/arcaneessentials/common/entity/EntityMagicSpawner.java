@@ -1,9 +1,7 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.MoverType;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public abstract class EntityMagicSpawner extends EntityMagicConstruct {
@@ -26,10 +24,11 @@ public abstract class EntityMagicSpawner extends EntityMagicConstruct {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		this.move(MoverType.SELF, motionX, 0, motionZ);
+		//this.move(MoverType.SELF, motionX, 0, motionZ);
 		this.setNoGravity(true);
+		setPosition(posX + motionX * 0.05, posY, posZ + motionZ * 0.05);
 		if (!world.isRemote) {
-			if (this.collided || world.getBlockState(getPosition().add(0, 1, 0)).isFullCube()) {
+			if (this.collided || (world.getBlockState(getPosition()).isFullCube() && world.getBlockState(getPosition()).getBlock() != Blocks.AIR)) {
 				this.setDead();
 			}
 		}
