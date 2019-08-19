@@ -17,14 +17,6 @@ public class EntityFlamePillarSpawner extends EntityMagicSpawner {
 	}
 
 	@Override
-	public void setDead() {
-		super.setDead();
-		if (!world.isRemote && this.isDead) {
-			Thread.dumpStack();
-		}
-	}
-
-	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {
 
 	}
