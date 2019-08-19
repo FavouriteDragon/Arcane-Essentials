@@ -31,6 +31,7 @@ public class FirePledge extends Spell {
 			EntityFlamePillarSpawner spawner = new EntityFlamePillarSpawner(world, caster.posX + look.x * 0.25, caster.posY, caster.posZ + look.z * 0.25, caster,
 					80 + 2 * (int) modifiers.get(WizardryItems.duration_upgrade), 5F * modifiers.get(WizardryItems.blast_upgrade));
 			look.scale(2);
+			spawner.setOwner(caster);
 			spawner.motionX = look.x;
 			spawner.motionY = 0;
 			spawner.motionZ = look.z;

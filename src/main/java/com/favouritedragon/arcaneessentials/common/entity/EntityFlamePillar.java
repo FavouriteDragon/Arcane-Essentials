@@ -1,6 +1,5 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
-import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
 import net.minecraft.entity.Entity;
@@ -34,6 +33,7 @@ public class EntityFlamePillar extends EntityMagicConstruct {
 							 float vortexHeight, int particleAmount) {
 		super(world);
 		this.setPosition(x, y, z);
+		this.setOwner(caster);
 		this.setCaster(caster);
 		this.lifetime = lifetime;
 		this.damageMultiplier = damageMultiplier;
@@ -70,19 +70,10 @@ public class EntityFlamePillar extends EntityMagicConstruct {
 
 	@Override
 	protected void entityInit() {
+		super.entityInit();
 		dataManager.register(SYNC_RADIUS, 1F);
 		dataManager.register(SYNC_PARTICLE_AMOUNT, 180);
 		dataManager.register(SYNC_HEIGHT, 15F);
-
-	}
-
-	@Override
-	protected void readEntityFromNBT(NBTTagCompound compound) {
-
-	}
-
-	@Override
-	protected void writeEntityToNBT(NBTTagCompound compound) {
 
 	}
 
@@ -124,15 +115,14 @@ public class EntityFlamePillar extends EntityMagicConstruct {
 		}
 	}
 
-	@Nullable
 	@Override
-	public UUID getOwnerId() {
-		return getCaster().getUniqueID();
+	protected void readEntityFromNBT(NBTTagCompound compound) {
+
 	}
 
-	@Nullable
 	@Override
-	public Entity getOwner() {
-		return getCaster();
+	protected void writeEntityToNBT(NBTTagCompound compound) {
+
 	}
+
 }

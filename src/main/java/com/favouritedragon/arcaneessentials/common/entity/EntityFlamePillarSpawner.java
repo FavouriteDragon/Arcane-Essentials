@@ -17,8 +17,11 @@ public class EntityFlamePillarSpawner extends EntityMagicSpawner {
 	}
 
 	@Override
-	protected void entityInit() {
-
+	public void setDead() {
+		super.setDead();
+		if (!world.isRemote && this.isDead) {
+			Thread.dumpStack();
+		}
 	}
 
 	@Override

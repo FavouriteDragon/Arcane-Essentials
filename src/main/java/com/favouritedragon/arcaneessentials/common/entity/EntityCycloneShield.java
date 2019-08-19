@@ -1,7 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
-import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.WizardryUtilities;
@@ -83,6 +82,7 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 
 	@Override
 	protected void entityInit() {
+		super.entityInit();
 		dataManager.register(SYNC_RADIUS, 1F);
 	}
 
@@ -160,15 +160,6 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 
 	}
 
-	@Nullable
-	@Override
-	public UUID getOwnerId() {
-		return getCaster().getUniqueID();
-	}
 
-	@Nullable
-	@Override
-	public Entity getOwner() {
-		return getCaster();
-	}
+
 }
