@@ -1,10 +1,7 @@
 package com.favouritedragon.arcaneessentials.common.spell.divine;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
-import com.favouritedragon.arcaneessentials.common.entity.EntityMagicBolt;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
-import electroblob.wizardry.entity.construct.EntityMagicConstruct;
-import electroblob.wizardry.entity.living.EntitySummonedCreature;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
@@ -88,6 +85,8 @@ public class RadianceStorm extends Spell {
 		if (world.isRemote) {
 			ArcaneUtils.spawnSpinningHelix(world, 420, 30, radius, ParticleBuilder.Type.SPARKLE, endPos,
 					1, Vec3d.ZERO, 30, 1.0F, 1.0F, 0.3F);
+			ParticleBuilder.create(ParticleBuilder.Type.BEAM).pos(startPos).target(endPos).scale(radius * 2).clr(1.0F, 1.0F, 0.3F)
+					.fade(1F, 1F, 1F).spawn(world);
 		}
 		world.playSound(endPos.x, endPos.y, endPos.z, WizardrySounds.BLOCK_ARCANE_WORKBENCH_SPELLBIND, SoundCategory.HOSTILE, 1.5F, 1F, true);
 		world.playSound(endPos.x, endPos.y, endPos.z, WizardrySounds.ENTITY_HAMMER_LAND, WizardrySounds.SPELLS, 1.5F, 1F, true);

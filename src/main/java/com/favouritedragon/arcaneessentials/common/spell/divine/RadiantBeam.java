@@ -50,11 +50,11 @@ public class RadiantBeam extends Spell {
 				double z1 = caster.posZ + look.z * i / 2 + world.rand.nextFloat() / 5 - 0.1f;
 				ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x1, y1, z1).vel(b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 80,
 						world.rand.nextDouble() / 40,
-						b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 80).time(30).clr(1.0F, 1.0F, 0.3F).spawn(world);
+						b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 80).time(15).clr(1.0F, 1.0F, 0.3F).spawn(world);
 
 			}
 			ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), 180, range, 0.5, ParticleBuilder.Type.SPARKLE, new Vec3d(caster.posX, caster.posY + caster.getEyeHeight() - 0.4F, caster.posZ),
-					new Vec3d(world.rand.nextDouble() / 80, world.rand.nextDouble() / 40, world.rand.nextDouble() / 80), 30, 1.0F, 1.0F, 0.3F);
+					new Vec3d(world.rand.nextDouble() / 80, world.rand.nextDouble() / 40, world.rand.nextDouble() / 80), 15, 1.0F, 1.0F, 0.3F);
 			ParticleBuilder.create(ParticleBuilder.Type.BEAM).pos(startPos).target(endPos).clr(1.0F, 1.0F, 0.3F).fade(1.0F,
 					1.0F, 1.0F).scale(2F).time(4).spawn(world);
 		}
