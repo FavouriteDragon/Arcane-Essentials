@@ -26,7 +26,7 @@ public abstract class EntityMagicSpawner extends EntityMagicConstruct {
 		super.onUpdate();
 		//this.move(MoverType.SELF, motionX, 0, motionZ);
 		this.setNoGravity(true);
-		setPosition(posX + motionX * 0.05, posY, posZ + motionZ * 0.05);
+		setPosition(posX + motionX, posY, posZ + motionZ);
 		if (!world.isRemote) {
 			if (this.collided || (world.getBlockState(getPosition()).isFullCube() && world.getBlockState(getPosition()).getBlock() != Blocks.AIR)) {
 				this.setDead();
