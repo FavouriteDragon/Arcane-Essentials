@@ -86,7 +86,7 @@ public class EntityThunderBurst extends EntityMagicConstruct {
 	@Nullable
 	@Override
 	public UUID getOwnerId() {
-		return getCaster().getUniqueID();
+		return getCaster() != null ? getCaster().getUniqueID() : null;
 	}
 
 	@Nullable
