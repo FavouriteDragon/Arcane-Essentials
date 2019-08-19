@@ -87,8 +87,8 @@ public class RegisterHandler {
 		event.getRegistry().register(new CycloneBolt());
 		event.getRegistry().register(new CycloneShield());
 		event.getRegistry().register(new FirePledge());
-		event.getRegistry().register(new KaThwack());
 		event.getRegistry().register(new InfernoPillar());
+		event.getRegistry().register(new KaThwack());
 		event.getRegistry().register(new LightningVortex());
 		event.getRegistry().register(new OceanBurst());
 		event.getRegistry().register(new RadianceStorm());
