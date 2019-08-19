@@ -2,9 +2,6 @@ package com.favouritedragon.arcaneessentials.common.spell.fire;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityFlamePillarSpawner;
-import electroblob.wizardry.constants.Element;
-import electroblob.wizardry.constants.SpellType;
-import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
@@ -28,7 +25,7 @@ public class FirePledge extends Spell {
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		if (world.getBlockState(caster.getPosition().offset(EnumFacing.DOWN)).getBlock() != Blocks.AIR) {
 			Vec3d look = caster.getLookVec();
-			EntityFlamePillarSpawner spawner = new EntityFlamePillarSpawner(world, caster.posX + look.x * 0.25, caster.posY, caster.posZ + look.z * 0.25, caster,
+			EntityFlamePillarSpawner spawner = new EntityFlamePillarSpawner(world, caster.posX + look.x * 0.25, caster.getEntityBoundingBox().minY, caster.posZ + look.z * 0.25, caster,
 					80 + 2 * (int) modifiers.get(WizardryItems.duration_upgrade), 5F * modifiers.get(WizardryItems.blast_upgrade));
 			look.scale(2);
 			spawner.setOwner(caster);
@@ -44,7 +41,7 @@ public class FirePledge extends Spell {
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
 		if (world.getBlockState(caster.getPosition().offset(EnumFacing.DOWN)).getBlock() != Blocks.AIR) {
-			world.spawnEntity(new EntityFlamePillarSpawner(world, caster.posX, caster.posY, caster.posZ, caster,
+			world.spawnEntity(new EntityFlamePillarSpawner(world, caster.posX, caster.getEntityBoundingBox().minY, caster.posZ, caster,
 					40 + 2 * (int) modifiers.get(WizardryItems.duration_upgrade), 1F * modifiers.get(WizardryItems.blast_upgrade)));
 			return true;
 		}

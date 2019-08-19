@@ -21,15 +21,15 @@ public class RenderThunderBurst extends Render<EntityThunderBurst> {
 		assert entity.getCaster() != null;
 		if (entity.ticksExisted <= 1) {
 			for (double theta = 0; theta <= 180; theta += 1) {
-				double dphi = 120 / Math.sin(Math.toRadians(theta));
+				double dphi = 60 / Math.sin(Math.toRadians(theta));
 
 				for (double phi = 0; phi < 360; phi += dphi) {
 					double rphi = Math.toRadians(phi);
 					double rtheta = Math.toRadians(theta);
 
-					x = entity.ticksExisted * 0.7 * Math.cos(rphi) * Math.sin(rtheta);
-					y = entity.ticksExisted * 0.7 * Math.sin(rphi) * Math.sin(rtheta);
-					z = entity.ticksExisted * 0.7 * Math.cos(rtheta);
+					x = entity.ticksExisted * 0.5 * Math.cos(rphi) * Math.sin(rtheta);
+					y = entity.ticksExisted * 0.5 * Math.sin(rphi) * Math.sin(rtheta);
+					z = entity.ticksExisted * 0.5 * Math.cos(rtheta);
 
 					ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING).pos(entity.getPositionVector()
 							.add(0, entity.getCaster().height / 2, 0))//.spin(entity.ticksExisted * 0.4, 0.8)
