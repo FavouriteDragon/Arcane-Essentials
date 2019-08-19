@@ -27,6 +27,7 @@ public class ThunderBurst extends Spell {
 			WizardryUtilities.playSoundAtPlayer(entityPlayer, WizardrySounds.ENTITY_LIGHTNING_SIGIL_TRIGGER, 1.0f, 1.0f);
 			WizardryUtilities.playSoundAtPlayer(entityPlayer, WizardrySounds.ENTITY_HAMMER_EXPLODE, 2.0f, 1.0f);
 			EntityThunderBurst burst = new EntityThunderBurst(world);
+			burst.setOwner(entityPlayer);
 			burst.setPosition(entityPlayer.posX, entityPlayer.posY, entityPlayer.posZ);
 			burst.setCaster(entityPlayer);
 			burst.lifetime = 30;
@@ -43,6 +44,7 @@ public class ThunderBurst extends Spell {
 			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_LIGHTNING_SIGIL_TRIGGER, SoundCategory.HOSTILE, 1.0f, 1.0f, false);
 			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_HAMMER_EXPLODE, SoundCategory.HOSTILE, 2.0f, 1.0f, true);
 			EntityThunderBurst burst = new EntityThunderBurst(world);
+			burst.setOwner(caster);
 			burst.setPosition(caster.posX, caster.posY, caster.posZ);
 			burst.setCaster(caster);
 			burst.lifetime = 30;

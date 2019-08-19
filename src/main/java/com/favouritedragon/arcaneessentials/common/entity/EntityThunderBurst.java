@@ -1,6 +1,5 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
-import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
@@ -11,9 +10,7 @@ import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
 import java.util.List;
-import java.util.UUID;
 
 public class EntityThunderBurst extends EntityMagicConstruct {
 
@@ -22,10 +19,6 @@ public class EntityThunderBurst extends EntityMagicConstruct {
 		setSize(1, 1);
 	}
 
-	@Override
-	protected void entityInit() {
-
-	}
 
 	@Override
 	public void onUpdate() {
@@ -74,24 +67,12 @@ public class EntityThunderBurst extends EntityMagicConstruct {
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {
-
 	}
-
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {
 
 	}
 
-	@Nullable
-	@Override
-	public UUID getOwnerId() {
-		return getCaster() != null ? getCaster().getUniqueID() : null;
-	}
 
-	@Nullable
-	@Override
-	public Entity getOwner() {
-		return getCaster();
-	}
 }

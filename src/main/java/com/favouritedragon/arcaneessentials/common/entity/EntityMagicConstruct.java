@@ -6,6 +6,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -19,30 +20,26 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 		super(world);
 	}
 
+	public void setOwner(Entity entity) {
+		dataManager.set(SYNC_OWNER_ID, entity.getUniqueID().toString());
+	}
+
 	@Override
 	protected void entityInit() {
-		dataManager.register(SYNC_OWNER_ID,);
+		//Random UUID
+		dataManager.register(SYNC_OWNER_ID, "cb2e7444-3287-4b97-adf1-e5e7ec266331");
 	}
 
-	@Override
-	protected void readEntityFromNBT(NBTTagCompound compound) {
-
-	}
-
-	@Override
-	protected void writeEntityToNBT(NBTTagCompound compound) {
-
-	}
 
 	@Nullable
 	@Override
 	public UUID getOwnerId() {
-		return null;
+		return UUID.fromString(dataManager.get(SYNC_OWNER_ID));
 	}
 
 	@Nullable
 	@Override
 	public Entity getOwner() {
-		return null;
+		return getCaster();
 	}
 }
