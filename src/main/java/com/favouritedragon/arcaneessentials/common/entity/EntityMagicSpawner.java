@@ -16,6 +16,7 @@ public abstract class EntityMagicSpawner extends EntityMagicConstruct {
 		this.posX = x;
 		this.posY = y;
 		this.posZ = z;
+		this.setOwner(caster);
 		this.setCaster(caster);
 		this.lifetime = lifetime;
 		this.damageMultiplier = damageMultiplier;
