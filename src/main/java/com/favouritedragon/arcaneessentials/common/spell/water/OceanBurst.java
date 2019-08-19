@@ -34,18 +34,18 @@ public class OceanBurst extends Spell {
 		double eyepos = caster.getEyeHeight() + caster.getEntityBoundingBox().minY;
 		if (world.isRemote) {
 			//Spawn particles
-				for(int i = 0; i < 40; i++) {
+				for(int i = 0; i < 80; i++) {
 					double x1 = caster.posX + look.x + world.rand.nextFloat() / 10 - 0.05f;
 					double y1 = eyepos - 0.4F + world.rand.nextFloat() / 10 - 0.05f;
 					double z1 = caster.posZ + look.z + world.rand.nextFloat() / 10 - 0.05f;
 
 					//Using the random function each time ensures a different number for every value, making the ability "feel" better.
-					ParticleBuilder.create(ParticleBuilder.Type.MAGIC_BUBBLE).pos(x1, y1, z1).vel(look.x * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 25
-									+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 20F,
-							look.y * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 25
-									+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 20F,
-							look.z * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 25
-									+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 20F).time(8)
+					ParticleBuilder.create(ParticleBuilder.Type.MAGIC_BUBBLE).pos(x1, y1, z1).vel(look.x * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 30
+									+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 25F,
+							look.y * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 30
+									+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 25F,
+							look.z * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 30
+									+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 25F)
 							.face(caster.rotationYaw, caster.rotationPitch).spawn(world);
 				}
 		}
@@ -56,7 +56,7 @@ public class OceanBurst extends Spell {
 					look.scale(1 + 1 * modifiers.get(WizardryItems.blast_upgrade)), SPLASH, true);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_GENERIC_SWIM, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
-			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_ICE_WRAITH_AMBIENT, 0.8F,
+			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_ICE_LANCE_SMASH, 0.8F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_FORCE_ORB_HIT, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
@@ -74,18 +74,18 @@ public class OceanBurst extends Spell {
 		double mult = modifiers.get(WizardryItems.range_upgrade) > 0 ? 0.6 + 0.2 * modifiers.get(WizardryItems.range_upgrade) : 0.6;
 		if (world.isRemote) {
 			//Spawn particles
-			for(int i = 0; i < 40; i++) {
+			for(int i = 0; i < 80; i++) {
 				double x1 = caster.posX + look.x + world.rand.nextFloat() / 10 - 0.05f;
 				double y1 = caster.getEyeHeight() + caster.getEntityBoundingBox().minY - 0.4f + world.rand.nextFloat() / 10 - 0.05f;
 				double z1 = caster.posZ + look.z + world.rand.nextFloat() / 10 - 0.05f;
 
 				//Using the random function each time ensures a different number for every value, making the ability "feel" better.
-				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_BUBBLE).pos(x1, y1, z1).vel(look.x * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 25
-								+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 20F,
-						look.y * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 25
-								+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 20F,
-						look.z * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 25
-								+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 20F).time(8)
+				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_BUBBLE).pos(x1, y1, z1).vel(look.x * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 30
+								+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 25F,
+						look.y * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 30
+								+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 25F,
+						look.z * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 30
+								+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 25F)
 						.face(caster.rotationYaw, caster.rotationPitch).spawn(world);
 			}
 		}

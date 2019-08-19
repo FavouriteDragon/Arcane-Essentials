@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.spell.necromancy;
 
+import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
@@ -24,7 +25,7 @@ public class KaThwack extends Spell {
 	public static final String DEATH_CHANCE = "death_chance";
 
 	public KaThwack() {
-		super("kathwack", EnumAction.BOW, false);
+		super(ArcaneEssentials.MODID, "kathwack", EnumAction.BOW, false);
 		this.soundValues(2, 0.8f, 0.3F);
 		addProperties(BLAST_RADIUS, DAMAGE, DEATH_CHANCE);
 	}
@@ -54,15 +55,17 @@ public class KaThwack extends Spell {
 				// Death chance increases closer to player up to a maximum of 20% at full hearts (at 1 block distance).
 				float chance = ArcaneUtils.getRandomNumberInRange(1, 100);
 				float healthMod = target.getHealth() / target.getMaxHealth();
-				if (chance > (getProperty(DEATH_CHANCE).floatValue() + healthMod * 100) / (0.5 + proximity / 2)) {
+				System.out.println(getProperty(DAMAGE).floatValue() * proximity * (modifiers.get(SpellModifiers.POTENCY)));
+				if (chance > ((getProperty(DEATH_CHANCE).floatValue() + healthMod * 100) / (0.5 + proximity / 2)) ||
+						target.getHealth() <= getProperty(DAMAGE).floatValue() * proximity * (modifiers.get(SpellModifiers.POTENCY))) {
 					caster.heal(target.getHealth());
-					target.setDead();
+					target.setHealth(0);
+					target.onDeath(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER));
 					if (world.isRemote) {
-						for (int i = 0; i < 15; i++) {
-							ParticleBuilder.create(ParticleBuilder.Type.DARK_MAGIC).entity(target).pos(target.posX, target.getEntityBoundingBox().minY, target.posZ)
-									.vel(world.rand.nextBoolean() ? world.rand.nextFloat() / 10 : -world.rand.nextFloat() / 10, 1 + world.rand.nextFloat(),
-											world.rand.nextBoolean() ? world.rand.nextFloat() / 10 : -world.rand.nextFloat() / 1)
-									.spin(target.width, world.rand.nextFloat()).spawn(world);
+						for (int i = 0; i < 80; i++) {
+							ParticleBuilder.create(ParticleBuilder.Type.DARK_MAGIC).pos(target.posX, target.getEntityBoundingBox().minY, target.posZ)
+									.vel(world.rand.nextBoolean() ? world.rand.nextFloat() / 30 : -world.rand.nextFloat() / 30, world.rand.nextFloat() / 10,
+											world.rand.nextBoolean() ? world.rand.nextFloat() / 30 : -world.rand.nextFloat() / 30).clr(36 ,7, 71).spawn(world);
 						}
 						ParticleBuilder.spawnHealParticles(world, caster);
 					}
@@ -92,9 +95,9 @@ public class KaThwack extends Spell {
 
 			ParticleBuilder.create(ParticleBuilder.Type.SPHERE)
 					.pos(caster.posX, caster.getEntityBoundingBox().minY + 0.1, caster.posZ)
-					.scale((float) radius * 0.8f)
-					.clr(0.8f, 0.2f, 0.8F)
-					.fade(0.6F + world.rand.nextFloat() / 10, 0.2F + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10)
+					.scale((float) radius * 0.6f)
+					.clr(36, 7, 71)
+					//.fade(0, 0, 0)
 					.spawn(world);
 
 
