@@ -22,13 +22,13 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class RadianceStorm extends Spell {
-	public static final String KNOCKBACK_MULT = "knockback_mult";
+	private static final String KNOCKBACK_MULT = "knockback_mult";
 	public RadianceStorm() {
-		//super(Tier.MASTER, 125, Element.HEALING, "radiance_storm", SpellType.ATTACK, 300, EnumAction.BOW, false, ArcaneEssentials.MODID);
 		super(ArcaneEssentials.MODID, "radiance_storm", EnumAction.BOW, false);
-		addProperties(DAMAGE, BLAST_RADIUS, BURN_DURATION, RANGE, KNOCKBACK_MULT);
+		addProperties(DAMAGE, BLAST_RADIUS, BURN_DURATION, RANGE, KNOCKBACK_MULT, RANGE);
 	}
 
+	@SuppressWarnings("ConstantConditions")
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		if (world.canBlockSeeSky(new BlockPos(caster))) {
@@ -40,7 +40,8 @@ public class RadianceStorm extends Spell {
 				double angle = world.rand.nextDouble() * Math.PI * 2;
 				double x = caster.posX + radius * Math.cos(angle);
 				double z = caster.posZ + radius * Math.sin(angle);
-				double y = WizardryUtilities.getNearestFloorLevel(world, new BlockPos(x, caster.posY, z), 3 + 2 * (int) modifiers.get(WizardryItems.range_upgrade));
+				boolean floor = WizardryUtilities.getNearestFloor(world, new BlockPos(x, caster.posY, z), getProperty(RANGE).intValue() + 2 * (int) modifiers.get(WizardryItems.range_upgrade)) != null;
+				double y = floor ? caster.getEntityBoundingBox().minY : WizardryUtilities.getNearestFloor(world, new BlockPos(x, caster.posY, z), getProperty(RANGE).intValue() + 2 * (int) modifiers.get(WizardryItems.range_upgrade));
 				Vec3d startPos = new Vec3d(x, caster.getEntityBoundingBox().minY + 30, z);
 				Vec3d endPos = new Vec3d(x, y, z);
 				Vec3d knockBack = new Vec3d(0.5, 0.2, 0.5).scale(getProperty(KNOCKBACK_MULT).floatValue());
@@ -53,6 +54,7 @@ public class RadianceStorm extends Spell {
 		return false;
 	}
 
+	@SuppressWarnings("ConstantConditions")
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
 		if (world.canBlockSeeSky(new BlockPos(caster))) {
@@ -64,7 +66,8 @@ public class RadianceStorm extends Spell {
 				double angle = world.rand.nextDouble() * Math.PI * 2;
 				double x = caster.posX + radius * Math.cos(angle);
 				double z = caster.posZ + radius * Math.sin(angle);
-				double y = WizardryUtilities.getNearestFloorLevel(world, new BlockPos(x, caster.posY, z), 3 + 2 * (int) modifiers.get(WizardryItems.range_upgrade));
+				boolean floor = WizardryUtilities.getNearestFloor(world, new BlockPos(x, caster.posY, z), getProperty(RANGE).intValue() + 2 * (int) modifiers.get(WizardryItems.range_upgrade)) != null;
+				double y = floor ? caster.getEntityBoundingBox().minY : WizardryUtilities.getNearestFloor(world, new BlockPos(x, caster.posY, z), getProperty(RANGE).intValue() + 2 * (int) modifiers.get(WizardryItems.range_upgrade));
 				Vec3d startPos = new Vec3d(x, caster.getEntityBoundingBox().minY + 30, z);
 				Vec3d endPos = new Vec3d(x, y, z);
 				Vec3d knockBack = new Vec3d(0.5, 0.2, 0.5).scale(getProperty(KNOCKBACK_MULT).floatValue());
@@ -83,13 +86,13 @@ public class RadianceStorm extends Spell {
 					damage, knockBack, true, fireTime, radius, 0);
 		}
 		if (world.isRemote) {
-			ArcaneUtils.spawnSpinningHelix(world, 420, 30, radius, ParticleBuilder.Type.SPARKLE, endPos,
-					1, Vec3d.ZERO, 30, 1.0F, 1.0F, 0.3F);
-			ParticleBuilder.create(ParticleBuilder.Type.BEAM).pos(startPos).target(endPos).scale(radius * 2).clr(1.0F, 1.0F, 0.3F)
-					.fade(1F, 1F, 1F).spawn(world);
+			ArcaneUtils.spawnSpinningHelix(world, 300, 30, radius - 0.1F, ParticleBuilder.Type.SPARKLE, endPos,
+					1, Vec3d.ZERO, 20, 1.0F, 1.0F, 0.3F);
+			ParticleBuilder.create(ParticleBuilder.Type.BEAM).pos(startPos).target(endPos).scale(radius * 4).clr(1.0F, 1.0F, 0.3F)
+					.fade(1F, 1F, 1F).time(10).spawn(world);
 		}
 		world.playSound(endPos.x, endPos.y, endPos.z, WizardrySounds.BLOCK_ARCANE_WORKBENCH_SPELLBIND, SoundCategory.HOSTILE, 1.5F, 1F, true);
-		world.playSound(endPos.x, endPos.y, endPos.z, WizardrySounds.ENTITY_HAMMER_LAND, WizardrySounds.SPELLS, 1.5F, 1F, true);
+		world.playSound(endPos.x, endPos.y, endPos.z, WizardrySounds.ENTITY_HAMMER_EXPLODE, WizardrySounds.SPELLS, 1.5F, 1F, true);
 	}
 
 	private void handleSphericalExplosion(World world, EntityLivingBase caster, Vec3d position, float radius, float damage, Vec3d knockBackScale, int fireTime) {
