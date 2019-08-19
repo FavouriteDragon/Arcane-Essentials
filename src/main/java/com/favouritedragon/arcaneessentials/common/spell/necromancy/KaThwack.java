@@ -55,12 +55,11 @@ public class KaThwack extends Spell {
 				// Death chance increases closer to player up to a maximum of 20% at full hearts (at 1 block distance).
 				float chance = ArcaneUtils.getRandomNumberInRange(1, 100);
 				float healthMod = target.getHealth() / target.getMaxHealth();
-				System.out.println(getProperty(DAMAGE).floatValue() * proximity * (modifiers.get(SpellModifiers.POTENCY)));
 				if (chance > ((getProperty(DEATH_CHANCE).floatValue() + healthMod * 100) / (0.5 + proximity / 2)) ||
 						target.getHealth() <= getProperty(DAMAGE).floatValue() * proximity * (modifiers.get(SpellModifiers.POTENCY))) {
 					caster.heal(target.getHealth());
-					target.setHealth(0);
-					target.onDeath(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER));
+					WizardryUtilities.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER),
+					target.getHealth() + 1);
 					if (world.isRemote) {
 						for (int i = 0; i < 80; i++) {
 							ParticleBuilder.create(ParticleBuilder.Type.DARK_MAGIC).pos(target.posX, target.getEntityBoundingBox().minY, target.posZ)
@@ -70,10 +69,11 @@ public class KaThwack extends Spell {
 						ParticleBuilder.spawnHealParticles(world, caster);
 					}
 				}
-
-				if (!world.isRemote)
-					WizardryUtilities.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER),
-							getProperty(DAMAGE).floatValue() * proximity * modifiers.get(SpellModifiers.POTENCY));
+				else {
+					if (!world.isRemote)
+						WizardryUtilities.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER),
+								getProperty(DAMAGE).floatValue() * proximity * modifiers.get(SpellModifiers.POTENCY));
+				}
 			}
 		}
 
