@@ -30,6 +30,7 @@ public class ArcaneUtils {
 	//NOTE: ONLY USE ENUMPARTICLETYPE SPAWN METHODS IN RENDERING FILES. DUE TO VANILLA'S WEIRD PARTICLE SPAWNING SYSTEM,
 	//YOU CANNOT SPAWN PARTICLES IN ENTITY CLASSES AND SUCH RELIABLY. CUSTOM PARTICLES IN THIS CASE ARE FINE, THOUGH.
 
+	//TODO: Fix most particle spawning methods
 	public static Vec3d rotateAroundAxisX(Vec3d v, double angle) {
 		angle = Math.toRadians(angle);
 		double y, z, cos, sin;
@@ -262,7 +263,7 @@ public class ArcaneUtils {
 		}
 	}
 
-	public static void spawnDirectionalHelix(World world, Entity entity, Vec3d direction, int maxAngle, double vortexLength, double radius, ResourceLocation type, Vec3d position,
+	public static void spawnDirectionalHelix(World world, Entity entity, Vec3d direction, int maxAngle, double vortexLength, double radius, ResourceLocation particle, Vec3d position,
 											 Vec3d particleSpeed, int maxAge, float r, float g, float b) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double x = radius * cos(angle);
@@ -272,6 +273,8 @@ public class ArcaneUtils {
 			if (entity != null && direction != null) {
 				pos = ArcaneUtils.rotateAroundAxisX(pos, entity.rotationPitch + 90);
 				pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
+				ParticleBuilder.create(particle).pos(pos.x + position.x + direction.x, pos.y + position.y + direction.y,
+						pos.z + position.z + direction.z).vel(particleSpeed).time(maxAge).clr(r, g, b).spawn(world);
 			//	Wizardry.proxy.spawnParticle(particle, world, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
 			//			pos.z + position.z + direction.z, particleSpeed.z, particleSpeed.y, particleSpeed.z, maxAge, r, g, b);
 			} else {
