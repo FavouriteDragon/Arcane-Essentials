@@ -56,7 +56,7 @@ public class RadiantBeam extends Spell {
 			ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), 180, range, 0.5, ParticleBuilder.Type.SPARKLE, new Vec3d(caster.posX, caster.posY + caster.getEyeHeight() - 0.4F, caster.posZ),
 					new Vec3d(world.rand.nextDouble() / 80, world.rand.nextDouble() / 40, world.rand.nextDouble() / 80), 15, 1.0F, 1.0F, 0.3F);
 			ParticleBuilder.create(ParticleBuilder.Type.BEAM).pos(startPos).target(endPos).clr(1.0F, 1.0F, 0.3F).fade(1.0F,
-					1.0F, 1.0F).scale(2F).time(4).spawn(world);
+					1.0F, 1.0F).scale(4F).time(4).spawn(world);
 		}
 
 		WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.BLOCK_ARCANE_WORKBENCH_SPELLBIND, 1.5F, 1);

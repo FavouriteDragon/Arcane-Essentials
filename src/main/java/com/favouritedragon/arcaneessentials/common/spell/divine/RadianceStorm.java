@@ -88,7 +88,7 @@ public class RadianceStorm extends Spell {
 		if (world.isRemote) {
 			ArcaneUtils.spawnSpinningHelix(world, 300, 30, radius - 0.1F, ParticleBuilder.Type.SPARKLE, endPos,
 					1, Vec3d.ZERO, 20, 1.0F, 1.0F, 0.3F);
-			ParticleBuilder.create(ParticleBuilder.Type.BEAM).pos(startPos).target(endPos).scale(radius * 4).clr(1.0F, 1.0F, 0.3F)
+			ParticleBuilder.create(ParticleBuilder.Type.BEAM).pos(startPos).target(endPos).scale(radius * 6).clr(1.0F, 1.0F, 0.3F)
 					.fade(1F, 1F, 1F).time(10).spawn(world);
 		}
 		world.playSound(endPos.x, endPos.y, endPos.z, WizardrySounds.BLOCK_ARCANE_WORKBENCH_SPELLBIND, SoundCategory.HOSTILE, 1.5F, 1F, true);
