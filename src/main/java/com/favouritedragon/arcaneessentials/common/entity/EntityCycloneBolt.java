@@ -25,11 +25,7 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 	private float damage;
 
 
-	/**
-	 * Creates a new projectile in the given world.
-	 *
-	 * @param world
-	 */
+	
 	public EntityCycloneBolt(World world) {
 		super(world);
 		this.setSize(1, 1);
@@ -123,12 +119,20 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 	}
 
 	@Override
+	public void setDead() {
+		super.setDead();
+		if (!world.isRemote  && this.isDead) {
+			Thread.dumpStack();
+		}
+	}
+
+	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if (getLifetime() >= ticksExisted) {
+		if (getLifetime() >= 100 && ticksExisted >= getLifetime()) {
 			Dissipate();
 		}
-		if (ArcaneUtils.getMagnitude(new Vec3d(motionX, motionY, motionZ)) <= 0.4F) {
+		if (ArcaneUtils.getMagnitude(new Vec3d(motionX, motionY, motionZ)) <= 0.1F) {
 			Dissipate();
 		}
 	}
