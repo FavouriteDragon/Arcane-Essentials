@@ -44,7 +44,7 @@ public class RenderCycloneBolt extends Render<EntityCycloneBolt> {
 
 		float r = 1, g = 0.95F + 0.05f * pulse, b = 1;
 
-		float radius = entity.width / 2;
+		float radius = entity.width / 4;
 		float a = 0.5f;
 
 		if (entity.ticksExisted > entity.getLifetime() - EXPANSION_TIME) {

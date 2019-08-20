@@ -79,6 +79,8 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 
 	private void Dissipate() {
 		if (!world.isRemote) {
+			world.playSound(null, posX, posY, posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
+					0.8F + world.rand.nextFloat() / 10F);
 			if (world instanceof WorldServer) {
 				WorldServer World = (WorldServer) world;
 				World.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, posX, posY, posZ, 12,
@@ -98,29 +100,12 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 				}
 			}
 		}
-		else {
-			world.playSound(null, posX, posY, posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
-					0.8F + world.rand.nextFloat() / 10F);
-		}
 		setDead();
 	}
 
 	@Override
 	protected void onEntityHit(EntityLivingBase entityHit) {
 		super.onEntityHit(entityHit);
-		List<Entity> hit = world.getEntitiesWithinAABB(Entity.class, getEntityBoundingBox());
-		if (!hit.isEmpty()) {
-			for (Entity target : hit) {
-				if (target != this && target != getCaster()) {
-					if (target.canBeCollidedWith()) {
-						target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(getCaster(),
-								getDamageType()), (float) getDamage());
-						target.addVelocity(motionX / 2, motionY / 2, motionZ / 2);
-						ArcaneUtils.applyPlayerKnockback(target);
-					}
-				}
-			}
-		}
 		Dissipate();
 	}
 
@@ -130,7 +115,7 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 		if (getLifetime() >= 100 && ticksExisted >= getLifetime()) {
 			Dissipate();
 		}
-		if (ArcaneUtils.getMagnitude(new Vec3d(motionX, motionY, motionZ)) <= 0.2F) {
+		if (ArcaneUtils.getMagnitude(new Vec3d(motionX, motionY, motionZ)) <= 0.4F) {
 			Dissipate();
 		}
 	}
