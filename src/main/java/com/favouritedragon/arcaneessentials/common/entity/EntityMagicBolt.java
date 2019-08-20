@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
+import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
@@ -14,7 +15,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -26,7 +26,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -36,7 +35,7 @@ import java.util.UUID;
 
 //Copy and pasted from eb's class, since IntelliJ is fudged up.
 
-public abstract class EntityMagicBolt extends Entity implements IProjectile, IEntityAdditionalSpawnData {
+public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
 	public static final double LAUNCH_Y_OFFSET = 0.1;
 	public static final int SEEKING_TIME = 15;
@@ -121,6 +120,7 @@ public abstract class EntityMagicBolt extends Entity implements IProjectile, IEn
 	 * determined by the aimingError parameter. For reference, skeletons set this to 10 on easy, 6 on normal and 2 on hard
 	 * difficulty.
 	 */
+	@Override
 	public void aim(EntityLivingBase caster, Entity target, float speed, float aimingError) {
 
 		this.setCaster(caster);
@@ -579,6 +579,7 @@ public abstract class EntityMagicBolt extends Entity implements IProjectile, IEn
 
 	@Override
 	public void writeEntityToNBT(NBTTagCompound tag) {
+		super.readEntityFromNBT(tag);
 		tag.setShort("xTile", (short) this.blockX);
 		tag.setShort("yTile", (short) this.blockY);
 		tag.setShort("zTile", (short) this.blockZ);
@@ -594,10 +595,12 @@ public abstract class EntityMagicBolt extends Entity implements IProjectile, IEn
 		if (this.getCaster() != null) {
 			tag.setUniqueId("casterUUID", this.getCaster().getUniqueID());
 		}
+
 	}
 
 	@Override
 	public void readEntityFromNBT(NBTTagCompound tag) {
+		super.readEntityFromNBT(tag);
 		this.blockX = tag.getShort("xTile");
 		this.blockY = tag.getShort("yTile");
 		this.blockZ = tag.getShort("zTile");
@@ -609,6 +612,7 @@ public abstract class EntityMagicBolt extends Entity implements IProjectile, IEn
 		this.inGround = tag.getByte("inGround") == 1;
 		this.damageMultiplier = tag.getFloat("damageMultiplier");
 		casterUUID = tag.getUniqueId("casterUUID");
+
 	}
 
 	@Override
@@ -646,5 +650,13 @@ public abstract class EntityMagicBolt extends Entity implements IProjectile, IEn
 
 	@Override
 	protected void entityInit() {
+		super.entityInit();
+	}
+
+	@Override
+	protected void onImpact(RayTraceResult result) {
+		if (result.entityHit instanceof EntityLivingBase) {
+			onEntityHit((EntityLivingBase) result.entityHit);
+		}
 	}
 }

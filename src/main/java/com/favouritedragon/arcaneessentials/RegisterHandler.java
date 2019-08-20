@@ -14,7 +14,9 @@ import com.favouritedragon.arcaneessentials.common.spell.storm.StormBlink;
 import com.favouritedragon.arcaneessentials.common.spell.storm.ThunderBurst;
 import com.favouritedragon.arcaneessentials.common.spell.water.OceanBurst;
 import com.favouritedragon.arcaneessentials.common.spell.water.Whirlpool;
+import electroblob.wizardry.entity.projectile.EntityMagicFireball;
 import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.spell.SpellProjectile;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -87,6 +89,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new CycloneBolt());
 		event.getRegistry().register(new CycloneShield());
 		event.getRegistry().register(new FirePledge());
+		event.getRegistry().register(new SpellProjectile<>(ArcaneEssentials.MODID,"frizz", EntityFireball::new).addProperties(Spell.DAMAGE, Spell.BURN_DURATION));
 		event.getRegistry().register(new InfernoPillar());
 		event.getRegistry().register(new KaThwack());
 		event.getRegistry().register(new LightningVortex());
