@@ -15,15 +15,13 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
 import java.util.List;
-import java.util.UUID;
 
 import static com.favouritedragon.arcaneessentials.common.util.DamageSources.PRESSURE;
 
 public class EntityCycloneShield extends EntityMagicConstruct {
 
-	public static final DataParameter<Float> SYNC_RADIUS = EntityDataManager.createKey(EntityCycloneShield.class, DataSerializers.FLOAT);
+	private static final DataParameter<Float> SYNC_RADIUS = EntityDataManager.createKey(EntityCycloneShield.class, DataSerializers.FLOAT);
 
 	public EntityCycloneShield(World par1World) {
 		super(par1World);
@@ -38,7 +36,7 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 		setRadius(radius);
 	}
 
-	public static void Dissipate(EntityCycloneShield shield) {
+	private static void Dissipate(EntityCycloneShield shield) {
 		if (!shield.world.isRemote && shield.getCaster() != null) {
 			double x = shield.posX;
 			double y = shield.posY + shield.getCaster().getEyeHeight();
@@ -116,21 +114,23 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 			List<EntityLivingBase> targets = WizardryUtilities.getEntitiesWithinRadius(getRadius(), x, y,
 					z, world);
 			for (EntityLivingBase target : targets) {
-				if (this.isValidTarget(target)) {
-					boolean b = world.rand.nextBoolean();
-					double multiplier = (getRadius() - target.getDistance(x, y, z)) * 0.0025;
-					if (b) {
-						target.addVelocity((target.posX - x) * multiplier,
-								(target.posY - (y)) * multiplier, (target.posZ - z) * multiplier);
-					} else{
-						target.addVelocity((x - target.posX) * multiplier,
-								(target.posY - (y)) * multiplier, (z - target.posZ) * multiplier);
+				if (target != getCaster()) {
+					if (this.isValidTarget(target)) {
+						boolean b = world.rand.nextBoolean();
+						double multiplier = (getRadius() - target.getDistance(x, y, z)) * 0.0025;
+						if (b) {
+							target.addVelocity((target.posX - x) * multiplier,
+									(target.posY - (y)) * multiplier, (target.posZ - z) * multiplier);
+						} else {
+							target.addVelocity((x - target.posX) * multiplier,
+									(target.posY - (y)) * multiplier, (z - target.posZ) * multiplier);
+						}
+						if (!MagicDamage.isEntityImmune(PRESSURE, target)) {
+							target.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(this, getCaster(), PRESSURE), 0.5F * damageMultiplier);
+						}
+						target.setEntityInvulnerable(false);
+						ArcaneUtils.applyPlayerKnockback(target);
 					}
-					if (!MagicDamage.isEntityImmune(PRESSURE, target)) {
-						target.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(this, getCaster(), PRESSURE), 0.5F * damageMultiplier);
-					}
-					target.setEntityInvulnerable(false);
-					ArcaneUtils.applyPlayerKnockback(target);
 				}
 			}
 			AxisAlignedBB box = new AxisAlignedBB(x + getRadius() * 1.25F, y + getRadius() * 1.25F, z + getRadius() * 1.25F, x - getRadius() * 1.25F,

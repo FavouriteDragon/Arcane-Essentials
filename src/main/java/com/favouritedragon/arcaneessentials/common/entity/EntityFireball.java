@@ -5,10 +5,17 @@ import net.minecraft.world.World;
 public class EntityFireball extends EntityMagicBolt {
 
 	private float damage;
+	private int lifetime;
 
-	private void setDamage(float damage) {
+
+	public void setDamage(float damage) {
 		this.damage = damage;
 	}
+
+	public void setLifetime(int lifetime) {
+		this.lifetime = lifetime;
+	}
+
 	public EntityFireball(World world) {
 		super(world);
 	}
@@ -20,6 +27,6 @@ public class EntityFireball extends EntityMagicBolt {
 
 	@Override
 	public int getLifetime() {
-		return 0;
+		return lifetime;
 	}
 }

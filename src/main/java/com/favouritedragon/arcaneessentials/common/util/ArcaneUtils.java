@@ -463,7 +463,7 @@ public class ArcaneUtils {
 	}
 
 	@Nullable
-	public static RayTraceResult standardEntityRayTrace(World world, Entity entity, Entity spellEntity, Vec3d startPos, Vec3d endPos, Predicate<? super Entity> filter,
+	public static RayTraceResult standardEntityRayTrace(World world, Vec3d startPos, Vec3d endPos, Predicate<? super Entity> filter,
 														boolean hitLiquids, float borderSize, boolean ignoreUncollidables, boolean returnLastUncollidable) {
 
 
@@ -533,8 +533,8 @@ public class ArcaneUtils {
 		filter.or(entity1 -> entity1 == caster);
 		if (spellEntity != null)
 			filter.or(entity1 -> entity1 == spellEntity);
-		
-		RayTraceResult result = standardEntityRayTrace(world, caster, spellEntity, startPos, endPos, filter, false, borderSize, true, false);
+
+		RayTraceResult result = standardEntityRayTrace(world, startPos, endPos, filter, false, borderSize, true, false);
 		if (result != null && result.entityHit instanceof EntityLivingBase && !filter.test(result.entityHit)) {
 			EntityLivingBase hit = (EntityLivingBase) result.entityHit;
 			if (!MagicDamage.isEntityImmune(damageType, hit)) {
@@ -613,7 +613,7 @@ public class ArcaneUtils {
 												   float damage, Vec3d knockBack, boolean invulnerable, int fireTime, float radius, float lifeSteal,
 												   Predicate<? super Entity> filter) {
 		filter.or(entity1 -> entity1 == caster || entity1 == spellEntity);
-		RayTraceResult result = standardEntityRayTrace(world, caster, spellEntity, startPos, endPos, filter, false, borderSize, true, false);
+		RayTraceResult result = standardEntityRayTrace(world, startPos, endPos, filter, false, borderSize, true, false);
 		if (result != null && result.entityHit instanceof EntityLivingBase && result.entityHit != caster && result.entityHit != spellEntity) {
 			EntityLivingBase hit = (EntityLivingBase) result.entityHit;
 			hit.setFire(fireTime);

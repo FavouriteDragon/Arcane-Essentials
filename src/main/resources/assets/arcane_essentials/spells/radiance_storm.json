@@ -17,10 +17,13 @@
   "chargeup": 60,
   "cooldown": 240,
   "base_properties": {
-    "damage": 8,
+    "damage": 9,
     "burn_duration": 10,
-    "blast_radius": 1,
-    "range": 5,
-    "knockback_mult": 1
+    "blast_radius": 1.5,
+    "effect_radius": 6,
+    "light_beams": 9,
+    "range": 8,
+    "knockback_mult": 1.5,
+    "explosion_damage": 6
   }
 }

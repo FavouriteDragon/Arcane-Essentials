@@ -23,60 +23,60 @@ import java.util.List;
 
 public class RadianceStorm extends Spell {
 	private static final String KNOCKBACK_MULT = "knockback_mult";
+	private static final String LIGHT_BEAMS = "light_beams";
+	private static final String EXPLOSION_DAMAGE = "explosion_damage";
+
+	private static final float CENTRE_RADIUS_FRACTION = 0.5f;
+
 	public RadianceStorm() {
 		super(ArcaneEssentials.MODID, "radiance_storm", EnumAction.BOW, false);
-		addProperties(DAMAGE, BLAST_RADIUS, BURN_DURATION, RANGE, KNOCKBACK_MULT, RANGE);
+		addProperties(DAMAGE, EFFECT_RADIUS, BLAST_RADIUS, BURN_DURATION, RANGE, KNOCKBACK_MULT, LIGHT_BEAMS,
+				EXPLOSION_DAMAGE);
 	}
 
-	@SuppressWarnings("ConstantConditions")
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		if (world.canBlockSeeSky(new BlockPos(caster))) {
-			float damage = getProperty(DAMAGE).floatValue() + 2 * modifiers.get(WizardryItems.blast_upgrade);
-			int fireTime = getProperty(BURN_DURATION).intValue() + 2 * (int) modifiers.get(WizardryItems.duration_upgrade);
-			float beamRadius = getProperty(BLAST_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade);
-			for (int r = 0; r < 7; r++) {
-				float radius = world.rand.nextInt((getProperty(RANGE).intValue() + 2 * (int) modifiers.get(WizardryItems.range_upgrade))) + world.rand.nextFloat() * modifiers.get(WizardryItems.blast_upgrade);
-				double angle = world.rand.nextDouble() * Math.PI * 2;
-				double x = caster.posX + radius * Math.cos(angle);
-				double z = caster.posZ + radius * Math.sin(angle);
-				boolean floor = WizardryUtilities.getNearestFloor(world, new BlockPos(x, caster.posY, z), getProperty(RANGE).intValue() + 2 * (int) modifiers.get(WizardryItems.range_upgrade)) != null;
-				double y = floor ? caster.getEntityBoundingBox().minY : WizardryUtilities.getNearestFloor(world, new BlockPos(x, caster.posY, z), getProperty(RANGE).intValue() + 2 * (int) modifiers.get(WizardryItems.range_upgrade));
-				Vec3d startPos = new Vec3d(x, caster.getEntityBoundingBox().minY + 30, z);
-				Vec3d endPos = new Vec3d(x, y, z);
-				Vec3d knockBack = new Vec3d(0.5, 0.2, 0.5).scale(getProperty(KNOCKBACK_MULT).floatValue());
-				spawnRadiantBeam(world, caster, startPos, endPos, beamRadius, damage, knockBack, fireTime);
-				handleSphericalExplosion(world, caster, endPos, beamRadius * 2, damage,
-						new Vec3d(2, 0.1, 2).scale(modifiers.get(WizardryItems.blast_upgrade)), fireTime);
-			}
-			return true;
-		}
-		return false;
+		return doCasting(world, caster, modifiers);
 	}
 
-	@SuppressWarnings("ConstantConditions")
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
-		if (world.canBlockSeeSky(new BlockPos(caster))) {
-			float damage = getProperty(DAMAGE).floatValue() + 2 * modifiers.get(WizardryItems.blast_upgrade);
-			int fireTime = getProperty(BURN_DURATION).intValue() + 2 * (int) modifiers.get(WizardryItems.duration_upgrade);
-			float beamRadius = getProperty(BLAST_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade);
-			for (int r = 0; r < 7; r++) {
-				float radius = world.rand.nextInt((getProperty(RANGE).intValue() + 2 * (int) modifiers.get(WizardryItems.range_upgrade))) + world.rand.nextFloat() * modifiers.get(WizardryItems.blast_upgrade);
-				double angle = world.rand.nextDouble() * Math.PI * 2;
-				double x = caster.posX + radius * Math.cos(angle);
-				double z = caster.posZ + radius * Math.sin(angle);
-				boolean floor = WizardryUtilities.getNearestFloor(world, new BlockPos(x, caster.posY, z), getProperty(RANGE).intValue() + 2 * (int) modifiers.get(WizardryItems.range_upgrade)) != null;
-				double y = floor ? caster.getEntityBoundingBox().minY : WizardryUtilities.getNearestFloor(world, new BlockPos(x, caster.posY, z), getProperty(RANGE).intValue() + 2 * (int) modifiers.get(WizardryItems.range_upgrade));
-				Vec3d startPos = new Vec3d(x, caster.getEntityBoundingBox().minY + 30, z);
-				Vec3d endPos = new Vec3d(x, y, z);
-				Vec3d knockBack = new Vec3d(0.5, 0.2, 0.5).scale(getProperty(KNOCKBACK_MULT).floatValue());
-				spawnRadiantBeam(world, caster, startPos, endPos, beamRadius, damage, knockBack, fireTime);
-				handleSphericalExplosion(world, caster, endPos, beamRadius * 2, damage,
-						new Vec3d(2, 0.1, 2).scale(modifiers.get(WizardryItems.blast_upgrade)), fireTime);
+		return doCasting(world, caster, modifiers);
+	}
+	private boolean doCasting(World world, EntityLivingBase caster, SpellModifiers modifiers){
+
+		if(world.canBlockSeeSky(new BlockPos(caster))){
+
+			double maxRadius = getProperty(EFFECT_RADIUS).doubleValue();
+
+			for(int i = 0; i < getProperty(LIGHT_BEAMS).intValue(); i++){
+
+				double radius = maxRadius * CENTRE_RADIUS_FRACTION + world.rand.nextDouble() * maxRadius
+						* (1 - CENTRE_RADIUS_FRACTION) * modifiers.get(WizardryItems.blast_upgrade);
+				float beamRadius = getProperty(BLAST_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade);
+				float angle = world.rand.nextFloat() * (float)Math.PI * 2;
+
+				double x = caster.posX + radius * MathHelper.cos(angle);
+				double z = caster.posZ + radius * MathHelper.sin(angle);
+				Integer y = WizardryUtilities.getNearestFloor(world, new BlockPos(x, caster.posY, z), (int)maxRadius);
+
+				if(y != null){
+
+					spawnRadiantBeam(world, caster, new Vec3d(x, y + 30, z), new Vec3d(x, y, z), beamRadius,
+							getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY),
+							new Vec3d(0.5, 0.75F, 0.5).scale(getProperty(KNOCKBACK_MULT).floatValue()),
+							getProperty(BURN_DURATION).intValue() * (int) modifiers.get(WizardryItems.duration_upgrade));
+
+
+				}
+				handleSphericalExplosion(world, caster, caster.getPositionVector(), (float) maxRadius, getProperty(DAMAGE).floatValue() *
+						modifiers.get(SpellModifiers.POTENCY), new Vec3d(1, 2, 1), getProperty(BURN_DURATION).intValue() *
+						(int) modifiers.get(WizardryItems.duration_upgrade));
 			}
+
 			return true;
 		}
+
 		return false;
 	}
 
@@ -124,6 +124,10 @@ public class RadianceStorm extends Spell {
 					}
 				}
 			}
+		}
+		else {
+			ParticleBuilder.create(ParticleBuilder.Type.SPHERE).pos(position).scale(1.4F).entity(caster).clr(1.0F, 1.0F, 0.3F)
+					.spawn(world);
 		}
 	}
 }
