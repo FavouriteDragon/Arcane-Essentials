@@ -530,7 +530,10 @@ public class ArcaneUtils {
 	public static void handlePiercingBeamCollision(World world, EntityLivingBase caster, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, boolean directDamage, MagicDamage.DamageType damageType,
 												   float damage, Vec3d knockBack, boolean invulnerable, int fireTime, float radius, float lifeSteal,
 												   Predicate<? super Entity> filter) {
-		filter.or(entity1 -> entity1 == caster || entity1 == spellEntity);
+		filter.or(entity1 -> entity1 == caster);
+		if (spellEntity != null)
+			filter.or(entity1 -> entity1 == spellEntity);
+		
 		RayTraceResult result = standardEntityRayTrace(world, caster, spellEntity, startPos, endPos, filter, false, borderSize, true, false);
 		if (result != null && result.entityHit instanceof EntityLivingBase && !filter.test(result.entityHit)) {
 			EntityLivingBase hit = (EntityLivingBase) result.entityHit;
@@ -551,7 +554,7 @@ public class ArcaneUtils {
 				hit.setEntityInvulnerable(invulnerable);
 				applyPlayerKnockback(hit);
 			}
-			Vec3d pos = result.hitVec;
+			Vec3d pos = hit.getPositionVector().add(0, hit.getEyeHeight(), 0);
 			AxisAlignedBB hitBox = new AxisAlignedBB(pos.x + radius, pos.y + radius, pos.z + radius, pos.x - radius, pos.y - radius, pos.z - radius);
 			List<Entity> nearby = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
 			nearby.removeIf(filter);
