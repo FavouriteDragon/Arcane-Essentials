@@ -1,13 +1,11 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
-import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.block.Block;
-import net.minecraft.enchantment.EnchantmentProtection;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
@@ -40,11 +38,6 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 		this.motionX = velocity.x;
 		this.motionY = velocity.y;
 		this.motionZ = velocity.z;
-	}
-
-	@Override
-	protected void entityInit() {
-
 	}
 
 	@Override
@@ -119,18 +112,5 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 
 		}
 
-
-	}
-
-	@Nullable
-	@Override
-	public UUID getOwnerId() {
-		return getCaster().getUniqueID();
-	}
-
-	@Nullable
-	@Override
-	public Entity getOwner() {
-		return getCaster();
 	}
 }

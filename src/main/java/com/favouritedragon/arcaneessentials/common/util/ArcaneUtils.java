@@ -1,10 +1,8 @@
 package com.favouritedragon.arcaneessentials.common.util;
 
-import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.RayTracer;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -682,6 +680,11 @@ public class ArcaneUtils {
 	public static int getRandomNumberInRange(int min, int max) {
 		Random r = new Random();
 		return r.nextInt((max - min) + 1) + min;
+	}
+
+	//Pretty performance heavy
+	public static double getMagnitude(Vec3d vector) {
+		return Math.sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
 	}
 }
 

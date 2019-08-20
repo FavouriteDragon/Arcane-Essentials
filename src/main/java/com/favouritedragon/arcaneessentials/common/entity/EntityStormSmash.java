@@ -5,7 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 
-public class EntityStormSmash extends EntityMagicBolt {
+public class EntityStormSmash {/*extends EntityMagicBolt {
 	public EntityStormSmash(World world) {
 		super(world);
 	}
@@ -55,5 +55,5 @@ public class EntityStormSmash extends EntityMagicBolt {
 	@Override
 	public void onBlockHit() {
 		super.onBlockHit();
-	}
+	}**/
 }
