@@ -1,8 +1,7 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
-import electroblob.wizardry.entity.construct.EntityMagicConstruct;
-import net.minecraft.entity.Entity;
+import electroblob.wizardry.util.RayTracer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -10,8 +9,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
-import java.util.UUID;
+import javax.annotation.Nonnull;
 
 import static com.favouritedragon.arcaneessentials.common.util.DamageSources.EARTH;
 
@@ -45,17 +43,18 @@ public class EntitySolarBeam extends EntityMagicConstruct {
 
 	@Override
 	protected void entityInit() {
+		super.entityInit();
 		dataManager.register(SYNC_RADIUS, 1.0F);
 		dataManager.register(SYNC_RANGE, 20.0F);
 	}
 
 	@Override
-	protected void readEntityFromNBT(NBTTagCompound compound) {
+	protected void readEntityFromNBT(@Nonnull NBTTagCompound compound) {
 
 	}
 
 	@Override
-	protected void writeEntityToNBT(NBTTagCompound compound) {
+	protected void writeEntityToNBT(@Nonnull NBTTagCompound compound) {
 
 	}
 
@@ -68,21 +67,9 @@ public class EntitySolarBeam extends EntityMagicConstruct {
 		if (!world.isRemote && getCaster() != null) {
 			Vec3d endpos = getLookVec().scale(getRange()).add(getPositionVector());
 			ArcaneUtils.handlePiercingBeamCollision(world, getCaster(), getPositionVector(), endpos, getRadius(), this, false, EARTH, 0.5F * damageMultiplier,
-					new Vec3d(0.05, 0.025, 0.05), false, 0, getRadius(), 0);
+					new Vec3d(0.05, 0.025, 0.05), false, 0, getRadius(), 0, RayTracer.ignoreEntityFilter(getCaster()));
 		}
 	}
 
-
-	@Nullable
-	@Override
-	public UUID getOwnerId() {
-		return getCaster().getUniqueID();
-	}
-
-	@Nullable
-	@Override
-	public Entity getOwner() {
-		return getCaster();
-	}
 }
 

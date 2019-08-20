@@ -5,10 +5,7 @@ import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
-import electroblob.wizardry.util.MagicDamage;
-import electroblob.wizardry.util.ParticleBuilder;
-import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
+import electroblob.wizardry.util.*;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,7 +35,7 @@ public class RadiantBeam extends Spell {
 		if (!world.isRemote) {
 			Vec3d knockBack = new Vec3d(6 * modifiers.get(WizardryItems.blast_upgrade), 6 * modifiers.get(WizardryItems.blast_upgrade), 6 * modifiers.get(WizardryItems.blast_upgrade));
 			ArcaneUtils.handlePiercingBeamCollision(world, caster, startPos, endPos, 0.5F, null, true,
-					MagicDamage.DamageType.RADIANT, damage, knockBack, true, 10, 0.5F, 0);
+					MagicDamage.DamageType.RADIANT, damage, knockBack, true, 10, 0.5F, 0, RayTracer.ignoreEntityFilter(caster));
 		}
 
 		if (world.isRemote) {
@@ -80,7 +77,7 @@ public class RadiantBeam extends Spell {
 			Vec3d endPos = caster.getLookVec().scale(range).add(startPos);
 			Vec3d knockBack = new Vec3d(6 * modifiers.get(WizardryItems.blast_upgrade), 6 * modifiers.get(WizardryItems.blast_upgrade), 6 * modifiers.get(WizardryItems.blast_upgrade));
 			ArcaneUtils.handlePiercingBeamCollision(world, caster, startPos, endPos, 0.5F, null, true,
-					MagicDamage.DamageType.RADIANT, damage, knockBack, true, 10, 0.5F, 0);
+					MagicDamage.DamageType.RADIANT, damage, knockBack, true, 10, 0.5F, 0, RayTracer.ignoreEntityFilter(caster));
 		}
 
 		if (world.isRemote) {

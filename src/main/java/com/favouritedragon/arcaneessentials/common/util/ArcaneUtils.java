@@ -20,6 +20,7 @@ import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Predicate;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -462,14 +463,12 @@ public class ArcaneUtils {
 	}
 
 	@Nullable
-	public static RayTraceResult standardEntityRayTrace(World world, Entity entity, Entity spellEntity, Vec3d startPos, Vec3d endPos, HashSet<Entity> excluded,
+	public static RayTraceResult standardEntityRayTrace(World world, Entity entity, Entity spellEntity, Vec3d startPos, Vec3d endPos, Predicate<? super Entity> filter,
 														boolean hitLiquids, float borderSize, boolean ignoreUncollidables, boolean returnLastUncollidable) {
 
-		excluded.add(entity);
-		excluded.add(spellEntity);
 
 		return RayTracer.rayTrace(world, startPos, endPos, borderSize,
-				hitLiquids, ignoreUncollidables, returnLastUncollidable, Entity.class, entity1 -> excluded.contains(entity));
+				hitLiquids, ignoreUncollidables, returnLastUncollidable, Entity.class, filter);
 	}
 
 	@Nullable
@@ -529,10 +528,11 @@ public class ArcaneUtils {
 	 */
 
 	public static void handlePiercingBeamCollision(World world, EntityLivingBase caster, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, boolean directDamage, MagicDamage.DamageType damageType,
-												   float damage, Vec3d knockBack, boolean invulnerable, int fireTime, float radius, float lifeSteal) {
-		HashSet<Entity> excluded = new HashSet<>();
-		RayTraceResult result = standardEntityRayTrace(world, caster, spellEntity, startPos, endPos, excluded, false, borderSize, true, false);
-		if (result != null && result.entityHit instanceof EntityLivingBase && result.entityHit != caster && result.entityHit != spellEntity) {
+												   float damage, Vec3d knockBack, boolean invulnerable, int fireTime, float radius, float lifeSteal,
+												   Predicate<? super Entity> filter) {
+		filter.or(entity1 -> entity1 == caster || entity1 == spellEntity);
+		RayTraceResult result = standardEntityRayTrace(world, caster, spellEntity, startPos, endPos, filter, false, borderSize, true, false);
+		if (result != null && result.entityHit instanceof EntityLivingBase && !filter.test(result.entityHit)) {
 			EntityLivingBase hit = (EntityLivingBase) result.entityHit;
 			if (!MagicDamage.isEntityImmune(damageType, hit)) {
 				hit.setFire(fireTime);
@@ -543,6 +543,7 @@ public class ArcaneUtils {
 					hit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(spellEntity, caster, damageType), damage);
 
 				}
+				filter.or(entity1 -> entity1 == hit);
 				Vec3d kM = endPos.subtract(startPos).scale(.01);
 				hit.motionX += knockBack.x * kM.x;
 				hit.motionY += knockBack.y * kM.y;
@@ -553,12 +554,11 @@ public class ArcaneUtils {
 			Vec3d pos = result.hitVec;
 			AxisAlignedBB hitBox = new AxisAlignedBB(pos.x + radius, pos.y + radius, pos.z + radius, pos.x - radius, pos.y - radius, pos.z - radius);
 			List<Entity> nearby = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
-			excluded.add(hit);
-			nearby.remove(excluded);
+			nearby.removeIf(filter);
 			//This is so it doesn't count the entity that was hit by the raytrace and mess up the chain
 			if (!nearby.isEmpty()) {
 				for (Entity e : nearby) {
-					if (e != caster && e != hit && !excluded.contains(e) && e.getTeam() != caster.getTeam()) {
+					if (e != caster && e != hit && e.getTeam() != caster.getTeam()) {
 						if (!MagicDamage.isEntityImmune(damageType, e)) {
 							e.setFire(fireTime);
 							if (directDamage) {
@@ -570,7 +570,7 @@ public class ArcaneUtils {
 							e.motionY += knockBack.y;
 							e.motionZ += knockBack.z;
 							applyPlayerKnockback(e);
-							excluded.add(e);
+							filter.or(entity1 -> entity1 == e);
 						}
 					}
 					if (e.getTeam() == caster.getTeam()) {
@@ -583,7 +583,7 @@ public class ArcaneUtils {
 				}
 			} else {
 				handlePiercingBeamCollision(world, caster, pos, endPos, borderSize, spellEntity, directDamage,
-						damageType, damage, knockBack, invulnerable, fireTime, radius, lifeSteal);
+						damageType, damage, knockBack, invulnerable, fireTime, radius, lifeSteal, filter);
 
 			}
 
@@ -603,50 +603,51 @@ public class ArcaneUtils {
 	 * @param damageSource The damage source.
 	 * @param damage       The amount of damage.
 	 * @param knockBack    The amount of knockback.
-	 * @param setFire      Whether to set an enemy on fire.
 	 * @param fireTime     How long to set an enemy on fire.
 	 */
 
 	public static void handlePiercingBeamCollision(World world, EntityLivingBase caster, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, DamageSource damageSource,
-												   float damage, Vec3d knockBack, boolean setFire, int fireTime, float radius) {
-		HashSet<Entity> excluded = new HashSet<>();
-		RayTraceResult result = standardEntityRayTrace(world, caster, spellEntity, startPos, endPos, excluded, false, borderSize, true, false);
-		if (result != null && result.entityHit instanceof EntityLivingBase) {
+												   float damage, Vec3d knockBack, boolean invulnerable, int fireTime, float radius, float lifeSteal,
+												   Predicate<? super Entity> filter) {
+		filter.or(entity1 -> entity1 == caster || entity1 == spellEntity);
+		RayTraceResult result = standardEntityRayTrace(world, caster, spellEntity, startPos, endPos, filter, false, borderSize, true, false);
+		if (result != null && result.entityHit instanceof EntityLivingBase && result.entityHit != caster && result.entityHit != spellEntity) {
 			EntityLivingBase hit = (EntityLivingBase) result.entityHit;
-			if (setFire) {
-				hit.setFire(fireTime);
-			}
+			hit.setFire(fireTime);
+			caster.heal(damage * lifeSteal);
 			hit.attackEntityFrom(damageSource, damage);
-			hit.motionX += knockBack.x;
-			hit.motionY += knockBack.y;
-			hit.motionZ += knockBack.z;
+			filter.or(entity1 -> entity1 == hit);
+			Vec3d kM = endPos.subtract(startPos).scale(.01);
+			hit.motionX += knockBack.x * kM.x;
+			hit.motionY += knockBack.y * kM.y;
+			hit.motionZ += knockBack.z * kM.z;
+			hit.setEntityInvulnerable(invulnerable);
 			applyPlayerKnockback(hit);
+
 			Vec3d pos = result.hitVec;
 			AxisAlignedBB hitBox = new AxisAlignedBB(pos.x + radius, pos.y + radius, pos.z + radius, pos.x - radius, pos.y - radius, pos.z - radius);
 			List<Entity> nearby = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
-			excluded.add(hit);
-			nearby.remove(excluded);
+			nearby.removeIf(filter);
 			//This is so it doesn't count the entity that was hit by the raytrace and mess up the chain
 			if (!nearby.isEmpty()) {
 				for (Entity e : nearby) {
-					if (e != caster && e != hit && !excluded.contains(e) && e.getTeam() != caster.getTeam()) {
-						if (setFire) {
-							e.setFire(fireTime);
-						}
+					if (e != caster && e != hit && e.getTeam() != caster.getTeam()) {
+						e.setFire(fireTime);
 						e.attackEntityFrom(damageSource, damage);
 						e.motionX += knockBack.x;
 						e.motionY += knockBack.y;
 						e.motionZ += knockBack.z;
 						applyPlayerKnockback(e);
-						excluded.add(e);
+						filter.or(entity1 -> entity1 == e);
 					}
 				}
 			} else {
-				handlePiercingBeamCollision(world, caster, pos, endPos, borderSize, spellEntity, damageSource, damage, knockBack, setFire, fireTime, radius);
+				handlePiercingBeamCollision(world, caster, pos, endPos, borderSize, spellEntity,
+						damageSource, damage, knockBack, invulnerable, fireTime, radius, lifeSteal, filter);
 
 			}
-
 		}
+
 	}
 
 	/**
