@@ -1,9 +1,11 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
+import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -79,7 +81,7 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 		if (!world.isRemote) {
 			if (world instanceof WorldServer) {
 				WorldServer World = (WorldServer) world;
-				World.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, posX, posY, posZ, 4,
+				World.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, posX, posY, posZ, 12,
 						0, 0, 0, 0.1);
 			}
 			List<Entity> hit = world.getEntitiesWithinAABB(Entity.class, getEntityBoundingBox());
@@ -95,6 +97,10 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 					}
 				}
 			}
+		}
+		else {
+			world.playSound(null, posX, posY, posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
+					0.8F + world.rand.nextFloat() / 10F);
 		}
 		setDead();
 	}
@@ -124,7 +130,7 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 		if (getLifetime() >= 100 && ticksExisted >= getLifetime()) {
 			Dissipate();
 		}
-		if (ArcaneUtils.getMagnitude(new Vec3d(motionX, motionY, motionZ)) <= 0.1F) {
+		if (ArcaneUtils.getMagnitude(new Vec3d(motionX, motionY, motionZ)) <= 0.2F) {
 			Dissipate();
 		}
 	}

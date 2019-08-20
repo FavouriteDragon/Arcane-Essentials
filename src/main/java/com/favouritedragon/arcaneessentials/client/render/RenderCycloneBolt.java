@@ -2,7 +2,6 @@ package com.favouritedragon.arcaneessentials.client.render;
 
 import com.favouritedragon.arcaneessentials.common.entity.EntityCycloneBolt;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
-import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;
@@ -31,7 +30,6 @@ public class RenderCycloneBolt extends Render<EntityCycloneBolt> {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 		GlStateManager.pushMatrix();
 
-		GlStateManager.disableLighting();
 		GlStateManager.enableBlend();
 		GlStateManager.disableTexture2D();
 		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
@@ -58,18 +56,16 @@ public class RenderCycloneBolt extends Render<EntityCycloneBolt> {
 		}
 
 		// Draw the inside first
-		drawSphere(radius - 0.1f - 0.025f * pulse, latStep, longStep, true, r, g, b, a * 0.8F);
-		drawSphere(radius - 0.1f - 0.025f * pulse, latStep, longStep, false, 1, 1, 1, a * 0.8F);
+		drawSphere(radius - 0.1f - 0.025f * pulse, latStep, longStep, true, r, g, b, a * 0.7F);
+		drawSphere(radius - 0.1f - 0.025f * pulse, latStep, longStep, false, 1, 1, 1, a * 0.7F);
 		drawSphere(radius, latStep, longStep, false, r, g, b, 0.7f * a);
 
 		//Particles
-		ParticleBuilder.create(ParticleBuilder.Type.BUFF).entity(entity).time(2).clr(1F, 1F, 1F).spawn(entity.world);
-		ArcaneUtils.spawnSpinningDirectionalVortex(entity.world, entity.getCaster(), Vec3d.ZERO, 12, 1, 0, 72,
+		ArcaneUtils.spawnSpinningDirectionalVortex(entity.world, entity.getCaster(), Vec3d.ZERO, 15, 1, 0, 72,
 				EnumParticleTypes.EXPLOSION_NORMAL, entity.getPositionVector(), new Vec3d(0.4, 0.1, 0.4), new Vec3d(entity.motionX, entity.motionY, entity.motionZ));
 
 
 		GlStateManager.enableTexture2D();
-		GlStateManager.enableLighting();
 		GlStateManager.disableBlend();
 
 		GlStateManager.popMatrix();
