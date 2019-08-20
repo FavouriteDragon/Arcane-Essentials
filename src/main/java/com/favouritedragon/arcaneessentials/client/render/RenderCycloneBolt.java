@@ -23,8 +23,8 @@ public class RenderCycloneBolt extends Render<EntityCycloneBolt> {
 		ArcaneUtils.spawnSpinningDirectionalVortex(entity.world, entity.getCaster(), Vec3d.ZERO, 12, 1, 0, 72,
 				EnumParticleTypes.EXPLOSION_NORMAL, entity.getPositionVector(), new Vec3d(0.4, 0.1, 0.4), new Vec3d(entity.motionX, entity.motionY, entity.motionZ));
 		ParticleBuilder.create(ParticleBuilder.Type.SPHERE).clr(1F, 1F, 1F).entity(entity)
-				.time(entity.getLifetime()).spawn(entity.world);
-		ParticleBuilder.create(ParticleBuilder.Type.BUFF).entity(entity).clr(1F, 1F, 1F).time(entity.getLifetime()).spawn(entity.world);
+				.time(entity.getLifetime()).scale(3).spawn(entity.world);
+		ParticleBuilder.create(ParticleBuilder.Type.BUFF).entity(entity).time(2).clr(1F, 1F, 1F).spawn(entity.world);
 	}
 
 	@Nullable

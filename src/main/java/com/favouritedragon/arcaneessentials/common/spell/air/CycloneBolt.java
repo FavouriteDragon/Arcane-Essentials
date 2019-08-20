@@ -30,7 +30,7 @@ public class CycloneBolt extends Spell {
 			float damageMultiplier = 1 * modifiers.get(WizardryItems.blast_upgrade);
 			EntityCycloneBolt bolt = new EntityCycloneBolt(world);
 			bolt.setCaster(caster);
-			bolt.aim(caster, speed / 20, 0);
+			bolt.aim(caster, speed / 25, 0);
 			bolt.setLifetime(getProperty(LIFETIME).intValue() * 20);
 			bolt.setDamage(getProperty(DAMAGE).floatValue() * damageMultiplier);
 			bolt.setKnockbackStrength(knockBackStrength);

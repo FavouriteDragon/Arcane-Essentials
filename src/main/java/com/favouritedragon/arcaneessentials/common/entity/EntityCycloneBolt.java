@@ -25,7 +25,7 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 	private float damage;
 
 
-	
+
 	public EntityCycloneBolt(World world) {
 		super(world);
 		this.setSize(1, 1);
@@ -116,14 +116,6 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 			}
 		}
 		Dissipate();
-	}
-
-	@Override
-	public void setDead() {
-		super.setDead();
-		if (!world.isRemote  && this.isDead) {
-			Thread.dumpStack();
-		}
 	}
 
 	@Override
