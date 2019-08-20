@@ -69,7 +69,7 @@ public class RadianceStorm extends Spell {
 
 
 				}
-				handleSphericalExplosion(world, caster, caster.getPositionVector(), (float) maxRadius, getProperty(DAMAGE).floatValue() *
+				handleSphericalExplosion(world, caster, caster.getPositionVector(), (float) maxRadius * 0.6F, getProperty(EXPLOSION_DAMAGE).floatValue() *
 						modifiers.get(SpellModifiers.POTENCY), new Vec3d(1, 2, 1), getProperty(BURN_DURATION).intValue() *
 						(int) modifiers.get(WizardryItems.duration_upgrade));
 			}
@@ -125,8 +125,8 @@ public class RadianceStorm extends Spell {
 				}
 			}
 		}
-		else {
-			ParticleBuilder.create(ParticleBuilder.Type.SPHERE).pos(position).scale(1.4F).entity(caster).clr(1.0F, 1.0F, 0.3F)
+		if (world.isRemote){
+			ParticleBuilder.create(ParticleBuilder.Type.SPHERE).pos(position).scale(1.3F).clr(1.0F, 1.0F, 0.3F)
 					.spawn(world);
 		}
 	}

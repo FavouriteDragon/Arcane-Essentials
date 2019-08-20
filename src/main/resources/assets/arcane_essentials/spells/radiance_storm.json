@@ -24,6 +24,6 @@
     "light_beams": 9,
     "range": 8,
     "knockback_mult": 1.5,
-    "explosion_damage": 6
+    "explosion_damage": 5
   }
 }
