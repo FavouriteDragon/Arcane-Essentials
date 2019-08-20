@@ -2,11 +2,7 @@ package com.favouritedragon.arcaneessentials.common.spell.air;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityCycloneShield;
-import electroblob.wizardry.constants.Element;
-import electroblob.wizardry.constants.SpellType;
-import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.registry.WizardryItems;
-import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLiving;
@@ -21,6 +17,7 @@ import net.minecraft.world.World;
 public class CycloneShield extends Spell {
 	public CycloneShield() {
 		super(ArcaneEssentials.MODID, "cyclone_shield", EnumAction.BOW, false);
+		addProperties(EFFECT_DURATION, DAMAGE, EFFECT_RADIUS);
 	}
 
 	@Override
@@ -30,9 +27,9 @@ public class CycloneShield extends Spell {
 		world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_FIREWORK_SHOOT, SoundCategory.HOSTILE, 0.5F + world.rand.nextFloat() / 20, 2.0F + world.rand.nextFloat() / 10, true);
 		if (!world.isRemote) {
 			caster.swingArm(hand);
-			int lifetime = 40 + 5 * (int) modifiers.get(WizardryItems.duration_upgrade);
-			float damageMultiplier = 2;
-			float radius = 4 * modifiers.get(WizardryItems.range_upgrade);
+			int lifetime = getProperty(EFFECT_DURATION).intValue() * 20 * (int) modifiers.get(WizardryItems.duration_upgrade);
+			float damageMultiplier = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
+			float radius = getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(WizardryItems.range_upgrade);
 			world.spawnEntity(new EntityCycloneShield(world, caster.posX, caster.posY, caster.posZ, caster, lifetime, damageMultiplier, radius));
 			return true;
 		}
@@ -47,9 +44,9 @@ public class CycloneShield extends Spell {
 
 		if (!world.isRemote) {
 			caster.swingArm(hand);
-			int lifetime = 40 + 5 * (int) modifiers.get(WizardryItems.duration_upgrade);
-			float damageMultiplier = 2;
-			float radius = 4 * modifiers.get(WizardryItems.range_upgrade);
+			int lifetime = getProperty(EFFECT_DURATION).intValue() * 20 * (int) modifiers.get(WizardryItems.duration_upgrade);
+			float damageMultiplier = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
+			float radius = getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(WizardryItems.range_upgrade);
 			world.spawnEntity(new EntityCycloneShield(world, caster.posX, caster.posY, caster.posZ, caster, lifetime, damageMultiplier, radius));
 			return true;
 		}

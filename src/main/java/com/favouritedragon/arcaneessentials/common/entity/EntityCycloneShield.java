@@ -29,6 +29,7 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 
 	public EntityCycloneShield(World world, double x, double y, double z, EntityLivingBase caster, int lifetime, float damageMultiplier, float radius) {
 		super(world);
+		this.setOwner(caster);
 		this.setPosition(x, y, z);
 		this.setCaster(caster);
 		this.lifetime = lifetime;
