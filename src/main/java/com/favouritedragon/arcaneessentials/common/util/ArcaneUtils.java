@@ -209,18 +209,22 @@ public class ArcaneUtils {
 	 */
 	public static void spawnSpinningVortex(World world, int maxAngle, double vortexHeight, double minRadius, double radiusScale, ResourceLocation particle, Vec3d position,
 										   Vec3d particleSpeed, Vec3d entitySpeed, int maxAge, float r, float g, float b) {
+		Vec3d prevpos = position;
 		for (int angle = 0; angle < maxAngle; angle++) {
-			double angle2 = world.rand.nextDouble() * Math.PI * 2;
 			double radius = minRadius + (angle / radiusScale);
 			double x = radius * cos(angle);
 			double y = angle / (maxAngle / vortexHeight);
 			double z = radius * sin(angle);
-			double speed = world.rand.nextDouble() * 2 + 1;
-			double omega = Math.signum(speed * ((Math.PI * 2) / 20 - speed / (20 * radius)));
-			angle2 += omega;
-			//Wizardry.proxy.spawnParticle(particle, world, x + position.x, y + position.y, z + position.z,
-				//	(particleSpeed.x * radius * omega * Math.cos(angle2)) + entitySpeed.x, particleSpeed.y + entitySpeed.y, (particleSpeed.z * radius * omega * Math.sin(angle2)) + entitySpeed.z, maxAge, r, g, b);
-
+			Vec3d pos = new Vec3d(position.x + x, position.y + y, position.z + z);
+			if (particle.equals(ParticleBuilder.Type.LIGHTNING)) {
+				ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING).vel(entitySpeed).spin(radius, ArcaneUtils.getMagnitude(particleSpeed))
+						.time(maxAge).clr(r, g, b).target(prevpos).pos(pos).spawn(world);
+				prevpos = pos;
+			}
+			else {
+				ParticleBuilder.create(particle).vel(entitySpeed).spin(radius, ArcaneUtils.getMagnitude(particleSpeed))
+						.time(maxAge).clr(r, g, b).pos(pos).spawn(world);
+			}
 		}
 	}
 

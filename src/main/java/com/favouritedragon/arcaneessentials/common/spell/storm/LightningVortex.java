@@ -21,15 +21,18 @@ import net.minecraft.world.World;
 
 public class LightningVortex extends Spell {
 
+	private static final String SPEED = "speed";
+
 	public LightningVortex() {
 		super(ArcaneEssentials.MODID, "lightning_vortex", EnumAction.BOW, false);
+		addProperties(DAMAGE, RANGE, SPEED);
 	}
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		double range = 3 + 1 * modifiers.get(WizardryItems.range_upgrade);
-		float damage = 3 + 1 * modifiers.get(WizardryItems.blast_upgrade);
-		Vec3d vel = caster.getLookVec().scale(range / 10);
+		double range = getProperty(RANGE).doubleValue() + 1 * modifiers.get(WizardryItems.range_upgrade);
+		float damage = getProperty(DAMAGE).floatValue() + 1 * modifiers.get(WizardryItems.blast_upgrade);
+		Vec3d vel = caster.getLookVec().scale(range / 20 * getProperty(SPEED).floatValue());
 		RayTraceResult result = RayTracer.standardBlockRayTrace(world, caster, range,true);
 		if (result != null) {
 			Vec3d pos = result.hitVec;
@@ -39,7 +42,7 @@ public class LightningVortex extends Spell {
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_LIGHTNING_THUNDER, 1F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
-			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_HAMMER_THROW, 2.0F,
+			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_LIGHTNING_IMPACT, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			return true;
 		} else {
@@ -50,7 +53,7 @@ public class LightningVortex extends Spell {
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_LIGHTNING_THUNDER, 1F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
-			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_HAMMER_THROW, 2.0F,
+			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_LIGHTNING_IMPACT, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			return true;
 		}
@@ -58,9 +61,9 @@ public class LightningVortex extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
-		double range = 3 + 1 * modifiers.get(WizardryItems.range_upgrade);
-		float damage = 3 + 1 * modifiers.get(WizardryItems.blast_upgrade);
-		Vec3d vel = caster.getLookVec().scale(range / 10);
+		double range = getProperty(RANGE).doubleValue() + 1 * modifiers.get(WizardryItems.range_upgrade);
+		float damage = getProperty(DAMAGE).floatValue() + 1 * modifiers.get(WizardryItems.blast_upgrade);
+		Vec3d vel = caster.getLookVec().scale(range / 20 * getProperty(SPEED).floatValue());
 		RayTraceResult result = RayTracer.standardBlockRayTrace(world, caster, range,true);
 		if (result != null) {
 			Vec3d pos = result.hitVec;

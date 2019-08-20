@@ -6,7 +6,6 @@ import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
 import net.minecraft.init.Blocks;
@@ -16,9 +15,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
 import java.util.List;
-import java.util.UUID;
 
 public class EntityLightningVortex extends EntityMagicConstruct {
 
@@ -30,6 +27,7 @@ public class EntityLightningVortex extends EntityMagicConstruct {
 								 float damageMultiplier) {
 		super(world);
 		this.setPosition(x, y, z);
+		this.setOwner(caster);
 		this.setCaster(caster);
 		this.lifetime = lifetime;
 		this.height = 7.0f;
