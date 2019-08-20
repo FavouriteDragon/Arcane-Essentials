@@ -228,6 +228,44 @@ public class ArcaneUtils {
 		}
 	}
 
+	/**
+	 * Spawns a directional vortex that has rotating particles.
+	 * Same as the one above, except it uses the particle's natural texture/colour.
+	 *
+	 * @param world         World the vortex spawns in.
+	 * @param maxAngle      The amount of particles/the maximum angle that the circle ticks to. 240 would mean there are 240 particles spiraling away.
+	 * @param vortexHeight  How tall the vortex is.
+	 * @param radiusScale   The maximum radius and how much the radius increases by. Always use your value for the maxAngle here-
+	 *                      otherwise you can get some funky effects. Ex: maxAngle/1.5 would give you a max radius of 1.5 blocks.
+	 *                      Note: It might only be a diamater of 1.5 blocks- if so, uhhh... My bad.
+	 * @param particle      The wizardry particle type. I had to create two methods- for for normal particles, one for wizardry ones.
+	 * @param position      The starting/reference position of the vortex. Used along with the direction position to determine the actual starting position.
+	 * @param particleSpeed How fast the particles are spinning. You don't need to include complex maths here- that's all handled by this method.
+	 * @param entitySpeed   The speed of the entity that is spawning the particles. If this is used for a quickburst, just make this 0. This is so
+	 *                      particles move with the entity that's directly spawning it.
+	 * @param maxAge        The maximum age of the particle. Wizardry particles already have a predetermined age, this just adds onto it.
+	 */
+	public static void spawnSpinningVortex(World world, int maxAngle, double vortexHeight, double minRadius, double radiusScale, ResourceLocation particle, Vec3d position,
+										   Vec3d particleSpeed, Vec3d entitySpeed, int maxAge) {
+		Vec3d prevpos = position;
+		for (int angle = 0; angle < maxAngle; angle++) {
+			double radius = minRadius + (angle / radiusScale);
+			double x = radius * cos(angle);
+			double y = angle / (maxAngle / vortexHeight);
+			double z = radius * sin(angle);
+			Vec3d pos = new Vec3d(position.x + x, position.y + y, position.z + z);
+			if (particle.equals(ParticleBuilder.Type.LIGHTNING)) {
+				ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING).vel(entitySpeed).spin(radius, ArcaneUtils.getMagnitude(particleSpeed))
+						.time(maxAge).target(prevpos).pos(pos).spawn(world);
+				prevpos = pos;
+			}
+			else {
+				ParticleBuilder.create(particle).vel(entitySpeed).spin(radius, ArcaneUtils.getMagnitude(particleSpeed))
+						.time(maxAge).pos(pos).spawn(world);
+			}
+		}
+	}
+
 	public static void spawnSpinningVortex(World world, int maxAngle, double vortexHeight, double minRadius, double radiusScale, EnumParticleTypes particle, Vec3d position,
 										   Vec3d particleSpeed, Vec3d entitySpeed) {
 		for (int angle = 0; angle < maxAngle; angle++) {

@@ -1,12 +1,10 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
-import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
@@ -16,9 +14,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 import java.util.List;
-import java.util.UUID;
 
 import static com.favouritedragon.arcaneessentials.common.util.DamageSources.SPLASH;
 
@@ -33,18 +30,12 @@ public class EntityWhirlpool extends EntityMagicConstruct {
 
 
 	@Override
-	protected void entityInit() {
-
-	}
-
-
-	@Override
-	protected void readEntityFromNBT(NBTTagCompound compound) {
+	protected void readEntityFromNBT(@Nonnull NBTTagCompound compound) {
 
 	}
 
 	@Override
-	protected void writeEntityToNBT(NBTTagCompound compound) {
+	protected void writeEntityToNBT(@Nonnull NBTTagCompound compound) {
 
 	}
 
@@ -140,17 +131,5 @@ public class EntityWhirlpool extends EntityMagicConstruct {
 			}
 		}
 		this.isDead = true;
-	}
-
-	@Nullable
-	@Override
-	public UUID getOwnerId() {
-		return getCaster().getUniqueID();
-	}
-
-	@Nullable
-	@Override
-	public Entity getOwner() {
-		return getCaster();
 	}
 }

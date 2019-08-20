@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class RenderLightningVortex extends Render<EntityLightningVortex> {
@@ -17,16 +18,16 @@ public class RenderLightningVortex extends Render<EntityLightningVortex> {
 	}
 
 	@Override
-	public void doRender(EntityLightningVortex entity, double x, double y, double z, float entityYaw, float partialTicks) {
+	public void doRender(@Nonnull EntityLightningVortex entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 		ArcaneUtils.spawnSpinningVortex(entity.world, 240, 7, 0.25, 80, ParticleBuilder.Type.LIGHTNING,
 				new Vec3d(entity.posX, entity.posY, entity.posZ), new Vec3d(2, 2, 2), new Vec3d(entity.motionX, entity.motionY, entity.motionZ),
-				2, 138 / 255F, 1F, 1F);
+				2);
 	}
 
 	@Nullable
 	@Override
-	protected ResourceLocation getEntityTexture(EntityLightningVortex entity) {
+	protected ResourceLocation getEntityTexture(@Nonnull EntityLightningVortex entity) {
 		return null;
 	}
 }
