@@ -465,8 +465,11 @@ public class ArcaneUtils {
 	public static RayTraceResult standardEntityRayTrace(World world, Entity entity, Entity spellEntity, Vec3d startPos, Vec3d endPos, HashSet<Entity> excluded,
 														boolean hitLiquids, float borderSize, boolean ignoreUncollidables, boolean returnLastUncollidable) {
 
+		excluded.add(entity);
+		excluded.add(spellEntity);
+
 		return RayTracer.rayTrace(world, startPos, endPos, borderSize,
-				hitLiquids, ignoreUncollidables, returnLastUncollidable, Entity.class, entity1 -> entity1 != entity && entity1 != spellEntity && !excluded.contains(entity1));
+				hitLiquids, ignoreUncollidables, returnLastUncollidable, Entity.class, entity1 -> excluded.contains(entity));
 	}
 
 	@Nullable
@@ -477,7 +480,7 @@ public class ArcaneUtils {
 		float dz = (float) entity.getLookVec().z * (float) range;
 		return RayTracer.rayTrace(world, startPos,
 				new Vec3d(startPos.x  + dx, startPos.y + dy, startPos.z + dz), borderSize,
-				hitLiquids, ignoreUncollidables, returnLastUncollidable, Entity.class, entity1 -> entity1 != entity && entity1 != spellEntity);
+				hitLiquids, ignoreUncollidables, returnLastUncollidable, Entity.class, entity1 -> entity1 == entity || entity1 == spellEntity);
 	}
 
 	public static void applyPlayerKnockback(Entity target) {
@@ -529,7 +532,7 @@ public class ArcaneUtils {
 												   float damage, Vec3d knockBack, boolean invulnerable, int fireTime, float radius, float lifeSteal) {
 		HashSet<Entity> excluded = new HashSet<>();
 		RayTraceResult result = standardEntityRayTrace(world, caster, spellEntity, startPos, endPos, excluded, false, borderSize, true, false);
-		if (result != null && result.entityHit instanceof EntityLivingBase) {
+		if (result != null && result.entityHit instanceof EntityLivingBase && result.entityHit != caster && result.entityHit != spellEntity) {
 			EntityLivingBase hit = (EntityLivingBase) result.entityHit;
 			if (!MagicDamage.isEntityImmune(damageType, hit)) {
 				hit.setFire(fireTime);
