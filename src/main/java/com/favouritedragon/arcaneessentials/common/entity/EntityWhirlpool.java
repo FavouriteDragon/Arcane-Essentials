@@ -67,7 +67,7 @@ public class EntityWhirlpool extends EntityMagicConstruct {
 
 			for (EntityLivingBase target : targets) {
 
-				if (this.isValidTarget(target)) {
+				if (this.isValidTarget(target) && target != getOwner()) {
 
 					double velY = target.motionY;
 

@@ -50,6 +50,7 @@ public class Whirlpool extends Spell {
 		} else {
 			Vec3d pos = caster.getPositionVector();
 			EntityWhirlpool pool = new EntityWhirlpool(world);
+			pool.setOwner(caster);
 			pool.setPosition(pos.x, pos.y, pos.z);
 			pool.setCaster(caster);
 			pool.lifetime = 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade);

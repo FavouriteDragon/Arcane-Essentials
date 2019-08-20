@@ -462,15 +462,11 @@ public class ArcaneUtils {
 	}
 
 	@Nullable
-	public static RayTraceResult standardEntityRayTrace(World world, Entity entity, Entity spellEntity, Vec3d startPos, Vec3d endPos, float borderSize, boolean transparentBlocks, HashSet<Entity> excluded) {
-		excluded.add(entity);
-		if (spellEntity != null) {
-			excluded.add(spellEntity);
-		}
-		return tracePath(world, (float) startPos.x,
-				(float) startPos.y, (float) startPos.z,
-				(float) endPos.x, (float) endPos.y, (float) endPos.z,
-				borderSize, excluded, false, transparentBlocks);
+	public static RayTraceResult standardEntityRayTrace(World world, Entity entity, Entity spellEntity, Vec3d startPos, Vec3d endPos, HashSet<Entity> excluded,
+														boolean hitLiquids, float borderSize, boolean ignoreUncollidables, boolean returnLastUncollidable) {
+
+		return RayTracer.rayTrace(world, startPos, endPos, borderSize,
+				hitLiquids, ignoreUncollidables, returnLastUncollidable, Entity.class, entity1 -> entity1 != entity && entity1 != spellEntity && !excluded.contains(entity1));
 	}
 
 	@Nullable
@@ -532,7 +528,7 @@ public class ArcaneUtils {
 	public static void handlePiercingBeamCollision(World world, EntityLivingBase caster, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, boolean directDamage, MagicDamage.DamageType damageType,
 												   float damage, Vec3d knockBack, boolean invulnerable, int fireTime, float radius, float lifeSteal) {
 		HashSet<Entity> excluded = new HashSet<>();
-		RayTraceResult result = standardEntityRayTrace(world, caster, spellEntity, startPos, endPos, borderSize, false, excluded);
+		RayTraceResult result = standardEntityRayTrace(world, caster, spellEntity, startPos, endPos, excluded, false, borderSize, true, false);
 		if (result != null && result.entityHit instanceof EntityLivingBase) {
 			EntityLivingBase hit = (EntityLivingBase) result.entityHit;
 			if (!MagicDamage.isEntityImmune(damageType, hit)) {
@@ -611,7 +607,7 @@ public class ArcaneUtils {
 	public static void handlePiercingBeamCollision(World world, EntityLivingBase caster, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, DamageSource damageSource,
 												   float damage, Vec3d knockBack, boolean setFire, int fireTime, float radius) {
 		HashSet<Entity> excluded = new HashSet<>();
-		RayTraceResult result = standardEntityRayTrace(world, caster, spellEntity, startPos, endPos, borderSize, false, excluded);
+		RayTraceResult result = standardEntityRayTrace(world, caster, spellEntity, startPos, endPos, excluded, false, borderSize, true, false);
 		if (result != null && result.entityHit instanceof EntityLivingBase) {
 			EntityLivingBase hit = (EntityLivingBase) result.entityHit;
 			if (setFire) {
