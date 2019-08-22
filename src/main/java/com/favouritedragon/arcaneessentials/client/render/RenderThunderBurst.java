@@ -21,21 +21,26 @@ public class RenderThunderBurst extends Render<EntityThunderBurst> {
 		assert entity.getCaster() != null;
 		if (entity.ticksExisted <= 1) {
 			for (double theta = 0; theta <= 180; theta += 1) {
-				double dphi = 60 / Math.sin(Math.toRadians(theta));
+				double dphi = 40 / Math.sin(Math.toRadians(theta));
 
 				for (double phi = 0; phi < 360; phi += dphi) {
 					double rphi = Math.toRadians(phi);
 					double rtheta = Math.toRadians(theta);
 
-					x = entity.ticksExisted * 0.5 * Math.cos(rphi) * Math.sin(rtheta);
-					y = entity.ticksExisted * 0.5 * Math.sin(rphi) * Math.sin(rtheta);
-					z = entity.ticksExisted * 0.5 * Math.cos(rtheta);
+					x = entity.ticksExisted  * Math.cos(rphi) * Math.sin(rtheta);
+					y = entity.ticksExisted  * Math.sin(rphi) * Math.sin(rtheta);
+					z = entity.ticksExisted  * Math.cos(rtheta);
 
-					ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING).pos(entity.getPositionVector()
-							.add(0, entity.getCaster().height / 2, 0))//.spin(entity.ticksExisted * 0.4, 0.8)
-							.vel(x, y, z).target(prevpos).time(10).spawn(entity.world);
+					double px, py, pz;
 
-					prevpos = entity.getPositionVector().add(x, y, z);
+					for(int i = 0; i < 4; i++) {
+						px = x + entity.world.rand.nextDouble() - 0.5;
+						py = y + entity.world.rand.nextDouble() - 0.5;
+						pz = z + entity.world.rand.nextDouble() - 0.5;
+						ParticleBuilder.create(ParticleBuilder.Type.SPARK).pos(px + entity.posX, py + entity.getEntityBoundingBox().minY,
+								pz + entity.posZ).vel(entity.world.rand.nextDouble() * x, entity.world.rand.nextDouble() * y,
+										entity.world.rand.nextDouble() * z).time(10).spawn(entity.world);
+					}
 				}
 			}
 

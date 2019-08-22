@@ -10,7 +10,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumAction;
-import net.minecraft.network.play.server.SPacketEntityVelocity;
+import net.minecraft.network.play.server.SPacketEntityTeleport;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -22,16 +22,18 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class StormBlink extends Spell {
+
 	public StormBlink() {
 		super(ArcaneEssentials.MODID, "storm_blink", EnumAction.BOW, false);
+		addProperties(EFFECT_RADIUS, RANGE, DAMAGE);
 	}
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		float radius = 2 * modifiers.get(WizardryItems.range_upgrade);
+		float radius = getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(WizardryItems.range_upgrade);
 		//TODO: Adjust particle amount. Add a config, and add trailing particlew when teleporting to make it feel more realistic
+		RayTraceResult result = RayTracer.standardBlockRayTrace(world, caster, getProperty(RANGE).intValue() * modifiers.get(WizardryItems.range_upgrade), false);
 		if (!world.isRemote) {
-			RayTraceResult result = RayTracer.standardBlockRayTrace(world, caster, 80 + 2 * modifiers.get(WizardryItems.range_upgrade), false);
 			if (result != null) {
 				BlockPos pos = result.getBlockPos();
 				if (caster.attemptTeleport(pos.getX(), pos.getY() + 1, pos.getZ())) {
@@ -47,7 +49,7 @@ public class StormBlink extends Spell {
 							if (target != caster) {
 								target.attackEntityFrom(
 										MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.SHOCK),
-										4 * modifiers.get(WizardryItems.blast_upgrade));
+										getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY));
 								double dx = target.posX - caster.posX;
 								double dz = target.posZ - caster.posZ;
 								// Normalises the velocity.
@@ -59,9 +61,9 @@ public class StormBlink extends Spell {
 								target.motionY = 0.2;
 								target.motionZ = 2 * dz;
 
-								// Player motion is handled on that player's client so needs packets
+								// Player motion is handled on that player's client so it needs packets
 								if (target instanceof EntityPlayerMP) {
-									((EntityPlayerMP) target).connection.sendPacket(new SPacketEntityVelocity(target));
+									((EntityPlayerMP) target).connection.sendPacket(new SPacketEntityTeleport(target));
 								}
 							}
 
@@ -85,11 +87,18 @@ public class StormBlink extends Spell {
 					y = radius * Math.sin(rphi) * Math.sin(rtheta);
 					z = radius * Math.cos(rtheta);
 
-					ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING).pos(x + caster.posX, y + caster.posY, z + caster.posZ)
-							.spin(radius, 1).time(2).spawn(world);
-				}
+					double px, py, pz;
 
+					for(int i = 0; i < 4; i++) {
+						px = x + world.rand.nextDouble() - 0.5;
+						py = y + world.rand.nextDouble() - 0.5;
+						pz = z + world.rand.nextDouble() - 0.5;
+						ParticleBuilder.create(ParticleBuilder.Type.SPARK).pos(px + caster.posX, py + caster.getEntityBoundingBox().minY, pz + caster.posZ)
+								.vel(world.rand.nextDouble() * 0.3 * x, world.rand.nextDouble() * 0.3 * y, world.rand.nextDouble() * 0.3 * z).time(5).spawn(world);
+					}
+				}
 			}
+
 		}
 
 		return false;
@@ -97,10 +106,10 @@ public class StormBlink extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
-		float radius = 2 * modifiers.get(WizardryItems.range_upgrade);
+		float radius = getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(WizardryItems.range_upgrade);
 		//TODO: Adjust particle amount. Add a config, and add trailing particlew when teleporting to make it feel more realistic
+		RayTraceResult result = RayTracer.standardBlockRayTrace(world, caster, getProperty(RANGE).intValue() * modifiers.get(WizardryItems.range_upgrade), false);
 		if (!world.isRemote) {
-			RayTraceResult result = RayTracer.standardBlockRayTrace(world, caster, 80 + 2 * modifiers.get(WizardryItems.range_upgrade), false);
 			if (result != null) {
 				BlockPos pos = result.getBlockPos();
 				if (caster.attemptTeleport(pos.getX(), pos.getY() + 1, pos.getZ())) {
@@ -116,7 +125,7 @@ public class StormBlink extends Spell {
 							if (hit != caster) {
 								hit.attackEntityFrom(
 										MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.SHOCK),
-										4 * modifiers.get(WizardryItems.blast_upgrade));
+										getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY));
 								double dx = hit.posX - caster.posX;
 								double dz = hit.posZ - caster.posZ;
 								// Normalises the velocity.
@@ -128,9 +137,9 @@ public class StormBlink extends Spell {
 								hit.motionY = 0.2;
 								hit.motionZ = 2 * dz;
 
-								// Player motion is handled on that player's client so needs packets
+								// Player motion is handled on that player's client so it needs packets
 								if (hit instanceof EntityPlayerMP) {
-									((EntityPlayerMP) hit).connection.sendPacket(new SPacketEntityVelocity(hit));
+									((EntityPlayerMP) hit).connection.sendPacket(new SPacketEntityTeleport(hit));
 								}
 							}
 
@@ -154,11 +163,18 @@ public class StormBlink extends Spell {
 					y = radius * Math.sin(rphi) * Math.sin(rtheta);
 					z = radius * Math.cos(rtheta);
 
-					ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING).pos(x + caster.posX, y + caster.posY, z + caster.posZ)
-							.spin(radius, 1).time(2).spawn(world);
-				}
+					double px, py, pz;
 
+					for(int i = 0; i < 4; i++) {
+						px = x + world.rand.nextDouble() - 0.5;
+						py = y + world.rand.nextDouble() - 0.5;
+						pz = z + world.rand.nextDouble() - 0.5;
+						ParticleBuilder.create(ParticleBuilder.Type.SPARK).pos(px + caster.posX, py + caster.getEntityBoundingBox().minY, pz + caster.posZ)
+								.vel(world.rand.nextDouble() * 0.3 * x, world.rand.nextDouble() * 0.3 * y, world.rand.nextDouble() * 0.3 * z).time(5).spawn(world);
+					}
+				}
 			}
+
 		}
 
 		return false;

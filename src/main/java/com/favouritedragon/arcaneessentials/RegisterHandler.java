@@ -89,7 +89,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new CycloneBolt());
 		event.getRegistry().register(new CycloneShield());
 		event.getRegistry().register(new FirePledge());
-		event.getRegistry().register(new SpellProjectile<>(ArcaneEssentials.MODID,"frizz", EntityFireball::new).addProperties(Spell.DAMAGE, Spell.BURN_DURATION));
+
 		event.getRegistry().register(new InfernoPillar());
 		event.getRegistry().register(new KaThwack());
 		event.getRegistry().register(new LightningVortex());
