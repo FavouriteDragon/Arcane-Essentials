@@ -34,6 +34,7 @@ public class SolarBeam extends Spell {
 			float range = 20 + 5 * modifiers.get(WizardryItems.range_upgrade);
 			double size = 2.0 + 1.0 * modifiers.get(WizardryItems.blast_upgrade);
 			EntitySolarBeam beam = new EntitySolarBeam(world);
+			beam.setOwner(caster);
 			beam.setPosition(look.x, look.y + caster.getEyeHeight(), look.z);
 			beam.damageMultiplier = (float) damageMult;
 			beam.lifetime = 80;
@@ -64,6 +65,7 @@ public class SolarBeam extends Spell {
 			double size = 2.0 + 1.0 * modifiers.get(WizardryItems.blast_upgrade);
 			EntitySolarBeam beam = new EntitySolarBeam(world);
 			beam.setPosition(look.x, look.y + caster.getEyeHeight(), look.z);
+			beam.setOwner(caster);
 			beam.damageMultiplier = (float) damageMult;
 			beam.lifetime = 80;
 			beam.setRadius((float) size / 2);
@@ -77,7 +79,7 @@ public class SolarBeam extends Spell {
 			caster.swingArm(hand);
 			return true;
 		}
-		return super.cast(world, caster, hand, ticksInUse, target, modifiers);
+		return false;
 	}
 
 	@Override

@@ -98,8 +98,8 @@ public class ArcaneUtils {
 				//Wizardry.proxy.spawnParticle(particle, world, pos.x + posX + direction.x, pos.y + posY + direction.y,
 				//		pos.z + posZ + direction.z, velX, velY, velZ, maxAge, r, g, b);
 			} else {
-			//	Wizardry.proxy.spawnParticle(particle, world, x + posX, y + posY,
-			//			z + posZ, velX, velY, velZ, maxAge, r, g, b);
+				//	Wizardry.proxy.spawnParticle(particle, world, x + posX, y + posY,
+				//			z + posZ, velX, velY, velZ, maxAge, r, g, b);
 			}
 		}
 	}
@@ -143,8 +143,8 @@ public class ArcaneUtils {
 				pVel = ArcaneUtils.rotateAroundAxisY(pVel, entity.rotationYaw);
 				pos = ArcaneUtils.rotateAroundAxisX(pos, entity.rotationPitch + 90);
 				pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
-			//	Wizardry.proxy.spawnParticle(particle, world, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
-					//	pos.z + position.z + direction.z, pVel.x + entitySpeed.x, pVel.y + entitySpeed.y, pVel.z + entitySpeed.z, maxAge, r, g, b);
+				//	Wizardry.proxy.spawnParticle(particle, world, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
+				//	pos.z + position.z + direction.z, pVel.x + entitySpeed.x, pVel.y + entitySpeed.y, pVel.z + entitySpeed.z, maxAge, r, g, b);
 			}
 		}
 	}
@@ -221,8 +221,7 @@ public class ArcaneUtils {
 				ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING).vel(entitySpeed).spin(radius, ArcaneUtils.getMagnitude(particleSpeed))
 						.time(maxAge).clr(r, g, b).target(prevpos).pos(pos).spawn(world);
 				prevpos = pos;
-			}
-			else {
+			} else {
 				ParticleBuilder.create(particle).vel(entitySpeed).spin(radius, ArcaneUtils.getMagnitude(particleSpeed))
 						.time(maxAge).clr(r, g, b).pos(pos).spawn(world);
 			}
@@ -259,8 +258,7 @@ public class ArcaneUtils {
 				ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING).vel(entitySpeed).spin(radius, ArcaneUtils.getMagnitude(particleSpeed))
 						.time(maxAge).target(prevpos).pos(pos).spawn(world);
 				prevpos = pos;
-			}
-			else {
+			} else {
 				ParticleBuilder.create(particle).vel(entitySpeed).spin(radius, ArcaneUtils.getMagnitude(particleSpeed))
 						.time(maxAge).pos(pos).spawn(world);
 			}
@@ -286,7 +284,7 @@ public class ArcaneUtils {
 
 
 	public static void spawnDirectionalHelix(World world, Entity entity, Vec3d direction, int maxAngle, double vortexLength, double radius, EnumParticleTypes particle, Vec3d position,
-											Vec3d particleSpeed) {
+											 Vec3d particleSpeed) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double x = radius * cos(angle);
 			double y = angle / (maxAngle / vortexLength);
@@ -316,10 +314,10 @@ public class ArcaneUtils {
 				pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
 				ParticleBuilder.create(particle).pos(pos.x + position.x + direction.x, pos.y + position.y + direction.y,
 						pos.z + position.z + direction.z).vel(particleSpeed).time(maxAge).clr(r, g, b).spawn(world);
-			//	Wizardry.proxy.spawnParticle(particle, world, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
-			//			pos.z + position.z + direction.z, particleSpeed.z, particleSpeed.y, particleSpeed.z, maxAge, r, g, b);
+				//	Wizardry.proxy.spawnParticle(particle, world, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
+				//			pos.z + position.z + direction.z, particleSpeed.z, particleSpeed.y, particleSpeed.z, maxAge, r, g, b);
 			} else {
-			//	Wizardry.proxy.spawnParticle(particle, world, x + position.x, y + position.y,
+				//	Wizardry.proxy.spawnParticle(particle, world, x + position.x, y + position.y,
 				//		z + position.z, particleSpeed.z, particleSpeed.y, particleSpeed.z, maxAge);
 			}
 		}
@@ -327,6 +325,7 @@ public class ArcaneUtils {
 
 	public static void spawnSpinningDirectionalHelix(World world, Entity entity, Vec3d direction, Vec3d entitySpeed, int maxAngle, double vortexLength, double radius, ResourceLocation particle, Vec3d position,
 													 Vec3d particleSpeed, int maxAge, float r, float g, float b) {
+		Vec3d prevPos = position;
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double angle2 = world.rand.nextDouble() * Math.PI * 2;
 			double x = radius * cos(angle);
@@ -338,11 +337,29 @@ public class ArcaneUtils {
 			Vec3d pos = new Vec3d(x, y, z);
 			if (entity != null && direction != null) {
 				Vec3d pVel = new Vec3d(particleSpeed.x * radius * omega * Math.cos(angle2), particleSpeed.y, particleSpeed.z * radius * omega * Math.sin(angle2));
-				pVel = ArcaneUtils.rotateAroundAxisX(pVel, entity.rotationPitch - 90);
+				pVel = ArcaneUtils.rotateAroundAxisX(pVel, entity.rotationPitch + 90);
+				pVel = ArcaneUtils.rotateAroundAxisY(pVel, entity.rotationYaw);
 				pos = ArcaneUtils.rotateAroundAxisX(pos, entity.rotationPitch + 90);
 				pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
-			//	Wizardry.proxy.spawnParticle(particle, world, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
-				//		pos.z + position.z + direction.z, pVel.x + entitySpeed.x, pVel.y + entitySpeed.y, pVel.z + entitySpeed.z, maxAge, r, g, b);
+				if (r == -1 && b == -1 && g == -1) {
+					if (particle == ParticleBuilder.Type.LIGHTNING || particle == ParticleBuilder.Type.BEAM || particle == ParticleBuilder.Type.VINE) {
+						ParticleBuilder.create(particle).pos(position.add(pos).add(direction))
+								.vel(pVel.add(entitySpeed)).entity(entity).time(maxAge).target(prevPos).spawn(world);
+						prevPos = position.add(pos).add(direction);
+					} else {
+						ParticleBuilder.create(particle).pos(position.add(pos).add(direction))
+								.vel(pVel.add(entitySpeed)).time(maxAge).spawn(world);
+					}
+				} else {
+					if (particle == ParticleBuilder.Type.LIGHTNING || particle == ParticleBuilder.Type.BEAM || particle == ParticleBuilder.Type.VINE) {
+						ParticleBuilder.create(particle).pos(position.add(pos).add(direction))
+								.vel(pVel.add(entitySpeed)).time(maxAge).entity(entity).target(prevPos).clr(r, g, b).spawn(world);
+						prevPos = position.add(pos).add(direction);
+					} else {
+						ParticleBuilder.create(particle).pos(position.add(pos).add(direction))
+								.vel(pVel.add(entitySpeed)).time(maxAge).clr(r, g, b).spawn(world);
+					}
+				}
 			}
 		}
 	}
@@ -465,8 +482,6 @@ public class ArcaneUtils {
 	@Nullable
 	public static RayTraceResult standardEntityRayTrace(World world, Vec3d startPos, Vec3d endPos, Predicate<? super Entity> filter,
 														boolean hitLiquids, float borderSize, boolean ignoreUncollidables, boolean returnLastUncollidable) {
-
-
 		return RayTracer.rayTrace(world, startPos, endPos, borderSize,
 				hitLiquids, ignoreUncollidables, returnLastUncollidable, Entity.class, filter);
 	}
@@ -478,7 +493,7 @@ public class ArcaneUtils {
 		float dy = (float) entity.getLookVec().y * (float) range;
 		float dz = (float) entity.getLookVec().z * (float) range;
 		return RayTracer.rayTrace(world, startPos,
-				new Vec3d(startPos.x  + dx, startPos.y + dy, startPos.z + dz), borderSize,
+				new Vec3d(startPos.x + dx, startPos.y + dy, startPos.z + dz), borderSize,
 				hitLiquids, ignoreUncollidables, returnLastUncollidable, Entity.class, entity1 -> entity1 == entity || entity1 == spellEntity);
 	}
 
@@ -524,7 +539,7 @@ public class ArcaneUtils {
 	 * @param damage       The amount of damage.
 	 * @param knockBack    The amount of knockback.
 	 * @param fireTime     How long to set an enemy on fire.
-	 * @param lifeSteal	   The percent of damage to heal the caster by. Between 0 and 1.
+	 * @param lifeSteal    The percent of damage to heal the caster by. Between 0 and 1.
 	 */
 
 	public static void handlePiercingBeamCollision(World world, EntityLivingBase caster, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, boolean directDamage, MagicDamage.DamageType damageType,
@@ -546,6 +561,7 @@ public class ArcaneUtils {
 					hit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(spellEntity, caster, damageType), damage);
 
 				}
+				System.out.println(hit);
 				filter.or(entity1 -> entity1 == hit);
 				Vec3d kM = endPos.subtract(startPos).scale(.01);
 				hit.motionX += knockBack.x * kM.x;
