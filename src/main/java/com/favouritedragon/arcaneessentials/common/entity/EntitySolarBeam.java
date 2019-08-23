@@ -25,7 +25,16 @@ public class EntitySolarBeam extends EntityMagicConstruct {
 	public EntitySolarBeam(World par1World) {
 		super(par1World);
 	}
+	private float damage;
 
+
+	public void setDamage(float damage) {
+		this.damage = damage;
+	}
+
+	public void setLifeTime(int lifeTime) {
+		this.lifetime = lifeTime;
+	}
 
 	public float getRadius() {
 		return dataManager.get(SYNC_RADIUS);
@@ -68,7 +77,7 @@ public class EntitySolarBeam extends EntityMagicConstruct {
 		}
 		if (!world.isRemote && getCaster() != null) {
 			Vec3d endpos = getLookVec().scale(getRange()).add(getPositionVector());
-			ArcaneUtils.handlePiercingBeamCollision(world, getCaster(), getPositionVector(), endpos, getRadius(), this, false, EARTH, 0.5F * damageMultiplier,
+			ArcaneUtils.handlePiercingBeamCollision(world, getCaster(), getPositionVector(), endpos, getRadius(), this, false, EARTH, damage,
 					new Vec3d(0.05, 0.025, 0.05), false, 0, getRadius(), 0, RayTracer.ignoreEntityFilter(getCaster()));
 		}
 	}

@@ -545,11 +545,15 @@ public class ArcaneUtils {
 	public static void handlePiercingBeamCollision(World world, EntityLivingBase caster, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, boolean directDamage, MagicDamage.DamageType damageType,
 												   float damage, Vec3d knockBack, boolean invulnerable, int fireTime, float radius, float lifeSteal,
 												   Predicate<? super Entity> filter) {
-		filter.or(entity1 -> entity1 == caster);
-		if (spellEntity != null)
-			filter.or(entity1 -> entity1 == spellEntity);
+		filter.or(e -> e == caster);
+		if (spellEntity != null) {
+			filter.or(e -> e == spellEntity);
+		}
+		System.out.println(filter.test(spellEntity));
 
 		RayTraceResult result = standardEntityRayTrace(world, startPos, endPos, filter, false, borderSize, true, false);
+		//System.out.println(result);
+
 		if (result != null && result.entityHit instanceof EntityLivingBase && !filter.test(result.entityHit)) {
 			EntityLivingBase hit = (EntityLivingBase) result.entityHit;
 			if (!MagicDamage.isEntityImmune(damageType, hit)) {
@@ -561,14 +565,13 @@ public class ArcaneUtils {
 					hit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(spellEntity, caster, damageType), damage);
 
 				}
-				System.out.println(hit);
-				filter.or(entity1 -> entity1 == hit);
 				Vec3d kM = endPos.subtract(startPos).scale(.01);
 				hit.motionX += knockBack.x * kM.x;
 				hit.motionY += knockBack.y * kM.y;
 				hit.motionZ += knockBack.z * kM.z;
 				hit.setEntityInvulnerable(invulnerable);
 				applyPlayerKnockback(hit);
+				filter.or(e -> e == hit);
 			}
 			Vec3d pos = hit.getPositionVector().add(0, hit.getEyeHeight(), 0);
 			AxisAlignedBB hitBox = new AxisAlignedBB(pos.x + radius, pos.y + radius, pos.z + radius, pos.x - radius, pos.y - radius, pos.z - radius);
@@ -576,26 +579,26 @@ public class ArcaneUtils {
 			nearby.removeIf(filter);
 			//This is so it doesn't count the entity that was hit by the raytrace and mess up the chain
 			if (!nearby.isEmpty()) {
-				for (Entity e : nearby) {
-					if (e != caster && e != hit && e.getTeam() != caster.getTeam()) {
-						if (!MagicDamage.isEntityImmune(damageType, e)) {
-							e.setFire(fireTime);
+				for (Entity secondHit : nearby) {
+					if (secondHit != caster && secondHit != hit && secondHit.getTeam() != caster.getTeam()) {
+						if (!MagicDamage.isEntityImmune(damageType, secondHit)) {
+							secondHit.setFire(fireTime);
 							if (directDamage) {
-								e.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, damageType), damage);
+								secondHit.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, damageType), damage);
 							} else if (spellEntity != null) {
-								e.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(spellEntity, caster, damageType), damage);
+								secondHit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(spellEntity, caster, damageType), damage);
 							}
-							e.motionX += knockBack.x;
-							e.motionY += knockBack.y;
-							e.motionZ += knockBack.z;
-							applyPlayerKnockback(e);
-							filter.or(entity1 -> entity1 == e);
+							secondHit.motionX += knockBack.x;
+							secondHit.motionY += knockBack.y;
+							secondHit.motionZ += knockBack.z;
+							applyPlayerKnockback(secondHit);
+							filter.or(e -> e == secondHit);
 						}
 					}
-					if (e.getTeam() == caster.getTeam()) {
+					if (secondHit.getTeam() == caster.getTeam()) {
 						if (damageType == MagicDamage.DamageType.RADIANT) {
-							if (e instanceof EntityLivingBase) {
-								((EntityLivingBase) e).heal(damage);
+							if (secondHit instanceof EntityLivingBase) {
+								((EntityLivingBase) secondHit).heal(damage);
 							}
 						}
 					}

@@ -11,27 +11,32 @@ public class EntityFireball extends EntityMagicBolt {
 
 	private static final DataParameter<Float> SYNC_SIZE = EntityDataManager.createKey(EntityFireball.class,
 			DataSerializers.FLOAT);
-
+	private float damage;
+	private int burnDuration;
+	
 	public EntityFireball(World world) {
 		super(world);
 	}
 
-	private float damage;
+	public void setBurnDuration(int duration) {
+		this.burnDuration = duration;
+	}
 
-	public void setDamage(float damage) {
-		this.damage = damage;
+	public float getSize() {
+		return dataManager.get(SYNC_SIZE);
 	}
 
 	public void setSize(float size) {
 		dataManager.set(SYNC_SIZE, size);
 	}
 
-	public float getSize() {
-		return dataManager.get(SYNC_SIZE);
-	}
 	@Override
 	public double getDamage() {
 		return damage;
+	}
+
+	public void setDamage(float damage) {
+		this.damage = damage;
 	}
 
 	@Override
