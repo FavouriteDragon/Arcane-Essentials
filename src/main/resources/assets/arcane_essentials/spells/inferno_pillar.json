@@ -16,5 +16,10 @@
   "cost": 50,
   "chargeup": 0,
   "cooldown": 180,
-  "base_properties": {}
+  "base_properties": {
+    "damage": 4,
+    "effect_duration": 4,
+    "effect_radius": 1.5,
+    "range": 15
+  }
 }

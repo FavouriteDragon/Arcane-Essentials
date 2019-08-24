@@ -365,13 +365,13 @@ public class ArcaneUtils {
 	}
 
 	public static void spawnSpinningHelix(World world, int maxAngle, double vortexLength, double radius, ResourceLocation particle, Vec3d position,
-										  double particleSpeed, Vec3d entitySpeed, int maxAge, float r, float g, float b) {
+										  double particleSpeed, Vec3d entitySpeed, int maxAge, float r, float g, float b, float scale) {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double x = radius * cos(angle);
 			double y = angle / (maxAngle / vortexLength);
 			double z = radius * sin(angle);
 			ParticleBuilder.create(particle).pos(x + position.x, y + position.y, z + position.z).clr(r, g, b).spin(radius, particleSpeed)
-					.vel(entitySpeed.scale(particleSpeed)).time(maxAge).spawn(world);
+					.vel(entitySpeed.scale(particleSpeed)).time(maxAge).scale(scale).spawn(world);
 
 		}
 	}
