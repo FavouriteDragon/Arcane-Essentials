@@ -90,7 +90,7 @@ public class EntityFireball extends EntityMagicBolt {
 		}
 		if (world.isRemote) {
 			for (int i = 0; i < 20; i++) {
-				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).pos(getPositionVector()).collide(true).time(10)
+				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).pos(getPositionVector()).time(10)
 						.vel(world.rand.nextGaussian() / 10, world.rand.nextGaussian() / 10, world.rand.nextGaussian() / 10).
 						scale(1.0F + world.rand.nextFloat()).spawn(world);
 			}
@@ -119,6 +119,6 @@ public class EntityFireball extends EntityMagicBolt {
 		if (ticksExisted >= getLifetime()) {
 			Explode();
 		}
-		setSize(getSize(), getSize());
+		setSize(getSize() * 2, getSize() * 2);
 	}
 }

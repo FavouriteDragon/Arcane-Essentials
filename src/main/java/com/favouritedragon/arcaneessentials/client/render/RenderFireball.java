@@ -42,6 +42,8 @@ public class RenderFireball extends Render<EntityFireball> {
 		float pulse = MathHelper.sin((entity.ticksExisted + partialTicks) / 10f);
 
 		float r = 245 / 255F, g = 0.05f * pulse, b = 0;
+		float r1 = 1F, g1 = 175 / 255F + 0.05F * pulse, b1 = 51 / 255F;
+		float r2 = 252 / 255F + 0.05F * pulse, g2 = 1F, b2 = 51 / 255F;
 
 		float radius = entity.width / 4;
 		float a = 0.5f;
@@ -55,12 +57,12 @@ public class RenderFireball extends Render<EntityFireball> {
 		}
 
 		// Draw the inside first
-		drawSphere(radius - 0.1f - 0.025f * pulse, latStep, longStep, true, r, g, b, a * 0.7F);
-		drawSphere(radius - 0.1f - 0.025f * pulse, latStep, longStep, false, 1, 1, 1, a * 0.7F);
-		drawSphere(radius, latStep, longStep, false, r, g, b, 0.7f * a);
+		drawSphere(radius - 0.1f - 0.025f * pulse, latStep, longStep, false, r, g, b, a * 0.8F);
+		drawSphere(radius - 0.1f - 0.025f * pulse, latStep, longStep, false, r1, g1, b1, a * 0.9F);
+		drawSphere(radius, latStep, longStep, false, r2, g2, b2, 0.95f * a);
 
 		//Particles
-		ArcaneUtils.spawnSpinningDirectionalVortex(entity.world, entity.getCaster(), Vec3d.ZERO, 30, 1, 0, 30 / entity.getSize(),
+		ArcaneUtils.spawnSpinningDirectionalVortex(entity.world, entity.getCaster(), Vec3d.ZERO, 30, entity.getSize() * 4, 0, 30 / entity.getSize(),
 				ParticleBuilder.Type.MAGIC_FIRE, entity.getPositionVector(), new Vec3d(0.4, 0.1, 0.4), new Vec3d(entity.motionX, entity.motionY, entity.motionZ),
 				15, -1, -1, -1);
 
