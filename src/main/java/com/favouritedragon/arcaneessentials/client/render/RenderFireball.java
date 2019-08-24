@@ -34,7 +34,7 @@ public class RenderFireball extends Render<EntityFireball> {
 		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
 
-		GlStateManager.translate(x, y, z);
+		GlStateManager.translate(x, y + entity.getSize() / 1.75, z);
 
 		float latStep = (float) Math.PI / 20;
 		float longStep = (float) Math.PI / 20;
@@ -44,7 +44,7 @@ public class RenderFireball extends Render<EntityFireball> {
 		float r1 = 1F, g1 = 175 / 255F, b1 = 51 / 255F;
 		float r2 = 252 / 255F, g2 = 1F, b2 = 51 / 255F;
 
-		float radius = entity.width / 4;
+		float radius = entity.getSize() / 2;
 		float a = 0.5f;
 
 		if (entity.ticksExisted > entity.getLifetime() - EXPANSION_TIME) {
@@ -55,14 +55,14 @@ public class RenderFireball extends Render<EntityFireball> {
 			a *= 1 - (EXPANSION_TIME - entity.ticksExisted - partialTicks) / EXPANSION_TIME;
 		}
 
-		// Draw the inside first
-		drawSphere(radius, latStep, longStep, false, r, g, b, a * 0.85F);
-		drawSphere(radius - 0.1f, latStep, longStep, false, r1, g1, b1, a * 9F);
-		drawSphere(radius - 0.2F, latStep, longStep, false, r2, g2, b2, 0.95f * a);
+
+		drawSphere(radius, latStep, longStep, false, r, g, b, a * 0.7F);
+		drawSphere(radius - 0.1f, latStep, longStep, true, r1, g1, b1, a * 1F);
+		drawSphere(radius - 0.2F, latStep, longStep, true, r2, g2, b2, 1.2f * a);
 
 		//Particles
-		ArcaneUtils.spawnSpinningDirectionalVortex(entity.world, entity.getCaster(), Vec3d.ZERO, 30, entity.getSize() * 4, 0, 30 / entity.getSize(),
-				ParticleBuilder.Type.MAGIC_FIRE, entity.getPositionVector(), new Vec3d(0.4, 0.1, 0.4), new Vec3d(entity.motionX, entity.motionY, entity.motionZ),
+		ArcaneUtils.spawnSpinningDirectionalVortex(entity.world, entity.getCaster(), Vec3d.ZERO, 5, entity.getSize() * 4, 0.00001, 5 / entity.getSize(),
+				ParticleBuilder.Type.MAGIC_FIRE, entity.getPositionVector().add(0, entity.getSize(), 0), new Vec3d(0.004, 0.001, 00.04), new Vec3d(entity.motionX, entity.motionY, entity.motionZ),
 				15, -1, -1, -1);
 
 

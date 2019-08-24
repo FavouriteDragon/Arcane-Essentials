@@ -143,6 +143,13 @@ public class ArcaneUtils {
 				pVel = ArcaneUtils.rotateAroundAxisY(pVel, entity.rotationYaw);
 				pos = ArcaneUtils.rotateAroundAxisX(pos, entity.rotationPitch + 90);
 				pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
+				if (r == -1 && g == -1 && b == -1) {
+					ParticleBuilder.create(particle).pos(pos.add(position).add(direction)).vel(pVel.add(entitySpeed)).time(maxAge).spawn(world);
+				}
+				else {
+					ParticleBuilder.create(particle).pos(pos.add(position).add(direction)).
+							clr(r, g, b).vel(pVel.add(entitySpeed)).time(maxAge).spawn(world);
+				}
 				//	Wizardry.proxy.spawnParticle(particle, world, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
 				//	pos.z + position.z + direction.z, pVel.x + entitySpeed.x, pVel.y + entitySpeed.y, pVel.z + entitySpeed.z, maxAge, r, g, b);
 			}

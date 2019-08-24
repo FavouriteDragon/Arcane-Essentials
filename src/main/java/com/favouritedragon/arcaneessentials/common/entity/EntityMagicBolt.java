@@ -361,8 +361,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
 			// Players that are considered invulnerable to the caster allow the projectile to pass straight through
 			// them.
-			if (raytraceresult != null && raytraceresult.entityHit != null
-					&& raytraceresult.entityHit instanceof EntityPlayer) {
+			if (raytraceresult != null && raytraceresult.entityHit instanceof EntityPlayer) {
 				EntityPlayer entityplayer = (EntityPlayer) raytraceresult.entityHit;
 
 				if (entityplayer.capabilities.disableDamage || this.getCaster() instanceof EntityPlayer

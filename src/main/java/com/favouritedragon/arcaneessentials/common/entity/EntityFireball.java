@@ -71,6 +71,14 @@ public class EntityFireball extends EntityMagicBolt {
 	}
 
 	private void Explode() {
+		if (world.isRemote) {
+			for (int i = 0; i < 30; i++) {
+				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).pos(getPositionVector()).time(10)
+						.vel(world.rand.nextGaussian() / 10, world.rand.nextGaussian() / 10, world.rand.nextGaussian() / 10).
+						scale(1.5F + world.rand.nextFloat()).spawn(world);
+			}
+		}
+
 		if (!world.isRemote) {
 			world.playSound(null, posX, posY, posZ, SoundEvents.ENTITY_GHAST_SHOOT, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
 					0.8F + world.rand.nextFloat() / 10F);
@@ -88,13 +96,7 @@ public class EntityFireball extends EntityMagicBolt {
 				}
 			}
 		}
-		if (world.isRemote) {
-			for (int i = 0; i < 20; i++) {
-				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).pos(getPositionVector()).time(10)
-						.vel(world.rand.nextGaussian() / 10, world.rand.nextGaussian() / 10, world.rand.nextGaussian() / 10).
-						scale(1.0F + world.rand.nextFloat()).spawn(world);
-			}
-		}
+
 		setDead();
 	}
 
@@ -119,6 +121,6 @@ public class EntityFireball extends EntityMagicBolt {
 		if (ticksExisted >= getLifetime()) {
 			Explode();
 		}
-		setSize(getSize() * 2, getSize() * 2);
+		setSize(getSize(), getSize());
 	}
 }

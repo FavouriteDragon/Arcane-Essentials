@@ -75,7 +75,7 @@ public class BlizzardBeam extends Spell {
 				1.0F + world.rand.nextFloat() / 10F, true);
 		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_ICE_CHARGE_ICE, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
 				1.0F + world.rand.nextFloat() / 10F, true);
-		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_BLIZZARD_AMBIENT, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_ICE_GIANT_ATTACK, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
 				1.0F + world.rand.nextFloat() / 10F, true);
 		return true;
 	}
@@ -120,7 +120,7 @@ public class BlizzardBeam extends Spell {
 				1.0F + world.rand.nextFloat() / 10F, true);
 		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_ICE_CHARGE_ICE, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
 				1.0F + world.rand.nextFloat() / 10F, true);
-		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_BLIZZARD_AMBIENT, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_ICE_GIANT_ATTACK, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
 				1.0F + world.rand.nextFloat() / 10F, true);
 		return true;
 	}

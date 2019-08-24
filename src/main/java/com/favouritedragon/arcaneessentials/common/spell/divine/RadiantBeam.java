@@ -18,16 +18,16 @@ public class RadiantBeam extends Spell {
 
 	public RadiantBeam() {
 		super(ArcaneEssentials.MODID, "radiant_beam", EnumAction.BOW, false);
-		addProperties(DAMAGE);
+		addProperties(DAMAGE, RANGE);
 	}
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 
 		Vec3d look = caster.getLookVec();
-		float damage = getProperty(DAMAGE).floatValue() + modifiers.get(WizardryItems.blast_upgrade);
+		float damage = getProperty(DAMAGE).floatValue() + modifiers.get(SpellModifiers.POTENCY);
 
-		float range = 60 + 2 * modifiers.get(WizardryItems.range_upgrade);
+		float range = getProperty(RANGE).floatValue() * modifiers.get(WizardryItems.range_upgrade);
 		double eyepos = caster.getEntityBoundingBox().minY + caster.getEyeHeight() - 0.4F;
 		Vec3d startPos = new Vec3d(caster.posX, eyepos, caster.posZ);
 		Vec3d endPos = caster.getLookVec().scale(range).add(startPos);
@@ -68,9 +68,9 @@ public class RadiantBeam extends Spell {
 						SpellModifiers modifiers) {
 
 		Vec3d look = caster.getLookVec();
-		float damage = getProperty(DAMAGE).floatValue() + modifiers.get(WizardryItems.blast_upgrade);
+		float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 
-		float range = 60 + 2 * modifiers.get(WizardryItems.range_upgrade);
+		float range = getProperty(RANGE).floatValue() * modifiers.get(WizardryItems.range_upgrade);
 		double eyepos = caster.getEntityBoundingBox().minY + caster.getEyeHeight() - 0.4F;
 
 		if (!world.isRemote) {

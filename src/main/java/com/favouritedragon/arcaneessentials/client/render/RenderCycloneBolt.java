@@ -35,7 +35,7 @@ public class RenderCycloneBolt extends Render<EntityCycloneBolt> {
 		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
 
-		GlStateManager.translate(x, y, z);
+		GlStateManager.translate(x, y + entity.height / 2, z);
 
 		float latStep = (float) Math.PI / 20;
 		float longStep = (float) Math.PI / 20;
