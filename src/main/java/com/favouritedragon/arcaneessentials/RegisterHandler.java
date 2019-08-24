@@ -9,6 +9,7 @@ import com.favouritedragon.arcaneessentials.common.spell.earth.SolarBeam;
 import com.favouritedragon.arcaneessentials.common.spell.fire.FirePledge;
 import com.favouritedragon.arcaneessentials.common.spell.fire.Frizz;
 import com.favouritedragon.arcaneessentials.common.spell.fire.InfernoPillar;
+import com.favouritedragon.arcaneessentials.common.spell.ice.BlizzardBeam;
 import com.favouritedragon.arcaneessentials.common.spell.necromancy.KaThwack;
 import com.favouritedragon.arcaneessentials.common.spell.storm.LightningVortex;
 import com.favouritedragon.arcaneessentials.common.spell.storm.StormBlink;
@@ -87,6 +88,7 @@ public class RegisterHandler {
 
 	@SubscribeEvent
 	public static void register(RegistryEvent.Register<Spell> event) {
+		event.getRegistry().register(new BlizzardBeam());
 		event.getRegistry().register(new CycloneBolt());
 		event.getRegistry().register(new CycloneShield());
 		event.getRegistry().register(new FirePledge());

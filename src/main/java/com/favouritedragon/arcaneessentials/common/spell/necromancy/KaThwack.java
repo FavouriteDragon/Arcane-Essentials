@@ -57,16 +57,18 @@ public class KaThwack extends Spell {
 				float healthMod = target.getHealth() / target.getMaxHealth();
 				if (chance > ((getProperty(DEATH_CHANCE).floatValue() + healthMod * 100) / (0.5 + proximity / 2)) ||
 						target.getHealth() <= getProperty(DAMAGE).floatValue() * proximity * (modifiers.get(SpellModifiers.POTENCY))) {
-					caster.heal(target.getHealth());
-					WizardryUtilities.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER),
-					target.getHealth() + 1);
-					if (world.isRemote) {
-						for (int i = 0; i < 80; i++) {
-							ParticleBuilder.create(ParticleBuilder.Type.DARK_MAGIC).pos(target.posX, target.getEntityBoundingBox().minY, target.posZ)
-									.vel(world.rand.nextBoolean() ? world.rand.nextFloat() / 30 : -world.rand.nextFloat() / 30, world.rand.nextFloat() / 10,
-											world.rand.nextBoolean() ? world.rand.nextFloat() / 30 : -world.rand.nextFloat() / 30).clr(36 ,7, 71).spawn(world);
+					if (target.getHealth() > 0 || !target.isDead) {
+						caster.heal(target.getHealth());
+						WizardryUtilities.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER),
+								target.getHealth() + 1);
+						if (world.isRemote) {
+							for (int i = 0; i < 80; i++) {
+								ParticleBuilder.create(ParticleBuilder.Type.DARK_MAGIC).pos(target.posX, target.getEntityBoundingBox().minY, target.posZ)
+										.vel(world.rand.nextBoolean() ? world.rand.nextFloat() / 30 : -world.rand.nextFloat() / 30, world.rand.nextFloat() / 10,
+												world.rand.nextBoolean() ? world.rand.nextFloat() / 30 : -world.rand.nextFloat() / 30).clr(36, 7, 71).spawn(world);
+							}
+							ParticleBuilder.spawnHealParticles(world, caster);
 						}
-						ParticleBuilder.spawnHealParticles(world, caster);
 					}
 				}
 				else {
@@ -96,8 +98,8 @@ public class KaThwack extends Spell {
 			for (int i = 0; i < 4; i++) {
 				ParticleBuilder.create(ParticleBuilder.Type.SPHERE)
 						.pos(caster.posX, caster.getEntityBoundingBox().minY + 0.1, caster.posZ)
-						.scale((float) radius * 0.6f)
-						.clr(36, 7, 71)
+						.scale((float) radius * 0.5f)
+						.clr(21, 0, 46)
 						.shaded(true)
 						.spawn(world);
 			}
