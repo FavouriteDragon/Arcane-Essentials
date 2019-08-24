@@ -56,9 +56,9 @@ public class RenderFireball extends Render<EntityFireball> {
 		}
 
 		// Draw the inside first
-		drawSphere(radius - 0.2F, latStep, longStep, false, r, g, b, a * 0.8F);
-		drawSphere(radius - 0.1f, latStep, longStep, false, r1, g1, b1, a * 0.9F);
-		drawSphere(radius, latStep, longStep, false, r2, g2, b2, 0.95f * a);
+		drawSphere(radius, latStep, longStep, false, r, g, b, a * 0.85F);
+		drawSphere(radius - 0.1f, latStep, longStep, false, r1, g1, b1, a * 9F);
+		drawSphere(radius - 0.2F, latStep, longStep, false, r2, g2, b2, 0.95f * a);
 
 		//Particles
 		ArcaneUtils.spawnSpinningDirectionalVortex(entity.world, entity.getCaster(), Vec3d.ZERO, 30, entity.getSize() * 4, 0, 30 / entity.getSize(),
