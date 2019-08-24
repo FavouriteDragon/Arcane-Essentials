@@ -545,14 +545,12 @@ public class ArcaneUtils {
 	public static void handlePiercingBeamCollision(World world, EntityLivingBase caster, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, boolean directDamage, MagicDamage.DamageType damageType,
 												   float damage, Vec3d knockBack, boolean invulnerable, int fireTime, float radius, float lifeSteal,
 												   Predicate<? super Entity> filter) {
-		filter.or(e -> e == caster);
+		filter = filter.or(e -> e == caster);
 		if (spellEntity != null) {
-			filter.or(e -> e == spellEntity);
+			filter = filter.or(e -> e == spellEntity);
 		}
-		System.out.println(filter.test(spellEntity));
 
 		RayTraceResult result = standardEntityRayTrace(world, startPos, endPos, filter, false, borderSize, true, false);
-		//System.out.println(result);
 
 		if (result != null && result.entityHit instanceof EntityLivingBase && !filter.test(result.entityHit)) {
 			EntityLivingBase hit = (EntityLivingBase) result.entityHit;
@@ -571,7 +569,7 @@ public class ArcaneUtils {
 				hit.motionZ += knockBack.z * kM.z;
 				hit.setEntityInvulnerable(invulnerable);
 				applyPlayerKnockback(hit);
-				filter.or(e -> e == hit);
+				filter = filter.or(e -> e == hit);
 			}
 			Vec3d pos = hit.getPositionVector().add(0, hit.getEyeHeight(), 0);
 			AxisAlignedBB hitBox = new AxisAlignedBB(pos.x + radius, pos.y + radius, pos.z + radius, pos.x - radius, pos.y - radius, pos.z - radius);
@@ -592,7 +590,7 @@ public class ArcaneUtils {
 							secondHit.motionY += knockBack.y;
 							secondHit.motionZ += knockBack.z;
 							applyPlayerKnockback(secondHit);
-							filter.or(e -> e == secondHit);
+							filter = filter.or(e -> e == secondHit);
 						}
 					}
 					if (secondHit.getTeam() == caster.getTeam()) {

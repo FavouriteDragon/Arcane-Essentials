@@ -13,7 +13,7 @@ public class EntityFireball extends EntityMagicBolt {
 			DataSerializers.FLOAT);
 	private float damage;
 	private int burnDuration;
-	
+
 	public EntityFireball(World world) {
 		super(world);
 	}
