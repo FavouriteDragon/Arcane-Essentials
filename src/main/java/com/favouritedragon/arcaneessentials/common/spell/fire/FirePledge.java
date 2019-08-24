@@ -19,15 +19,18 @@ public class FirePledge extends Spell {
 
 	public FirePledge() {
 		super(ArcaneEssentials.MODID, "fire_pledge", EnumAction.BOW, false);
+		addProperties(DAMAGE, EFFECT_DURATION, RANGE);
 	}
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		if (world.getBlockState(caster.getPosition().offset(EnumFacing.DOWN)).getBlock() != Blocks.AIR && !world.isRemote) {
 			Vec3d look = caster.getLookVec();
+			float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
+			int lifetime = getProperty(EFFECT_DURATION).intValue() * (int) modifiers.get(EFFECT_DURATION);
 			EntityFlamePillarSpawner spawner = new EntityFlamePillarSpawner(world, caster.posX + look.x * 0.25, caster.getEntityBoundingBox().minY, caster.posZ + look.z * 0.25, caster,
-					80 + 2 * (int) modifiers.get(WizardryItems.duration_upgrade), 5F * modifiers.get(WizardryItems.blast_upgrade));
-			look.scale(10);
+					lifetime, damage);
+			look.scale(getProperty(RANGE).doubleValue());
 			spawner.setOwner(caster);
 			spawner.motionX = look.x;
 			spawner.motionY = 0;
@@ -42,9 +45,11 @@ public class FirePledge extends Spell {
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
 		if (world.getBlockState(caster.getPosition().offset(EnumFacing.DOWN)).getBlock() != Blocks.AIR && !world.isRemote) {
 			Vec3d look = caster.getLookVec();
+			float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
+			int lifetime = getProperty(EFFECT_DURATION).intValue() * (int) modifiers.get(EFFECT_DURATION);
 			EntityFlamePillarSpawner spawner = new EntityFlamePillarSpawner(world, caster.posX + look.x * 0.25, caster.getEntityBoundingBox().minY, caster.posZ + look.z * 0.25, caster,
-					80 + 2 * (int) modifiers.get(WizardryItems.duration_upgrade), 5F * modifiers.get(WizardryItems.blast_upgrade));
-			look.scale(10);
+					lifetime, damage);
+			look.scale(getProperty(RANGE).doubleValue());
 			spawner.motionX = look.x;
 			spawner.motionY = 0;
 			spawner.motionZ = look.z;
