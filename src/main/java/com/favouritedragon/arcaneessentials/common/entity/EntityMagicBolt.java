@@ -114,6 +114,11 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 		this.shoot(this.motionX, this.motionY, this.motionZ, speed * 1.5F, error);
 	}
 
+	@Override
+	public boolean hasNoGravity() {
+		return !doGravity();
+	}
+
 	/**
 	 * Sets the shooter of the projectile to the given caster, positions the projectile at the given caster's eyes and
 	 * aims it at the given target with the given speed. The trajectory will be altered slightly by a random amount
@@ -523,11 +528,13 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 				this.motionZ *= (double) f3;
 			}
 
-			System.out.println(doGravity());
 			if (this.doGravity()) {
 				this.motionY -= 0.05;
 			}
 
+			if (collided) {
+				onBlockHit(null);
+			}
 			this.setPosition(this.posX, this.posY, this.posZ);
 			this.doBlockCollisions();
 		}
