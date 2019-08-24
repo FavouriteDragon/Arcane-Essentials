@@ -35,7 +35,7 @@ public class RenderCycloneBolt extends Render<EntityCycloneBolt> {
 		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
 
-		GlStateManager.translate(x, y + entity.height / 2, z);
+		GlStateManager.translate(x, y + entity.height / 1.5, z);
 
 		float latStep = (float) Math.PI / 20;
 		float longStep = (float) Math.PI / 20;
@@ -44,7 +44,7 @@ public class RenderCycloneBolt extends Render<EntityCycloneBolt> {
 
 		float r = 1, g = 0.95F + 0.05f * pulse, b = 1;
 
-		float radius = entity.width / 4;
+		float radius = entity.width / 3;
 		float a = 0.5f;
 
 		if (entity.ticksExisted > entity.getLifetime() - EXPANSION_TIME) {

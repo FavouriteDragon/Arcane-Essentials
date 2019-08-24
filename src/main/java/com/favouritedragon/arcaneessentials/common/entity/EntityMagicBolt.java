@@ -116,7 +116,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
 	@Override
 	public boolean hasNoGravity() {
-		return !doGravity();
+		return true;
 	}
 
 	/**

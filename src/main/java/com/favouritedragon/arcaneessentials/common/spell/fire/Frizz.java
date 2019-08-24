@@ -2,11 +2,13 @@ package com.favouritedragon.arcaneessentials.common.spell.fire;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityFireball;
+import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -40,6 +42,8 @@ public class Frizz extends Spell {
 			fireball.setKnockbackStrength((int) size * 2);
 			fireball.setBurnDuration(burnDuration);
 			fireball.aim(caster, getProperty(RANGE).floatValue() / 50, 0F);
+			world.playSound(caster.posX,caster.posY, caster.posZ, SoundEvents.ENTITY_GHAST_SHOOT, WizardrySounds.SPELLS,
+					1.0F + world.rand.nextFloat(), 1.0F + world.rand.nextFloat(), false);
 			return world.spawnEntity(fireball);
 		} else return false;
 	}

@@ -62,7 +62,7 @@ public class RenderFireball extends Render<EntityFireball> {
 
 		//Particles
 		ArcaneUtils.spawnSpinningDirectionalVortex(entity.world, entity.getCaster(), Vec3d.ZERO, 5, entity.getSize() * 4, 0.00001, 5 / entity.getSize(),
-				ParticleBuilder.Type.MAGIC_FIRE, entity.getPositionVector().add(0, entity.getSize(), 0), new Vec3d(0.004, 0.001, 00.04), new Vec3d(entity.motionX, entity.motionY, entity.motionZ),
+				ParticleBuilder.Type.MAGIC_FIRE, entity.getPositionVector().add(0, entity.getSize() / 1.5, 0), new Vec3d(0.004, 0.001, 00.04), new Vec3d(entity.motionX, entity.motionY, entity.motionZ),
 				15, -1, -1, -1);
 
 

@@ -30,7 +30,7 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 
 	public EntityCycloneBolt(World world) {
 		super(world);
-		this.setSize(1, 1);
+		this.setSize(0.75F, 0.75F);
 	}
 
 	@Override

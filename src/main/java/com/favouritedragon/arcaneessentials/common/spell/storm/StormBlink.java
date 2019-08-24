@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.network.play.server.SPacketEntityTeleport;
 import net.minecraft.util.EnumHand;
@@ -37,7 +38,9 @@ public class StormBlink extends Spell {
 			if (result != null) {
 				BlockPos pos = result.getBlockPos();
 				if (caster.attemptTeleport(pos.getX(), pos.getY() + 1, pos.getZ())) {
-					WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_LIGHTNING_SIGIL_TRIGGER, SoundCategory.AMBIENT, 4.0F, 2.0F);
+					WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_LIGHTNING_IMPACT, WizardrySounds.SPELLS,
+							2.0F + world.rand.nextFloat(), 1.0F + world.rand.nextFloat());
+					WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_LIGHTNING_SIGIL_TRIGGER, SoundCategory.AMBIENT, 4.0F, 1.0F);
 					List<EntityLivingBase> targets = WizardryUtilities
 							.getEntitiesWithinRadius(radius, caster.posX, caster.posY, caster.posZ, world);
 					targets.remove(caster);

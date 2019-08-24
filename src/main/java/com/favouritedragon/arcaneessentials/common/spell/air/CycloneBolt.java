@@ -26,8 +26,8 @@ public class CycloneBolt extends Spell {
 		if (!world.isRemote) {
 			caster.swingArm(hand);
 			float speed = 0.5F * modifiers.get(WizardryItems.range_upgrade) + getProperty(SPEED).floatValue();
-			int knockBackStrength = 3 + (int) modifiers.get(WizardryItems.blast_upgrade);
-			float damageMultiplier = 1 * modifiers.get(WizardryItems.blast_upgrade);
+			int knockBackStrength = getProperty(SPEED).intValue() / 3 + (int) modifiers.get(WizardryItems.blast_upgrade);
+			float damageMultiplier = getProperty(RANGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 			EntityCycloneBolt bolt = new EntityCycloneBolt(world);
 			bolt.setCaster(caster);
 			bolt.aim(caster, speed / 25, 0);
