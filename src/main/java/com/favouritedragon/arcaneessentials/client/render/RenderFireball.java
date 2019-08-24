@@ -1,13 +1,12 @@
 package com.favouritedragon.arcaneessentials.client.render;
 
-import com.favouritedragon.arcaneessentials.common.entity.EntityCycloneBolt;
 import com.favouritedragon.arcaneessentials.common.entity.EntityFireball;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
+import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -24,7 +23,7 @@ public class RenderFireball extends Render<EntityFireball> {
 		super(renderManager);
 	}
 
-	//Copied from the forcefiled class
+	//Copied from the forcefield class
 	@Override
 	public void doRender(@Nonnull EntityFireball entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
@@ -61,8 +60,9 @@ public class RenderFireball extends Render<EntityFireball> {
 		drawSphere(radius, latStep, longStep, false, r, g, b, 0.7f * a);
 
 		//Particles
-		ArcaneUtils.spawnSpinningDirectionalVortex(entity.world, entity.getCaster(), Vec3d.ZERO, 15, 1, 0, 72,
-				EnumParticleTypes.EXPLOSION_NORMAL, entity.getPositionVector(), new Vec3d(0.4, 0.1, 0.4), new Vec3d(entity.motionX, entity.motionY, entity.motionZ));
+		ArcaneUtils.spawnSpinningDirectionalVortex(entity.world, entity.getCaster(), Vec3d.ZERO, 30, 1, 0, 30 / entity.getSize(),
+				ParticleBuilder.Type.MAGIC_FIRE, entity.getPositionVector(), new Vec3d(0.4, 0.1, 0.4), new Vec3d(entity.motionX, entity.motionY, entity.motionZ),
+				15, -1, -1, -1);
 
 
 		GlStateManager.enableTexture2D();

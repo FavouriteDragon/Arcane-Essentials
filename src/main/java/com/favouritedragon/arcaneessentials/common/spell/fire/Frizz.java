@@ -10,7 +10,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
@@ -26,33 +25,28 @@ public class Frizz extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		if (!world.isRemote) {
-			cast(world, caster, modifiers);
-			return true;
-		}
-		return false;
+		return cast(world, caster, modifiers);
 	}
 
-	private void cast(World world, EntityLivingBase caster, SpellModifiers modifiers) {
+	private boolean cast(World world, EntityLivingBase caster, SpellModifiers modifiers) {
 		float size = getProperty(SIZE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 		float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
-		Vec3d pos = caster.getPositionVector().add(caster.getLookVec()).add(0, caster.getEyeHeight() - 0.2, 0);
-		EntityFireball fireball = new EntityFireball(world);
-		fireball.setSize(size);
-		fireball.setDamage(damage);
-		fireball.setPosition(pos.x, pos.y, pos.z);
-		fireball.setCaster(caster);
-		fireball.aim(caster, getProperty(RANGE).floatValue(), 0F);
-		world.spawnEntity(fireball);
+		int burnDuration = getProperty(BURN_DURATION).intValue() * (int) modifiers.get(SpellModifiers.POTENCY);
+		if (!world.isRemote) {
+			EntityFireball fireball = new EntityFireball(world);
+			fireball.setCaster(caster);
+			fireball.setSize(size);
+			fireball.setDamage(damage);
+			fireball.setKnockbackStrength((int) size * 2);
+			fireball.setBurnDuration(burnDuration);
+			fireball.aim(caster, getProperty(RANGE).floatValue() / 50, 0F);
+			return world.spawnEntity(fireball);
+		} else return false;
 	}
 
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
-		if (!world.isRemote) {
-			cast(world, caster, modifiers);
-			return true;
-		}
-		return false;
+		return cast(world, caster, modifiers);
 	}
 
 	@Override

@@ -68,11 +68,6 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 	}
 
 	@Override
-	public boolean doGravity() {
-		return false;
-	}
-
-	@Override
 	public boolean canRenderOnFire() {
 		return false;
 	}

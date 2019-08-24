@@ -168,10 +168,10 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 	}
 
 	/**
-	 * Override this to disable gravity. Returns true by default.
+	 * Override this to enable gravity.
 	 */
-	public boolean doGravity() {
-		return true;
+	protected boolean doGravity() {
+		return false;
 	}
 
 	/**
@@ -369,7 +369,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 			// If the arrow hits something
 			if (raytraceresult != null) {
 				// If the arrow hits an entity
-				if (raytraceresult.entityHit != null) {
+				if (raytraceresult.entityHit != null && raytraceresult.entityHit != getCaster()) {
 					DamageSource damagesource = null;
 
 					if (this.getCaster() == null) {
@@ -523,7 +523,10 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 				this.motionZ *= (double) f3;
 			}
 
-			if (this.doGravity()) this.motionY -= 0.05;
+			System.out.println(doGravity());
+			if (this.doGravity()) {
+				this.motionY -= 0.05;
+			}
 
 			this.setPosition(this.posX, this.posY, this.posZ);
 			this.doBlockCollisions();

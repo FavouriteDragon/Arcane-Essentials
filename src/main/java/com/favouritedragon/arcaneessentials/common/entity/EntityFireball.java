@@ -1,10 +1,19 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
+import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
+import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
+import electroblob.wizardry.util.ParticleBuilder;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class EntityFireball extends EntityMagicBolt {
 
@@ -45,11 +54,6 @@ public class EntityFireball extends EntityMagicBolt {
 	}
 
 	@Override
-	public boolean doGravity() {
-		return false;
-	}
-
-	@Override
 	public boolean doDeceleration() {
 		return false;
 	}
@@ -64,5 +68,57 @@ public class EntityFireball extends EntityMagicBolt {
 	protected void entityInit() {
 		super.entityInit();
 		dataManager.register(SYNC_SIZE, 1.0F);
+	}
+
+	private void Explode() {
+		if (!world.isRemote) {
+			world.playSound(null, posX, posY, posZ, SoundEvents.ENTITY_GHAST_SHOOT, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
+					0.8F + world.rand.nextFloat() / 10F);
+			List<Entity> hit = world.getEntitiesWithinAABB(Entity.class, getEntityBoundingBox());
+			if (!hit.isEmpty()) {
+				for (Entity target : hit) {
+					if (target != this && target != getCaster()) {
+						if (target.canBeCollidedWith()) {
+							target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(getCaster(),
+									getDamageType()), (float) getDamage() * 0.4F);
+							target.addVelocity(motionX / 4, motionY / 4, motionZ / 4);
+							ArcaneUtils.applyPlayerKnockback(target);
+						}
+					}
+				}
+			}
+		}
+		if (world.isRemote) {
+			for (int i = 0; i < 20; i++) {
+				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).pos(getPositionVector()).collide(true).time(10)
+						.vel(world.rand.nextGaussian() / 10, world.rand.nextGaussian() / 10, world.rand.nextGaussian() / 10).
+						scale(1.0F + world.rand.nextFloat()).spawn(world);
+			}
+		}
+		setDead();
+	}
+
+	@Override
+	protected void onEntityHit(EntityLivingBase entityHit) {
+		super.onEntityHit(entityHit);
+		if (entityHit != getCaster()) {
+			entityHit.setFire(burnDuration);
+			Explode();
+		}
+	}
+
+	@Override
+	protected void onBlockHit(RayTraceResult hit) {
+		super.onBlockHit(hit);
+		Explode();
+	}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+		if (ticksExisted >= getLifetime()) {
+			Explode();
+		}
+		setSize(getSize(), getSize());
 	}
 }

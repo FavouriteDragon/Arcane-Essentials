@@ -16,9 +16,7 @@ import com.favouritedragon.arcaneessentials.common.spell.storm.StormBlink;
 import com.favouritedragon.arcaneessentials.common.spell.storm.ThunderBurst;
 import com.favouritedragon.arcaneessentials.common.spell.water.OceanBurst;
 import com.favouritedragon.arcaneessentials.common.spell.water.Whirlpool;
-import electroblob.wizardry.entity.projectile.EntityMagicFireball;
 import electroblob.wizardry.spell.Spell;
-import electroblob.wizardry.spell.SpellProjectile;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -72,7 +70,7 @@ public class RegisterHandler {
 		registerEntity(EntityCycloneBolt.class, "Cyclone Bolt", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
 		registerEntity(EntityCycloneShield.class, "Cylone Shield", id++, 128, LIVING_UPDATE_INTERVAL, false);
 		registerEntity(EntitySolarBeam.class, "Solar Beam", id++, 128, LIVING_UPDATE_INTERVAL, false);
-
+		registerEntity(EntityFireball.class, "Fireball", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
 
 	}
 

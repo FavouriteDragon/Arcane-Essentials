@@ -64,7 +64,7 @@ public class BlizzardBeam extends Spell {
 						b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 80).time(15).spawn(world);
 
 			}
-			ParticleBuilder.create(ParticleBuilder.Type.BEAM).scale(1.3F).pos(startPos).target(endPos)
+			ParticleBuilder.create(ParticleBuilder.Type.BEAM).scale(getProperty(EFFECT_RADIUS).floatValue() * 5).pos(startPos).target(endPos)
 					.time(15).clr(174, 252, 255).fade(230, 253, 254).collide(true).spawn(world);
 			ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), 180, range, getProperty(EFFECT_RADIUS).floatValue(),
 					ParticleBuilder.Type.SNOW, startPos, new Vec3d(world.rand.nextGaussian() / 80, world.rand.nextGaussian() / 40, world.rand.nextGaussian() / 80),
@@ -75,7 +75,7 @@ public class BlizzardBeam extends Spell {
 				1.0F + world.rand.nextFloat() / 10F, true);
 		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_ICE_CHARGE_ICE, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
 				1.0F + world.rand.nextFloat() / 10F, true);
-		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_ICE_WRAITH_AMBIENT, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_BLIZZARD_AMBIENT, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
 				1.0F + world.rand.nextFloat() / 10F, true);
 		return true;
 	}
@@ -109,7 +109,7 @@ public class BlizzardBeam extends Spell {
 						b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 80).time(15).clr(1.0F, 1.0F, 0.3F).spawn(world);
 
 			}
-			ParticleBuilder.create(ParticleBuilder.Type.BEAM).scale(1.3F).pos(startPos).entity(caster).target(endPos)
+			ParticleBuilder.create(ParticleBuilder.Type.BEAM).scale(getProperty(EFFECT_RADIUS).floatValue() * 5).pos(startPos).entity(caster).target(endPos)
 					.time(6).clr(174, 252, 255).fade(230, 253, 254).spawn(world);
 			ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), 180, range, getProperty(EFFECT_RADIUS).floatValue(),
 					ParticleBuilder.Type.SNOW, startPos, new Vec3d(world.rand.nextGaussian() / 80, world.rand.nextGaussian() / 40, world.rand.nextGaussian() / 80),
@@ -120,7 +120,7 @@ public class BlizzardBeam extends Spell {
 				1.0F + world.rand.nextFloat() / 10F, true);
 		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_ICE_CHARGE_ICE, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
 				1.0F + world.rand.nextFloat() / 10F, true);
-		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_ICE_WRAITH_AMBIENT, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_BLIZZARD_AMBIENT, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
 				1.0F + world.rand.nextFloat() / 10F, true);
 		return true;
 	}

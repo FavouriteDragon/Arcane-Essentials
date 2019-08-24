@@ -312,7 +312,7 @@ public class ArcaneUtils {
 			if (entity != null && direction != null) {
 				pos = ArcaneUtils.rotateAroundAxisX(pos, entity.rotationPitch + 90);
 				pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
-				if (r == -1 && g == -1 && b == 1) {
+				if (r == -1 && g == -1 && b == -1) {
 					ParticleBuilder.create(particle).pos(pos.x + position.x + direction.x, pos.y + position.y + direction.y,
 							pos.z + position.z + direction.z).vel(particleSpeed).time(maxAge).spawn(world);
 				}
