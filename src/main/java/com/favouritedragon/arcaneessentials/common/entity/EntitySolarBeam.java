@@ -73,7 +73,7 @@ public class EntitySolarBeam extends EntityMagicConstruct {
 	public void onUpdate() {
 		super.onUpdate();
 		if (ticksExisted == 1) {
-			setSize(0.1F, 0.1F);
+			setSize(0.75F, 0.75F);
 		}
 		if (!world.isRemote && getCaster() != null) {
 			Vec3d endpos = getLookVec().scale(getRange()).add(getPositionVector());

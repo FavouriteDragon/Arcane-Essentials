@@ -21,6 +21,7 @@ public class EntityFireball extends EntityMagicBolt {
 	private static final DataParameter<Float> SYNC_SIZE = EntityDataManager.createKey(EntityFireball.class,
 			DataSerializers.FLOAT);
 	private float damage;
+	private int lifetime;
 	private int burnDuration;
 
 	public EntityFireball(World world) {
@@ -29,6 +30,10 @@ public class EntityFireball extends EntityMagicBolt {
 
 	public void setBurnDuration(int duration) {
 		this.burnDuration = duration;
+	}
+
+	public void setLifetime(int lifetime) {
+		this.lifetime = lifetime;
 	}
 
 	public float getSize() {
@@ -60,7 +65,7 @@ public class EntityFireball extends EntityMagicBolt {
 
 	@Override
 	public int getLifetime() {
-		return 150;
+		return lifetime;
 	}
 
 
@@ -72,10 +77,11 @@ public class EntityFireball extends EntityMagicBolt {
 
 	private void Explode() {
 		if (world.isRemote) {
-			for (int i = 0; i < 30; i++) {
+			for (int i = 0; i < 50; i++) {
 				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).pos(getPositionVector()).time(10)
-						.vel(world.rand.nextGaussian() / 10, world.rand.nextGaussian() / 10, world.rand.nextGaussian() / 10).
-						scale(1.5F + world.rand.nextFloat()).spawn(world);
+						.vel(world.rand.nextGaussian() / 10 * getSize(), world.rand.nextGaussian() / 10
+								* getSize(), world.rand.nextGaussian() / 10 * getSize()).
+						scale(2.5F * getSize() + world.rand.nextFloat()).spawn(world);
 			}
 		}
 

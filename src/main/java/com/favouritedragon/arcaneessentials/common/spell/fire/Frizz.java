@@ -38,6 +38,7 @@ public class Frizz extends Spell {
 			EntityFireball fireball = new EntityFireball(world);
 			fireball.setCaster(caster);
 			fireball.setSize(size);
+			fireball.setLifetime(50);
 			fireball.setDamage(damage);
 			fireball.setKnockbackStrength((int) size * 2);
 			fireball.setBurnDuration(burnDuration);
