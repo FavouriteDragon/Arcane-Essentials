@@ -22,7 +22,7 @@ public class KaThwack extends Spell {
 	 * The radius within which maximum damage is dealt and maximum repulsion velocity is applied.
 	 */
 	private static final double EPICENTRE_RADIUS = 1;
-	public static final String DEATH_CHANCE = "death_chance";
+	private static final String DEATH_CHANCE = "death_chance";
 
 	public KaThwack() {
 		super(ArcaneEssentials.MODID, "kathwack", EnumAction.BOW, false);
@@ -93,13 +93,14 @@ public class KaThwack extends Spell {
 				}
 			}
 
-			ParticleBuilder.create(ParticleBuilder.Type.SPHERE)
-					.pos(caster.posX, caster.getEntityBoundingBox().minY + 0.1, caster.posZ)
-					.scale((float) radius * 0.6f)
-					.clr(36, 7, 71)
-					//.fade(0, 0, 0)
-					.spawn(world);
-
+			for (int i = 0; i < 4; i++) {
+				ParticleBuilder.create(ParticleBuilder.Type.SPHERE)
+						.pos(caster.posX, caster.getEntityBoundingBox().minY + 0.1, caster.posZ)
+						.scale((float) radius * 0.6f)
+						.clr(36, 7, 71)
+						.shaded(true)
+						.spawn(world);
+			}
 
 		}
 
