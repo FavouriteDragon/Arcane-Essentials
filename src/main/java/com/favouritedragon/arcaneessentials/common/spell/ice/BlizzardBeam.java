@@ -4,6 +4,7 @@ import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardryPotions;
+import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
@@ -58,26 +59,31 @@ public class BlizzardBeam extends Spell {
 				double y1 = eyepos + look.y * i / 2
 						+ world.rand.nextFloat() / 5 - 0.1f;
 				double z1 = caster.posZ + look.z * i / 2 + world.rand.nextFloat() / 5 - 0.1f;
-				ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x1, y1, z1).vel(b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 80,
+				ParticleBuilder.create(ParticleBuilder.Type.SNOW).pos(x1, y1, z1).vel(b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 80,
 						world.rand.nextDouble() / 40,
-						b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 80).time(15).clr(1.0F, 1.0F, 0.3F).spawn(world);
+						b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 80).time(15).spawn(world);
 
 			}
 			ParticleBuilder.create(ParticleBuilder.Type.BEAM).scale(1.3F).pos(startPos).target(endPos)
-					.time(6).clr(174, 252, 255).fade(230, 253, 254).spawn(world);
+					.time(15).clr(174, 252, 255).fade(230, 253, 254).collide(true).spawn(world);
 			ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), 180, range, getProperty(EFFECT_RADIUS).floatValue(),
 					ParticleBuilder.Type.SNOW, startPos, new Vec3d(world.rand.nextGaussian() / 80, world.rand.nextGaussian() / 40, world.rand.nextGaussian() / 80),
 					12, -1, -1, -1);
-			return true;
 
 		}
-		return false;
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_ICE_SHARD_SMASH, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
+				1.0F + world.rand.nextFloat() / 10F, true);
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_ICE_CHARGE_ICE, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
+				1.0F + world.rand.nextFloat() / 10F, true);
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_ICE_WRAITH_AMBIENT, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
+				1.0F + world.rand.nextFloat() / 10F, true);
+		return true;
 	}
 
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
 		Vec3d look = caster.getLookVec();
-		float damage = getProperty(DAMAGE).floatValue() + modifiers.get(WizardryItems.blast_upgrade);
+		float damage = getProperty(DAMAGE).floatValue() + modifiers.get(SpellModifiers.POTENCY);
 		float range = getProperty(RANGE).floatValue() * modifiers.get(WizardryItems.range_upgrade);
 		double eyepos = caster.getEntityBoundingBox().minY + caster.getEyeHeight() - 0.4F;
 		float knockbackMult = getProperty(DIRECT_EFFECT_STRENGTH).floatValue() * modifiers.get(SpellModifiers.POTENCY);
@@ -98,7 +104,7 @@ public class BlizzardBeam extends Spell {
 				double y1 = eyepos + look.y * i / 2
 						+ world.rand.nextFloat() / 5 - 0.1f;
 				double z1 = caster.posZ + look.z * i / 2 + world.rand.nextFloat() / 5 - 0.1f;
-				ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x1, y1, z1).vel(b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 80,
+				ParticleBuilder.create(ParticleBuilder.Type.SNOW).pos(x1, y1, z1).vel(b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 80,
 						world.rand.nextDouble() / 40,
 						b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 80).time(15).clr(1.0F, 1.0F, 0.3F).spawn(world);
 
@@ -108,11 +114,17 @@ public class BlizzardBeam extends Spell {
 			ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), 180, range, getProperty(EFFECT_RADIUS).floatValue(),
 					ParticleBuilder.Type.SNOW, startPos, new Vec3d(world.rand.nextGaussian() / 80, world.rand.nextGaussian() / 40, world.rand.nextGaussian() / 80),
 					12, -1, -1, -1);
-			return true;
 
 		}
-		return false;
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_ICE_SHARD_SMASH, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
+				1.0F + world.rand.nextFloat() / 10F, true);
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_ICE_CHARGE_ICE, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
+				1.0F + world.rand.nextFloat() / 10F, true);
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_ICE_WRAITH_AMBIENT, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
+				1.0F + world.rand.nextFloat() / 10F, true);
+		return true;
 	}
+
 
 	//Method handling everything
 	private void handlePiercingBeamCollision(World world, EntityLivingBase caster, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, boolean directDamage, MagicDamage.DamageType damageType,
@@ -185,4 +197,5 @@ public class BlizzardBeam extends Spell {
 	public boolean canBeCastByNPCs() {
 		return true;
 	}
+
 }
