@@ -22,12 +22,13 @@ public class Whirlpool extends Spell {
 
 	public Whirlpool() {
 		super(ArcaneEssentials.MODID, "whirlpool", EnumAction.BOW, false);
+		addProperties(RANGE, DAMAGE);
 	}
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		double range = 3 + 1 * modifiers.get(WizardryItems.range_upgrade);
-		float damage = 0.5F + modifiers.get(WizardryItems.blast_upgrade);
+		double range = getProperty(RANGE).floatValue() * modifiers.get(WizardryItems.range_upgrade);
+		float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 		RayTraceResult result = RayTracer.standardBlockRayTrace(world, caster, range,true);
 		if (result != null) {
 			Vec3d pos = result.hitVec;
@@ -70,8 +71,8 @@ public class Whirlpool extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
-		double range = 3 + 1 * modifiers.get(WizardryItems.range_upgrade);
-		float damage = 3 + 1 * modifiers.get(WizardryItems.blast_upgrade);
+		double range = getProperty(RANGE).floatValue() * modifiers.get(WizardryItems.range_upgrade);
+		float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 		RayTraceResult result = RayTracer.standardBlockRayTrace(world, caster, range,true);
 		if (result != null) {
 			Vec3d pos = result.hitVec;
