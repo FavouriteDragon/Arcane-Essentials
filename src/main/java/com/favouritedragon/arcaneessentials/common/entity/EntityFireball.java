@@ -21,7 +21,7 @@ public class EntityFireball extends EntityMagicBolt {
 	private static final DataParameter<Float> SYNC_SIZE = EntityDataManager.createKey(EntityFireball.class,
 			DataSerializers.FLOAT);
 	private float damage;
-	private int lifetime;
+	private int lifetime = 40;
 	private int burnDuration;
 
 	public EntityFireball(World world) {
@@ -124,7 +124,7 @@ public class EntityFireball extends EntityMagicBolt {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if (ticksExisted >= getLifetime()) {
+		if (ticksExisted >= getLifetime() && !world.isRemote) {
 			Explode();
 		}
 		setSize(getSize(), getSize());

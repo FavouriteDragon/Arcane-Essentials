@@ -34,17 +34,17 @@ public class Frizz extends Spell {
 		float size = getProperty(SIZE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 		float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 		int burnDuration = getProperty(BURN_DURATION).intValue() * (int) modifiers.get(SpellModifiers.POTENCY);
+		world.playSound(caster.posX,caster.posY, caster.posZ, SoundEvents.ENTITY_GHAST_SHOOT, WizardrySounds.SPELLS,
+				1.0F + world.rand.nextFloat(), 1.0F + world.rand.nextFloat(), false);
 		if (!world.isRemote) {
 			EntityFireball fireball = new EntityFireball(world);
 			fireball.setCaster(caster);
 			fireball.setSize(size);
-			fireball.setLifetime(50);
+			fireball.setLifetime(40);
 			fireball.setDamage(damage);
 			fireball.setKnockbackStrength((int) size * 2);
 			fireball.setBurnDuration(burnDuration);
 			fireball.aim(caster, getProperty(RANGE).floatValue() / 50, 0F);
-			world.playSound(caster.posX,caster.posY, caster.posZ, SoundEvents.ENTITY_GHAST_SHOOT, WizardrySounds.SPELLS,
-					1.0F + world.rand.nextFloat(), 1.0F + world.rand.nextFloat(), false);
 			return world.spawnEntity(fireball);
 		} else return false;
 	}
