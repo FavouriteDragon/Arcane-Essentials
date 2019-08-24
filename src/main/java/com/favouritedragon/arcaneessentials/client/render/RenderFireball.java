@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 import javax.annotation.Nonnull;
@@ -31,6 +30,7 @@ public class RenderFireball extends Render<EntityFireball> {
 
 		GlStateManager.enableBlend();
 		GlStateManager.disableTexture2D();
+		GlStateManager.disableLighting();
 		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
 
@@ -39,11 +39,10 @@ public class RenderFireball extends Render<EntityFireball> {
 		float latStep = (float) Math.PI / 20;
 		float longStep = (float) Math.PI / 20;
 
-		float pulse = MathHelper.sin((entity.ticksExisted + partialTicks) / 10f);
 
-		float r = 245 / 255F, g = 0.05f * pulse, b = 0;
-		float r1 = 1F, g1 = 175 / 255F + 0.05F * pulse, b1 = 51 / 255F;
-		float r2 = 252 / 255F + 0.05F * pulse, g2 = 1F, b2 = 51 / 255F;
+		float r = 245 / 255F, g = 0.05f, b = 0;
+		float r1 = 1F, g1 = 175 / 255F, b1 = 51 / 255F;
+		float r2 = 252 / 255F, g2 = 1F, b2 = 51 / 255F;
 
 		float radius = entity.width / 4;
 		float a = 0.5f;
@@ -57,8 +56,8 @@ public class RenderFireball extends Render<EntityFireball> {
 		}
 
 		// Draw the inside first
-		drawSphere(radius - 0.1f - 0.025f * pulse, latStep, longStep, false, r, g, b, a * 0.8F);
-		drawSphere(radius - 0.1f - 0.025f * pulse, latStep, longStep, false, r1, g1, b1, a * 0.9F);
+		drawSphere(radius - 0.2F, latStep, longStep, false, r, g, b, a * 0.8F);
+		drawSphere(radius - 0.1f, latStep, longStep, false, r1, g1, b1, a * 0.9F);
 		drawSphere(radius, latStep, longStep, false, r2, g2, b2, 0.95f * a);
 
 		//Particles
@@ -68,6 +67,7 @@ public class RenderFireball extends Render<EntityFireball> {
 
 
 		GlStateManager.enableTexture2D();
+		GlStateManager.enableLighting();
 		GlStateManager.disableBlend();
 
 		GlStateManager.popMatrix();
