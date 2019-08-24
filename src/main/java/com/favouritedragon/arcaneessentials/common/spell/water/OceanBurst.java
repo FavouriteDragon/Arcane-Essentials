@@ -24,14 +24,16 @@ public class OceanBurst extends Spell {
 
 	public OceanBurst() {
 		super(ArcaneEssentials.MODID, "ocean_burst", EnumAction.BOW, false);
+		addProperties(DAMAGE, RANGE, EFFECT_STRENGTH, EFFECT_RADIUS);
 	}
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		double range = 3 + 2 * modifiers.get(WizardryItems.range_upgrade);
+		double range = getProperty(RANGE).doubleValue() * modifiers.get(WizardryItems.range_upgrade);
 		Vec3d look = caster.getLookVec();
-		double mult = modifiers.get(WizardryItems.range_upgrade) > 0 ? 0.6 + 0.2 * modifiers.get(WizardryItems.range_upgrade) : 0.6;
+		double mult = getProperty(EFFECT_STRENGTH).doubleValue() * 0.6 * modifiers.get(SpellModifiers.POTENCY);
 		double eyepos = caster.getEyeHeight() + caster.getEntityBoundingBox().minY;
+		float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 		if (world.isRemote) {
 			//Spawn particles
 				for(int i = 0; i < 80; i++) {
@@ -52,8 +54,8 @@ public class OceanBurst extends Spell {
 		if (!world.isRemote) {
 			Vec3d startPos = new Vec3d(caster.posX, eyepos, caster.posZ);
 			Vec3d endPos = startPos.add(caster.getLookVec().scale(mult * range));
-			ArcaneUtils.vortexEntityCollision(world, caster, null, startPos, endPos, 0.74F, 3 + 2 * modifiers.get(WizardryItems.blast_upgrade),
-					look.scale(1 + 1 * modifiers.get(WizardryItems.blast_upgrade)), SPLASH, true);
+			ArcaneUtils.vortexEntityCollision(world, caster, null, startPos, endPos, getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(SpellModifiers.POTENCY),
+					damage, look.scale(mult / 0.6), SPLASH, true);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_GENERIC_SWIM, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_ICE_LANCE_SMASH, 0.8F,
@@ -69,14 +71,16 @@ public class OceanBurst extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
-		double range = 3 + 2 * modifiers.get(WizardryItems.range_upgrade);
+		double range = getProperty(RANGE).doubleValue() * modifiers.get(WizardryItems.range_upgrade);
 		Vec3d look = caster.getLookVec();
-		double mult = modifiers.get(WizardryItems.range_upgrade) > 0 ? 0.6 + 0.2 * modifiers.get(WizardryItems.range_upgrade) : 0.6;
+		double mult = getProperty(EFFECT_STRENGTH).doubleValue() * 0.6 * modifiers.get(SpellModifiers.POTENCY);
+		double eyepos = caster.getEyeHeight() + caster.getEntityBoundingBox().minY;
+		float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 		if (world.isRemote) {
 			//Spawn particles
 			for(int i = 0; i < 80; i++) {
 				double x1 = caster.posX + look.x + world.rand.nextFloat() / 10 - 0.05f;
-				double y1 = caster.getEyeHeight() + caster.getEntityBoundingBox().minY - 0.4f + world.rand.nextFloat() / 10 - 0.05f;
+				double y1 = eyepos - 0.4F + world.rand.nextFloat() / 10 - 0.05f;
 				double z1 = caster.posZ + look.z + world.rand.nextFloat() / 10 - 0.05f;
 
 				//Using the random function each time ensures a different number for every value, making the ability "feel" better.
@@ -90,10 +94,10 @@ public class OceanBurst extends Spell {
 			}
 		}
 		if (!world.isRemote) {
-			Vec3d startPos = new Vec3d(caster.posX, caster.getEyeHeight() + caster.getEntityBoundingBox().minY, caster.posZ);
+			Vec3d startPos = new Vec3d(caster.posX, eyepos, caster.posZ);
 			Vec3d endPos = startPos.add(caster.getLookVec().scale(mult * range));
-			ArcaneUtils.vortexEntityCollision(world, caster, null, startPos, endPos, 0.74F, 4 + 2 * modifiers.get(WizardryItems.blast_upgrade),
-					look.scale(2 + 1 * modifiers.get(WizardryItems.blast_upgrade)), SPLASH, true);
+			ArcaneUtils.vortexEntityCollision(world, caster, null, startPos, endPos, getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(SpellModifiers.POTENCY),
+					damage, look.scale(mult / 0.6), SPLASH, true);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_GENERIC_SWIM, SoundCategory.HOSTILE, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
 			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_ICE_LANCE_SMASH, SoundCategory.HOSTILE, 0.8F,
