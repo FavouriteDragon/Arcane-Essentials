@@ -63,7 +63,7 @@ public class BlizzardBeam extends Spell {
 						b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 80).time(15).clr(1.0F, 1.0F, 0.3F).spawn(world);
 
 			}
-			ParticleBuilder.create(ParticleBuilder.Type.BEAM).scale(1.3F).pos(startPos).entity(caster).target(endPos)
+			ParticleBuilder.create(ParticleBuilder.Type.BEAM).scale(1.3F).pos(startPos).target(endPos)
 					.time(6).clr(174, 252, 255).fade(230, 253, 254).spawn(world);
 			ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), 180, range, getProperty(EFFECT_RADIUS).floatValue(),
 					ParticleBuilder.Type.SNOW, startPos, new Vec3d(world.rand.nextGaussian() / 80, world.rand.nextGaussian() / 40, world.rand.nextGaussian() / 80),
@@ -179,5 +179,10 @@ public class BlizzardBeam extends Spell {
 			}
 
 		}
+	}
+
+	@Override
+	public boolean canBeCastByNPCs() {
+		return true;
 	}
 }
