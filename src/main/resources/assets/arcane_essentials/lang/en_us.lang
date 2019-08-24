@@ -11,7 +11,7 @@ spell.arcane_essentials:fire_pledge=Fire Pledge
 spell.arcane_essentials:fire_pledge.desc=BBBBBBBBBBBBBBBBBBBBBBUUUUUUUUUUUUUUUURRRRRRNNNNNNNNNNNNNNNN Summon geysers of fire in front of you, like the pokemon move! Gen 6, anybody?
 
 spell.arcane_essentials:frizz=Frizz
-spell.arcane_essentials:frizz.desc=Shoot a small fireball that singes enemies.
+spell.arcane_essentials:frizz.desc=Singe enemies with a small fireball.
 
 spell.arcane_essentials:inferno_pillar=Inferno Pillar
 spell.arcane_essentials:inferno_pillar.desc=Create a massive flaming pillar around you! This pillar burns enemies and reflects projectiles for a couple seconds, great for protecting yourself from those pesky skeletons!
@@ -23,7 +23,7 @@ spell.arcane_essentials:lightning_vortex=Lightning Vortex
 spell.arcane_essentials:lightning_vortex.desc=Create a spinning vortex of lightning where you're looking! Lasts about 5 seconds, and sets enemies on fire!
 
 spell.arcane_essentials:ocean_burst=Ocean Burst
-spell.arcane_essentials:ocean_burst.desc=Unleash a power cone burst of water that blasts enemies away!
+spell.arcane_essentials:ocean_burst.desc=Unleash a powerful burst of water that blasts enemies away!
 
 spell.arcane_essentials:radiance_storm=Radiance Storm
 spell.arcane_essentials:radiance_storm.desc=Unleash pillars of divine light around you, severely damaging mobs, spiking them out of the sky, and blasting them away.
