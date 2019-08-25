@@ -10,6 +10,7 @@ import electroblob.wizardry.util.RayTracer;
 import electroblob.wizardry.util.WizardryUtilities;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -18,6 +19,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketChangeGameState;
 import net.minecraft.util.DamageSource;
@@ -39,7 +41,16 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
 	public static final double LAUNCH_Y_OFFSET = 0.2;
 	public static final int SEEKING_TIME = 15;
-
+	/**
+	 * Seems to be some sort of timer for animating an arrow.
+	 */
+	public int arrowShake;
+	/**
+	 * The damage multiplier for the projectile.
+	 */
+	public float damageMultiplier = 1.0f;
+	int ticksInGround;
+	int ticksInAir;
 	private int blockX = -1;
 	private int blockY = -1;
 	private int blockZ = -1;
@@ -53,10 +64,6 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 	private int inData;
 	private boolean inGround;
 	/**
-	 * Seems to be some sort of timer for animating an arrow.
-	 */
-	public int arrowShake;
-	/**
 	 * The owner of this arrow.
 	 */
 	private WeakReference<EntityLivingBase> caster;
@@ -66,16 +73,10 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 	 * why it is private).
 	 */
 	private UUID casterUUID;
-	int ticksInGround;
-	int ticksInAir;
 	/**
 	 * The amount of knockback an arrow applies when it hits a mob.
 	 */
 	private int knockbackStrength;
-	/**
-	 * The damage multiplier for the projectile.
-	 */
-	public float damageMultiplier = 1.0f;
 
 	/**
 	 * Creates a new projectile in the given world.
@@ -106,11 +107,11 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 		this.setPosition(this.posX + caster.getLookVec().x, this.posY + caster.getLookVec().y, this.posZ + caster.getLookVec().z);
 
 		// yOffset was set to 0 here, but that has been replaced by getYOffset(), which returns 0 in Entity anyway.
-		this.motionX = (double) (-MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI)
-				* MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI));
-		this.motionY = (double) (-MathHelper.sin(this.rotationPitch / 180.0F * (float) Math.PI));
-		this.motionZ = (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI)
-				* MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI));
+		this.motionX = -MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI)
+				* MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI);
+		this.motionY = -MathHelper.sin(this.rotationPitch / 180.0F * (float) Math.PI);
+		this.motionZ = MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI)
+				* MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI);
 
 		this.shoot(this.motionX, this.motionY, this.motionZ, speed * 1.5F, error);
 	}
@@ -136,7 +137,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 		double dy = this.doGravity() ? target.getEntityBoundingBox().minY + (double) (target.height / 3.0f) - this.posY
 				: target.getEntityBoundingBox().minY + (double) (target.height / 2.0f) - this.posY;
 		double dz = target.posZ - caster.posZ;
-		double horizontalDistance = (double) MathHelper.sqrt(dx * dx + dz * dz);
+		double horizontalDistance = MathHelper.sqrt(dx * dx + dz * dz);
 
 		if (horizontalDistance >= 1.0E-7D) {
 			float yaw = (float) (Math.atan2(dz, dx) * 180.0d / Math.PI) - 90.0f;
@@ -262,7 +263,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 	@Override
 	public void onUpdate() {
 
-		super.onUpdate();
+		//super.onUpdate();
 
 		// Projectile disappears after its lifetime (if it has one) has elapsed
 		if (getLifetime() >= 0 && this.ticksExisted > getLifetime()) {
@@ -280,7 +281,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 			float f = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
 			this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(this.motionX, this.motionZ) * 180.0D
 					/ Math.PI);
-			this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(this.motionY, (double) f) * 180.0D
+			this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(this.motionY, f) * 180.0D
 					/ Math.PI);
 		}
 
@@ -341,8 +342,8 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
 				if (entity1.canBeCollidedWith() && (entity1 != this.getCaster() || this.ticksInAir >= 5)) {
 					f1 = 0.3F;
-					AxisAlignedBB axisalignedbb1 = entity1.getEntityBoundingBox().grow((double) f1, (double) f1,
-							(double) f1);
+					AxisAlignedBB axisalignedbb1 = entity1.getEntityBoundingBox().grow(f1, f1,
+							f1);
 					RayTraceResult RayTraceResult1 = axisalignedbb1.calculateIntercept(vec3d1, vec3d);
 
 					if (RayTraceResult1 != null) {
@@ -434,9 +435,9 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 					this.blockY = raytraceresult.getBlockPos().getY();
 					this.blockZ = raytraceresult.getBlockPos().getZ();
 					this.stuckInBlock = this.world.getBlockState(raytraceresult.getBlockPos());
-					this.motionX = (double) ((float) (raytraceresult.hitVec.x - this.posX));
-					this.motionY = (double) ((float) (raytraceresult.hitVec.y - this.posY));
-					this.motionZ = (double) ((float) (raytraceresult.hitVec.z - this.posZ));
+					this.motionX = (float) (raytraceresult.hitVec.x - this.posX);
+					this.motionY = (float) (raytraceresult.hitVec.y - this.posY);
+					this.motionZ = (float) (raytraceresult.hitVec.z - this.posZ);
 					// f2 = MathHelper.sqrt(this.motionX * this.motionX + this.motionY * this.motionY + this.motionZ *
 					// this.motionZ);
 					// this.posX -= this.motionX / (double)f2 * 0.05000000074505806D;
@@ -446,7 +447,9 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 					this.inGround = true;
 					this.arrowShake = 7;
 
-					this.onBlockHit(raytraceresult);
+					if (this.collided && (world.getBlockState(getPosition()).getBlock() != Blocks.AIR &&
+							!(world.getBlockState(getPosition()).getBlock() instanceof BlockTallGrass)))
+						this.onBlockHit(raytraceresult);
 
 					if (this.stuckInBlock.getMaterial() != Material.AIR) {
 						this.stuckInBlock.getBlock().onEntityCollision(this.world, raytraceresult.getBlockPos(),
@@ -523,17 +526,13 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 			}
 
 			if (this.doDeceleration()) {
-				this.motionX *= (double) f3;
-				this.motionY *= (double) f3;
-				this.motionZ *= (double) f3;
+				this.motionX *= f3;
+				this.motionY *= f3;
+				this.motionZ *= f3;
 			}
 
 			if (this.doGravity()) {
 				this.motionY -= 0.05;
-			}
-
-			if (collided) {
-				onBlockHit(null);
 			}
 			this.setPosition(this.posX, this.posY, this.posZ);
 			this.doBlockCollisions();
@@ -543,21 +542,21 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 	@Override
 	public void shoot(double x, double y, double z, float speed, float randomness) {
 		float f2 = MathHelper.sqrt(x * x + y * y + z * z);
-		x /= (double) f2;
-		y /= (double) f2;
-		z /= (double) f2;
+		x /= f2;
+		y /= f2;
+		z /= f2;
 		x += this.rand.nextGaussian() * (double) (this.rand.nextBoolean() ? -1 : 1) * 0.007499999832361937D * (double) randomness;
 		y += this.rand.nextGaussian() * (double) (this.rand.nextBoolean() ? -1 : 1) * 0.007499999832361937D * (double) randomness;
 		z += this.rand.nextGaussian() * (double) (this.rand.nextBoolean() ? -1 : 1) * 0.007499999832361937D * (double) randomness;
-		x *= (double) speed;
-		y *= (double) speed;
-		z *= (double) speed;
+		x *= speed;
+		y *= speed;
+		z *= speed;
 		this.motionX = x;
 		this.motionY = y;
 		this.motionZ = z;
 		float f3 = MathHelper.sqrt(x * x + z * z);
 		this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(x, z) * 180.0D / Math.PI);
-		this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(y, (double) f3) * 180.0D / Math.PI);
+		this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(y, f3) * 180.0D / Math.PI);
 		this.ticksInGround = 0;
 	}
 
@@ -577,7 +576,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 		if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
 			float f = MathHelper.sqrt(p_70016_1_ * p_70016_1_ + p_70016_5_ * p_70016_5_);
 			this.prevRotationYaw = this.rotationYaw = (float) (Math.atan2(p_70016_1_, p_70016_5_) * 180.0D / Math.PI);
-			this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(p_70016_3_, (double) f) * 180.0D / Math.PI);
+			this.prevRotationPitch = this.rotationPitch = (float) (Math.atan2(p_70016_3_, f) * 180.0D / Math.PI);
 			this.prevRotationPitch = this.rotationPitch;
 			this.prevRotationYaw = this.rotationYaw;
 			this.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);

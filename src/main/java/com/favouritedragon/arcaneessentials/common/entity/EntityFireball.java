@@ -32,10 +32,6 @@ public class EntityFireball extends EntityMagicBolt {
 		this.burnDuration = duration;
 	}
 
-	public void setLifetime(int lifetime) {
-		this.lifetime = lifetime;
-	}
-
 	public float getSize() {
 		return dataManager.get(SYNC_SIZE);
 	}
@@ -68,6 +64,9 @@ public class EntityFireball extends EntityMagicBolt {
 		return lifetime;
 	}
 
+	public void setLifetime(int lifetime) {
+		this.lifetime = lifetime;
+	}
 
 	@Override
 	protected void entityInit() {
@@ -118,6 +117,11 @@ public class EntityFireball extends EntityMagicBolt {
 	@Override
 	protected void onBlockHit(RayTraceResult hit) {
 		super.onBlockHit(hit);
+		Explode();
+	}
+
+	@Override
+	protected void tickInGround() {
 		Explode();
 	}
 

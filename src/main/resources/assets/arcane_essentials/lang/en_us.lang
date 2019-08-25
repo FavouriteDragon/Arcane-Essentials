@@ -13,6 +13,9 @@ spell.arcane_essentials:fire_pledge.desc=BBBBBBBBBBBBBBBBBBBBBBUUUUUUUUUUUUUUUUR
 spell.arcane_essentials:frizz=Frizz
 spell.arcane_essentials:frizz.desc=Singe enemies with a small fireball.
 
+spell.arcane_essentials:frizzle=Frizzle
+spell.arcane_essentials:frizzle.desc=Burn enemies with a medium-sized fireball.
+
 spell.arcane_essentials:inferno_pillar=Inferno Pillar
 spell.arcane_essentials:inferno_pillar.desc=Create a massive flaming pillar around you! This pillar burns enemies and reflects projectiles for a couple seconds, great for protecting yourself from those pesky skeletons!
 

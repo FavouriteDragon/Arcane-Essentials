@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.MathHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -60,10 +61,55 @@ public class RenderFireball extends Render<EntityFireball> {
 			a *= 1 - (EXPANSION_TIME - entity.ticksExisted - partialTicks) / EXPANSION_TIME;
 		}
 
+		//Colour shifting;
+			float range = 0.2F;
+			float rInitial = 245 / 255F;
+			float gInitial = 0.05f;
+			float bInitial = 0;
+			float aInitial = 0.5F;
+			float red = rInitial, green = gInitial, blue = bInitial, alpha = aInitial;
+			for (int i = 0; i < 4; i++) {
+				float rMin = rInitial - range;
+				float gMin = 0;
+				float bMin = 0;
+				float aMin = aInitial - range;
+				float rMax = rInitial + range;
+				float gMax = bInitial + range;
+				float bMax = gInitial + range;
+				float aMax = aInitial + range;
+				switch (i) {
+					case 0:
+						float amountR = ArcaneUtils.getRandomNumberInRange(0,
+								(int) (100 / rMax)) / 100F * 0.05F;
+						red = entity.world.rand.nextBoolean() ? rInitial + amountR : rInitial - amountR;
+						red = MathHelper.clamp(red, rMin, rMax);
+						break;
 
-		drawSphere(radius, latStep, longStep, false, r, g, b, a * 0.85F);
-		drawSphere(radius - 0.05f, latStep, longStep, true, r1, g1, b1, a * 1F);
-		drawSphere(radius - 0.1F, latStep, longStep, true, r2, g2, b2, 2f * a);
+					case 1:
+						float amountG = ArcaneUtils.getRandomNumberInRange(0,
+								(int) (100 / gMax)) / 100F * 0.05F;
+						green = entity.world.rand.nextBoolean() ? gInitial + amountG : gInitial - amountG;
+						green = MathHelper.clamp(green, gMin, gMax);
+						break;
+
+					case 2:
+						float amountB = ArcaneUtils.getRandomNumberInRange(0,
+								(int) (100 / bMax)) / 100F * 0.05F;
+						blue = entity.world.rand.nextBoolean() ? bInitial + amountB : bInitial - amountB;
+						blue = MathHelper.clamp(blue, bMin, bMax);
+						break;
+
+					case 3:
+						float amountA = ArcaneUtils.getRandomNumberInRange(0,
+								(int) (100 / aMax)) / 100F * 0.05F;
+						alpha = entity.world.rand.nextBoolean() ? aInitial + amountA : aInitial - amountA;
+						alpha = MathHelper.clamp(alpha, aMin, aMax);
+						break;
+				}
+				drawSphere(radius, latStep, longStep, false, red, green, blue, alpha);
+			}
+		//drawSphere(radius - 0.05f, latStep, longStep, true, r1, g1, b1, a * 1F);
+		drawSphere(radius / 2, latStep, longStep, false, r2, g2, b2, 1.4f * a);
 
 		//Particles
 

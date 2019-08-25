@@ -1,4 +1,4 @@
-package com.favouritedragon.arcaneessentials.common.spell.sorcery;
+package com.favouritedragon.arcaneessentials.common.spell.arcane;
 
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
