@@ -47,5 +47,5 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 	public void despawn() {
 		super.despawn();
 	}
-	
+
 }
