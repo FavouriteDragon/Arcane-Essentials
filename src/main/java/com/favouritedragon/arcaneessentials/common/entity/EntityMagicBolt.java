@@ -103,8 +103,9 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 		//this.posY -= 0.10000000149011612D;
 		//this.posZ -= (double) (MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F);
 
+		Vec3d pos = caster.getLookVec().scale(0.75 + width / 2);
 
-		this.setPosition(this.posX + caster.getLookVec().x, this.posY + caster.getLookVec().y, this.posZ + caster.getLookVec().z);
+		this.setPosition(this.posX + pos.x, this.posY + pos.y, this.posZ + pos.z);
 
 		// yOffset was set to 0 here, but that has been replaced by getYOffset(), which returns 0 in Entity anyway.
 		this.motionX = -MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI)
@@ -332,7 +333,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
 			Entity entity = null;
 			List<?> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox()
-					.expand(this.motionX, this.motionY, this.motionZ).grow(1.0D, 1.0D, 1.0D));
+					.expand(this.motionX, this.motionY, this.motionZ).grow(0.5));
 			double d0 = 0.0D;
 			int i;
 			float f1;
@@ -376,57 +377,60 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 			if (raytraceresult != null) {
 				// If the arrow hits an entity
 				if (raytraceresult.entityHit != null && raytraceresult.entityHit != getCaster()) {
-					DamageSource damagesource = null;
+					List<Entity> hit = world.getEntitiesWithinAABB(Entity.class, getEntityBoundingBox());
+					if (!hit.isEmpty() && hit.contains(raytraceresult.entityHit)) {
+						DamageSource damagesource = null;
 
-					if (this.getCaster() == null) {
-						damagesource = DamageSource.causeThrownDamage(this, this);
-					} else {
-						damagesource = MagicDamage.causeIndirectMagicDamage(this, this.getCaster(), this.getDamageType()).setProjectile();
-					}
+						if (this.getCaster() == null) {
+							damagesource = DamageSource.causeThrownDamage(this, this);
+						} else {
+							damagesource = MagicDamage.causeIndirectMagicDamage(this, this.getCaster(), this.getDamageType()).setProjectile();
+						}
 
-					if (raytraceresult.entityHit.attackEntityFrom(damagesource,
-							(float) (this.getDamage() * this.damageMultiplier))) {
-						if (raytraceresult.entityHit instanceof EntityLivingBase) {
-							EntityLivingBase entityHit = (EntityLivingBase) raytraceresult.entityHit;
+						if (raytraceresult.entityHit.attackEntityFrom(damagesource,
+								(float) (this.getDamage() * this.damageMultiplier))) {
+							if (raytraceresult.entityHit instanceof EntityLivingBase) {
+								EntityLivingBase entityHit = (EntityLivingBase) raytraceresult.entityHit;
 
-							this.onEntityHit(entityHit);
+								this.onEntityHit(entityHit);
 
-							if (this.knockbackStrength > 0) {
-								float f4 = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
+								if (this.knockbackStrength > 0) {
+									float f4 = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
 
-								if (f4 > 0.0F) {
-									raytraceresult.entityHit.addVelocity(
-											this.motionX * (double) this.knockbackStrength * 0.6000000238418579D
-													/ (double) f4,
-											0.1D, this.motionZ * (double) this.knockbackStrength * 0.6000000238418579D
-													/ (double) f4);
+									if (f4 > 0.0F) {
+										raytraceresult.entityHit.addVelocity(
+												this.motionX * (double) this.knockbackStrength * 0.6000000238418579D
+														/ (double) f4,
+												0.1D, this.motionZ * (double) this.knockbackStrength * 0.6000000238418579D
+														/ (double) f4);
+									}
+								}
+
+								// Thorns enchantment
+								if (this.getCaster() != null) {
+									EnchantmentHelper.applyThornEnchantments(entityHit, this.getCaster());
+									EnchantmentHelper.applyArthropodEnchantments(this.getCaster(), entityHit);
+								}
+
+								if (this.getCaster() != null && raytraceresult.entityHit != this.getCaster()
+										&& raytraceresult.entityHit instanceof EntityPlayer
+										&& this.getCaster() instanceof EntityPlayerMP) {
+									((EntityPlayerMP) this.getCaster()).connection
+											.sendPacket(new SPacketChangeGameState(6, 0.0F));
 								}
 							}
 
-							// Thorns enchantment
-							if (this.getCaster() != null) {
-								EnchantmentHelper.applyThornEnchantments(entityHit, this.getCaster());
-								EnchantmentHelper.applyArthropodEnchantments(this.getCaster(), entityHit);
+							if (!(raytraceresult.entityHit instanceof EntityEnderman) && !this.doOverpenetration()) {
+								this.setDead();
 							}
+						} else {
+							if (!this.doOverpenetration()) this.setDead();
 
-							if (this.getCaster() != null && raytraceresult.entityHit != this.getCaster()
-									&& raytraceresult.entityHit instanceof EntityPlayer
-									&& this.getCaster() instanceof EntityPlayerMP) {
-								((EntityPlayerMP) this.getCaster()).connection
-										.sendPacket(new SPacketChangeGameState(6, 0.0F));
-							}
+							// Was the 'rebound' that happened when entities were immune to damage
+							/* this.motionX *= -0.10000000149011612D; this.motionY *= -0.10000000149011612D; this.motionZ *=
+							 * -0.10000000149011612D; this.rotationYaw += 180.0F; this.prevRotationYaw += 180.0F;
+							 * this.ticksInAir = 0; */
 						}
-
-						if (!(raytraceresult.entityHit instanceof EntityEnderman) && !this.doOverpenetration()) {
-							this.setDead();
-						}
-					} else {
-						if (!this.doOverpenetration()) this.setDead();
-
-						// Was the 'rebound' that happened when entities were immune to damage
-						/* this.motionX *= -0.10000000149011612D; this.motionY *= -0.10000000149011612D; this.motionZ *=
-						 * -0.10000000149011612D; this.rotationYaw += 180.0F; this.prevRotationYaw += 180.0F;
-						 * this.ticksInAir = 0; */
 					}
 				}
 				// If the arrow hits a block

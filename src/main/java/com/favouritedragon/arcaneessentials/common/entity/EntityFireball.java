@@ -94,11 +94,11 @@ public class EntityFireball extends EntityMagicBolt {
 		}
 
 		if (world.isRemote) {
-			for (int i = 0; i < 40 + getSize() * 10; i++) {
+			for (int i = 0; i < 60 - getSize(); i++) {
 				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).pos(getPositionVector()).time(10)
 						.vel(world.rand.nextGaussian() / 10 * getSize(), world.rand.nextGaussian() / 10
 								* getSize(), world.rand.nextGaussian() / 10 * getSize()).
-						scale(2F * getSize() + world.rand.nextFloat()).spawn(world);
+						scale(0.75F + getSize() / 2 + world.rand.nextFloat()).spawn(world);
 			}
 		}
 

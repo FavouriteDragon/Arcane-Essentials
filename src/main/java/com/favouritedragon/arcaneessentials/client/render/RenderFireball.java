@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -46,8 +47,8 @@ public class RenderFireball extends Render<EntityFireball> {
 		float longStep = (float) Math.PI / 20;
 
 
-		float r = 245 / 255F, g = 0.05f, b = 0;
-		float r1 = 1F, g1 = 175 / 255F, b1 = 51 / 255F;
+		//float r = 245 / 255F, g = 0.05f, b = 0;
+		//float r1 = 1F, g1 = 175 / 255F, b1 = 51 / 255F;
 		float r2 = 252 / 255F, g2 = 1F, b2 = 51 / 255F;
 
 		float radius = entity.getSize() / 2;
@@ -62,7 +63,7 @@ public class RenderFireball extends Render<EntityFireball> {
 		}
 
 		//Colour shifting;
-			float range = 0.2F;
+			float range = 0.175F;
 			float rInitial = 245 / 255F;
 			float gInitial = 0.05f;
 			float bInitial = 0;
@@ -80,28 +81,28 @@ public class RenderFireball extends Render<EntityFireball> {
 				switch (i) {
 					case 0:
 						float amountR = ArcaneUtils.getRandomNumberInRange(0,
-								(int) (100 / rMax)) / 100F * 0.05F;
+								(int) (100 / rMax)) / 100F * 0.075F;
 						red = entity.world.rand.nextBoolean() ? rInitial + amountR : rInitial - amountR;
 						red = MathHelper.clamp(red, rMin, rMax);
 						break;
 
 					case 1:
 						float amountG = ArcaneUtils.getRandomNumberInRange(0,
-								(int) (100 / gMax)) / 100F * 0.05F;
+								(int) (100 / gMax)) / 100F * 0.075F;
 						green = entity.world.rand.nextBoolean() ? gInitial + amountG : gInitial - amountG;
 						green = MathHelper.clamp(green, gMin, gMax);
 						break;
 
 					case 2:
 						float amountB = ArcaneUtils.getRandomNumberInRange(0,
-								(int) (100 / bMax)) / 100F * 0.05F;
+								(int) (100 / bMax)) / 100F * 0.075F;
 						blue = entity.world.rand.nextBoolean() ? bInitial + amountB : bInitial - amountB;
 						blue = MathHelper.clamp(blue, bMin, bMax);
 						break;
 
 					case 3:
 						float amountA = ArcaneUtils.getRandomNumberInRange(0,
-								(int) (100 / aMax)) / 100F * 0.05F;
+								(int) (100 / aMax)) / 100F * 0.025F;
 						alpha = entity.world.rand.nextBoolean() ? aInitial + amountA : aInitial - amountA;
 						alpha = MathHelper.clamp(alpha, aMin, aMax);
 						break;
@@ -113,14 +114,14 @@ public class RenderFireball extends Render<EntityFireball> {
 
 		//Particles
 
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < entity.getSize() * 10; i++) {
 			if (entity.world.isRemote) {
 				AxisAlignedBB boundingBox = entity.getEntityBoundingBox();
 				double spawnX = boundingBox.minX + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxX - boundingBox.minX);
 				double spawnY = boundingBox.minY + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxY - boundingBox.minY);
 				double spawnZ = boundingBox.minZ + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxZ - boundingBox.minZ);
-				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).vel(entity.motionX, entity.motionY, entity.motionZ).pos(spawnX, spawnY, spawnZ).collide(true)
-						.time(5).scale(entity.getSize() * 2 + entity.world.rand.nextFloat() / 2).spawn(entity.world);
+				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).vel(new Vec3d(entity.motionX, entity.motionY, entity.motionZ).scale(entity.world.rand.nextFloat() / 2))
+						.pos(spawnX, spawnY, spawnZ).collide(true).time(5).scale(0.75F + entity.getSize() / 2 + entity.world.rand.nextFloat() / 2).spawn(entity.world);
 			}
 		}
 

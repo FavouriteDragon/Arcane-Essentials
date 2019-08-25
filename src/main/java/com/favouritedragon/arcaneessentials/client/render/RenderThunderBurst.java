@@ -2,11 +2,13 @@ package com.favouritedragon.arcaneessentials.client.render;
 
 import com.favouritedragon.arcaneessentials.common.entity.EntityThunderBurst;
 import electroblob.wizardry.util.ParticleBuilder;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class RenderThunderBurst extends Render<EntityThunderBurst> {
@@ -15,9 +17,15 @@ public class RenderThunderBurst extends Render<EntityThunderBurst> {
 	}
 
 	@Override
-	public void doRender(EntityThunderBurst entity, double x, double y, double z, float entityYaw, float partialTicks) {
+	public void doRender(@Nonnull EntityThunderBurst entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
-		Vec3d prevpos = entity.getPositionVector();
+		GlStateManager.pushMatrix();
+
+		GlStateManager.enableBlend();
+		GlStateManager.disableTexture2D();
+		GlStateManager.disableLighting();
+		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
 		assert entity.getCaster() != null;
 		if (entity.ticksExisted <= 1) {
 			for (double theta = 0; theta <= 180; theta += 1) {
@@ -45,16 +53,19 @@ public class RenderThunderBurst extends Render<EntityThunderBurst> {
 			}
 
 		}
-		ParticleBuilder.create(ParticleBuilder.Type.SPHERE).time(10)
-				.pos(entity.getPositionVector().add(0, entity.getCaster().height / 2, 0)).clr(138, 255, 255)
-				.scale(entity.ticksExisted * 0.9F).spawn(entity.world);
+		RenderUtils.drawSphere(entity.ticksExisted * 0.7F, (float) Math.PI / 20, (float) Math.PI / 20, false, 138 / 255F, 1F, 1F,
+				0.55F);
+		GlStateManager.enableTexture2D();
+		GlStateManager.enableLighting();
+		GlStateManager.disableBlend();
 
+		GlStateManager.popMatrix();
 
 	}
 
 	@Nullable
 	@Override
-	protected ResourceLocation getEntityTexture(EntityThunderBurst entity) {
+	protected ResourceLocation getEntityTexture(@Nonnull EntityThunderBurst entity) {
 		return null;
 	}
 }

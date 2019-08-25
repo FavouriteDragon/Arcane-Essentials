@@ -26,7 +26,7 @@ public class InfernoPillar extends Spell {
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
-		int lifetime = getProperty(EFFECT_DURATION).intValue() * 20 * (int) modifiers.get(WizardryItems.duration_upgrade);
+		int lifetime = getProperty(EFFECT_DURATION).intValue() * 20 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade);
 		float radius = getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 		float height = getProperty(RANGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 		world.spawnEntity(new EntityFlamePillar(world, caster.posX, caster.posY, caster.posZ, caster, lifetime,
@@ -41,7 +41,7 @@ public class InfernoPillar extends Spell {
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
 		float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
-		int lifetime = getProperty(EFFECT_DURATION).intValue() * 20 * (int) modifiers.get(WizardryItems.duration_upgrade);
+		int lifetime = getProperty(EFFECT_DURATION).intValue() * 20 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade);
 		float radius = getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 		float height = getProperty(RANGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 		world.spawnEntity(new EntityFlamePillar(world, caster.posX, caster.posY, caster.posZ, caster, lifetime,

@@ -14,12 +14,18 @@ spell.arcane_essentials:frizz=Frizz
 spell.arcane_essentials:frizz.desc=Singe enemies with a small fireball.
 
 spell.arcane_essentials:frizzle=Frizzle
-spell.arcane_essentials:frizzle.desc=Burn enemies with a medium-sized fireball.
+spell.arcane_essentials:frizzle.desc=Burn enemies with a fireball.
 
 spell.arcane_essentials:inferno_pillar=Inferno Pillar
 spell.arcane_essentials:inferno_pillar.desc=Create a massive flaming pillar around you! This pillar burns enemies and reflects projectiles for a couple seconds, great for protecting yourself from those pesky skeletons!
 
-spell.arcane_essentials:kathwack=Kathwack
+spell.arcane_essentials:kafrizz=KaFrizz
+spell.arcane_essentials:kafrizz.desc=Incinerate enemies with a huge fireball!
+
+spell.arcane_essentials:kafrizzle=KaFrizzle
+spell.arcane_essentials"kafrizzle.desc=Cremate enemies with an enormous fireball!
+
+spell.arcane_essentials:kathwack=KaThwack
 spell.arcane_essentials:kathwack.desc=Unleash a wave of instantaneous death around you, dealing around 5 damage, with a 20% chance to kill any enemy standing right next to you.
 
 spell.arcane_essentials:lightning_vortex=Lightning Vortex
