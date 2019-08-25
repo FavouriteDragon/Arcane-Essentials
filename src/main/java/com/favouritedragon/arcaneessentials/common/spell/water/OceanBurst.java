@@ -43,11 +43,11 @@ public class OceanBurst extends Spell {
 
 					//Using the random function each time ensures a different number for every value, making the ability "feel" better.
 					ParticleBuilder.create(ParticleBuilder.Type.MAGIC_BUBBLE).pos(x1, y1, z1).vel(look.x * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 30
-									+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 25F,
+									+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 40F,
 							look.y * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 30
-									+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 25F,
+									+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 40F,
 							look.z * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 30
-									+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 25F)
+									+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 40F)
 							.face(caster.rotationYaw, caster.rotationPitch).spawn(world);
 				}
 		}
@@ -55,10 +55,10 @@ public class OceanBurst extends Spell {
 			Vec3d startPos = new Vec3d(caster.posX, eyepos, caster.posZ);
 			Vec3d endPos = startPos.add(caster.getLookVec().scale(mult * range));
 			ArcaneUtils.vortexEntityCollision(world, caster, null, startPos, endPos, getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(SpellModifiers.POTENCY),
-					damage, look.scale(mult / 0.6), SPLASH, true);
+					damage, look.scale(mult / 0.6 * 2), SPLASH, true);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_GENERIC_SWIM, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
-			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_ICE_LANCE_SMASH, 0.8F,
+			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_GENERIC_SPLASH, 0.8F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_FORCE_ORB_HIT, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
@@ -85,11 +85,11 @@ public class OceanBurst extends Spell {
 
 				//Using the random function each time ensures a different number for every value, making the ability "feel" better.
 				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_BUBBLE).pos(x1, y1, z1).vel(look.x * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 30
-								+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 25F,
+								+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 40F,
 						look.y * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 30
-								+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 25F,
+								+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 40F,
 						look.z * mult * ArcaneUtils.getRandomNumberInRange(1, 100) / 30
-								+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 25F)
+								+ ArcaneUtils.getRandomNumberInRange(-10, 10) / 40F)
 						.face(caster.rotationYaw, caster.rotationPitch).spawn(world);
 			}
 		}
@@ -100,7 +100,7 @@ public class OceanBurst extends Spell {
 					damage, look.scale(mult / 0.6), SPLASH, true);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_GENERIC_SWIM, SoundCategory.HOSTILE, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
-			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_ICE_LANCE_SMASH, SoundCategory.HOSTILE, 0.8F,
+			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.HOSTILE, 0.8F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
 			world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_FORCE_ARROW_HIT, SoundCategory.HOSTILE, 1.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);

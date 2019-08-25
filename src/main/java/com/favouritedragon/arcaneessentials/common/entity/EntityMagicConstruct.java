@@ -42,4 +42,10 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 	public Entity getOwner() {
 		return getCaster();
 	}
+
+	@Override
+	public void despawn() {
+		super.despawn();
+	}
+	
 }

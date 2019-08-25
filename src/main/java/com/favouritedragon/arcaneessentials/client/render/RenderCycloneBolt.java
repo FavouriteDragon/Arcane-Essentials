@@ -62,7 +62,7 @@ public class RenderCycloneBolt extends Render<EntityCycloneBolt> {
 
 		//Particles
 		ArcaneUtils.spawnSpinningDirectionalVortex(entity.world, entity.getCaster(), Vec3d.ZERO, 15, 1, 0, 72,
-				EnumParticleTypes.EXPLOSION_NORMAL, entity.getPositionVector(), new Vec3d(0.4, 0.1, 0.4), new Vec3d(entity.motionX, entity.motionY, entity.motionZ));
+				EnumParticleTypes.EXPLOSION_NORMAL, entity.getPositionVector().add(0, entity.height / 2, 0), new Vec3d(0.4, 0.1, 0.4), new Vec3d(entity.motionX, entity.motionY, entity.motionZ));
 
 
 		GlStateManager.enableTexture2D();

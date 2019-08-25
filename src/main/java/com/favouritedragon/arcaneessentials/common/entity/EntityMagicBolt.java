@@ -37,7 +37,7 @@ import java.util.UUID;
 
 public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
-	public static final double LAUNCH_Y_OFFSET = 0.1;
+	public static final double LAUNCH_Y_OFFSET = 0.2;
 	public static final int SEEKING_TIME = 15;
 
 	private int blockX = -1;
@@ -98,11 +98,12 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 		this.setLocationAndAngles(caster.posX, caster.getEntityBoundingBox().minY + (double) caster.getEyeHeight() - LAUNCH_Y_OFFSET,
 				caster.posZ, caster.rotationYaw, caster.rotationPitch);
 
-		this.posX -= (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F);
-		this.posY -= 0.10000000149011612D;
-		this.posZ -= (double) (MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F);
+		//this.posX -= (double) (MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F);
+		//this.posY -= 0.10000000149011612D;
+		//this.posZ -= (double) (MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI) * 0.16F);
 
-		this.setPosition(this.posX, this.posY, this.posZ);
+
+		this.setPosition(this.posX + caster.getLookVec().x, this.posY + caster.getLookVec().y, this.posZ + caster.getLookVec().z);
 
 		// yOffset was set to 0 here, but that has been replaced by getYOffset(), which returns 0 in Entity anyway.
 		this.motionX = (double) (-MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI)
@@ -664,7 +665,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
 	@Override
 	protected void onImpact(RayTraceResult result) {
-		if (result.entityHit instanceof EntityLivingBase) {
+		if (result.entityHit instanceof EntityLivingBase && result.entityHit != getCaster()) {
 			onEntityHit((EntityLivingBase) result.entityHit);
 		}
 	}

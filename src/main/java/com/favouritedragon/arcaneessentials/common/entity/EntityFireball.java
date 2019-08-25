@@ -76,19 +76,10 @@ public class EntityFireball extends EntityMagicBolt {
 	}
 
 	private void Explode() {
-		if (world.isRemote) {
-			for (int i = 0; i < 50; i++) {
-				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).pos(getPositionVector()).time(10)
-						.vel(world.rand.nextGaussian() / 10 * getSize(), world.rand.nextGaussian() / 10
-								* getSize(), world.rand.nextGaussian() / 10 * getSize()).
-						scale(2.5F * getSize() + world.rand.nextFloat()).spawn(world);
-			}
-		}
-
 		if (!world.isRemote) {
 			world.playSound(null, posX, posY, posZ, SoundEvents.ENTITY_GHAST_SHOOT, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
 					0.8F + world.rand.nextFloat() / 10F);
-			List<Entity> hit = world.getEntitiesWithinAABB(Entity.class, getEntityBoundingBox());
+			List<Entity> hit = world.getEntitiesWithinAABB(Entity.class, getEntityBoundingBox().grow(getSize() / 2));
 			if (!hit.isEmpty()) {
 				for (Entity target : hit) {
 					if (target != this && target != getCaster()) {
@@ -100,6 +91,15 @@ public class EntityFireball extends EntityMagicBolt {
 						}
 					}
 				}
+			}
+		}
+
+		if (world.isRemote) {
+			for (int i = 0; i < 40 + getSize() * 10; i++) {
+				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).pos(getPositionVector()).time(10)
+						.vel(world.rand.nextGaussian() / 10 * getSize(), world.rand.nextGaussian() / 10
+								* getSize(), world.rand.nextGaussian() / 10 * getSize()).
+						scale(2F * getSize() + world.rand.nextFloat()).spawn(world);
 			}
 		}
 

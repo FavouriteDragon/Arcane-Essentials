@@ -11,15 +11,15 @@
     "looting": true
   },
   "tier": "apprentice",
-  "element": "earth",
-  "type": "attack",
-  "cost": 35,
+  "element": "fire",
+  "type": "projectile",
+  "cost": 20,
   "chargeup": 0,
-  "cooldown": 80,
+  "cooldown": 60,
   "base_properties": {
-    "damage": 4,
-    "range": 4,
-    "effect_radius": 0.8,
-    "effect_strength": 1
+    "damage": 6,
+    "burn_duration": 8,
+    "range": 15,
+    "size": 2
   }
 }

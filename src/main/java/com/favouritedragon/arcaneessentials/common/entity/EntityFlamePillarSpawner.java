@@ -36,4 +36,16 @@ public class EntityFlamePillarSpawner extends EntityMagicSpawner {
 		}
 	}
 
+	@Override
+	public boolean canBeCollidedWith() {
+		return false;
+	}
+
+	@Override
+	public void setDead() {
+		super.setDead();
+		if (!world.isRemote) {
+			Thread.dumpStack();
+		}
+	}
 }
