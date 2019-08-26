@@ -19,9 +19,9 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class LightningVortex extends Spell {
+import static com.favouritedragon.arcaneessentials.common.util.ArcaneSpellProperties.SPEED;
 
-	private static final String SPEED = "speed";
+public class LightningVortex extends Spell {
 
 	public LightningVortex() {
 		super(ArcaneEssentials.MODID, "lightning_vortex", EnumAction.BOW, false);

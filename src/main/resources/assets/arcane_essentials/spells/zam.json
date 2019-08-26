@@ -10,15 +10,17 @@
     "trades": true,
     "looting": true
   },
-  "tier": "master",
+  "tier": "novice",
   "element": "necromancy",
   "type": "attack",
-  "cost": 120,
+  "cost": 10,
   "chargeup": 0,
-  "cooldown": 300,
+  "cooldown": 30,
   "base_properties": {
-    "death_chance": 20,
-    "damage": 3.5,
-    "blast_radius": 8
+    "damage": 4,
+    "life_steal": 0.4,
+    "range": 10,
+    "effect_radius": 1,
+    "effect_strength": 0.5
   }
 }

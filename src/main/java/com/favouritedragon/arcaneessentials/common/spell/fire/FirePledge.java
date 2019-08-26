@@ -27,7 +27,7 @@ public class FirePledge extends Spell {
 		if (world.getBlockState(caster.getPosition().offset(EnumFacing.DOWN)).getBlock() != Blocks.AIR && !world.isRemote) {
 			Vec3d look = caster.getLookVec();
 			float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
-			int lifetime = getProperty(EFFECT_DURATION).intValue() * (int) modifiers.get(EFFECT_DURATION);
+			int lifetime = getProperty(EFFECT_DURATION).intValue() * 20 * (int) modifiers.get(WizardryItems.duration_upgrade);
 			EntityFlamePillarSpawner spawner = new EntityFlamePillarSpawner(world, caster.posX + look.x * 0.25, caster.getEntityBoundingBox().minY, caster.posZ + look.z * 0.25, caster,
 					lifetime, damage);
 			look.scale(getProperty(RANGE).doubleValue());
@@ -46,7 +46,7 @@ public class FirePledge extends Spell {
 		if (world.getBlockState(caster.getPosition().offset(EnumFacing.DOWN)).getBlock() != Blocks.AIR && !world.isRemote) {
 			Vec3d look = caster.getLookVec();
 			float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
-			int lifetime = getProperty(EFFECT_DURATION).intValue() * (int) modifiers.get(EFFECT_DURATION);
+			int lifetime = getProperty(EFFECT_DURATION).intValue() * 20 * (int) modifiers.get(WizardryItems.duration_upgrade);
 			EntityFlamePillarSpawner spawner = new EntityFlamePillarSpawner(world, caster.posX + look.x * 0.25, caster.getEntityBoundingBox().minY, caster.posZ + look.z * 0.25, caster,
 					lifetime, damage);
 			look.scale(getProperty(RANGE).doubleValue());

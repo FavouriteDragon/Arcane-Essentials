@@ -12,10 +12,11 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
+import static com.favouritedragon.arcaneessentials.common.util.ArcaneSpellProperties.LIFETIME;
+import static com.favouritedragon.arcaneessentials.common.util.ArcaneSpellProperties.SPEED;
+
 public class CycloneBolt extends Spell {
 
-	private static final String SPEED = "speed";
-	private static final String LIFETIME = "lifetime";
 	public CycloneBolt() {
 		super(ArcaneEssentials.MODID, "cyclone_bolt", EnumAction.BOW, false);
 		addProperties(DAMAGE, SPEED, LIFETIME);

@@ -15,9 +15,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
-public class Frizzle extends Spell {
+import static com.favouritedragon.arcaneessentials.common.util.ArcaneSpellProperties.SIZE;
 
-	private static final String SIZE = "size";
+public class Frizzle extends Spell {
 
 	public Frizzle() {
 		super(ArcaneEssentials.MODID, "frizzle", EnumAction.BOW, false);

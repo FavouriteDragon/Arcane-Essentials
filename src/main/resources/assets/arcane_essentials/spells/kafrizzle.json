@@ -17,7 +17,7 @@
   "chargeup": 0,
   "cooldown": 200,
   "base_properties": {
-    "damage": 18,
+    "damage": 15,
     "burn_duration": 30,
     "range": 30,
     "size": 4

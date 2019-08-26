@@ -63,7 +63,7 @@ public class RenderFireball extends Render<EntityFireball> {
 		}
 
 		//Colour shifting;
-			float range = 0.175F;
+			float range = 0.15F;
 			float rInitial = 245 / 255F;
 			float gInitial = 0.05f;
 			float bInitial = 0;
@@ -120,7 +120,7 @@ public class RenderFireball extends Render<EntityFireball> {
 				double spawnX = boundingBox.minX + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxX - boundingBox.minX);
 				double spawnY = boundingBox.minY + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxY - boundingBox.minY);
 				double spawnZ = boundingBox.minZ + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxZ - boundingBox.minZ);
-				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).vel(new Vec3d(entity.motionX, entity.motionY, entity.motionZ).scale(entity.world.rand.nextFloat() / 2))
+				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).vel(new Vec3d(entity.motionX, entity.motionY, entity.motionZ).scale(entity.world.rand.nextFloat() / 10))
 						.pos(spawnX, spawnY, spawnZ).collide(true).time(5).scale(0.75F + entity.getSize() / 2 + entity.world.rand.nextFloat() / 2).spawn(entity.world);
 			}
 		}

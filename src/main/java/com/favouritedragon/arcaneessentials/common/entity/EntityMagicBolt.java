@@ -379,7 +379,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 				if (raytraceresult.entityHit != null && raytraceresult.entityHit != getCaster()) {
 					List<Entity> hit = world.getEntitiesWithinAABB(Entity.class, getEntityBoundingBox());
 					if (!hit.isEmpty() && hit.contains(raytraceresult.entityHit)) {
-						DamageSource damagesource = null;
+						DamageSource damagesource;
 
 						if (this.getCaster() == null) {
 							damagesource = DamageSource.causeThrownDamage(this, this);
@@ -430,6 +430,59 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 							/* this.motionX *= -0.10000000149011612D; this.motionY *= -0.10000000149011612D; this.motionZ *=
 							 * -0.10000000149011612D; this.rotationYaw += 180.0F; this.prevRotationYaw += 180.0F;
 							 * this.ticksInAir = 0; */
+						}
+					}
+					if (!hit.isEmpty()) {
+						hit.remove(raytraceresult.entityHit);
+						for (Entity e : hit) {
+							if (AllyDesignationSystem.isValidTarget(this, e) && e != getCaster()) {
+								DamageSource damagesource;
+
+								if (this.getCaster() == null) {
+									damagesource = DamageSource.causeThrownDamage(this, this);
+								} else {
+									damagesource = MagicDamage.causeIndirectMagicDamage(this, this.getCaster(), this.getDamageType()).setProjectile();
+								}
+
+								if (e.attackEntityFrom(damagesource,
+										(float) (this.getDamage() * this.damageMultiplier))) {
+									if (e instanceof EntityLivingBase) {
+
+										this.onEntityHit((EntityLivingBase) e);
+
+										if (this.knockbackStrength > 0) {
+											float f4 = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
+
+											if (f4 > 0.0F) {
+												raytraceresult.entityHit.addVelocity(
+														this.motionX * (double) this.knockbackStrength * 0.6000000238418579D
+																/ (double) f4,
+														0.1D, this.motionZ * (double) this.knockbackStrength * 0.6000000238418579D
+																/ (double) f4);
+											}
+										}
+
+										// Thorns enchantment
+										if (this.getCaster() != null) {
+											EnchantmentHelper.applyThornEnchantments((EntityLivingBase) e, this.getCaster());
+											EnchantmentHelper.applyArthropodEnchantments(this.getCaster(), e);
+										}
+
+										if (this.getCaster() != null && e != this.getCaster()
+												&& e instanceof EntityPlayer
+												&& this.getCaster() instanceof EntityPlayerMP) {
+											((EntityPlayerMP) this.getCaster()).connection
+													.sendPacket(new SPacketChangeGameState(6, 0.0F));
+										}
+									}
+
+									if (!(e instanceof EntityEnderman) && !this.doOverpenetration()) {
+										this.setDead();
+									}
+								} else {
+									if (!this.doOverpenetration()) this.setDead();
+								}
+							}
 						}
 					}
 				}
@@ -638,6 +691,14 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 		if (buffer.isReadable()) this.caster = new WeakReference<>(
 				(EntityLivingBase) this.world.getEntityByID(buffer.readInt()));
 	}
+
+	@Override
+	public boolean isInRangeToRenderDist(double distance) {
+		return true;
+	}
+
+	@SideOnly(Side.CLIENT)
+
 
 	// Miscellaneous overrides
 

@@ -86,6 +86,7 @@ public class EntityFireball extends EntityMagicBolt {
 							target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(getCaster(),
 									getDamageType()), (float) getDamage() * 0.4F);
 							target.addVelocity(motionX / 4, motionY / 4, motionZ / 4);
+							target.setFire(burnDuration);
 							ArcaneUtils.applyPlayerKnockback(target);
 						}
 					}
@@ -101,36 +102,37 @@ public class EntityFireball extends EntityMagicBolt {
 						scale(0.75F + getSize() / 2 + world.rand.nextFloat()).spawn(world);
 			}
 		}
+		this.isDead = true;
+	}
 
-		setDead();
+	@Override
+	public void setDead() {
+		Explode();
+		super.setDead();
 	}
 
 	@Override
 	protected void onEntityHit(EntityLivingBase entityHit) {
 		super.onEntityHit(entityHit);
 		if (entityHit != getCaster()) {
-			entityHit.setFire(burnDuration);
-			Explode();
+			setDead();
 		}
 	}
 
 	@Override
 	protected void onBlockHit(RayTraceResult hit) {
 		super.onBlockHit(hit);
-		Explode();
+		setDead();
 	}
 
 	@Override
 	protected void tickInGround() {
-		Explode();
+		setDead();
 	}
 
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if (ticksExisted >= getLifetime() && !world.isRemote) {
-			Explode();
-		}
 		setSize(getSize(), getSize());
 	}
 }
