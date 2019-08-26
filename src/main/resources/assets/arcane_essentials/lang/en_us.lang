@@ -52,5 +52,11 @@ spell.arcane_essentials:thunder_burst.desc=Unleash a shockwave of raw lightning 
 spell.arcane_essentials:whirlpool=Whirlpool
 spell.arcane_essentials:whirlpool.desc=Create a swirling vortex of water where you're looking within a couple blocks, OR around you! Draws enemies inwards and slowly damanges them- great for trapping mobs for EXPLOSIONS!
 
+spell.arcane_essentials:zam=Zam
+spell.arcane_essentials:zam.desc=Burn enemies with a small bolt of darkness.
+
+spell.arcane_essentials:kazammle=KaZammle
+spell.arcane_essentials:kazammle.desc=Utterly obliterate enemies with stygian thunder from the depths of hell!
+
 element.water=Water
 element.air=Air

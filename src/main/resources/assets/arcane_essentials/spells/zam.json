@@ -18,9 +18,9 @@
   "cooldown": 30,
   "base_properties": {
     "damage": 4,
-    "life_steal": 0.4,
-    "range": 10,
-    "effect_radius": 1,
-    "effect_strength": 0.5
+    "life_steal": 0.3,
+    "range": 9,
+    "effect_radius": 0.5,
+    "effect_strength": 0.75
   }
 }
