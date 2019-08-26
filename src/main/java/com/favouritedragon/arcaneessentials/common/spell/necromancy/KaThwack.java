@@ -3,6 +3,7 @@ package com.favouritedragon.arcaneessentials.common.spell.necromancy;
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardryItems;
+import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.*;
 import net.minecraft.block.Block;
@@ -105,9 +106,16 @@ public class KaThwack extends Spell {
 			}
 
 		}
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_SHADOW_WRAITH_HURT, WizardrySounds.SPELLS,
+				1.0F + world.rand.nextFloat(), 0.8F + world.rand.nextFloat() / 10F, false);
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_DARKNESS_ORB_HIT, WizardrySounds.SPELLS,
+				1.0F + world.rand.nextFloat(), 0.8F + world.rand.nextFloat() / 10F, false);
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_SHADOW_WRAITH_DEATH, WizardrySounds.SPELLS,
+				1.3F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10F, false);
 
 		caster.swingArm(hand);
 		playSound(world, caster, ticksInUse, -1, modifiers);
 		return true;
 	}
+
 }

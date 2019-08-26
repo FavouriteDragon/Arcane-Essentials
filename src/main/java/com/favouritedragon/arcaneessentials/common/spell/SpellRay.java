@@ -32,7 +32,7 @@ public abstract class SpellRay extends electroblob.wizardry.spell.SpellRay {
 		Vec3d endpoint = origin.add(direction.scale(range));
 
 		// Change the filter depending on whether living entities are ignored or not
-		RayTraceResult rayTrace = RayTracer.rayTrace(world, origin, endpoint, (getProperty(EFFECT_RADIUS).floatValue() * 2 * modifiers.get(SpellModifiers.POTENCY)) - 1, hitLiquids,
+		RayTraceResult rayTrace = RayTracer.rayTrace(world, origin, endpoint, getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(SpellModifiers.POTENCY), hitLiquids,
 				ignoreUncollidables, false, Entity.class, ignoreLivingEntities ? WizardryUtilities::isLiving
 						: RayTracer.ignoreEntityFilter(caster));
 

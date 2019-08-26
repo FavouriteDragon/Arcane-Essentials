@@ -9,6 +9,7 @@ import com.favouritedragon.arcaneessentials.common.spell.earth.SolarBeam;
 import com.favouritedragon.arcaneessentials.common.spell.fire.*;
 import com.favouritedragon.arcaneessentials.common.spell.ice.BlizzardBeam;
 import com.favouritedragon.arcaneessentials.common.spell.necromancy.KaThwack;
+import com.favouritedragon.arcaneessentials.common.spell.necromancy.KaZammle;
 import com.favouritedragon.arcaneessentials.common.spell.necromancy.Zam;
 import com.favouritedragon.arcaneessentials.common.spell.storm.LightningVortex;
 import com.favouritedragon.arcaneessentials.common.spell.storm.StormBlink;
@@ -95,6 +96,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new KaFrizz());
 		event.getRegistry().register(new KaFrizzle());
 		event.getRegistry().register(new KaThwack());
+		event.getRegistry().register(new KaZammle());
 		event.getRegistry().register(new LightningVortex());
 		event.getRegistry().register(new OceanBurst());
 		event.getRegistry().register(new RadianceStorm());

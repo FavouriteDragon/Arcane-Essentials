@@ -22,7 +22,7 @@ public class Zam extends SpellRay {
 
 	public Zam() {
 		super(ArcaneEssentials.MODID, "zam", false, EnumAction.BOW);
-		addProperties(DAMAGE, LIFE_STEAL, EFFECT_RADIUS, EFFECT_STRENGTH);
+		addProperties(DAMAGE, LIFE_STEAL, EFFECT_STRENGTH);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class Zam extends SpellRay {
 						float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 						if (target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER), damage)) {
 							caster.heal(getProperty(LIFE_STEAL).floatValue() * damage * modifiers.get(SpellModifiers.POTENCY));
-							Vec3d vel = hit.subtract(origin).scale(0.25 * getProperty(EFFECT_STRENGTH).doubleValue()).add(0, 0.15F, 0);
+							Vec3d vel = hit.subtract(origin).scale(0.25 * getProperty(EFFECT_STRENGTH).doubleValue()).add(0, 0.125F, 0);
 							target.addVelocity(vel.x, vel.y, vel.z);
 							world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_LIGHTNING_DISC_HIT, WizardrySounds.SPELLS,
 									0.8F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10F, false);
