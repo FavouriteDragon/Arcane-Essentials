@@ -8,9 +8,7 @@ import com.favouritedragon.arcaneessentials.common.spell.divine.RadiantBeam;
 import com.favouritedragon.arcaneessentials.common.spell.earth.SolarBeam;
 import com.favouritedragon.arcaneessentials.common.spell.fire.*;
 import com.favouritedragon.arcaneessentials.common.spell.ice.BlizzardBeam;
-import com.favouritedragon.arcaneessentials.common.spell.necromancy.KaThwack;
-import com.favouritedragon.arcaneessentials.common.spell.necromancy.KaZammle;
-import com.favouritedragon.arcaneessentials.common.spell.necromancy.Zam;
+import com.favouritedragon.arcaneessentials.common.spell.necromancy.*;
 import com.favouritedragon.arcaneessentials.common.spell.storm.LightningVortex;
 import com.favouritedragon.arcaneessentials.common.spell.storm.StormBlink;
 import com.favouritedragon.arcaneessentials.common.spell.storm.ThunderBurst;
@@ -96,6 +94,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new KaFrizz());
 		event.getRegistry().register(new KaFrizzle());
 		event.getRegistry().register(new KaThwack());
+		event.getRegistry().register(new KaZam());
 		event.getRegistry().register(new KaZammle());
 		event.getRegistry().register(new LightningVortex());
 		event.getRegistry().register(new OceanBurst());
@@ -106,6 +105,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new ThunderBurst());
 		event.getRegistry().register(new Whirlpool());
 		event.getRegistry().register(new Zam());
+		event.getRegistry().register(new Zammle());
 
 	}
 }

@@ -20,7 +20,7 @@
     "damage": 19,
     "life_steal": 0.8,
     "range": 35,
-    "effect_radius": 3,
-    "effect_strength": 2
+    "effect_radius": 1.75,
+    "effect_strength": 5
   }
 }

@@ -679,6 +679,87 @@ public class ArcaneUtils {
 
 	}
 
+	//This method is like the piercing method, except it just stops.
+	/**
+	 * @param world        The world the raytrace is in.
+	 * @param caster       The caster of the spell. This is so mobs don't attack each other when you use raytraces from mobs.
+	 *                     All damage is done by the caster.
+	 * @param startPos     Where the raytrace starts.
+	 * @param endPos       Where the raytrace ends.
+	 * @param borderSize   The width of the raytrace.
+	 * @param spellEntity  The entity that's using this method, if applicable. If this method is directly used in a spell, just make this null.
+	 * @param directDamage If the damage caused should be direct or not. Set to true if this method is directly used by the caster in a spell.
+	 * @param damageType   The damagetype of the damage.
+	 * @param damage       The amount of damage.
+	 * @param knockBack    The amount of knockback.
+	 * @param fireTime     How long to set an enemy on fire.
+	 * @param lifeSteal    The percent of damage to heal the caster by. Between 0 and 1.
+	 */
+
+	public static void handleBeamCollision(World world, EntityLivingBase caster, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, boolean directDamage, MagicDamage.DamageType damageType,
+												   float damage, Vec3d knockBack, boolean invulnerable, int fireTime, float radius, float lifeSteal,
+												   Predicate<? super Entity> filter) {
+		filter = filter.or(e -> e == caster);
+		if (spellEntity != null) {
+			filter = filter.or(e -> e == spellEntity);
+		}
+
+		RayTraceResult result = standardEntityRayTrace(world, startPos, endPos, filter, false, borderSize, true, false);
+
+		if (result != null && result.entityHit instanceof EntityLivingBase && !filter.test(result.entityHit)) {
+			EntityLivingBase hit = (EntityLivingBase) result.entityHit;
+			if (!MagicDamage.isEntityImmune(damageType, hit)) {
+				hit.setFire(fireTime);
+				caster.heal(damage * lifeSteal);
+				if (directDamage) {
+					hit.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, damageType), damage);
+				} else if (spellEntity != null) {
+					hit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(spellEntity, caster, damageType), damage);
+
+				}
+				Vec3d kM = endPos.subtract(startPos).scale(.01);
+				hit.motionX += knockBack.x * kM.x;
+				hit.motionY += knockBack.y * kM.y;
+				hit.motionZ += knockBack.z * kM.z;
+				hit.setEntityInvulnerable(invulnerable);
+				applyPlayerKnockback(hit);
+				filter = filter.or(e -> e == hit);
+			}
+			Vec3d pos = hit.getPositionVector().add(0, hit.getEyeHeight(), 0);
+			AxisAlignedBB hitBox = new AxisAlignedBB(pos.x + radius, pos.y + radius, pos.z + radius, pos.x - radius, pos.y - radius, pos.z - radius);
+			List<Entity> nearby = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
+			nearby.removeIf(filter);
+			//This is so it doesn't count the entity that was hit by the raytrace and mess up the chain
+			if (!nearby.isEmpty()) {
+				for (Entity secondHit : nearby) {
+					if (secondHit != caster && secondHit != hit && secondHit.getTeam() != caster.getTeam()) {
+						if (!MagicDamage.isEntityImmune(damageType, secondHit)) {
+							secondHit.setFire(fireTime);
+							if (directDamage) {
+								secondHit.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, damageType), damage);
+							} else if (spellEntity != null) {
+								secondHit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(spellEntity, caster, damageType), damage);
+							}
+							secondHit.motionX += knockBack.x;
+							secondHit.motionY += knockBack.y;
+							secondHit.motionZ += knockBack.z;
+							applyPlayerKnockback(secondHit);
+							filter = filter.or(e -> e == secondHit);
+						}
+					}
+					if (secondHit.getTeam() == caster.getTeam()) {
+						if (damageType == MagicDamage.DamageType.RADIANT) {
+							if (secondHit instanceof EntityLivingBase) {
+								((EntityLivingBase) secondHit).heal(damage);
+							}
+						}
+					}
+				}
+			}
+
+		}
+	}
+
 	/**
 	 * Method for ray tracing entities (the useless default method doesn't work, despite EnumHitType having an ENTITY
 	 * field...) You can also use this for seeking.

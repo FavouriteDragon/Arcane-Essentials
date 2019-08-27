@@ -10,17 +10,17 @@
     "trades": true,
     "looting": true
   },
-  "tier": "novice",
+  "tier": "apprentice",
   "element": "necromancy",
   "type": "attack",
-  "cost": 15,
+  "cost": 35,
   "chargeup": 0,
-  "cooldown": 40,
+  "cooldown": 65,
   "base_properties": {
-    "damage": 4,
-    "life_steal": 0.3,
-    "range": 10,
-    "effect_radius": 0.5,
-    "effect_strength": 0.75
+    "damage": 9,
+    "life_steal": 0.4,
+    "range": 18,
+    "effect_radius": 1,
+    "effect_strength": 1.5
   }
 }
