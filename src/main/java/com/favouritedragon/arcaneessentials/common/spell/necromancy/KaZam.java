@@ -76,7 +76,7 @@ public class KaZam extends SpellRay {
 		if (world.isRemote) {
 			Vec3d endPos = origin.add(direction.scale(distance));
 			ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING, caster).pos(origin).
-					target(endPos).clr(33, 0, 71).scale(getProperty(EFFECT_RADIUS).floatValue() * 4.5F).time(8).spawn(world);
+					target(endPos).clr(33, 0, 71).scale(getProperty(EFFECT_RADIUS).floatValue() * 4).time(8).spawn(world);
 			for (int i = 0; i < 2; i++) {
 				ParticleBuilder.create(ParticleBuilder.Type.SPHERE).pos(endPos).time(18).
 						clr(33, 0, 71).scale(getProperty(EFFECT_RADIUS).floatValue()).spawn(world);

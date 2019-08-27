@@ -2,6 +2,7 @@ package com.favouritedragon.arcaneessentials.common.spell.necromancy;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.spell.SpellRay;
+import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
@@ -37,6 +38,9 @@ public class Zammle extends SpellRay {
 						if (target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER), damage)) {
 							caster.heal(getProperty(LIFE_STEAL).floatValue() * damage * modifiers.get(SpellModifiers.POTENCY));
 							Vec3d vel = hit.subtract(origin).scale(modifiers.get(WizardryItems.blast_upgrade) * getProperty(EFFECT_STRENGTH).doubleValue()).add(0, 0.125F, 0);
+							if (ArcaneUtils.getMagnitude(vel) >= getProperty(EFFECT_STRENGTH).doubleValue() * 1.5) {
+								vel = vel.normalize().scale(getProperty(EFFECT_STRENGTH).doubleValue() * modifiers.get(WizardryItems.blast_upgrade));
+							}
 							target.addVelocity(vel.x, vel.y, vel.z);
 							world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_LIGHTNING_DISC_HIT, WizardrySounds.SPELLS,
 									1F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10F, false);
@@ -75,7 +79,7 @@ public class Zammle extends SpellRay {
 		if (world.isRemote) {
 			Vec3d endPos = origin.add(direction.scale(distance));
 			ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING, caster).pos(origin).
-					target(endPos).clr(33, 0, 71).scale(getProperty(EFFECT_RADIUS).floatValue() * 3).time(8).spawn(world);
+					target(endPos).clr(33, 0, 71).scale(getProperty(EFFECT_RADIUS).floatValue() * 2.5F).time(8).spawn(world);
 			for (int i = 0; i < 40; i++)
 				ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(endPos).clr(33, 0, 71)
 						.scale(getProperty(EFFECT_RADIUS).floatValue() * 2).time(18).vel(world.rand.nextGaussian() / 5, world.rand.nextGaussian() / 5,
