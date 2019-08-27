@@ -28,6 +28,12 @@ spell.arcane_essentials"kafrizzle.desc=Cremate enemies with an enormous fireball
 spell.arcane_essentials:kathwack=KaThwack
 spell.arcane_essentials:kathwack.desc=Unleash a wave of instantaneous death around you, dealing around 5 damage, with a 20% chance to kill any enemy standing right next to you.
 
+spell.arcane_essentials:kazam=KaZam
+spell.arcane_essentials:kazam.desc=Smite enemies with lightning born from lost souls!
+
+spell.arcane_essentials:kazammle=KaZammle
+spell.arcane_essentials:kazammle.desc=Utterly obliterate enemies with stygian thunder from the depths of hell!
+
 spell.arcane_essentials:lightning_vortex=Lightning Vortex
 spell.arcane_essentials:lightning_vortex.desc=Create a spinning vortex of lightning where you're looking! Lasts about 5 seconds, and sets enemies on fire!
 
@@ -55,8 +61,10 @@ spell.arcane_essentials:whirlpool.desc=Create a swirling vortex of water where y
 spell.arcane_essentials:zam=Zam
 spell.arcane_essentials:zam.desc=Burn enemies with a small bolt of darkness.
 
-spell.arcane_essentials:kazammle=KaZammle
-spell.arcane_essentials:kazammle.desc=Utterly obliterate enemies with stygian thunder from the depths of hell!
+spell.arcane_essentials:zammle=Zammle
+spell.arcane_essentials:zammle.desc=Strike enemies with black lightning!
+
+
 
 element.water=Water
 element.air=Air
