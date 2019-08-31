@@ -3,17 +3,16 @@ package com.favouritedragon.arcaneessentials.common.util;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.RayTracer;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -145,8 +144,7 @@ public class ArcaneUtils {
 				pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
 				if (r == -1 && g == -1 && b == -1) {
 					ParticleBuilder.create(particle).pos(pos.add(position).add(direction)).vel(pVel.add(entitySpeed)).time(maxAge).spawn(world);
-				}
-				else {
+				} else {
 					ParticleBuilder.create(particle).pos(pos.add(position).add(direction)).
 							clr(r, g, b).vel(pVel.add(entitySpeed)).time(maxAge).spawn(world);
 				}
@@ -322,8 +320,7 @@ public class ArcaneUtils {
 				if (r == -1 && g == -1 && b == -1) {
 					ParticleBuilder.create(particle).pos(pos.x + position.x + direction.x, pos.y + position.y + direction.y,
 							pos.z + position.z + direction.z).vel(particleSpeed).time(maxAge).spawn(world);
-				}
-				else {
+				} else {
 					ParticleBuilder.create(particle).pos(pos.x + position.x + direction.x, pos.y + position.y + direction.y,
 							pos.z + position.z + direction.z).vel(particleSpeed).time(maxAge).clr(r, g, b).spawn(world);
 				}
@@ -680,6 +677,7 @@ public class ArcaneUtils {
 	}
 
 	//This method is like the piercing method, except it just stops.
+
 	/**
 	 * @param world        The world the raytrace is in.
 	 * @param caster       The caster of the spell. This is so mobs don't attack each other when you use raytraces from mobs.
@@ -697,8 +695,8 @@ public class ArcaneUtils {
 	 */
 
 	public static void handleBeamCollision(World world, EntityLivingBase caster, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, boolean directDamage, MagicDamage.DamageType damageType,
-												   float damage, Vec3d knockBack, boolean invulnerable, int fireTime, float radius, float lifeSteal,
-												   Predicate<? super Entity> filter) {
+										   float damage, Vec3d knockBack, boolean invulnerable, int fireTime, float radius, float lifeSteal,
+										   Predicate<? super Entity> filter) {
 		filter = filter.or(e -> e == caster);
 		if (spellEntity != null) {
 			filter = filter.or(e -> e == spellEntity);
@@ -837,6 +835,55 @@ public class ArcaneUtils {
 	//Pretty performance heavy
 	public static double getMagnitude(Vec3d vector) {
 		return Math.sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
+	}
+
+	//Copied from the original method, except it doesn't spawn particles
+	public static boolean attemptTeleport(EntityLivingBase entity, double x, double y, double z) {
+		double d0 = entity.posX;
+		double d1 = entity.posY;
+		double d2 = entity.posZ;
+		entity.posX = x;
+		entity.posY = y;
+		entity.posZ = z;
+		boolean flag = false;
+		BlockPos blockpos = new BlockPos(entity);
+		World world = entity.world;
+
+		if (world.isBlockLoaded(blockpos)) {
+			boolean flag1 = false;
+
+			while (!flag1 && blockpos.getY() > 0) {
+				BlockPos blockpos1 = blockpos.down();
+				IBlockState iblockstate = world.getBlockState(blockpos1);
+
+				if (iblockstate.getMaterial().blocksMovement()) {
+					flag1 = true;
+				} else {
+					--entity.posY;
+					blockpos = blockpos1;
+				}
+			}
+
+			if (flag1) {
+				entity.setPositionAndUpdate(entity.posX, entity.posY, entity.posZ);
+
+				if (world.getCollisionBoxes(entity, entity.getEntityBoundingBox()).isEmpty() && !world.containsAnyLiquid(entity.getEntityBoundingBox())) {
+					flag = true;
+				}
+			}
+		}
+
+		if (!flag) {
+			entity.setPositionAndUpdate(d0, d1, d2);
+			return false;
+		} else {
+
+			if (entity instanceof EntityCreature) {
+				((EntityCreature) entity).getNavigator().clearPath();
+			}
+
+			return true;
+		}
 	}
 }
 
