@@ -2,6 +2,7 @@ package com.favouritedragon.arcaneessentials.common.spell.fire;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityFlamePillar;
+import com.favouritedragon.arcaneessentials.common.spell.IArcaneSpell;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
@@ -16,7 +17,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
-public class InfernoPillar extends Spell {
+public class InfernoPillar extends Spell implements IArcaneSpell {
 
 	public InfernoPillar() {
 			super(ArcaneEssentials.MODID, "inferno_pillar", EnumAction.BOW, false);
@@ -57,6 +58,11 @@ public class InfernoPillar extends Spell {
 
 	@Override
 	public boolean canBeCastByNPCs() {
+		return true;
+	}
+
+	@Override
+	public boolean isShieldCastable() {
 		return true;
 	}
 }

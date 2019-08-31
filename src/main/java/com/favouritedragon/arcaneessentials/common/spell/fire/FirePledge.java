@@ -2,6 +2,7 @@ package com.favouritedragon.arcaneessentials.common.spell.fire;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityFlamePillarSpawner;
+import com.favouritedragon.arcaneessentials.common.spell.IArcaneSpell;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
@@ -15,7 +16,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class FirePledge extends Spell {
+public class FirePledge extends Spell implements IArcaneSpell {
 
 	public FirePledge() {
 		super(ArcaneEssentials.MODID, "fire_pledge", EnumAction.BOW, false);
@@ -61,6 +62,11 @@ public class FirePledge extends Spell {
 
 	@Override
 	public boolean canBeCastByNPCs() {
+		return true;
+	}
+
+	@Override
+	public boolean isAxeCastable() {
 		return true;
 	}
 }

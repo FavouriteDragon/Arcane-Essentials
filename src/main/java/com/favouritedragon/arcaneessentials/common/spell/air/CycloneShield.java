@@ -58,4 +58,9 @@ public class CycloneShield extends Spell implements IArcaneSpell {
 	public boolean canBeCastByNPCs() {
 		return true;
 	}
+
+	@Override
+	public boolean isShieldCastable() {
+		return true;
+	}
 }

@@ -13,4 +13,8 @@ public interface IArcaneSpell {
 	default boolean isAxeCastable() {
 		return false;
 	}
+
+	default boolean isShieldCastable() {
+		return false;
+	}
 }

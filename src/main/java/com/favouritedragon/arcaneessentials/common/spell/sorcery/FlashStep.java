@@ -29,5 +29,8 @@ public class FlashStep extends Spell implements IArcaneSpell {
 		return false;
 	}
 
-
+	@Override
+	public boolean isSwordCastable() {
+		return true;
+	}
 }
