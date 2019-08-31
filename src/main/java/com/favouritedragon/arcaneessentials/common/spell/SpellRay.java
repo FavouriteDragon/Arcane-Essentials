@@ -68,5 +68,7 @@ public abstract class SpellRay extends electroblob.wizardry.spell.SpellRay imple
 		return true;
 	}
 
+
+
 	public abstract void playSound(World world, EntityLivingBase caster);
 }

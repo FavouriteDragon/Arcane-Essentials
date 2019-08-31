@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.item.weapon;
 
+import com.favouritedragon.arcaneessentials.common.util.SpellUtils;
 import com.google.common.collect.Multimap;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Constants;
@@ -47,6 +48,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
+
+import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SWORDS;
 
 public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellCastingItem, IManaStoringItem {
 
@@ -187,6 +190,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 		}
 	}
 
+	//Change for a sword
 	@Override
 	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
 
@@ -216,10 +220,6 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 		return true;
 	}
 
-	@Override
-	public boolean canDestroyBlockInCreative(World world, BlockPos pos, ItemStack stack, EntityPlayer player) {
-		return WandHelper.getUpgradeLevel(stack, WizardryItems.melee_upgrade) == 0;
-	}
 
 	// A proper hook was introduced for this in Forge build 14.23.5.2805 - Hallelujah, finally!
 	// The discussion about this was quite interesting, see the following:
@@ -403,6 +403,8 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 
 		// ...and the wand has enough mana to cast the spell...
 		return cost <= this.getMana(stack) // This comes first because it changes over time
+				//and the spell is compatible with a sword
+				&& SpellUtils.isSwordCastable(spell)
 				// ...and either the spell is not in cooldown or the player is in creative mode
 				&& (WandHelper.getCurrentCooldown(stack) == 0 || caster.isCreative());
 	}
@@ -596,36 +598,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 
 		// Upgrades wand if necessary. Damage is copied, preserving remaining durability,
 		// and also the entire NBT tag compound.
-		if (upgrade.getStack().getItem() == WizardryItems.arcane_tome) {
-
-			Tier tier = Tier.values()[upgrade.getStack().getItemDamage()];
-
-			// Checks the wand upgrade is for the tier above the wand's tier, and that either the wand has enough
-			// progression or the player is in creative mode.
-			// It is guaranteed that: this == centre.getStack().getItem()
-			if ((player.isCreative() || Wizardry.settings.legacyWandLevelling
-					|| WandHelper.getProgression(centre.getStack()) >= tier.progression)) {
-
-				// We're not carrying over excess progression for now, but if we do want to, this is how
-//				if(!Wizardry.settings.legacyWandLevelling){
-//					// Easy way to carry excess progression over to the new stack
-//					WandHelper.setProgression(centre.getStack(), WandHelper.getProgression(centre.getStack()) - tier.progression);
-//				}
-
-				ItemStack newWand = new ItemStack(WizardryItems.getWand(tier, this.element));
-				newWand.setTagCompound(centre.getStack().getTagCompound());
-				// This needs to be done after copying the tag compound so the mana capacity for the new wand
-				// takes storage upgrades into account
-				// Note the usage of the new wand item and not 'this' to ensure the correct capacity is used
-				((IManaStoringItem) newWand.getItem()).setMana(newWand, this.getMana(centre.getStack()));
-
-				centre.putStack(newWand);
-				upgrade.decrStackSize(1);
-
-				changed = true;
-			}
-
-		} else if (WandHelper.isWandUpgrade(upgrade.getStack().getItem())) {
+		if (WandHelper.isWandUpgrade(upgrade.getStack().getItem())) {
 
 			// Special upgrades
 			Item specialUpgrade = upgrade.getStack().getItem();
@@ -694,14 +667,16 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 
 				Spell spell = Spell.byMetadata(spellBooks[i].getStack().getItemDamage());
 				// If the wand is powerful enough for the spell, it's not already bound to that slot and it's enabled for wands
-				if (spells[i] != spell && spell.isEnabled(SpellProperties.Context.WANDS)) {
+				if (spells[i] != spell && SpellUtils.isSwordCastable(spell)) {
 					spells[i] = spell;
 					changed = true;
 				}
 			}
 		}
 
-		WandHelper.setSpells(centre.getStack(), spells);
+		if (SpellUtils.isSwordCastable(spells[1])) {
+			WandHelper.setSpells(centre.getStack(), spells);
+		}
 
 		// Charges wand by appropriate amount
 		if (crystals.getStack() != ItemStack.EMPTY && !this.isManaFull(centre.getStack())) {
