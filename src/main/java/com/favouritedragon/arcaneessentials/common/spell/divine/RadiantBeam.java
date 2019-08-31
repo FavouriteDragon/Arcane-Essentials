@@ -1,6 +1,7 @@
 package com.favouritedragon.arcaneessentials.common.spell.divine;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
+import com.favouritedragon.arcaneessentials.common.spell.IArcaneSpell;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
@@ -14,7 +15,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class RadiantBeam extends Spell {
+public class RadiantBeam extends Spell implements IArcaneSpell {
 
 	public RadiantBeam() {
 		super(ArcaneEssentials.MODID, "radiant_beam", EnumAction.BOW, false);
@@ -112,4 +113,8 @@ public class RadiantBeam extends Spell {
 		return true;
 	}
 
+	@Override
+	public boolean isSwordCastable() {
+		return true;
+	}
 }

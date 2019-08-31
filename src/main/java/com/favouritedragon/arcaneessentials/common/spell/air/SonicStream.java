@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.spell.air;
 
+import com.favouritedragon.arcaneessentials.common.spell.IArcaneSpell;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.SpellType;
 import electroblob.wizardry.constants.Tier;
@@ -10,7 +11,7 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public class SonicStream extends Spell {
+public class SonicStream extends Spell implements IArcaneSpell {
 
 	public SonicStream(String name, EnumAction action, boolean isContinuous) {
 		super(name, action, isContinuous);

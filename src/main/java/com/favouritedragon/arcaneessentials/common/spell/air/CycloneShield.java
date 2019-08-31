@@ -2,6 +2,7 @@ package com.favouritedragon.arcaneessentials.common.spell.air;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityCycloneShield;
+import com.favouritedragon.arcaneessentials.common.spell.IArcaneSpell;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
@@ -14,7 +15,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
-public class CycloneShield extends Spell {
+public class CycloneShield extends Spell implements IArcaneSpell {
 	public CycloneShield() {
 		super(ArcaneEssentials.MODID, "cyclone_shield", EnumAction.BOW, false);
 		addProperties(EFFECT_DURATION, DAMAGE, EFFECT_RADIUS);

@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public abstract class SpellRay extends electroblob.wizardry.spell.SpellRay {
+public abstract class SpellRay extends electroblob.wizardry.spell.SpellRay implements IArcaneSpell {
 
 	public SpellRay(String name, boolean isContinuous, EnumAction action) {
 		super(name, isContinuous, action);

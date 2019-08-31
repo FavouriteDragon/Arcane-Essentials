@@ -264,7 +264,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 		return 72000;
 	}
 
-	@SideOnly(Side.CLIENT)
+	/*@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> text, net.minecraft.client.util.ITooltipFlag advanced){
 
@@ -300,8 +300,9 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 //			ChargeStatus status = ChargeStatus.getChargeStatus(stack);
 //			text.add(status.getFormattingCode() + status.getDisplayName());
 		}
-	}
+	}**/
 
+	@Nonnull
 	@Override
 	public String getItemStackDisplayName(ItemStack stack){
 		return (this.element == null ? "" : this.element.getFormattingCode()) + super.getItemStackDisplayName(stack);
@@ -311,8 +312,9 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 	/* An important thing to note about this method: it is only called on the server and the client of the player
 	 * holding the item (I call this client-inconsistency). This means if you spawn particles here they will not show up
 	 * on other players' screens. Instead, this must be done via packets. */
+	@Nonnull
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, @Nonnull EnumHand hand){
 
 		ItemStack stack = player.getHeldItem(hand);
 
@@ -390,8 +392,6 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 
 		// ...and the wand has enough mana to cast the spell...
 		return cost <= this.getMana(stack) // This comes first because it changes over time
-				// ...and the wand is the same tier as the spell or higher...
-				&& spell.getTier().level <= this.tier.level
 				// ...and either the spell is not in cooldown or the player is in creative mode
 				&& (WandHelper.getCurrentCooldown(stack) == 0 || caster.isCreative());
 	}

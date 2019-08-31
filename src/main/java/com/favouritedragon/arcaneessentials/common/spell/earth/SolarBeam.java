@@ -2,6 +2,7 @@ package com.favouritedragon.arcaneessentials.common.spell.earth;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntitySolarBeam;
+import com.favouritedragon.arcaneessentials.common.spell.IArcaneSpell;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
@@ -16,7 +17,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class SolarBeam extends Spell {
+public class SolarBeam extends Spell implements IArcaneSpell {
 
 	public SolarBeam() {
 		super(ArcaneEssentials.MODID, "solar_beam", EnumAction.BOW, false);

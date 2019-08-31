@@ -2,6 +2,7 @@ package com.favouritedragon.arcaneessentials.common.spell.air;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityCycloneBolt;
+import com.favouritedragon.arcaneessentials.common.spell.IArcaneSpell;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
@@ -15,7 +16,7 @@ import net.minecraft.world.World;
 import static com.favouritedragon.arcaneessentials.common.util.ArcaneSpellProperties.LIFETIME;
 import static com.favouritedragon.arcaneessentials.common.util.ArcaneSpellProperties.SPEED;
 
-public class CycloneBolt extends Spell {
+public class CycloneBolt extends Spell implements IArcaneSpell {
 
 	public CycloneBolt() {
 		super(ArcaneEssentials.MODID, "cyclone_bolt", EnumAction.BOW, false);
@@ -40,5 +41,10 @@ public class CycloneBolt extends Spell {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public boolean isSwordCastable() {
+		return true;
 	}
 }

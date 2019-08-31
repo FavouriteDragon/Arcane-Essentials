@@ -1,6 +1,7 @@
 package com.favouritedragon.arcaneessentials.common.spell.divine;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
+import com.favouritedragon.arcaneessentials.common.spell.IArcaneSpell;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
@@ -21,7 +22,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class RadianceStorm extends Spell {
+public class RadianceStorm extends Spell implements IArcaneSpell {
 	private static final String KNOCKBACK_MULT = "knockback_mult";
 	private static final String LIGHT_BEAMS = "light_beams";
 	private static final String EXPLOSION_DAMAGE = "explosion_damage";
