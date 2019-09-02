@@ -21,6 +21,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.play.server.SPacketChangeGameState;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
@@ -38,6 +41,9 @@ import java.util.UUID;
 //Copy and pasted from eb's class, since IntelliJ is fudged up.
 
 public abstract class EntityMagicBolt extends EntityMagicProjectile {
+
+	public static final DataParameter<Float> SYNC_SIZE = EntityDataManager.createKey(EntityFireball.class,
+			DataSerializers.FLOAT);
 
 	public static final double LAUNCH_Y_OFFSET = 0.2;
 	public static final int SEEKING_TIME = 15;
@@ -86,6 +92,13 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 		this.setSize(0.5F, 0.5F);
 	}
 
+	public void setSize(float size) {
+		dataManager.set(SYNC_SIZE, size);
+	}
+
+	public float getSize() {
+		return dataManager.get(SYNC_SIZE);
+	}
 	// Initialiser methods
 
 	/**
@@ -266,6 +279,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
 		//super.onUpdate();
 
+		setSize(getSize(), getSize());
 		// Projectile disappears after its lifetime (if it has one) has elapsed
 		if (getLifetime() >= 0 && this.ticksExisted > getLifetime()) {
 			this.setDead();
@@ -725,6 +739,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 	@Override
 	protected void entityInit() {
 		super.entityInit();
+		dataManager.register(SYNC_SIZE, 1.0F);
 	}
 
 	@Override

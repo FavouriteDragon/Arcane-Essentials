@@ -7,9 +7,6 @@ import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
@@ -17,9 +14,6 @@ import java.util.List;
 
 public class EntityFireball extends EntityMagicBolt {
 
-
-	private static final DataParameter<Float> SYNC_SIZE = EntityDataManager.createKey(EntityFireball.class,
-			DataSerializers.FLOAT);
 	private float damage;
 	private int lifetime = 40;
 	private int burnDuration;
@@ -30,14 +24,6 @@ public class EntityFireball extends EntityMagicBolt {
 
 	public void setBurnDuration(int duration) {
 		this.burnDuration = duration;
-	}
-
-	public float getSize() {
-		return dataManager.get(SYNC_SIZE);
-	}
-
-	public void setSize(float size) {
-		dataManager.set(SYNC_SIZE, size);
 	}
 
 	@Override
@@ -68,11 +54,6 @@ public class EntityFireball extends EntityMagicBolt {
 		this.lifetime = lifetime;
 	}
 
-	@Override
-	protected void entityInit() {
-		super.entityInit();
-		dataManager.register(SYNC_SIZE, 1.0F);
-	}
 
 	private void Explode() {
 		if (!world.isRemote) {
@@ -128,11 +109,5 @@ public class EntityFireball extends EntityMagicBolt {
 	@Override
 	protected void tickInGround() {
 		setDead();
-	}
-
-	@Override
-	public void onUpdate() {
-		super.onUpdate();
-		setSize(getSize(), getSize());
 	}
 }

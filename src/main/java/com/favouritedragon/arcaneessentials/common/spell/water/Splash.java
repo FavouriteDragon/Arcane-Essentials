@@ -14,12 +14,17 @@ import net.minecraft.world.World;
 public class Splash extends Spell {
 
 
-	public Splash(String name, EnumAction action, boolean isContinuous) {
-		super(name, action, isContinuous);
+	public Splash() {
+		super(ArcaneEssentials.MODID, "spash", EnumAction.BOW, false);
 	}
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		return false;
+	}
+
+	@Override
+	public boolean canBeCastByNPCs() {
+		return true;
 	}
 }

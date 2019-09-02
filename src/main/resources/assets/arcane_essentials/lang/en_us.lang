@@ -64,6 +64,10 @@ spell.arcane_essentials:zam.desc=Burn enemies with a small bolt of darkness.
 spell.arcane_essentials:zammle=Zammle
 spell.arcane_essentials:zammle.desc=Strike enemies with black lightning!
 
+item.arcane_essentials:sword.spell=Current Spell: %1$s
+item.arcane_essentials:sword.mana=Mana: %1$s/%2$s
+
+item.arcane_essentials:lightning_sword.name=Sword of The Storm
 
 
 element.water=Water

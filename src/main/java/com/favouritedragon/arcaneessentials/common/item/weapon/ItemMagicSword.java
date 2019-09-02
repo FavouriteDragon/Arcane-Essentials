@@ -1,11 +1,13 @@
 package com.favouritedragon.arcaneessentials.common.item.weapon;
 
+import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.util.SpellUtils;
 import com.google.common.collect.Multimap;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Constants;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
+import electroblob.wizardry.data.SpellGlyphData;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.entity.living.ISummonedCreature;
 import electroblob.wizardry.event.SpellCastEvent;
@@ -34,7 +36,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -47,9 +48,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 import java.util.Random;
-
-import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SWORDS;
 
 public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellCastingItem, IManaStoringItem {
 
@@ -78,7 +78,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 		this.element = element;
 		setMaxStackSize(1);
 		setCreativeTab(WizardryTabs.GEAR);
-		setMaxDamage(7);
+		setMaxDamage(1875);
 		WizardryRecipes.addToManaFlaskCharging(this);
 	}
 
@@ -247,7 +247,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 	@Override
 	// Only called client-side
 	// This method is always called on the item in oldStack, meaning that oldStack.getItem() == this
-	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+	public boolean shouldCauseReequipAnimation(ItemStack oldStack, @Nonnull ItemStack newStack, boolean slotChanged) {
 
 		// This method does some VERY strange things! Despite its name, it also seems to affect the updating of NBT...
 
@@ -273,17 +273,13 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 		return 72000;
 	}
 
-	/*@SideOnly(Side.CLIENT)
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, World world, List<String> text, net.minecraft.client.util.ITooltipFlag advanced){
 
 		EntityPlayer player = net.minecraft.client.Minecraft.getMinecraft().player;
 		if (player == null) { return; }
 		// +0.5f is necessary due to the error in the way floats are calculated.
-		if(element != null) text.add("\u00A78" + net.minecraft.client.resources.I18n.format("item." + Wizardry.MODID + ":wand.buff",
-				(int)((tier.level + 1) * Constants.POTENCY_INCREASE_PER_TIER * 100 + 0.5f) + "%",
-				element.getDisplayName()));
-
 		Spell spell = WandHelper.getCurrentSpell(stack);
 
 		boolean discovered = true;
@@ -292,24 +288,22 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 			discovered = false;
 		}
 
-		text.add("\u00A77" + net.minecraft.client.resources.I18n.format("item." + Wizardry.MODID + ":wand.spell",
+		text.add("\u00A77" + net.minecraft.client.resources.I18n.format("item." + ArcaneEssentials.MODID + ":sword.spell",
 				discovered ? "\u00A77" + spell.getDisplayNameWithFormatting()
 						: "#\u00A79" + SpellGlyphData.getGlyphName(spell, player.world)));
 
 		if(advanced.isAdvanced()){
 			// Advanced tooltips for debugging
-			text.add("\u00A79" + net.minecraft.client.resources.I18n.format("item." + Wizardry.MODID + ":wand.mana",
+			text.add("\u00A79" + net.minecraft.client.resources.I18n.format("item." + ArcaneEssentials.MODID + ":sword.mana",
 					this.getMana(stack), this.getManaCapacity(stack)));
 
-			text.add("\u00A77" + net.minecraft.client.resources.I18n.format("item." + Wizardry.MODID + ":wand.progression",
-					WandHelper.getProgression(stack), this.tier.level < Tier.MASTER.level ? Tier.values()[tier.ordinal() + 1].progression : 0));
 
 //		}else{
 //
 //			ChargeStatus status = ChargeStatus.getChargeStatus(stack);
 //			text.add(status.getFormattingCode() + status.getDisplayName());
 		}
-	}**/
+	}
 
 	@Nonnull
 	@Override
@@ -674,9 +668,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 			}
 		}
 
-		if (SpellUtils.isSwordCastable(spells[1])) {
-			WandHelper.setSpells(centre.getStack(), spells);
-		}
+		WandHelper.setSpells(centre.getStack(), spells);
 
 		// Charges wand by appropriate amount
 		if (crystals.getStack() != ItemStack.EMPTY && !this.isManaFull(centre.getStack())) {
