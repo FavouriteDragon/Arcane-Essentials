@@ -25,7 +25,7 @@ public class Zammle extends SpellRay {
 
 	public Zammle() {
 		super(ArcaneEssentials.MODID, "zammle", false, EnumAction.BOW);
-		addProperties(DAMAGE, LIFE_STEAL, EFFECT_STRENGTH, EFFECT_RADIUS);
+		addProperties(DAMAGE, LIFE_STEAL, EFFECT_STRENGTH);
 	}
 
 	@Override

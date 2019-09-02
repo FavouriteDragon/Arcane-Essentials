@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = ArcaneEssentials.MODID, name = ArcaneEssentials.NAME, version = ArcaneEssentials.VERSION, dependencies="required-after:ebwizardry")
+@Mod(modid = ArcaneEssentials.MODID, name = ArcaneEssentials.NAME, version = ArcaneEssentials.VERSION, dependencies ="required-after:ebwizardry")
 public class ArcaneEssentials
 {
     public static final String MODID = "arcane_essentials";
@@ -19,7 +19,7 @@ public class ArcaneEssentials
     public static final String CLIENT = "com.favouritedragon.arcaneessentials.client.ClientProxy";
 	public static final String SERVER = "com.favouritedragon.arcaneessentials.proxy.ServerProxy";
 
-    private static Logger logger;
+    public static Logger logger;
 
     @Mod.Instance(ArcaneEssentials.MODID)
     public static ArcaneEssentials instance;

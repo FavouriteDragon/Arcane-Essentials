@@ -3,7 +3,6 @@
     "book": true,
     "scroll": true,
     "wands": true,
-    "swords": true,
     "npcs": true,
     "dispensers": true,
     "commands": true,

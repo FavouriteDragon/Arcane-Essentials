@@ -19,29 +19,29 @@ public class SpellUtils {
 		if (spell instanceof IArcaneSpell) {
 			return ((IArcaneSpell) spell).isSwordCastable();
 		}
-		return spell.isEnabled(SWORDS);
+		return false; //spell.isEnabled(SWORDS);
 	}
 
 	public static boolean isWandCastable(Spell spell) {
 		if (spell instanceof IArcaneSpell) {
 			return ((IArcaneSpell) spell).isWandCastable();
 		}
-		return spell.isEnabled(SpellProperties.Context.WANDS);
+		return true; //spell.isEnabled(SpellProperties.Context.WANDS);
 	}
 
 	public static boolean isAxeCastable(Spell spell) {
 		if (spell instanceof IArcaneSpell) {
 			return ((IArcaneSpell) spell).isAxeCastable();
 		}
-			return spell.isEnabled(AXES);
+			return false; //spell.isEnabled(AXES);
 	}
 
 	//TODO: Add spell sources
 
-	public static final SpellProperties.Context SWORDS = WizardryEnumHelper.addSpellContext("swords", "swords");
-	public static final SpellProperties.Context AXES = WizardryEnumHelper.addSpellContext("axes", "axes");
-	public static final SpellProperties.Context BOWS = WizardryEnumHelper.addSpellContext("bows", "bows");
-	public static final SpellProperties.Context SHIELDS = WizardryEnumHelper.addSpellContext("shields", "shields");
+	//public static final SpellProperties.Context SWORDS = WizardryEnumHelper.addSpellContext("swords", "swords");
+	//public static final SpellProperties.Context AXES = WizardryEnumHelper.addSpellContext("axes", "axes");
+	//public static final SpellProperties.Context BOWS = WizardryEnumHelper.addSpellContext("bows", "bows");
+	//public static final SpellProperties.Context SHIELDS = WizardryEnumHelper.addSpellContext("shields", "shields");
 
 
 

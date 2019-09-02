@@ -18,10 +18,12 @@ import electroblob.wizardry.spell.Spell;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+import org.apache.logging.log4j.Level;
 
 @Mod.EventBusSubscriber(modid = ArcaneEssentials.MODID)
 public class RegisterHandler {
@@ -108,4 +110,91 @@ public class RegisterHandler {
 		event.getRegistry().register(new Zammle());
 
 	}
+
+	//For debugging; it's how eb gets spell property files
+	/*private static boolean loadSpellProperties(String modID){
+
+		// Yes, I know you're not supposed to do orElse(null). But... meh.
+		ModContainer mod = Loader.instance().getModList().stream().filter(m -> m.getModId().equals(modID)).findFirst().orElse(null);
+
+		if(mod == null){
+			Wizardry.logger.warn("Tried to load spell properties for mod with ID '" + modID + "', but no such mod was loaded");
+			return false; // Failed!
+		}
+
+		// Spells will be removed from this list as their properties are set
+		// If everything works properly, it should be empty by the end
+		List<Spell> spells = Spell.getSpells(s -> s.getRegistryName().getNamespace().equals(modID));
+		if(modID.equals(Wizardry.MODID)) spells.add(Spells.none); // In this particular case we do need the none spell
+
+		Wizardry.logger.info("Loading spell properties for " + spells.size() + " spells in mod " + modID);
+
+		// This method is used by Forge to load mod recipes and advancements, so it's a fair bet it's the right one
+		// In the absence of Javadoc, here's what the non-obvious parameters do:
+		// - preprocessor is called once with just the root directory, allowing any global index files to be processed
+		// - processor is called once for each file in the directory so processing can be done
+		// - defaultUnfoundRoot is the default value to return if the root specified isn't found
+		// - visitAllFiles determines whether the method short-circuits; in other words, if the processor returns false
+		// at any point and visitAllFiles is false, the method returns immediately.
+		boolean success = CraftingHelper.findFiles(mod, "assets/" + modID + "/spells", null,
+
+				(root, file) -> {
+
+					String relative = root.relativize(file).toString();
+					if(!"json".equals(FilenameUtils.getExtension(file.toString())) || relative.startsWith("_"))
+						return true; // True or it'll look like it failed just because it found a non-JSON file
+
+					String name = FilenameUtils.removeExtension(relative).replaceAll("\\\\", "/");
+					ResourceLocation key = new ResourceLocation(modID, name);
+
+					Spell spell = Spell.registry.getValue(key);
+
+					// If no spell matches a particular file, log it and just ignore the file
+					if(spell == null){
+						Wizardry.logger.info("Spell properties file " + name + ".json does not match any registered spells; ensure the filename is spelled correctly.");
+						return true;
+					}
+
+					BufferedReader reader = null;
+
+					// We want to do this regardless of whether the JSON file got read properly, because that prints its
+					// own separate warning
+					if(!spells.remove(spell)) Wizardry.logger.warn("What's going on?!");
+
+					try{
+
+						reader = Files.newBufferedReader(file);
+
+						JsonObject json = JsonUtils.fromJson(gson, reader, JsonObject.class);
+						SpellProperties properties = new SpellProperties(json, spell);
+						spell.setProperties(properties);
+
+					}catch(JsonParseException jsonparseexception){
+						Wizardry.logger.error("Parsing error loading spell property file for " + key, jsonparseexception);
+						return false;
+					}catch(IOException ioexception){
+						Wizardry.logger.error("Couldn't read spell property file for " + key, ioexception);
+						return false;
+					}finally{
+						IOUtils.closeQuietly(reader);
+					}
+
+					return true;
+
+				},
+				true, true);
+
+		// If a spell is missing its file, log an error
+		if(!spells.isEmpty()){
+			if(spells.size() <= 15){
+				spells.forEach(s -> Wizardry.logger.error("Spell " + s.getRegistryName() + " is missing a properties file!"));
+			}else{
+				// If there are more than 15 don't bother logging them all, chances are they're all missing
+				Wizardry.logger.error("Mod " + modID + " has " + spells.size() + " spells that are missing properties files!");
+			}
+		}
+
+		return success;
+	}
+}**/
 }

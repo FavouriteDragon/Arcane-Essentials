@@ -56,7 +56,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 	/**
 	 * The number of spell slots a wand has with no attunement upgrades applied.
 	 */
-	public static final int BASE_SPELL_SLOTS = 3;
+	private static final int BASE_SPELL_SLOTS = 3;
 
 	/**
 	 * The number of ticks between each time a continuous spell is added to the player's recently-cast spells.
@@ -398,7 +398,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 		// ...and the wand has enough mana to cast the spell...
 		return cost <= this.getMana(stack) // This comes first because it changes over time
 				//and the spell is compatible with a sword
-				&& SpellUtils.isSwordCastable(spell)
+			//	&& SpellUtils.isSwordCastable(spell)
 				// ...and either the spell is not in cooldown or the player is in creative mode
 				&& (WandHelper.getCurrentCooldown(stack) == 0 || caster.isCreative());
 	}
@@ -661,7 +661,8 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 
 				Spell spell = Spell.byMetadata(spellBooks[i].getStack().getItemDamage());
 				// If the wand is powerful enough for the spell, it's not already bound to that slot and it's enabled for wands
-				if (spells[i] != spell && SpellUtils.isSwordCastable(spell)) {
+				if (spells[i] != spell /*&& SpellUtils.isSwordCastable(spell)**/) {
+					System.out.println("huh");
 					spells[i] = spell;
 					changed = true;
 				}
