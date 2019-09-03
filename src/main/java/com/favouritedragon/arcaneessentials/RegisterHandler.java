@@ -14,16 +14,31 @@ import com.favouritedragon.arcaneessentials.common.spell.storm.StormBlink;
 import com.favouritedragon.arcaneessentials.common.spell.storm.ThunderBurst;
 import com.favouritedragon.arcaneessentials.common.spell.water.OceanBurst;
 import com.favouritedragon.arcaneessentials.common.spell.water.Whirlpool;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import electroblob.wizardry.Wizardry;
+import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.util.SpellProperties;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.Level;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = ArcaneEssentials.MODID)
 public class RegisterHandler {
@@ -82,6 +97,7 @@ public class RegisterHandler {
 		registerLoot();
 		registerEntities();
 		registerItems();
+
 	}
 
 	@SubscribeEvent
@@ -111,8 +127,10 @@ public class RegisterHandler {
 
 	}
 
+	//TODO: Debugged! It appears that something in the file finding process is going wrong- it's not even being run o_0.
+
 	//For debugging; it's how eb gets spell property files
-	/*private static boolean loadSpellProperties(String modID){
+	public static boolean loadSpellProperties(String modID){
 
 		// Yes, I know you're not supposed to do orElse(null). But... meh.
 		ModContainer mod = Loader.instance().getModList().stream().filter(m -> m.getModId().equals(modID)).findFirst().orElse(null);
@@ -127,7 +145,10 @@ public class RegisterHandler {
 		List<Spell> spells = Spell.getSpells(s -> s.getRegistryName().getNamespace().equals(modID));
 		if(modID.equals(Wizardry.MODID)) spells.add(Spells.none); // In this particular case we do need the none spell
 
-		Wizardry.logger.info("Loading spell properties for " + spells.size() + " spells in mod " + modID);
+		for (Spell s : spells) {
+			ArcaneEssentials.logger.info(s.getRegistryName());
+		}
+		ArcaneEssentials.logger.info("Loading spell properties for " + spells.size() + " spells");
 
 		// This method is used by Forge to load mod recipes and advancements, so it's a fair bet it's the right one
 		// In the absence of Javadoc, here's what the non-obvious parameters do:
@@ -140,14 +161,19 @@ public class RegisterHandler {
 
 				(root, file) -> {
 
+			ArcaneEssentials.logger.warn("WTFFFFFFF");
 					String relative = root.relativize(file).toString();
-					if(!"json".equals(FilenameUtils.getExtension(file.toString())) || relative.startsWith("_"))
+					if(!"json".equals(FilenameUtils.getExtension(file.toString())) || relative.startsWith("_")) {
+						ArcaneEssentials.logger.warn("This isn't good");
 						return true; // True or it'll look like it failed just because it found a non-JSON file
+					}
 
 					String name = FilenameUtils.removeExtension(relative).replaceAll("\\\\", "/");
 					ResourceLocation key = new ResourceLocation(modID, name);
 
 					Spell spell = Spell.registry.getValue(key);
+
+					ArcaneEssentials.logger.info(spell);
 
 					// If no spell matches a particular file, log it and just ignore the file
 					if(spell == null){
@@ -159,15 +185,17 @@ public class RegisterHandler {
 
 					// We want to do this regardless of whether the JSON file got read properly, because that prints its
 					// own separate warning
+					ArcaneEssentials.logger.info(key.getPath());
 					if(!spells.remove(spell)) Wizardry.logger.warn("What's going on?!");
 
 					try{
 
 						reader = Files.newBufferedReader(file);
+						ArcaneEssentials.logger.info(file);
 
-						JsonObject json = JsonUtils.fromJson(gson, reader, JsonObject.class);
-						SpellProperties properties = new SpellProperties(json, spell);
-						spell.setProperties(properties);
+						//JsonObject json = JsonUtils.fromJson(gson, reader, JsonObject.class);
+					//	SpellProperties properties = new SpellProperties(json, spell);
+					//	spell.setProperties(properties);
 
 					}catch(JsonParseException jsonparseexception){
 						Wizardry.logger.error("Parsing error loading spell property file for " + key, jsonparseexception);
@@ -196,5 +224,4 @@ public class RegisterHandler {
 
 		return success;
 	}
-}**/
 }

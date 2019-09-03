@@ -39,6 +39,7 @@ public class ArcaneEssentials
     @EventHandler
     public void init(FMLInitializationEvent event) {
         proxy.Init(event);
+        RegisterHandler.loadSpellProperties(ArcaneEssentials.MODID);
 		}
 
     @EventHandler
