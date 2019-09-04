@@ -5,6 +5,7 @@ import com.favouritedragon.arcaneessentials.common.item.armour.ItemManaArmour;
 import com.favouritedragon.arcaneessentials.common.item.weapon.ItemMagicSword;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
+import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.registry.WizardryTabs;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -26,7 +27,7 @@ public class ArcaneItems {
 	public static void register(RegistryEvent.Register<Item> event) {
 
 		IForgeRegistry<Item> registry = event.getRegistry();
-		//registerItem(registry, "lightning_sword", new ItemMagicSword(Item.ToolMaterial.DIAMOND, Element.LIGHTNING));
+		registerItem(registry, "lightning_sword", new ItemMagicSword(Item.ToolMaterial.DIAMOND, Tier.MASTER, Element.LIGHTNING));
 	}
 
 	//Copied from eb's class

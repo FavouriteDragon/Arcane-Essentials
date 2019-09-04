@@ -23,7 +23,7 @@ spell.arcane_essentials:kafrizz=KaFrizz
 spell.arcane_essentials:kafrizz.desc=Incinerate enemies with a huge fireball!
 
 spell.arcane_essentials:kafrizzle=KaFrizzle
-spell.arcane_essentials"kafrizzle.desc=Cremate enemies with an enormous fireball!
+spell.arcane_essentials:kafrizzle.desc=Cremate enemies with an enormous fireball!
 
 spell.arcane_essentials:kathwack=KaThwack
 spell.arcane_essentials:kathwack.desc=Unleash a wave of instantaneous death around you, dealing around 5 damage, with a 20% chance to kill any enemy standing right next to you.
@@ -66,8 +66,14 @@ spell.arcane_essentials:zammle.desc=Strike enemies with black lightning!
 
 item.arcane_essentials:sword.spell=Current Spell: %1$s
 item.arcane_essentials:sword.mana=Mana: %1$s/%2$s
+item.arcane_essentials:sword.levelup=%1$s is ready to upgrade to %2$s tier
+item.arcane_essentials:sword.buff=+%1$s %2$s potency
+item.arcane_essentials:sword.progression=Progression: %1$s/%2$s
 
-item.arcane_essentials:lightning_sword.name=Sword of The Storm
+item.arcane_essentials:novice_lightning_sword.name=Sparking Sword
+item.arcane_essentials:apprentic_lightning_sword.name=Shock Sword
+item.arcane_essentials:advanced_lightning_sword.name=Sword of The Storm
+item.arcane_essentials:master_lightning_sword.name=Tempest Tearer
 
 
 element.water=Water

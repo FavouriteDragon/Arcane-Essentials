@@ -10,7 +10,7 @@
     "trades": true,
     "looting": true
   },
-  "tier": "advanced",
+  "tier": "master",
   "element": "fire",
   "type": "projectile",
   "cost": 100,

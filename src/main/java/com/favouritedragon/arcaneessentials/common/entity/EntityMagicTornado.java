@@ -1,22 +1,5 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
-import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
-import electroblob.wizardry.entity.construct.EntityMagicConstruct;
-import electroblob.wizardry.registry.WizardrySounds;
-import electroblob.wizardry.util.MagicDamage;
-import electroblob.wizardry.util.WizardryUtilities;
-import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.MoverType;
-import net.minecraft.init.Blocks;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-
-import java.util.List;
-
 public class EntityMagicTornado {/*} extends EntityMagicConstruct {
 
 	public EntityLightningVortex(World world) {

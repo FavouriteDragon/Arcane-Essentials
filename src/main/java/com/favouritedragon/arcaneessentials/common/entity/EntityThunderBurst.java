@@ -2,7 +2,6 @@ package com.favouritedragon.arcaneessentials.common.entity;
 
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.WizardryUtilities;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
