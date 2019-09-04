@@ -36,7 +36,7 @@ public class RenderWaterBall extends Render<EntityWaterBall> {
 		GlStateManager.color(colorEnhancement, colorEnhancement, colorEnhancement, 0.6f);
 
 		Matrix4f mat = new Matrix4f();
-		mat.translate((float) x - 0.5f, (float) y * ball.getSize(), (float) z - 0.5f);
+		mat.translate((float) x - 0.5f, (float) y * ball.getSize() / -0.5F, (float) z - 0.5f);
 
 		//TIL that putting the rotation code here makes it orbit around you. Very cool, but not the intended effect xD
 		//Using mul.rotate instead of GlStateManager does the same thing to the entity, BUT it just spins the water bubble around a corner
@@ -54,14 +54,14 @@ public class RenderWaterBall extends Render<EntityWaterBall> {
 
 		// @formatter:off
 		Vector4f
-				lbf = new Vector4f(0, 0, 0, 1).mul(mat),
-				rbf = new Vector4f(1, 0, 0, 1).mul(mat),
-				ltf = new Vector4f(0, 1, 0, 1).mul(mat),
-				rtf = new Vector4f(1, 1, 0, 1).mul(mat),
-				lbb = new Vector4f(0, 0, 1, 1).mul(mat),
-				rbb = new Vector4f(1, 0, 1, 1).mul(mat),
-				ltb = new Vector4f(0, 1, 1, 1).mul(mat),
-				rtb = new Vector4f(1, 1, 1, 1).mul(mat);
+				lbf = new Vector4f(0, 0, 0, 1).mul(mat).mul(ball.getSize()),
+				rbf = new Vector4f(1, 0, 0, 1).mul(mat).mul(ball.getSize()),
+				ltf = new Vector4f(0, 1, 0, 1).mul(mat).mul(ball.getSize()),
+				rtf = new Vector4f(1, 1, 0, 1).mul(mat).mul(ball.getSize()),
+				lbb = new Vector4f(0, 0, 1, 1).mul(mat).mul(ball.getSize()),
+				rbb = new Vector4f(1, 0, 1, 1).mul(mat).mul(ball.getSize()),
+				ltb = new Vector4f(0, 1, 1, 1).mul(mat).mul(ball.getSize()),
+				rtb = new Vector4f(1, 1, 1, 1).mul(mat).mul(ball.getSize());
 
 
 		float t1 = ticks * (float) Math.PI / 10f;
@@ -99,7 +99,7 @@ public class RenderWaterBall extends Render<EntityWaterBall> {
 		//GlStateManager.rotate(rotation, 0, 1, 0);
 		//GlStateManager.rotate(rotation * 0.2F, 0, 0, 1);
 
-		GlStateManager.scale(ball.getSize(), ball.getSize(), ball.getSize());
+		//GlStateManager.scale(ball.getSize(), ball.getSize(), ball.getSize());
 
 
 

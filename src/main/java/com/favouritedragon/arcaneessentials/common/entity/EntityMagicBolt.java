@@ -82,7 +82,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 	/**
 	 * The amount of knockback an arrow applies when it hits a mob.
 	 */
-	private int knockbackStrength;
+	private double knockbackStrength;
 
 	/**
 	 * Creates a new projectile in the given world.
@@ -226,7 +226,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 	/**
 	 * Sets the amount of knockback the projectile applies when it hits a mob.
 	 */
-	public void setKnockbackStrength(int knockback) {
+	public void setKnockbackStrength(float knockback) {
 		this.knockbackStrength = knockback;
 	}
 
@@ -413,9 +413,9 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
 									if (f4 > 0.0F) {
 										raytraceresult.entityHit.addVelocity(
-												this.motionX * (double) this.knockbackStrength * 0.6000000238418579D
+												this.motionX * this.knockbackStrength * 0.6000000238418579D
 														/ (double) f4,
-												0.1D, this.motionZ * (double) this.knockbackStrength * 0.6000000238418579D
+												0.1D, this.motionZ * this.knockbackStrength * 0.6000000238418579D
 														/ (double) f4);
 									}
 								}
@@ -469,9 +469,9 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
 											if (f4 > 0.0F) {
 												raytraceresult.entityHit.addVelocity(
-														this.motionX * (double) this.knockbackStrength * 0.6000000238418579D
+														this.motionX *  this.knockbackStrength * 0.6000000238418579D
 																/ (double) f4,
-														0.1D, this.motionZ * (double) this.knockbackStrength * 0.6000000238418579D
+														0.1D, this.motionZ * this.knockbackStrength * 0.6000000238418579D
 																/ (double) f4);
 											}
 										}

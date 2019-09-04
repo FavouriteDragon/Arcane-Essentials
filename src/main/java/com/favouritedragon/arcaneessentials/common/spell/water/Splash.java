@@ -24,8 +24,8 @@ public class Splash extends Spell {
 		float speed, damage, knockback, size;
 		damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 		size = getProperty(SIZE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
-		speed = getProperty(RANGE).floatValue() / 10 * modifiers.get(WizardryItems.range_upgrade);
-		knockback = getProperty(EFFECT_STRENGTH).floatValue() * modifiers.get(WizardryItems.blast_upgrade);
+		speed = getProperty(RANGE).floatValue() / 13 * modifiers.get(WizardryItems.range_upgrade);
+		knockback = getProperty(EFFECT_STRENGTH).floatValue() / 2 * modifiers.get(WizardryItems.blast_upgrade);
 		if (!world.isRemote) {
 			EntityWaterBall ball = new EntityWaterBall(world);
 			ball.setCaster(caster);

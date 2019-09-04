@@ -57,22 +57,23 @@ public class EntityWaterBall extends EntityMagicBolt {
 						if (target.canBeCollidedWith()) {
 							target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(getCaster(),
 									getDamageType()), (float) getDamage() * 0.4F);
-							target.addVelocity(motionX / 4, motionY / 4, motionZ / 4);
+							target.addVelocity(motionX / 4 * getSize(), motionY / 4 * getSize(), motionZ / 4 * getSize());
 							ArcaneUtils.applyPlayerKnockback(target);
 						}
 					}
 				}
 			}
 			if (world instanceof WorldServer) {
-				((WorldServer) world).spawnParticle(EnumParticleTypes.WATER_SPLASH, true, posX, posY, posZ, 30 + (int) (getSize() * 5),0, 0, 0, 0.01D);
+				((WorldServer) world).spawnParticle(EnumParticleTypes.WATER_SPLASH, true, posX, posY, posZ, 40 + (int) (getSize() * 5),0, 0, 0,
+						0.02D + getSize() / 50);
 			}
 		}
 
 		if (world.isRemote) {
-			for (int i = 0; i < 20 - getSize(); i++) {
+			for (int i = 0; i < 30 - getSize(); i++) {
 				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_BUBBLE).pos(getPositionVector()).time(10)
-						.vel(world.rand.nextGaussian() / 10 * getSize(), world.rand.nextGaussian() / 10
-								* getSize(), world.rand.nextGaussian() / 10 * getSize()).
+						.vel(world.rand.nextGaussian() / 8 * getSize(), world.rand.nextGaussian() / 8
+								* getSize(), world.rand.nextGaussian() / 8 * getSize()).
 						scale(0.25F + getSize() / 2 + world.rand.nextFloat()).spawn(world);
 			}
 		}

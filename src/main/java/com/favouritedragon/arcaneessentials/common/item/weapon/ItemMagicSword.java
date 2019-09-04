@@ -121,6 +121,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 		super.setDamage(stack, getManaCapacity(stack) - mana);
 	}
 
+	
 	@Override
 	public int getMana(ItemStack stack){
 		return getManaCapacity(stack) - getDamage(stack);
@@ -751,7 +752,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 		return changed;
 	}
 
-	// hitEntity is only called server-side, so we'll have to use events
+	//hitEntity is only called server-side, so we'll have to use events
 	@SubscribeEvent
 	public static void onAttackEntityEvent(AttackEntityEvent event){
 
