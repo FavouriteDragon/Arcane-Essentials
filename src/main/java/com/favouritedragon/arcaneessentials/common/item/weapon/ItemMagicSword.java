@@ -13,7 +13,6 @@ import electroblob.wizardry.event.SpellCastEvent;
 import electroblob.wizardry.item.IManaStoringItem;
 import electroblob.wizardry.item.ISpellCastingItem;
 import electroblob.wizardry.item.IWorkbenchItem;
-import electroblob.wizardry.item.ItemWand;
 import electroblob.wizardry.packet.PacketCastSpell;
 import electroblob.wizardry.packet.WizardryPacketHandler;
 import electroblob.wizardry.registry.*;
@@ -53,6 +52,8 @@ import java.util.Random;
 import static com.favouritedragon.arcaneessentials.common.spell.arcane.ElementArcane.ARCANE;
 
 public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellCastingItem, IManaStoringItem {
+
+	//It works! Gonna leave it alone for now until eb adds proper context support
 
 	/** The number of spell slots a wand has with no attunement upgrades applied. */
 	private static final int BASE_SPELL_SLOTS = 3;
@@ -108,7 +109,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 		return true;
 	}
 
-	/** Does nothing, use {@link ItemWand#setMana(ItemStack, int)} to modify wand mana. */
+	/** Does nothing, use {@link ItemMagicSword#setMana(ItemStack, int)} to modify wand mana. */
 	@Override
 	public void setDamage(ItemStack stack, int damage){
 		// Overridden to do nothing to stop repair things from 'repairing' the mana in a wand
@@ -249,8 +250,8 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 
 		if(!oldStack.isEmpty() || !newStack.isEmpty()){
 			// We only care about the situation where we specifically want the animation NOT to play.
-			if(oldStack.getItem() == newStack.getItem() && !slotChanged && oldStack.getItem() instanceof ItemWand
-					&& newStack.getItem() instanceof ItemWand
+			if(oldStack.getItem() == newStack.getItem() && !slotChanged && oldStack.getItem() instanceof ItemSword
+					&& newStack.getItem() instanceof ItemSword
 					&& WandHelper.getCurrentSpell(oldStack) == WandHelper.getCurrentSpell(newStack))
 				return false;
 		}
@@ -713,7 +714,9 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 
 				Spell spell = Spell.byMetadata(spellBooks[i].getStack().getItemDamage());
 				// If the wand is powerful enough for the spell, it's not already bound to that slot and it's enabled for wands
-				if(!(spell.getTier().level > this.tier.level) && spells[i] != spell && spell.isEnabled(SpellProperties.Context.WANDS)){
+				//TODO: Change the context to swords, add a fail message
+				if(!(spell.getTier().level > this.tier.level) && spells[i] != spell && spell.isEnabled(SpellProperties.Context.WANDS) &&
+						(spell.getElement() == this.element || spell.getElement().equals(Element.MAGIC) || spell.getElement().equals(ARCANE))){
 					spells[i] = spell;
 					changed = true;
 				}

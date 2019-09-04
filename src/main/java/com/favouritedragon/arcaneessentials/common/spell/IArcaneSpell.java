@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.spell;
 
+//Temporary interface until the proper spell contexts are implemented
 public interface IArcaneSpell {
 
 	default boolean isSwordCastable() {

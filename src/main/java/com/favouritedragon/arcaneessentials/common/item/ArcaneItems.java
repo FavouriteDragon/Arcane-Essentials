@@ -27,7 +27,7 @@ public class ArcaneItems {
 	public static void register(RegistryEvent.Register<Item> event) {
 
 		IForgeRegistry<Item> registry = event.getRegistry();
-		registerItem(registry, "lightning_sword", new ItemMagicSword(Item.ToolMaterial.DIAMOND, Tier.MASTER, Element.LIGHTNING));
+		registerItem(registry, "master_lightning_sword", new ItemMagicSword(Item.ToolMaterial.DIAMOND, Tier.MASTER, Element.LIGHTNING));
 	}
 
 	//Copied from eb's class
