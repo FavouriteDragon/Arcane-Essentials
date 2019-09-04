@@ -42,7 +42,7 @@ import java.util.UUID;
 
 public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
-	public static final DataParameter<Float> SYNC_SIZE = EntityDataManager.createKey(EntityFireball.class,
+	public static final DataParameter<Float> SYNC_SIZE = EntityDataManager.createKey(EntityMagicBolt.class,
 			DataSerializers.FLOAT);
 
 	public static final double LAUNCH_Y_OFFSET = 0.2;
