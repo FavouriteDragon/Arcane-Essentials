@@ -59,7 +59,7 @@ public class EntityFireball extends EntityMagicBolt {
 		if (!world.isRemote) {
 			world.playSound(null, posX, posY, posZ, SoundEvents.ENTITY_GHAST_SHOOT, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
 					0.8F + world.rand.nextFloat() / 10F);
-			List<Entity> hit = world.getEntitiesWithinAABB(Entity.class, getEntityBoundingBox().grow(getSize() / 2));
+			List<Entity> hit = world.getEntitiesWithinAABB(Entity.class, getEntityBoundingBox().grow(getSize() / 4));
 			if (!hit.isEmpty()) {
 				for (Entity target : hit) {
 					if (target != this && target != getCaster()) {

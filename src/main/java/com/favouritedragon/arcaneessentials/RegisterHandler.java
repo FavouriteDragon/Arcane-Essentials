@@ -13,16 +13,14 @@ import com.favouritedragon.arcaneessentials.common.spell.storm.LightningVortex;
 import com.favouritedragon.arcaneessentials.common.spell.storm.StormBlink;
 import com.favouritedragon.arcaneessentials.common.spell.storm.ThunderBurst;
 import com.favouritedragon.arcaneessentials.common.spell.water.OceanBurst;
+import com.favouritedragon.arcaneessentials.common.spell.water.Splash;
 import com.favouritedragon.arcaneessentials.common.spell.water.Whirlpool;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.spell.Spell;
-import electroblob.wizardry.util.SpellProperties;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegistryEvent;
@@ -33,7 +31,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.logging.log4j.Level;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -86,6 +83,7 @@ public class RegisterHandler {
 		registerEntity(EntityCycloneShield.class, "Cylone Shield", id++, 128, LIVING_UPDATE_INTERVAL, false);
 		registerEntity(EntitySolarBeam.class, "Solar Beam", id++, 128, LIVING_UPDATE_INTERVAL, false);
 		registerEntity(EntityFireball.class, "Fireball", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
+		registerEntity(EntityWaterBall.class, "Waterball", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
 
 	}
 
@@ -119,6 +117,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new RadianceStorm());
 		event.getRegistry().register(new RadiantBeam());
 		event.getRegistry().register(new SolarBeam());
+		event.getRegistry().register(new Splash());
 		event.getRegistry().register(new StormBlink());
 		event.getRegistry().register(new ThunderBurst());
 		event.getRegistry().register(new Whirlpool());

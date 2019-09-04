@@ -94,10 +94,12 @@ public class RenderWaterBall extends Render<EntityWaterBall> {
 		drawQuad(2, rtf, rbf, lbf, ltf, 0, v1, 1, v2); // -z
 		drawQuad(2, rtb, rbb, lbb, ltb, 0, v1, 1, v2); // +z
 
-		float rotation = ticks * 20F;
-		GlStateManager.rotate(rotation * 0.2F, 1, 0, 0);
-		GlStateManager.rotate(rotation, 0, 1, 0);
-		GlStateManager.rotate(rotation * 0.2F, 0, 0, 1);
+		//float rotation = ticks * 20F;
+		//GlStateManager.rotate(rotation * 0.2F, 1, 0, 0);
+		//GlStateManager.rotate(rotation, 0, 1, 0);
+		//GlStateManager.rotate(rotation * 0.2F, 0, 0, 1);
+
+		GlStateManager.scale(ball.getSize(), ball.getSize(), ball.getSize());
 
 
 
