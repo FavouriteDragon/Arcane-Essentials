@@ -54,7 +54,7 @@ public class RenderThunderBurst extends Render<EntityThunderBurst> {
 
 		}
 		RenderUtils.drawSphere(entity.ticksExisted * 0.7F, (float) Math.PI / 20, (float) Math.PI / 20, false, 138 / 255F, 1F, 1F,
-				0.55F);
+				0.55F, null);
 		GlStateManager.enableTexture2D();
 		GlStateManager.enableLighting();
 		GlStateManager.disableBlend();

@@ -2,14 +2,20 @@ package com.favouritedragon.arcaneessentials.client.render;
 
 import com.favouritedragon.arcaneessentials.common.entity.EntityWaterBall;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
+import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import static com.favouritedragon.arcaneessentials.client.render.RenderUtils.drawQuad;
 import static net.minecraft.util.math.MathHelper.cos;
@@ -102,10 +108,54 @@ public class RenderWaterBall extends Render<EntityWaterBall> {
 		//GlStateManager.scale(ball.getSize(), ball.getSize(), ball.getSize());
 
 
+		//drawSphere(ball.getSize());
 
 		GlStateManager.color(1, 1, 1, 1);
 		GlStateManager.disableBlend();
 
+	}
+
+	private static void drawSphere(float radius, float latStep, float longStep, boolean inside, float r, float g, float b, float a, @Nullable ResourceLocation texture){
+
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder buffer = tessellator.getBuffer();
+
+		buffer.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR);
+
+		boolean goingUp = inside;
+
+		buffer.pos(0, goingUp ? -radius : radius, 0).color(r, g, b, a).endVertex(); // Start at the north pole
+
+		for(float longitude = -(float)Math.PI; longitude <= (float)Math.PI; longitude += longStep){
+
+			// Leave the poles out since they only have a single point per stack instead of two
+			for(float theta = (float)Math.PI/2 - latStep; theta >= -(float)Math.PI/2 + latStep; theta -= latStep){
+
+				float latitude = goingUp ? -theta : theta;
+
+				float hRadius = radius * MathHelper.cos(latitude);
+				float vy = radius * MathHelper.sin(latitude);
+				float vx = hRadius * MathHelper.sin(longitude);
+				float vz = hRadius * MathHelper.cos(longitude);
+
+				buffer.pos(vx, vy, vz).color(r, g, b, a).endVertex();
+
+				vx = hRadius * MathHelper.sin(longitude + longStep);
+				vz = hRadius * MathHelper.cos(longitude + longStep);
+
+				if (texture != null) {
+					Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+				}
+				buffer.pos(vx, vy, vz).color(r, g, b, a).endVertex();
+			}
+
+			// The next pole
+			buffer.pos(0, goingUp ? radius : -radius, 0).color(r, g, b, a).endVertex();
+
+			goingUp = !goingUp;
+		}
+
+		tessellator.draw();
 	}
 
 

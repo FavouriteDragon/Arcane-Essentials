@@ -1,8 +1,8 @@
 package com.favouritedragon.arcaneessentials.client.render;
 
+import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityFireball;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
-import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -21,7 +21,7 @@ import static com.favouritedragon.arcaneessentials.client.render.RenderUtils.dra
 
 public class RenderFireball extends Render<EntityFireball> {
 	private static final float EXPANSION_TIME = 3;
-	private static final ResourceLocation TEXTURE = new ResourceLocation(Wizardry.MODID, "textures/entity/fireball.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation(ArcaneEssentials.MODID, "textures/entity/fireball.png");
 
 	public RenderFireball(RenderManager renderManager) {
 		super(renderManager);
@@ -107,10 +107,10 @@ public class RenderFireball extends Render<EntityFireball> {
 						alpha = MathHelper.clamp(alpha, aMin, aMax);
 						break;
 				}
-				drawSphere(radius, latStep, longStep, false, red, green, blue, alpha);
+				drawSphere(radius, latStep, longStep, false, red, green, blue, alpha, TEXTURE);
 			}
 		//drawSphere(radius - 0.05f, latStep, longStep, true, r1, g1, b1, a * 1F);
-		drawSphere(radius / 2, latStep, longStep, false, r2, g2, b2, 1.4f * a);
+		drawSphere(radius / 2, latStep, longStep, false, r2, g2, b2, 1.4f * a, TEXTURE);
 
 		//Particles
 

@@ -1,11 +1,15 @@
 package com.favouritedragon.arcaneessentials.client.render;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
+
+import javax.annotation.Nullable;
 
 
 public class RenderUtils {
@@ -78,11 +82,12 @@ public class RenderUtils {
 	 * @param b The blue component of the sphere colour.
 	 * @param a The alpha component of the sphere colour.
 	 */
-	public static void drawSphere(float radius, float latStep, float longStep, boolean inside, float r, float g, float b, float a){
+	public static void drawSphere(float radius, float latStep, float longStep, boolean inside, float r, float g, float b, float a, @Nullable ResourceLocation texture){
 
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder buffer = tessellator.getBuffer();
 
+		//Need to change this so it supports textures
 		buffer.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR);
 
 		boolean goingUp = inside;
@@ -106,6 +111,9 @@ public class RenderUtils {
 				vx = hRadius * MathHelper.sin(longitude + longStep);
 				vz = hRadius * MathHelper.cos(longitude + longStep);
 
+				if (texture != null) {
+					Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+				}
 				buffer.pos(vx, vy, vz).color(r, g, b, a).endVertex();
 			}
 
