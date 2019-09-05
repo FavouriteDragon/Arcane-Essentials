@@ -88,7 +88,7 @@ public class RenderUtils {
 		BufferBuilder buffer = tessellator.getBuffer();
 
 		//Need to change this so it supports textures
-		buffer.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_TEX_COLOR);
+		buffer.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR);
 
 		boolean goingUp = inside;
 
