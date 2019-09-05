@@ -36,7 +36,7 @@ public class RenderWaterBall extends Render<EntityWaterBall> {
 		GlStateManager.color(colorEnhancement, colorEnhancement, colorEnhancement, 0.6f);
 
 		Matrix4f mat = new Matrix4f();
-		mat.translate((float) x - 0.5f, (float) y * ball.getSize() / -0.5F, (float) z - 0.5f);
+		mat.translate((float) x - 0.5f, (float) y + 0.5F, (float) z - 0.5f);
 
 		//TIL that putting the rotation code here makes it orbit around you. Very cool, but not the intended effect xD
 		//Using mul.rotate instead of GlStateManager does the same thing to the entity, BUT it just spins the water bubble around a corner
@@ -54,8 +54,8 @@ public class RenderWaterBall extends Render<EntityWaterBall> {
 
 		// @formatter:off
 		Vector4f
-				lbf = new Vector4f(0, 0, 0, 1).mul(mat).mul(ball.getSize()),
-				rbf = new Vector4f(1, 0, 0, 1).mul(mat).mul(ball.getSize()),
+				lbf = new Vector4f(0, 0, 0, 1).mul(mat),
+				rbf = new Vector4f(1, 0, 0, 1).mul(mat),
 				ltf = new Vector4f(0, 1, 0, 1).mul(mat).mul(ball.getSize()),
 				rtf = new Vector4f(1, 1, 0, 1).mul(mat).mul(ball.getSize()),
 				lbb = new Vector4f(0, 0, 1, 1).mul(mat).mul(ball.getSize()),

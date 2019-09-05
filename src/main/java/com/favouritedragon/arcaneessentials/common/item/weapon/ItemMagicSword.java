@@ -46,6 +46,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Random;
 
@@ -79,6 +80,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 		WizardryRecipes.addToManaFlaskCharging(this);
 	}
 
+	@Nonnull
 	@Override
 	public Spell getCurrentSpell(ItemStack stack){
 		return WandHelper.getCurrentSpell(stack);
@@ -121,7 +123,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 		super.setDamage(stack, getManaCapacity(stack) - mana);
 	}
 
-	
+
 	@Override
 	public int getMana(ItemStack stack){
 		return getManaCapacity(stack) - getDamage(stack);
@@ -195,7 +197,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 			// This check doesn't affect the damage output, but it does stop a blank line from appearing in the tooltip.
 			if(level > 0 && !this.isManaEmpty(stack)){
 				multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(),
-						new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Melee upgrade modifier", 2 * level, 0));
+						new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Melee upgrade modifier", level + (tier.level + 1) + getAttackDamage(), 0));
 				multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Melee upgrade modifier", -2.4000000953674316D, 0));
 			}
 		}
@@ -206,10 +208,9 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 	@Override
 	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase wielder){
 
-		int level = WandHelper.getUpgradeLevel(stack, WizardryItems.melee_upgrade);
 		int mana = this.getMana(stack);
 
-		if(level > 0 && mana > 0) this.consumeMana(stack, level * 4, wielder);
+		if(mana > 0) this.consumeMana(stack, 1, wielder);
 
 		return true;
 	}

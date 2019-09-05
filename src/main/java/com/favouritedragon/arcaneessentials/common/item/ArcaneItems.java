@@ -22,32 +22,17 @@ public class ArcaneItems {
 
 	public static final Item manaHelm = new ItemManaArmour(ArcaneMaterials.MANA_ARMOUR, 1, EntityEquipmentSlot.HEAD, "mana_helm", "mana_helm");
 	public static final Item manaChestplate = new ItemManaArmour(ArcaneMaterials.MANA_ARMOUR, 1, EntityEquipmentSlot.CHEST, "mana_chestplate", "mana_chestplate");
+	public static final Item masterLightningSword = new ItemMagicSword(Item.ToolMaterial.DIAMOND, Tier.MASTER, Element.LIGHTNING);
 
 	@SubscribeEvent
 	public static void register(RegistryEvent.Register<Item> event) {
 
 		IForgeRegistry<Item> registry = event.getRegistry();
-		registerItem(registry, "master_lightning_sword", new ItemMagicSword(Item.ToolMaterial.DIAMOND, Tier.MASTER, Element.LIGHTNING));
+		registerItem(registry, "master_lightning_sword", masterLightningSword);
 	}
 
 	//Copied from eb's class
 
-	/**
-	 * Sets both the registry and unlocalised names of the given item, then registers it with the given registry. Use
-	 * this instead of {@link Item#setRegistryName(String)} and {@link Item#setTranslationKey(String)} during
-	 * construction, for convenience and consistency. As of wizardry 4.2, this also automatically adds it to the order
-	 * list for its creative tab if that tab is a {@link WizardryTabs.CreativeTabListed}, meaning the order can be defined simply
-	 * by the order in which the items are registered in this class.
-	 *
-	 * @param registry The registry to register the given item to.
-	 * @param name The name of the item, without the mod ID or the .name stuff. The registry name will be
-	 *        {@code ebwizardry:[name]}. The unlocalised name will be {@code item.ebwizardry:[name].name}.
-	 * @param item The item to register.
-	 */
-	// It now makes sense to have the name first, since it's shorter than an entire item declaration.
-	public static void registerItem(IForgeRegistry<Item> registry, String name, Item item){
-		registerItem(registry, name, item, false);
-	}
 
 	/**
 	 * Sets both the registry and unlocalised names of the given item, then registers it with the given registry. Use
@@ -60,18 +45,14 @@ public class ArcaneItems {
 	 * @param name The name of the item, without the mod ID or the .name stuff. The registry name will be
 	 *        {@code ebwizardry:[name]}. The unlocalised name will be {@code item.ebwizardry:[name].name}.
 	 * @param item The item to register.
-	 * @param setTabIcon True to set this item as the icon for its creative tab.
 	 */
 	// It now makes sense to have the name first, since it's shorter than an entire item declaration.
-	private static void registerItem(IForgeRegistry<Item> registry, String name, Item item, boolean setTabIcon){
+	private static void registerItem(IForgeRegistry<Item> registry, String name, Item item){
 
 		item.setRegistryName(ArcaneEssentials.MODID, name);
 		item.setTranslationKey(item.getRegistryName().toString());
 		registry.register(item);
 
-		if(setTabIcon && item.getCreativeTab() instanceof WizardryTabs.CreativeTabSorted){
-			((WizardryTabs.CreativeTabSorted)item.getCreativeTab()).setIconItem(new ItemStack(item));
-		}
 
 		if(item.getCreativeTab() instanceof WizardryTabs.CreativeTabListed){
 			((WizardryTabs.CreativeTabListed)item.getCreativeTab()).order.add(item);
