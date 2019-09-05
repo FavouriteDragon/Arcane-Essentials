@@ -88,7 +88,7 @@ public class RenderUtils {
 		BufferBuilder buffer = tessellator.getBuffer();
 
 		//Need to change this so it supports textures
-		buffer.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR);
+		buffer.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_TEX_COLOR);
 
 		boolean goingUp = inside;
 
@@ -105,20 +105,33 @@ public class RenderUtils {
 				float vy = radius * MathHelper.sin(latitude);
 				float vx = hRadius * MathHelper.sin(longitude);
 				float vz = hRadius * MathHelper.cos(longitude);
-
-				buffer.pos(vx, vy, vz).color(r, g, b, a).endVertex();
-
+				if (texture != null) {
+					Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+					buffer.pos(vx, vy, vz).color(r, g, b, a).tex(0, 0).endVertex();
+				}
+				else {
+					buffer.pos(vx, vy, vz).color(r, g, b, a).endVertex();
+				}
 				vx = hRadius * MathHelper.sin(longitude + longStep);
 				vz = hRadius * MathHelper.cos(longitude + longStep);
 
 				if (texture != null) {
 					Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+					buffer.pos(vx, vy, vz).color(r, g, b, a).tex(0, 0).endVertex();
 				}
-				buffer.pos(vx, vy, vz).color(r, g, b, a).endVertex();
+				else {
+					buffer.pos(vx, vy, vz).color(r, g, b, a).endVertex();
+				}
 			}
 
 			// The next pole
-			buffer.pos(0, goingUp ? radius : -radius, 0).color(r, g, b, a).endVertex();
+			if (texture != null) {
+				Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+				buffer.pos(0, goingUp ? radius : -radius, 0).tex(0, 0).color(r, g, b, a).endVertex();
+			}
+			else {
+				buffer.pos(0, goingUp ? radius : -radius, 0).color(r, g, b, a).endVertex();
+			}
 
 			goingUp = !goingUp;
 		}

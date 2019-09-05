@@ -34,7 +34,6 @@ public class RenderFireball extends Render<EntityFireball> {
 		GlStateManager.pushMatrix();
 
 		GlStateManager.enableBlend();
-		GlStateManager.disableTexture2D();
 		GlStateManager.disableLighting();
 		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
@@ -126,7 +125,6 @@ public class RenderFireball extends Render<EntityFireball> {
 		}
 
 
-		GlStateManager.enableTexture2D();
 		GlStateManager.enableLighting();
 		GlStateManager.disableBlend();
 
