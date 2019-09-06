@@ -15,6 +15,11 @@ import net.minecraftforge.fml.common.Mod;
 
 public class SpellUtils {
 
+	public static final String SIZE = "size";
+	public static final String SPEED = "speed";
+	public static final String LIFE_STEAL = "life_steal";
+	public static final String LIFETIME = "lifetime";
+
 	public static boolean isSwordCastable(Spell spell) {
 		if (spell instanceof IArcaneSpell) {
 			return ((IArcaneSpell) spell).isSwordCastable();

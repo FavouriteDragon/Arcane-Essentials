@@ -13,8 +13,9 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-import static com.favouritedragon.arcaneessentials.common.util.ArcaneSpellProperties.LIFETIME;
-import static com.favouritedragon.arcaneessentials.common.util.ArcaneSpellProperties.SPEED;
+import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.LIFETIME;
+import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SPEED;
+
 
 public class CycloneBolt extends Spell implements IArcaneSpell {
 

@@ -19,7 +19,8 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import static com.favouritedragon.arcaneessentials.common.util.ArcaneSpellProperties.SPEED;
+import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SPEED;
+
 
 public class LightningVortex extends Spell {
 

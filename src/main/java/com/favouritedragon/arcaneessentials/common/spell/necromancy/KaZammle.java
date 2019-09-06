@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-import static com.favouritedragon.arcaneessentials.common.util.ArcaneSpellProperties.LIFE_STEAL;
+import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.LIFE_STEAL;
 
 
 public class KaZammle extends SpellRay {

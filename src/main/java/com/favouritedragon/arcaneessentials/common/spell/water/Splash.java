@@ -10,9 +10,10 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
+import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SIZE;
+
 public class Splash extends Spell {
 
-	private static final String SIZE = "size";
 
 	public Splash() {
 		super(ArcaneEssentials.MODID, "splash", EnumAction.BOW, false);

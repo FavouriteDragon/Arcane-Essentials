@@ -14,6 +14,7 @@ import com.favouritedragon.arcaneessentials.common.spell.storm.StormBlink;
 import com.favouritedragon.arcaneessentials.common.spell.storm.ThunderBurst;
 import com.favouritedragon.arcaneessentials.common.spell.water.OceanBurst;
 import com.favouritedragon.arcaneessentials.common.spell.water.Splash;
+import com.favouritedragon.arcaneessentials.common.spell.water.Sploosh;
 import com.favouritedragon.arcaneessentials.common.spell.water.Whirlpool;
 import com.google.gson.JsonParseException;
 import electroblob.wizardry.Wizardry;
@@ -118,6 +119,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new RadiantBeam());
 		event.getRegistry().register(new SolarBeam());
 		event.getRegistry().register(new Splash());
+		event.getRegistry().register(new Sploosh());
 		event.getRegistry().register(new StormBlink());
 		event.getRegistry().register(new ThunderBurst());
 		event.getRegistry().register(new Whirlpool());

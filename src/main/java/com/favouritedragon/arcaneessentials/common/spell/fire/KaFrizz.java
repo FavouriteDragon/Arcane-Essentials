@@ -15,7 +15,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
-import static com.favouritedragon.arcaneessentials.common.util.ArcaneSpellProperties.SIZE;
+import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SIZE;
 
 public class KaFrizz extends Spell {
 

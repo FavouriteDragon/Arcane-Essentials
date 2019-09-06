@@ -1,6 +1,7 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
+import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
@@ -21,9 +22,14 @@ public class EntityWaterBall extends EntityMagicBolt {
 	}
 
 	private float damage = 5;
+	private boolean spawnWhirlPool;
 
 	public void setDamage(float damage) {
 		this.damage = damage;
+	}
+
+	public void setSpawnWhirlPool(boolean whirlPool) {
+		this.spawnWhirlPool = whirlPool;
 	}
 
 	@Override
@@ -63,6 +69,18 @@ public class EntityWaterBall extends EntityMagicBolt {
 					}
 				}
 			}
+			if (spawnWhirlPool) {
+				EntityWhirlpool pool = new EntityWhirlpool(world);
+				pool.setOwner(getCaster());
+				pool.setPosition(posX, posY, posZ);
+				pool.setCaster(getCaster());
+				pool.lifetime = 40 + (int) (getSize() * 10);
+				pool.damageMultiplier = damage;
+				pool.height = getSize() * 2;
+				pool.width = getSize() * 2;
+				world.spawnEntity(pool);
+			}
+
 			if (world instanceof WorldServer) {
 				((WorldServer) world).spawnParticle(EnumParticleTypes.WATER_SPLASH, true, posX, posY, posZ, 40 + (int) (getSize() * 5),0, 0, 0,
 						0.02D + getSize() / 50);

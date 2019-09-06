@@ -106,10 +106,10 @@ public class RenderFireball extends Render<EntityFireball> {
 						alpha = MathHelper.clamp(alpha, aMin, aMax);
 						break;
 				}
-				drawSphere(radius, latStep, longStep, false, red, green, blue, alpha, TEXTURE);
+				drawSphere(radius, latStep, longStep, false, red, green, blue, alpha, null);
 			}
 		//drawSphere(radius - 0.05f, latStep, longStep, true, r1, g1, b1, a * 1F);
-		drawSphere(radius / 2, latStep, longStep, false, r2, g2, b2, 1.4f * a, TEXTURE);
+		drawSphere(radius / 2, latStep, longStep, false, r2, g2, b2, 1.4f * a, null);
 
 		//Particles
 
