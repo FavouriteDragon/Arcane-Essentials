@@ -32,6 +32,7 @@ public class KaSplooshle extends Spell {
 			ball.setSize(size);
 			ball.setSpawnWhirlPool(true);
 			ball.setDamage(damage);
+			ball.setSpawnGeysers(true);
 			ball.setKnockbackStrength((int) knockback);
 			ball.aim(caster, speed, 0F);
 			return world.spawnEntity(ball);
