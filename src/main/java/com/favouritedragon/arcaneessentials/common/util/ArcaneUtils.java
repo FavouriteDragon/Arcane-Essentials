@@ -518,6 +518,10 @@ public class ArcaneUtils {
 		return new Vec3d((double) (f1 * f2), (double) f3, (double) (f * f2));
 	}
 
+	public static Vec3d toRectangular(double yaw, double pitch) {
+		return new Vec3d(-sin(yaw) * cos(pitch), -sin(pitch), cos(yaw) * cos(pitch));
+	}
+
 	public static Vec3d getDirectionalVortexEndPos(EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double radiusScale, double posX, double posY, double posZ) {
 		double radius = maxAngle / radiusScale;
 		double x = radius * cos(maxAngle);

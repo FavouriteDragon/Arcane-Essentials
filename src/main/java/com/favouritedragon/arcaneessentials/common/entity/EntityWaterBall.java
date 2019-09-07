@@ -80,7 +80,7 @@ public class EntityWaterBall extends EntityMagicBolt {
 				pool.setPosition(posX, posY, posZ);
 				pool.setCaster(getCaster());
 				pool.lifetime = 20 + (int) (getSize() * 10);
-				pool.damageMultiplier = damage / 6;
+				pool.damageMultiplier = damage / 7;
 				pool.setSize(getSize());
 				pool.setRenderSize(getSize() * 1.5F);
 				pool.setVortexHeight(getSize() * 1.5F);
@@ -89,13 +89,14 @@ public class EntityWaterBall extends EntityMagicBolt {
 
 			if (spawnGeysers) {
 				for (int i = 0; i < 5; i++) {
-					Vec3d pos = ArcaneUtils.getVectorForRotation(0, rotationYaw + i * 5);
+					Vec3d pos = ArcaneUtils.toRectangular(rotationYaw + i * 72, 0);
+					pos = pos.scale(3);
 					EntityWhirlpool pool = new EntityWhirlpool(world);
 					pool.setOwner(getCaster());
 					pool.setPosition(posX + pos.x, posY, posZ + pos.z);
 					pool.setCaster(getCaster());
 					pool.lifetime = 20 + (int) (getSize() * 10);
-					pool.damageMultiplier = damage / 6;
+					pool.damageMultiplier = damage / 10;
 					pool.setSize(getSize() / 2);
 					pool.setRenderSize(getSize() / 2);
 					pool.setVortexHeight(getSize() * 4);
