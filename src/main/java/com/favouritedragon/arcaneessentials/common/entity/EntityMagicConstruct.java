@@ -1,12 +1,10 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -40,7 +38,7 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 	}
 
 	public void setRenderSize(float size) {
-		dataManager.set(SYNC_SIZE, size);
+		dataManager.set(SYNC_RENDER_SIZE, size);
 	}
 
 	public float getRenderSize() {
@@ -72,6 +70,10 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 	public void onUpdate() {
 		super.onUpdate();
 		setSize(getSize(), getSize());
+
+		if (getCaster() == null) {
+			despawn();
+		}
 
 	}
 

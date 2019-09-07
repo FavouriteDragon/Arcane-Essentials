@@ -256,7 +256,7 @@ public class ArcaneUtils {
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double radius = minRadius + (angle / radiusScale);
 			double x = radius * cos(angle);
-			double y = angle / (maxAngle / vortexHeight);
+			double y = vortexHeight * (angle / (float) maxAngle);
 			y = MathHelper.clamp(y, 0, vortexHeight);
 			double z = radius * sin(angle);
 			Vec3d pos = new Vec3d(position.x + x, position.y + y, position.z + z);

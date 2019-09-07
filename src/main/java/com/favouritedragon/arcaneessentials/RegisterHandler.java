@@ -108,6 +108,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new KaFrizz());
 		event.getRegistry().register(new KaFrizzle());
 		event.getRegistry().register(new KaSploosh());
+		event.getRegistry().register(new KaSplooshle());
 		event.getRegistry().register(new KaThwack());
 		event.getRegistry().register(new KaZam());
 		event.getRegistry().register(new KaZammle());
