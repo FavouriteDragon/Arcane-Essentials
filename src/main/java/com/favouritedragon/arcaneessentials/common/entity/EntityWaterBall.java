@@ -97,7 +97,7 @@ public class EntityWaterBall extends EntityMagicBolt {
 					pool.setCaster(getCaster());
 					pool.lifetime = 20 + (int) (getSize() * 10);
 					pool.damageMultiplier = damage / 10;
-					pool.setSize(getSize() / 2);
+					pool.setSize(getSize() / 4);
 					pool.setRenderSize(getSize() / 2);
 					pool.setVortexHeight(getSize() * 4);
 					world.spawnEntity(pool);
