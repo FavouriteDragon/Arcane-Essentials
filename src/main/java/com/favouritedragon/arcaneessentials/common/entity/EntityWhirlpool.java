@@ -9,6 +9,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
@@ -21,13 +24,22 @@ import static com.favouritedragon.arcaneessentials.common.util.DamageSources.SPL
 
 public class EntityWhirlpool extends EntityMagicConstruct {
 
+	private static final DataParameter<Float> SYNC_VORTEX_HEIGHT = EntityDataManager.createKey(EntityWhirlpool.class,
+			DataSerializers.FLOAT);
+
 	public EntityWhirlpool(World world) {
 		super(world);
 		this.height = 1F;
 		this.width = 1F;
 	}
 
+	public void setVortexHeight(float height) {
+		dataManager.set(SYNC_VORTEX_HEIGHT, height);
+	}
 
+	public float getVortexHeight() {
+		return dataManager.get(SYNC_VORTEX_HEIGHT);
+	}
 
 	@Override
 	protected void readEntityFromNBT(@Nonnull NBTTagCompound compound) {
@@ -42,6 +54,13 @@ public class EntityWhirlpool extends EntityMagicConstruct {
 	@Override
 	public boolean canRenderOnFire() {
 		return false;
+	}
+
+
+	@Override
+	protected void entityInit() {
+		super.entityInit();
+		dataManager.register(SYNC_VORTEX_HEIGHT, 1.0F);
 	}
 
 	@Override

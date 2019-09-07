@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 
@@ -22,6 +23,7 @@ public class EntityWaterBall extends EntityMagicBolt {
 
 	private float damage = 5;
 	private boolean spawnWhirlPool;
+	private boolean spawnGeysers;
 
 	public void setDamage(float damage) {
 		this.damage = damage;
@@ -29,6 +31,10 @@ public class EntityWaterBall extends EntityMagicBolt {
 
 	public void setSpawnWhirlPool(boolean whirlPool) {
 		this.spawnWhirlPool = whirlPool;
+	}
+
+	public void setSpawnGeysers(boolean spawnGeysers) {
+		this.spawnGeysers = spawnGeysers;
 	}
 
 	@Override
@@ -77,7 +83,24 @@ public class EntityWaterBall extends EntityMagicBolt {
 				pool.damageMultiplier = damage / 6;
 				pool.setSize(getSize());
 				pool.setRenderSize(getSize() * 2);
+				pool.setVortexHeight(getSize());
 				world.spawnEntity(pool);
+			}
+
+			if (spawnGeysers) {
+				for (int i = 0; i < 5; i++) {
+					Vec3d pos = ArcaneUtils.getVectorForRotation(0, rotationYaw + i * 5);
+					EntityWhirlpool pool = new EntityWhirlpool(world);
+					pool.setOwner(getCaster());
+					pool.setPosition(posX + pos.x, posY, posZ + pos.z);
+					pool.setCaster(getCaster());
+					pool.lifetime = 20 + (int) (getSize() * 10);
+					pool.damageMultiplier = damage / 6;
+					pool.setSize(getSize() / 2);
+					pool.setRenderSize(getSize() / 2);
+					pool.setVortexHeight(getSize() * 4);
+					world.spawnEntity(pool);
+				}
 			}
 
 			if (world instanceof WorldServer) {
