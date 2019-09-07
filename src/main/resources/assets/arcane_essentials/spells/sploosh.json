@@ -19,7 +19,7 @@
   "base_properties": {
     "damage": 6,
     "range": 9,
-    "size": 0.75,
+    "size": 1,
     "effect_strength": 0.75
   }
 }

@@ -16,6 +16,13 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 	public static final DataParameter<String> SYNC_OWNER_ID = EntityDataManager.createKey(EntityMagicConstruct.class,
 			DataSerializers.STRING);
 
+	//SYNC_SIZE is used for setting the actual size of the entity. It's also used for rendering.
+	private static final DataParameter<Float> SYNC_SIZE = EntityDataManager.createKey(EntityMagicConstruct.class,
+			DataSerializers.FLOAT);
+	//This is used for when the entity renders too big to fit normal hitboxes.
+	private static final DataParameter <Float> SYNC_RENDER_SIZE = EntityDataManager.createKey(EntityMagicConstruct.class,
+			DataSerializers.FLOAT);
+
 	public EntityMagicConstruct(World world) {
 		super(world);
 	}
@@ -24,10 +31,28 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 		dataManager.set(SYNC_OWNER_ID, entity.getUniqueID().toString());
 	}
 
+	public void setSize(float size) {
+		dataManager.set(SYNC_SIZE, size);
+	}
+
+	public float getSize() {
+		return dataManager.get(SYNC_SIZE);
+	}
+
+	public void setRenderSize(float size) {
+		dataManager.set(SYNC_SIZE, size);
+	}
+
+	public float getRenderSize() {
+		return dataManager.get(SYNC_RENDER_SIZE);
+	}
+
 	@Override
 	protected void entityInit() {
 		//Random UUID
 		dataManager.register(SYNC_OWNER_ID, "cb2e7444-3287-4b97-adf1-e5e7ec266331");
+		dataManager.register(SYNC_SIZE, 1.0F);
+		dataManager.register(SYNC_RENDER_SIZE, 1.0F);
 	}
 
 
@@ -41,6 +66,13 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 	@Override
 	public Entity getOwner() {
 		return getCaster();
+	}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+		setSize(getSize(), getSize());
+
 	}
 
 	@Override

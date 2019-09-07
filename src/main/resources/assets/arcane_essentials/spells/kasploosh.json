@@ -10,16 +10,16 @@
     "trades": true,
     "looting": true
   },
-  "tier": "novice",
+  "tier": "advanced",
   "element": "earth",
   "type": "projectile",
-  "cost": 10,
+  "cost": 60,
   "chargeup": 0,
-  "cooldown": 30,
+  "cooldown": 100,
   "base_properties": {
-    "damage": 3,
-    "range": 6,
-    "size": 0.5,
-    "effect_strength": 0.5
+    "damage": 12,
+    "range": 12,
+    "size": 2,
+    "effect_strength": 1.5
   }
 }

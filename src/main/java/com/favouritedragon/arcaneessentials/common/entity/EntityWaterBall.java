@@ -1,7 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
-import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
@@ -74,10 +73,10 @@ public class EntityWaterBall extends EntityMagicBolt {
 				pool.setOwner(getCaster());
 				pool.setPosition(posX, posY, posZ);
 				pool.setCaster(getCaster());
-				pool.lifetime = 40 + (int) (getSize() * 10);
-				pool.damageMultiplier = damage;
-				pool.height = getSize() * 2;
-				pool.width = getSize() * 2;
+				pool.lifetime = 20 + (int) (getSize() * 10);
+				pool.damageMultiplier = damage / 6;
+				pool.setSize(getSize() / 2);
+				pool.setRenderSize(getSize() * 4);
 				world.spawnEntity(pool);
 			}
 

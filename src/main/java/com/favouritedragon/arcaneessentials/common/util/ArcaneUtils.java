@@ -257,6 +257,7 @@ public class ArcaneUtils {
 			double radius = minRadius + (angle / radiusScale);
 			double x = radius * cos(angle);
 			double y = angle / (maxAngle / vortexHeight);
+			y = MathHelper.clamp(y, 0, vortexHeight);
 			double z = radius * sin(angle);
 			Vec3d pos = new Vec3d(position.x + x, position.y + y, position.z + z);
 			if (particle.equals(ParticleBuilder.Type.LIGHTNING)) {
