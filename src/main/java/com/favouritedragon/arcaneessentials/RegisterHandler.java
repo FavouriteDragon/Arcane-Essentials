@@ -9,6 +9,7 @@ import com.favouritedragon.arcaneessentials.common.spell.earth.SolarBeam;
 import com.favouritedragon.arcaneessentials.common.spell.fire.*;
 import com.favouritedragon.arcaneessentials.common.spell.ice.BlizzardBeam;
 import com.favouritedragon.arcaneessentials.common.spell.necromancy.*;
+import com.favouritedragon.arcaneessentials.common.spell.sorcery.FlashStep;
 import com.favouritedragon.arcaneessentials.common.spell.storm.LightningVortex;
 import com.favouritedragon.arcaneessentials.common.spell.storm.StormBlink;
 import com.favouritedragon.arcaneessentials.common.spell.storm.ThunderBurst;
@@ -105,6 +106,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new CycloneBolt());
 		event.getRegistry().register(new CycloneShield());
 		event.getRegistry().register(new FirePledge());
+		event.getRegistry().register(new FlashStep());
 		event.getRegistry().register(new Frizz());
 		event.getRegistry().register(new Frizzle());
 		event.getRegistry().register(new InfernoPillar());

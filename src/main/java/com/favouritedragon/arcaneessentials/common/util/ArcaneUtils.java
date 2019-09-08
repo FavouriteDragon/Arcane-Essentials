@@ -843,7 +843,8 @@ public class ArcaneUtils {
 	}
 
 	//Copied from the original method, except it doesn't spawn particles
-	public static boolean attemptTeleport(EntityLivingBase entity, double x, double y, double z) {
+	//Goes directly to the ground
+	public static boolean attemptGroundedTeleport(EntityLivingBase entity, double x, double y, double z) {
 		double d0 = entity.posX;
 		double d1 = entity.posY;
 		double d2 = entity.posZ;
@@ -876,6 +877,35 @@ public class ArcaneUtils {
 					flag = true;
 				}
 			}
+		}
+
+		if (!flag) {
+			entity.setPositionAndUpdate(d0, d1, d2);
+			return false;
+		} else {
+
+			if (entity instanceof EntityCreature) {
+				((EntityCreature) entity).getNavigator().clearPath();
+			}
+
+			return true;
+		}
+	}
+
+	public static boolean attemptTeleport(EntityLivingBase entity, double x, double y, double z) {
+		double d0 = entity.posX;
+		double d1 = entity.posY;
+		double d2 = entity.posZ;
+		entity.posX = x;
+		entity.posY = y;
+		entity.posZ = z;
+		boolean flag = false;
+		World world = entity.world;
+
+		entity.setPositionAndUpdate(entity.posX, entity.posY, entity.posZ);
+
+		if (world.getCollisionBoxes(entity, entity.getEntityBoundingBox()).isEmpty() && !world.containsAnyLiquid(entity.getEntityBoundingBox())) {
+			flag = true;
 		}
 
 		if (!flag) {
