@@ -6,6 +6,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+
 public class EntityFlamePillarSpawner extends EntityMagicSpawner {
 
 	public EntityFlamePillarSpawner(World world) {
@@ -17,28 +19,35 @@ public class EntityFlamePillarSpawner extends EntityMagicSpawner {
 	}
 
 	@Override
-	protected void readEntityFromNBT(NBTTagCompound compound) {
+	protected void readEntityFromNBT(@Nonnull NBTTagCompound compound) {
 
 	}
 
 	@Override
-	protected void writeEntityToNBT(NBTTagCompound compound) {
+	protected void writeEntityToNBT(@Nonnull NBTTagCompound compound) {
 
 	}
 
-	@Override
-	public void onUpdate() {
-		super.onUpdate();
-		if (ticksExisted % 5 == 0 && getCaster() != null) {
-			world.spawnEntity(new EntityFlamePillar(world, posX, posY, posZ, getCaster(), lifetime / 2, damageMultiplier, 1F, 7, 60));
-			world.playSound(posX, posY, posZ, SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.HOSTILE,
-					1 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10, true);
-		}
-	}
 
 	@Override
 	public boolean canBeCollidedWith() {
 		return false;
 	}
 
+	@Override
+	protected int getFrequency() {
+		return 5;
+	}
+
+	@Override
+	protected boolean spawnEntity() {
+		return 	world.spawnEntity(new EntityFlamePillar(world, posX, posY, posZ, getCaster(), lifetime / 2, damageMultiplier, 1F, 7, 60));
+	}
+
+	@Override
+	public void playSound() {
+		world.playSound(posX, posY, posZ, SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.HOSTILE,
+				1 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10, true);
+
+	}
 }

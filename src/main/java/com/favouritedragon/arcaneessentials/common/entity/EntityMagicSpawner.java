@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
@@ -36,6 +37,32 @@ public abstract class EntityMagicSpawner extends EntityMagicConstruct {
 				this.setDead();
 			}
 		}
+		if (getCaster() != null && ticksExisted % getFrequency() == 0) {
+			if (spawnEntity()) {
+				playSound();
+			}
+		}
 	}
 
+	protected boolean spawnEntity() {
+		return false;
+	}
+
+	protected int getFrequency() {
+		return 6;
+	}
+
+	public void playSound() {
+
+	}
+
+	@Override
+	public boolean canBeCollidedWith() {
+		return false;
+	}
+
+	@Override
+	public boolean canBePushed() {
+		return false;
+	}
 }

@@ -82,6 +82,8 @@ public class RegisterHandler {
 		registerEntity(EntitySolarBeam.class, "Solar Beam", id++, 128, LIVING_UPDATE_INTERVAL, false);
 		registerEntity(EntityFireball.class, "Fireball", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
 		registerEntity(EntityWaterBall.class, "Waterball", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
+		registerEntity(EntityMagicLightning.class, "MagicLightning", id++, 128, LIVING_UPDATE_INTERVAL, false);
+		registerEntity(EntityLightningSpawner.class, "LightningSpawner", id++, 128, LIVING_UPDATE_INTERVAL, true);
 
 	}
 

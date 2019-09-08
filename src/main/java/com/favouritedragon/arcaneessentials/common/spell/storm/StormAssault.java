@@ -29,14 +29,14 @@ import java.util.List;
 public class StormAssault extends Spell implements IArcaneSpell {
 
 	private static final IVariable<Integer> ASSAULT_TIME = new IVariable.Variable<Integer>(Persistence.NEVER).withTicker(StormAssault::update);
-	private static final IVariable<SpellModifiers> CHARGE_MODIFIERS = new IVariable.Variable<>(Persistence.NEVER);
+	private static final IVariable<SpellModifiers> STORM_MODIFIERS = new IVariable.Variable<>(Persistence.NEVER);
 
 	private static final String NUMBER_OF_STRIKES = "strike_count";
 
 	private static final double EXTRA_HIT_MARGIN = 1;
 
 	public StormAssault(){
-		super("charge", EnumAction.NONE, false);
+		super("storm_assault", EnumAction.NONE, false);
 		addProperties(NUMBER_OF_STRIKES, DURATION, DAMAGE, EFFECT_STRENGTH);
 		this.soundValues(0.6f, 1, 0);
 	}
@@ -47,9 +47,7 @@ public class StormAssault extends Spell implements IArcaneSpell {
 		WizardData.get(caster).setVariable(ASSAULT_TIME, (int)(getProperty(DURATION).floatValue()
 				* modifiers.get(WizardryItems.duration_upgrade)));
 
-		WizardData.get(caster).setVariable(CHARGE_MODIFIERS, modifiers);
-
-		if(world.isRemote) world.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, caster.posX, caster.posY + caster.height/2, caster.posZ, 0, 0, 0);
+		WizardData.get(caster).setVariable(STORM_MODIFIERS, modifiers);
 
 		this.playSound(world, caster, ticksInUse, -1, modifiers);
 
@@ -60,9 +58,9 @@ public class StormAssault extends Spell implements IArcaneSpell {
 
 		if(chargeTime == null) chargeTime = 0;
 
-		if(chargeTime > 0){
+		if(chargeTime > 0) {
 
-			SpellModifiers modifiers = WizardData.get(player).getVariable(CHARGE_MODIFIERS);
+			SpellModifiers modifiers = WizardData.get(player).getVariable(STORM_MODIFIERS);
 			if(modifiers == null) modifiers = new SpellModifiers();
 
 			Vec3d look = player.getLookVec();
