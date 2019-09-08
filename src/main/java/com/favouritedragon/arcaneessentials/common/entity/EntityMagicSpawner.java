@@ -1,11 +1,11 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
 public abstract class EntityMagicSpawner extends EntityMagicConstruct {
+
 
 
 	public EntityMagicSpawner(World world) {
@@ -21,6 +21,14 @@ public abstract class EntityMagicSpawner extends EntityMagicConstruct {
 		this.setCaster(caster);
 		this.lifetime = lifetime;
 		this.damageMultiplier = damageMultiplier;
+	}
+
+	public void setLifetime(int time) {
+		this.lifetime = time;
+	}
+
+	public int getLifetime() {
+		return lifetime;
 	}
 
 	@Override

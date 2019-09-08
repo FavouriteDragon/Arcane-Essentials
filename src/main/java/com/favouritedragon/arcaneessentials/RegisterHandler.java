@@ -12,6 +12,7 @@ import com.favouritedragon.arcaneessentials.common.spell.necromancy.*;
 import com.favouritedragon.arcaneessentials.common.spell.storm.LightningVortex;
 import com.favouritedragon.arcaneessentials.common.spell.storm.StormBlink;
 import com.favouritedragon.arcaneessentials.common.spell.storm.ThunderBurst;
+import com.favouritedragon.arcaneessentials.common.spell.storm.ThunderingChain;
 import com.favouritedragon.arcaneessentials.common.spell.water.*;
 import com.google.gson.JsonParseException;
 import electroblob.wizardry.Wizardry;
@@ -123,6 +124,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new Sploosh());
 		event.getRegistry().register(new StormBlink());
 		event.getRegistry().register(new ThunderBurst());
+		event.getRegistry().register(new ThunderingChain());
 		event.getRegistry().register(new Whirlpool());
 		event.getRegistry().register(new Zam());
 		event.getRegistry().register(new Zammle());

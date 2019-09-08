@@ -32,12 +32,12 @@ public class ClientProxy implements IProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlamePillar.class, RenderFirePillar::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlamePillarSpawner.class, RenderFirePillarSpawner::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityLightningVortex.class, RenderLightningVortex::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityLightningSpawner.class, RenderLightningSpawner::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityMagicLightning.class, RenderMagicLightning::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntitySolarBeam.class, RenderSolarBeam::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityThunderBurst.class, RenderThunderBurst::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityWaterBall.class, RenderWaterBall::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityWhirlpool.class, RenderWhirlpool::new);
-
-
 
 	}
 

@@ -13,7 +13,7 @@ import java.util.List;
 
 public class EntityMagicLightning extends EntityMagicConstruct {
 
-	private float knockbackMult;
+	private Vec3d knockback;
 	private float damage;
 	private int burnTime;
 
@@ -21,8 +21,8 @@ public class EntityMagicLightning extends EntityMagicConstruct {
 		super(world);
 	}
 
-	public void setKnockbackMult(float mult) {
-		this.knockbackMult = mult;
+	public void setKnockback(Vec3d knockback) {
+		this.knockback = knockback;
 	}
 
 	public void setDamage(float damage) {
@@ -56,7 +56,7 @@ public class EntityMagicLightning extends EntityMagicConstruct {
 				if (!world.isRemote) {
 					if (hit.canBeCollidedWith() && hit.canBePushed() && AllyDesignationSystem.isValidTarget(this, hit)) {
 						hit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(this, getCaster(), MagicDamage.DamageType.SHOCK), damage);
-						Vec3d vel = hit.getPositionVector().subtract(getPositionVector()).scale(knockbackMult);
+						Vec3d vel = knockback;
 						hit.addVelocity(vel.x, vel.y, vel.z);
 						hit.setFire(burnTime);
 						ArcaneUtils.applyPlayerKnockback(hit);

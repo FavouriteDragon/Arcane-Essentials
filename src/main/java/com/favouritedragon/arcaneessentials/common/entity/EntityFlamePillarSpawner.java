@@ -41,7 +41,7 @@ public class EntityFlamePillarSpawner extends EntityMagicSpawner {
 
 	@Override
 	protected boolean spawnEntity() {
-		return 	world.spawnEntity(new EntityFlamePillar(world, posX, posY, posZ, getCaster(), lifetime / 2, damageMultiplier, 1F, 7, 60));
+		return 	world.spawnEntity(new EntityFlamePillar(world, posX, posY, posZ, getCaster(), getLifetime() / 2, damageMultiplier, 1F, 7, 60));
 	}
 
 	@Override
