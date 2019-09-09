@@ -6,11 +6,14 @@ import electroblob.wizardry.data.IVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.registry.WizardryItems;
+import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
+import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -40,9 +43,10 @@ public class FlashStep extends Spell {
 		}
 		if (ArcaneUtils.attemptTeleport(caster, tPos.x, tPos.y, tPos.z)) {
 			if (world.isRemote) {
-				//spawn particles
+				//spawn particles, play sounds
+				WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_FORCE_ORB_HIT_BLOCK, 1.0F + world.rand.nextFloat() / 10,
+						0.8F + world.rand.nextFloat() / 10);
 			}
-			return true;
 		}
 		WizardData.get(caster).setVariable(TELEPORTS, WizardData.get(caster).getVariable(TELEPORTS) - 1);
 

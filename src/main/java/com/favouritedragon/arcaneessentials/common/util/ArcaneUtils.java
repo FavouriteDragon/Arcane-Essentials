@@ -894,10 +894,10 @@ public class ArcaneUtils {
 
 	public static boolean attemptTeleport(EntityLivingBase entity, double x, double y, double z) {
 		double d0 = entity.posX;
-		double d1 = entity.posY;
+		double d1 = entity.getEntityBoundingBox().minY;
 		double d2 = entity.posZ;
 		entity.posX = x;
-		entity.posY = y;
+		entity.posY = y - 1;
 		entity.posZ = z;
 		boolean flag = false;
 		World world = entity.world;
@@ -912,7 +912,6 @@ public class ArcaneUtils {
 			entity.setPositionAndUpdate(d0, d1, d2);
 			return false;
 		} else {
-
 			if (entity instanceof EntityCreature) {
 				((EntityCreature) entity).getNavigator().clearPath();
 			}

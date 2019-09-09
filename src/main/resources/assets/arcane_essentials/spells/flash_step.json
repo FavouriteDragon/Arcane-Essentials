@@ -17,7 +17,7 @@
   "chargeup": 0,
   "cooldown": 80,
   "base_properties": {
-    "range": 6,
+    "range": 3,
     "teleport_count": 2
   }
 }
