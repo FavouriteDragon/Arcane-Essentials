@@ -19,6 +19,8 @@ spell.arcane_essentials:frizz.desc=Singe enemies with a small fireball.
 spell.arcane_essentials:frizzle=Frizzle
 spell.arcane_essentials:frizzle.desc=Burn enemies with a fireball.
 
+spell.arcane_essentials:inferno_form=Inferno Form
+spell.arcane_essentials:inferno_form.desc=Become one with the power of flame, turning into a living inferno for 12 seconds! Enemies within a 2 block radius will be pushed back, projectiles are blocked, and there's a chance for you to phase through attacks!
 spell.arcane_essentials:inferno_pillar=Inferno Pillar
 spell.arcane_essentials:inferno_pillar.desc=Create a massive flaming pillar around you! This pillar burns enemies and reflects projectiles for a couple seconds, great for protecting yourself from those pesky skeletons!
 
@@ -88,10 +90,22 @@ item.arcane_essentials:sword.levelup=%1$s is ready to upgrade to %2$s tier
 item.arcane_essentials:sword.buff=+%1$s %2$s potency
 item.arcane_essentials:sword.progression=Progression: %1$s/%2$s
 
-item.arcane_essentials:novice_lightning_sword.name=Sparking Sword
-item.arcane_essentials:apprentic_lightning_sword.name=Shock Sword
+item.arcane_essentials:novice_lightning_sword.name=Novice Lightning Sword
+item.arcane_essentials:apprentice_lightning_sword.name=Apprentice Lightning Sword
 item.arcane_essentials:advanced_lightning_sword.name=Sword of The Storm
-item.arcane_essentials:master_lightning_sword.name=Tempest Tearer
+item.arcane_essentials:master_lightning_sword.name=Master Lightning Sword
+
+item.arcane_essentials:master_sorcery_sword.name=Master Sorcery Sword
+
+item.arcane_essentials:master_nature_sword.name=Master Earth Sword
+
+item.arcane_essentials:master_fire_sword.name=Master Fire Sword
+
+item.arcane_essentials:master_ice_sword.name=Master Ice Sword
+
+item.arcane_essentials:master_healing_sword.name=Master Healing Sword
+
+item.arcane_essentials:master_necromancy_sword.name=Master Necromancy Sword
 
 
 element.water=Water

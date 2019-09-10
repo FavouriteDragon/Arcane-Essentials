@@ -26,6 +26,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Objects;
 
 import static com.favouritedragon.arcaneessentials.common.util.DamageSources.SPLASH;
 
@@ -39,17 +40,6 @@ public class PotionInfernoForm extends PotionMagicEffect implements ISyncedPotio
 		setBeneficial();
 	}
 
-	@Override
-	public boolean isInstant() {
-		return false;
-	}
-
-	@Override
-	public void performEffect(@Nonnull EntityLivingBase entityLivingBaseIn, int amplifier) {
-		super.performEffect(entityLivingBaseIn, amplifier);
-		entityLivingBaseIn.extinguish();
-	}
-
 	@SubscribeEvent
 	public static void handlePotion(LivingEvent.LivingUpdateEvent event) {
 		if (event.getEntityLiving() != null) {
@@ -57,28 +47,30 @@ public class PotionInfernoForm extends PotionMagicEffect implements ISyncedPotio
 			if (entity.isPotionActive(ArcanePotions.infernoForm)) {
 				entity.setInvisible(entity.isPotionActive(ArcanePotions.infernoForm));
 				if (entity.world.isRemote) {
-					if (ArcaneUtils.getRandomNumberInRange(1, 20) <= 10) {
-						ArcaneUtils.spawnSpinningHelix(entity.world, 60, 6F, 1F, ParticleBuilder.Type.MAGIC_FIRE,
+					assert entity.getActivePotionEffect(ArcanePotions.infernoForm) != null;
+					if (Objects.requireNonNull(entity.getActivePotionEffect(ArcanePotions.infernoForm)).getIsPotionDurationMax()) {
+						ArcaneUtils.spawnSpinningHelix(entity.world, 100, 7F, 1F, ParticleBuilder.Type.MAGIC_FIRE,
 								entity.getPositionVector(), -4, new Vec3d(entity.motionX, entity.motionY, entity.motionZ),
-								10 + ArcaneUtils.getRandomNumberInRange(1, 10), -1, -1, -1, 0.8f + entity.world.rand.nextFloat() / 2);
+								RegisterHandler.inferno_form.getProperty(Spell.EFFECT_DURATION).intValue() + ArcaneUtils.getRandomNumberInRange(1, 10), -1, -1, -1, 0.8f + entity.world.rand.nextFloat() / 2);
+
+					}
+					if (ArcaneUtils.getRandomNumberInRange(1, 20) <= 10) {
 						ParticleBuilder.create(ParticleBuilder.Type.BUFF).entity(entity).time(20).
 								clr(252, 2, 25).spawn(entity.world);
 					}
-				}
-				else {
+				} else {
 					float radius = RegisterHandler.inferno_form.getProperty(Spell.EFFECT_RADIUS).floatValue();
 					List<Entity> nearby = entity.world.getEntitiesWithinAABB(Entity.class, entity.getEntityBoundingBox()
 							.grow(radius, radius / 3, radius));
 					if (!nearby.isEmpty()) {
 						nearby.remove(entity);
-						for(Entity hit : nearby) {
+						for (Entity hit : nearby) {
 							if (AllyDesignationSystem.isValidTarget(entity, hit)) {
 								if (hit.canBeCollidedWith() && hit.canBePushed() && hit != entity) {
 									if (hit instanceof EntityArrow || (hit instanceof EntityThrowable && !(hit instanceof EntityMagicProjectile))) {
 										hit.setFire(RegisterHandler.inferno_form.getProperty(Spell.BURN_DURATION).intValue());
 										hit.addVelocity(hit.motionX * -1.01, 0, hit.motionZ * -1.01);
-									}
-									else {
+									} else {
 										hit.setFire(RegisterHandler.inferno_form.getProperty(Spell.BURN_DURATION).intValue());
 										Vec3d vel = hit.getPositionVector().subtract(entity.getPositionVector()).scale(0.1);
 										hit.addVelocity(vel.x, vel.y, vel.z);
@@ -118,12 +110,22 @@ public class PotionInfernoForm extends PotionMagicEffect implements ISyncedPotio
 		if (event.getEntityLiving().isPotionActive(ArcanePotions.infernoForm)) {
 			if (event.getSource() == DamageSource.DROWN || (event.getSource() instanceof IElementalDamage && ((IElementalDamage) event.getSource()).getType() == SPLASH)) {
 				event.setAmount(event.getAmount() * 1.5F);
-			}
-			else if (event.getSource() instanceof IElementalDamage && (((IElementalDamage) event.getSource()).getType() == MagicDamage.DamageType.FIRE ||
+			} else if (event.getSource() instanceof IElementalDamage && (((IElementalDamage) event.getSource()).getType() == MagicDamage.DamageType.FIRE ||
 					((IElementalDamage) event.getSource()).getType() == MagicDamage.DamageType.FROST)) {
 				event.setAmount(event.getAmount() * 0.05F);
 			}
 		}
+	}
+
+	@Override
+	public boolean isInstant() {
+		return false;
+	}
+
+	@Override
+	public void performEffect(@Nonnull EntityLivingBase entityLivingBaseIn, int amplifier) {
+		super.performEffect(entityLivingBaseIn, amplifier);
+		entityLivingBaseIn.extinguish();
 	}
 
 

@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "arcane_essentials:items/master_healing_sword"
+  }
+}

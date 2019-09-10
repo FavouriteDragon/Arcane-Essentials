@@ -3,13 +3,11 @@ package com.favouritedragon.arcaneessentials.common.item;
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.item.armour.ItemManaArmour;
 import com.favouritedragon.arcaneessentials.common.item.weapon.ItemMagicSword;
-import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Element;
 import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.registry.WizardryTabs;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -22,13 +20,27 @@ public class ArcaneItems {
 
 	public static final Item manaHelm = new ItemManaArmour(ArcaneMaterials.MANA_ARMOUR, 1, EntityEquipmentSlot.HEAD, "mana_helm", "mana_helm");
 	public static final Item manaChestplate = new ItemManaArmour(ArcaneMaterials.MANA_ARMOUR, 1, EntityEquipmentSlot.CHEST, "mana_chestplate", "mana_chestplate");
+
+	//Swords
 	public static final Item masterLightningSword = new ItemMagicSword(Item.ToolMaterial.DIAMOND, Tier.MASTER, Element.LIGHTNING);
+	public static final Item masterSorcerySword = new ItemMagicSword(Item.ToolMaterial.DIAMOND, Tier.MASTER, Element.SORCERY);
+	public static final Item masterNatureSword = new ItemMagicSword(Item.ToolMaterial.DIAMOND, Tier.MASTER, Element.EARTH);
+	public static final Item masterFireSword = new ItemMagicSword(Item.ToolMaterial.DIAMOND, Tier.MASTER, Element.FIRE);
+	public static final Item masterIceSword = new ItemMagicSword(Item.ToolMaterial.DIAMOND, Tier.MASTER, Element.ICE);
+	public static final Item masterHealingSword = new ItemMagicSword(Item.ToolMaterial.DIAMOND, Tier.MASTER, Element.HEALING);
+	public static final Item masterNecromancySword = new ItemMagicSword(Item.ToolMaterial.DIAMOND, Tier.MASTER, Element.NECROMANCY);
 
 	@SubscribeEvent
 	public static void register(RegistryEvent.Register<Item> event) {
 
 		IForgeRegistry<Item> registry = event.getRegistry();
 		registerItem(registry, "master_lightning_sword", masterLightningSword);
+		registerItem(registry, "master_sorcery_sword", masterSorcerySword);
+		registerItem(registry, "master_nature_sword", masterNatureSword);
+		registerItem(registry, "master_fire_sword", masterFireSword);
+		registerItem(registry, "master_ice_sword", masterIceSword);
+		registerItem(registry, "master_healing_sword", masterHealingSword);
+		registerItem(registry, "master_necromancy_sword", masterNecromancySword);
 	}
 
 	//Copied from eb's class
