@@ -377,9 +377,15 @@ public class ArcaneUtils {
 			double x = radius * cos(angle);
 			double y = angle / (maxAngle / vortexLength);
 			double z = radius * sin(angle);
-			ParticleBuilder.create(particle).pos(x + position.x, y + position.y, z + position.z).clr(r, g, b).spin(radius, particleSpeed)
-					.vel(entitySpeed.scale(particleSpeed)).time(maxAge).scale(scale).spawn(world);
+			if (r == -1 && g == -1 && b == -1) {
+				ParticleBuilder.create(particle).pos(x + position.x, y + position.y, z + position.z).spin(radius, particleSpeed)
+						.vel(entitySpeed.scale(particleSpeed)).time(maxAge).scale(scale).spawn(world);
+			}
+			else {
+				ParticleBuilder.create(particle).pos(x + position.x, y + position.y, z + position.z).clr(r, g, b).spin(radius, particleSpeed)
+						.vel(entitySpeed.scale(particleSpeed)).time(maxAge).scale(scale).spawn(world);
 
+			}
 		}
 	}
 
