@@ -277,7 +277,7 @@ public class ArcaneUtils {
 			double angle2 = world.rand.nextDouble() * Math.PI * 2;
 			double radius = minRadius + (angle / radiusScale);
 			double x = radius * cos(angle);
-			double y = angle / (maxAngle / vortexHeight);
+			double y = vortexHeight * (angle / (float) maxAngle);
 			double z = radius * sin(angle);
 			double speed = world.rand.nextDouble() * 2 + 1;
 			double omega = Math.signum(speed * ((Math.PI * 2) / 20 - speed / (20 * radius)));
