@@ -29,14 +29,62 @@ public abstract class SpellRay extends electroblob.wizardry.spell.SpellRay imple
 	@Override
 	protected boolean shootSpell(World world, Vec3d origin, Vec3d direction, @Nullable EntityPlayer caster, int ticksInUse, SpellModifiers modifiers) {
 
+		if (isPiercing()) {
+			return shootPiercingSpell(world, origin, direction, caster, ticksInUse, modifiers, RayTracer.ignoreEntityFilter(caster));
+		} else {
+			double range = getRange(world, origin, direction, caster, ticksInUse, modifiers);
+			Vec3d endpoint = origin.add(direction.scale(range));
+			Predicate<Entity> ignore = RayTracer.ignoreEntityFilter(caster);
+
+			// Change the filter depending on whether living entities are ignored or not
+			RayTraceResult rayTrace = RayTracer.rayTrace(world, origin, endpoint, getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(SpellModifiers.POTENCY), hitLiquids,
+					ignoreUncollidables, false, Entity.class, ignoreLivingEntities ? WizardryUtilities::isLiving
+							: ignore);
+
+			boolean flag = false;
+
+			//TODO: Piercing
+			if (rayTrace != null) {
+				// Doesn't matter which way round these are, they're mutually exclusive
+				if (rayTrace.typeOfHit == RayTraceResult.Type.ENTITY) {
+					// Do whatever the spell does when it hits an entity
+					flag = onEntityHit(world, rayTrace.entityHit, rayTrace.hitVec, caster, origin, ticksInUse, modifiers);
+					// If the spell succeeded, clip the particles to the correct distance so they don't go through the entity
+					if (flag) range = origin.distanceTo(rayTrace.hitVec);
+
+
+				} else if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK) {
+					// Do whatever the spell does when it hits an block
+					flag = onBlockHit(world, rayTrace.getBlockPos(), rayTrace.sideHit, rayTrace.hitVec, caster, origin, ticksInUse, modifiers);
+					// Clip the particles to the correct distance so they don't go through the block
+					// Unlike with entities, this is done regardless of whether the spell succeeded, since no spells go
+					// through blocks (and in fact, even the ray tracer itself doesn't do that)
+					range = origin.distanceTo(rayTrace.hitVec);
+				}
+			}
+
+			// If flag is false, either the spell missed or the relevant entity/block hit method returned false
+			if (!flag && !onMiss(world, caster, origin, direction, ticksInUse, modifiers)) return false;
+
+			// Particle spawning
+			if (world.isRemote) {
+				spawnParticleRay(world, origin, direction, caster, range);
+			}
+			if (caster != null)
+				playSound(world, caster);
+
+			return true;
+		}
+	}
+
+	protected boolean shootPiercingSpell(World world, Vec3d origin, Vec3d direction, @Nullable EntityPlayer caster, int ticksInUse, SpellModifiers modifiers, Predicate<Entity> filter) {
 		double range = getRange(world, origin, direction, caster, ticksInUse, modifiers);
 		Vec3d endpoint = origin.add(direction.scale(range));
-		Predicate<Entity> ignore = RayTracer.ignoreEntityFilter(caster);
 
 		// Change the filter depending on whether living entities are ignored or not
 		RayTraceResult rayTrace = RayTracer.rayTrace(world, origin, endpoint, getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(SpellModifiers.POTENCY), hitLiquids,
 				ignoreUncollidables, false, Entity.class, ignoreLivingEntities ? WizardryUtilities::isLiving
-						: ignore);
+						: filter);
 
 		boolean flag = false;
 
@@ -48,24 +96,9 @@ public abstract class SpellRay extends electroblob.wizardry.spell.SpellRay imple
 				flag = onEntityHit(world, rayTrace.entityHit, rayTrace.hitVec, caster, origin, ticksInUse, modifiers);
 				// If the spell succeeded, clip the particles to the correct distance so they don't go through the entity
 				if (flag) range = origin.distanceTo(rayTrace.hitVec);
+				filter = filter.or(e -> e == rayTrace.entityHit);
+				shootPiercingSpell(world, origin, direction, caster, ticksInUse, modifiers, filter);
 
-				if (isPiercing()) {
-					ignore.or(e -> e == rayTrace.entityHit);
-					RayTraceResult rayTrace1 = RayTracer.rayTrace(world, origin, endpoint, getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(SpellModifiers.POTENCY), hitLiquids,
-							ignoreUncollidables, false, Entity.class, ignoreLivingEntities ? WizardryUtilities::isLiving
-									: ignore);
-
-					if (rayTrace1 != null) {
-						// Doesn't matter which way round these are, they're mutually exclusive
-						if (rayTrace.typeOfHit == RayTraceResult.Type.ENTITY) {
-							// Do whatever the spell does when it hits an entity
-							flag = onEntityHit(world, rayTrace.entityHit, rayTrace.hitVec, caster, origin, ticksInUse, modifiers);
-							// If the spell succeeded, clip the particles to the correct distance so they don't go through the entity
-							if (flag) range = origin.distanceTo(rayTrace.hitVec);
-
-						}
-					}
-				}
 
 			} else if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK) {
 				// Do whatever the spell does when it hits an block
@@ -74,6 +107,13 @@ public abstract class SpellRay extends electroblob.wizardry.spell.SpellRay imple
 				// Unlike with entities, this is done regardless of whether the spell succeeded, since no spells go
 				// through blocks (and in fact, even the ray tracer itself doesn't do that)
 				range = origin.distanceTo(rayTrace.hitVec);
+				// Particle spawning
+				if (world.isRemote) {
+					spawnParticleRay(world, origin, direction, caster, range);
+				}
+				if (caster != null)
+					playSound(world, caster);
+				return true;
 			}
 		}
 
@@ -84,6 +124,7 @@ public abstract class SpellRay extends electroblob.wizardry.spell.SpellRay imple
 		if (world.isRemote) {
 			spawnParticleRay(world, origin, direction, caster, range);
 		}
+
 		if (caster != null)
 			playSound(world, caster);
 
