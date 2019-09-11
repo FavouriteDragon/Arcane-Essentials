@@ -24,7 +24,7 @@ public class RenderWhirlpool extends Render<EntityWhirlpool> {
 		int maxAngle = 90 + (int) (entity.getRenderSize() * 20);
 		if (entity.ticksExisted <= 1 || entity.ticksExisted % 8 == 0) {
 			ArcaneUtils.spawnSpinningVortex(entity.world, maxAngle / 2, entity.getVortexHeight(), 0.01, maxAngle / entity.getRenderSize(), ParticleBuilder.Type.MAGIC_BUBBLE,
-					new Vec3d(entity.posX, entity.posY, entity.posZ), new Vec3d(0.15, 0.05, 0.15), Vec3d.ZERO, 2);
+					new Vec3d(entity.posX, entity.posY, entity.posZ), new Vec3d(0.15, 0.05, 0.15), Vec3d.ZERO, 20);
 			ArcaneUtils.spawnSpinningVortex(entity.world, maxAngle / 2, entity.getVortexHeight(), 0.01, maxAngle / entity.getRenderSize(), EnumParticleTypes.WATER_BUBBLE,
 					new Vec3d(entity.posX, entity.posY, entity.posZ), new Vec3d(0.15, 0.05, 0.15), Vec3d.ZERO);
 		}

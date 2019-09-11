@@ -39,6 +39,7 @@ public class Whirlpool extends Spell {
 			pool.lifetime = 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade);
 			pool.damageMultiplier = damage;
 			pool.setRenderSize(4);
+			pool.setVortexHeight(3);
 			world.spawnEntity(pool);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.BLOCK_WATER_AMBIENT, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
@@ -56,7 +57,7 @@ public class Whirlpool extends Spell {
 			pool.lifetime = 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade);
 			pool.damageMultiplier = damage;
 			pool.setRenderSize(4);
-			pool.setVortexHeight(2);
+			pool.setVortexHeight(3);
 			world.spawnEntity(pool);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.BLOCK_WATER_AMBIENT, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
@@ -74,14 +75,15 @@ public class Whirlpool extends Spell {
 		float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 		RayTraceResult result = RayTracer.standardBlockRayTrace(world, caster, range,true);
 		if (result != null) {
-			Vec3d pos = result.hitVec;
+			Vec3d pos = caster.getPositionVector();
 			EntityWhirlpool pool = new EntityWhirlpool(world);
+			pool.setOwner(caster);
 			pool.setPosition(pos.x, pos.y, pos.z);
 			pool.setCaster(caster);
 			pool.lifetime = 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade);
 			pool.damageMultiplier = damage;
-			pool.height = 3;
-			pool.width = 3;
+			pool.setRenderSize(4);
+			pool.setVortexHeight(3);
 			world.spawnEntity(pool);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.BLOCK_WATER_AMBIENT, SoundCategory.HOSTILE, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
@@ -93,12 +95,13 @@ public class Whirlpool extends Spell {
 		} else {
 			Vec3d pos = caster.getPositionVector();
 			EntityWhirlpool pool = new EntityWhirlpool(world);
+			pool.setOwner(caster);
 			pool.setPosition(pos.x, pos.y, pos.z);
 			pool.setCaster(caster);
 			pool.lifetime = 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade);
 			pool.damageMultiplier = damage;
-			pool.height = 3;
-			pool.width = 3;
+			pool.setRenderSize(4);
+			pool.setVortexHeight(3);
 			world.spawnEntity(pool);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.BLOCK_WATER_AMBIENT, SoundCategory.HOSTILE, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
