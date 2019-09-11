@@ -1,7 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
-import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -10,6 +9,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -74,7 +74,7 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 
 	private void Dissipate() {
 		if (!world.isRemote) {
-			world.playSound(null, posX, posY, posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
+			world.playSound(null, posX, posY, posZ, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.PLAYERS, 1.0F + world.rand.nextFloat() / 10,
 					0.8F + world.rand.nextFloat() / 10F);
 			if (world instanceof WorldServer) {
 				WorldServer World = (WorldServer) world;

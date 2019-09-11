@@ -12,6 +12,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
@@ -148,7 +149,7 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 
 		}
 		if (ticksExisted % 4 == 0 && getCaster() != null) {
-			world.playSound(getCaster().posX, getCaster().posY, getCaster().posZ, WizardrySounds.ENTITY_BLIZZARD_AMBIENT, WizardrySounds.SPELLS, 0.5F + world.rand.nextFloat() / 20, 2.0F + world.rand.nextFloat() / 20, true);
+			world.playSound(getCaster().posX, getCaster().posY, getCaster().posZ, WizardrySounds.ENTITY_BLIZZARD_AMBIENT, SoundCategory.PLAYERS, 0.5F + world.rand.nextFloat() / 20, 2.0F + world.rand.nextFloat() / 20, true);
 		}
 	}
 

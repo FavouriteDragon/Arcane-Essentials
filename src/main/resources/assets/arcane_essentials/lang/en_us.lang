@@ -107,6 +107,8 @@ item.arcane_essentials:master_healing_sword.name=Master Healing Sword
 
 item.arcane_essentials:master_necromancy_sword.name=Master Necromancy Sword
 
+potion.arcane_essentials:inferno_form.name=Inferno Form
+
 
 element.water=Water
 element.air=Air

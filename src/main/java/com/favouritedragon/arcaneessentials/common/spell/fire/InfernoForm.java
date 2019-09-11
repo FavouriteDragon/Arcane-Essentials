@@ -2,6 +2,7 @@ package com.favouritedragon.arcaneessentials.common.spell.fire;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.potion.ArcanePotions;
+import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
@@ -9,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class InfernoForm extends Spell {
@@ -25,6 +27,7 @@ public class InfernoForm extends Spell {
 		}
 		int duration = getProperty(EFFECT_DURATION).intValue();
 		caster.addPotionEffect(new PotionEffect(ArcanePotions.infernoForm, duration, 0, false, false));
+		caster.playSound(WizardrySounds.ENTITY_FIREBOMB_FIRE, 1.0F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
 		return true;
 	}
 }

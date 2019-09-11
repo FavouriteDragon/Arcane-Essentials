@@ -7,6 +7,7 @@ import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
@@ -57,7 +58,7 @@ public class EntityFireball extends EntityMagicBolt {
 
 	private void Explode() {
 		if (!world.isRemote) {
-			world.playSound(null, posX, posY, posZ, SoundEvents.ENTITY_GHAST_SHOOT, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
+			world.playSound(null, posX, posY, posZ, SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.PLAYERS, 1.0F + world.rand.nextFloat() / 10,
 					0.8F + world.rand.nextFloat() / 10F);
 			List<Entity> hit = world.getEntitiesWithinAABB(Entity.class, getEntityBoundingBox().grow(getSize() / 4));
 			if (!hit.isEmpty()) {

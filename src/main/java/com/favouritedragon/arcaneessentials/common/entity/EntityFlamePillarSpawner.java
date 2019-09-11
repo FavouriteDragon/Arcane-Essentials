@@ -46,7 +46,7 @@ public class EntityFlamePillarSpawner extends EntityMagicSpawner {
 
 	@Override
 	public void playSound() {
-		world.playSound(posX, posY, posZ, SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.HOSTILE,
+		world.playSound(posX, posY, posZ, SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.PLAYERS,
 				1 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10, true);
 
 	}

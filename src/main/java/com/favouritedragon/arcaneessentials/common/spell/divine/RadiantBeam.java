@@ -99,7 +99,6 @@ public class RadiantBeam extends Spell implements IArcaneSpell {
 
 		}
 
-
 		caster.playSound(WizardrySounds.BLOCK_ARCANE_WORKBENCH_SPELLBIND, 1.5F, 1);
 		caster.playSound(WizardrySounds.ENTITY_FORCEFIELD_DEFLECT, 0.5F, 1.0f);
 

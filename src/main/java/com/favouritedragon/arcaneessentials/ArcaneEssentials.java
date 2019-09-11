@@ -27,6 +27,7 @@ public class ArcaneEssentials
 	@SidedProxy(clientSide = ArcaneEssentials.CLIENT, serverSide = ArcaneEssentials.SERVER)
 	public static IProxy proxy;
 
+	//TODO: Change spell categories back once eb fixes them; properly implement sword spells once eb fixes spell context.
 
 	@EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -39,7 +40,6 @@ public class ArcaneEssentials
     @EventHandler
     public void init(FMLInitializationEvent event) {
         proxy.Init(event);
-       // RegisterHandler.loadSpellProperties(ArcaneEssentials.MODID);
 		}
 
     @EventHandler

@@ -12,6 +12,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.function.Predicate;
 
 public abstract class SpellRay extends electroblob.wizardry.spell.SpellRay implements IArcaneSpell {
 
@@ -30,14 +31,16 @@ public abstract class SpellRay extends electroblob.wizardry.spell.SpellRay imple
 
 		double range = getRange(world, origin, direction, caster, ticksInUse, modifiers);
 		Vec3d endpoint = origin.add(direction.scale(range));
+		Predicate<Entity> ignore = RayTracer.ignoreEntityFilter(caster);
 
 		// Change the filter depending on whether living entities are ignored or not
 		RayTraceResult rayTrace = RayTracer.rayTrace(world, origin, endpoint, getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(SpellModifiers.POTENCY), hitLiquids,
 				ignoreUncollidables, false, Entity.class, ignoreLivingEntities ? WizardryUtilities::isLiving
-						: RayTracer.ignoreEntityFilter(caster));
+						: ignore);
 
 		boolean flag = false;
 
+		//TODO: Piercing
 		if (rayTrace != null) {
 			// Doesn't matter which way round these are, they're mutually exclusive
 			if (rayTrace.typeOfHit == RayTraceResult.Type.ENTITY) {
@@ -45,6 +48,24 @@ public abstract class SpellRay extends electroblob.wizardry.spell.SpellRay imple
 				flag = onEntityHit(world, rayTrace.entityHit, rayTrace.hitVec, caster, origin, ticksInUse, modifiers);
 				// If the spell succeeded, clip the particles to the correct distance so they don't go through the entity
 				if (flag) range = origin.distanceTo(rayTrace.hitVec);
+
+				if (isPiercing()) {
+					ignore.or(e -> e == rayTrace.entityHit);
+					RayTraceResult rayTrace1 = RayTracer.rayTrace(world, origin, endpoint, getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(SpellModifiers.POTENCY), hitLiquids,
+							ignoreUncollidables, false, Entity.class, ignoreLivingEntities ? WizardryUtilities::isLiving
+									: ignore);
+
+					if (rayTrace1 != null) {
+						// Doesn't matter which way round these are, they're mutually exclusive
+						if (rayTrace.typeOfHit == RayTraceResult.Type.ENTITY) {
+							// Do whatever the spell does when it hits an entity
+							flag = onEntityHit(world, rayTrace.entityHit, rayTrace.hitVec, caster, origin, ticksInUse, modifiers);
+							// If the spell succeeded, clip the particles to the correct distance so they don't go through the entity
+							if (flag) range = origin.distanceTo(rayTrace.hitVec);
+
+						}
+					}
+				}
 
 			} else if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK) {
 				// Do whatever the spell does when it hits an block
@@ -65,9 +86,14 @@ public abstract class SpellRay extends electroblob.wizardry.spell.SpellRay imple
 		}
 		if (caster != null)
 			playSound(world, caster);
+
 		return true;
 	}
 
+
+	public boolean isPiercing() {
+		return false;
+	}
 
 
 	public abstract void playSound(World world, EntityLivingBase caster);

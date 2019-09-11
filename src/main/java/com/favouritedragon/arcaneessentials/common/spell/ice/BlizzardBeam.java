@@ -1,41 +1,39 @@
 package com.favouritedragon.arcaneessentials.common.spell.ice;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
+import com.favouritedragon.arcaneessentials.common.spell.SpellRay;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.registry.WizardrySounds;
-import electroblob.wizardry.spell.Spell;
-import electroblob.wizardry.util.MagicDamage;
-import electroblob.wizardry.util.ParticleBuilder;
-import electroblob.wizardry.util.RayTracer;
-import electroblob.wizardry.util.SpellModifiers;
+import electroblob.wizardry.util.*;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 import java.util.List;
 import java.util.function.Predicate;
 
 import static com.favouritedragon.arcaneessentials.common.util.ArcaneUtils.applyPlayerKnockback;
-import static com.favouritedragon.arcaneessentials.common.util.ArcaneUtils.standardEntityRayTrace;
 
-public class BlizzardBeam extends Spell {
+public class BlizzardBeam extends SpellRay {
 
 	public BlizzardBeam() {
-		super(ArcaneEssentials.MODID, "blizzard_beam", EnumAction.BOW, false);
-		addProperties(DAMAGE, RANGE, EFFECT_RADIUS, EFFECT_DURATION, EFFECT_STRENGTH, DIRECT_EFFECT_STRENGTH);
+		super(ArcaneEssentials.MODID, "blizzard_beam", false, EnumAction.BOW);
+		addProperties(DAMAGE, EFFECT_DURATION, EFFECT_STRENGTH, DIRECT_EFFECT_STRENGTH);
 	}
 
-	@Override
+	/*@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		Vec3d look = caster.getLookVec();
 		float damage = getProperty(DAMAGE).floatValue() + modifiers.get(WizardryItems.blast_upgrade);
@@ -191,11 +189,87 @@ public class BlizzardBeam extends Spell {
 			}
 
 		}
-	}
+	}**/
 
 	@Override
 	public boolean canBeCastByNPCs() {
 		return true;
 	}
 
+	@Override
+	protected boolean onEntityHit(World world, Entity target, Vec3d hit, @Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
+		Predicate<Entity> filter = RayTracer.ignoreEntityFilter(caster);
+		Vec3d knockBack = hit.subtract(origin).scale(.01 * getProperty(DIRECT_EFFECT_STRENGTH).floatValue());
+		float damage = getProperty(DAMAGE).floatValue() + modifiers.get(SpellModifiers.POTENCY);
+		if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, target) && target instanceof EntityLivingBase) {
+			target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FROST), damage);
+			target.motionX += knockBack.x;
+			target.motionY += knockBack.y;
+			target.motionZ += knockBack.z;
+			((EntityLivingBase) target).addPotionEffect(new PotionEffect(WizardryPotions.frost, getProperty(EFFECT_DURATION).intValue() * (int) modifiers.get(WizardryItems.duration_upgrade),
+					getProperty(EFFECT_STRENGTH).intValue() * (int) modifiers.get(SpellModifiers.POTENCY)));
+			applyPlayerKnockback(target);
+			filter = filter.or(e -> e == target);
+		}
+		//This is actually just the area around the entity that gets hti
+		float radius = getProperty(EFFECT_RADIUS).floatValue() / 2;
+		Vec3d pos = target.getPositionVector().add(0, target.getEyeHeight(), 0);
+		AxisAlignedBB hitBox = new AxisAlignedBB(pos.x + radius, pos.y + radius, pos.z + radius, pos.x - radius, pos.y - radius, pos.z - radius);
+		List<Entity> nearby = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
+		nearby.removeIf(filter);
+		//This is so it doesn't count the entity that was hit by the raytrace and mess up the chain
+		if (!nearby.isEmpty()) {
+			for (Entity secondHit : nearby) {
+				if (secondHit != caster && secondHit != target && AllyDesignationSystem.isValidTarget(caster, secondHit)) {
+					if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, secondHit)) {
+						secondHit.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FROST), damage);
+						secondHit.motionX += knockBack.x;
+						secondHit.motionY += knockBack.y;
+						secondHit.motionZ += knockBack.z;
+						applyPlayerKnockback(secondHit);
+						if (secondHit instanceof EntityLivingBase)
+							((EntityLivingBase) secondHit).addPotionEffect(new PotionEffect(WizardryPotions.frost, getProperty(EFFECT_DURATION).intValue() * (int) modifiers.get(WizardryItems.duration_upgrade),
+									getProperty(EFFECT_STRENGTH).intValue() * (int) modifiers.get(SpellModifiers.POTENCY)));
+						filter = filter.or(e -> e == secondHit);
+					}
+				}
+			}
+		}
+		//shootSpell(world, hit.add(hit.subtract(origin).scale(0.5)), hit.subtract(origin), (EntityPlayer) caster, ticksInUse, modifiers);
+		return true;
+	}
+
+	@Override
+	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit, @Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
+		return true;
+	}
+
+	@Override
+	protected boolean onMiss(World world, @Nullable EntityLivingBase caster, Vec3d origin, Vec3d direction, int ticksInUse, SpellModifiers modifiers) {
+		return true;
+	}
+
+	@Override
+	protected void spawnParticleRay(World world, Vec3d origin, Vec3d direction, EntityLivingBase caster, double distance) {
+		super.spawnParticleRay(world, origin, direction, caster, distance);
+		Vec3d endPos = origin.add(direction.scale(distance));
+		ParticleBuilder.create(ParticleBuilder.Type.BEAM).scale(getProperty(EFFECT_RADIUS).floatValue() * 5).pos(origin).target(endPos)
+				.time(15).clr(174, 252, 255).fade(230, 253, 254).collide(true).spawn(world);
+		ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), 180, distance, getProperty(EFFECT_RADIUS).floatValue(),
+				ParticleBuilder.Type.SNOW, origin, new Vec3d(world.rand.nextGaussian() / 80, world.rand.nextGaussian() / 40, world.rand.nextGaussian() / 80),
+				12, -1, -1, -1);
+
+	}
+
+
+
+	@Override
+	public void playSound(World world, EntityLivingBase caster) {
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_ICE_SHARD_SMASH, SoundCategory.PLAYERS, 1.0F + world.rand.nextFloat() / 10,
+				1.0F + world.rand.nextFloat() / 10F, true);
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_ICE_CHARGE_ICE, SoundCategory.PLAYERS, 1.0F + world.rand.nextFloat() / 10,
+				1.0F + world.rand.nextFloat() / 10F, true);
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_ICE_GIANT_ATTACK, SoundCategory.PLAYERS, 1.0F + world.rand.nextFloat() / 10,
+				1.0F + world.rand.nextFloat() / 10F, true);
+	}
 }

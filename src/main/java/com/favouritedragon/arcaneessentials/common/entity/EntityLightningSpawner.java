@@ -3,6 +3,7 @@ package com.favouritedragon.arcaneessentials.common.entity;
 import electroblob.wizardry.registry.WizardrySounds;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -50,9 +51,9 @@ public class EntityLightningSpawner extends EntityMagicSpawner {
 
 	@Override
 	public void playSound() {
-		world.playSound(posX, posY, posZ, SoundEvents.ENTITY_LIGHTNING_IMPACT, WizardrySounds.SPELLS, 1.2F + world.rand.nextFloat(),
+		world.playSound(posX, posY, posZ, SoundEvents.ENTITY_LIGHTNING_IMPACT, SoundCategory.PLAYERS, 1.2F + world.rand.nextFloat(),
 				0.8F + world.rand.nextFloat(), false);
-		world.playSound(posX, posY, posZ, WizardrySounds.ENTITY_LIGHTNING_DISC_HIT, WizardrySounds.SPELLS, 1.0F + world.rand.nextFloat() / 10,
+		world.playSound(posX, posY, posZ, WizardrySounds.ENTITY_LIGHTNING_DISC_HIT, SoundCategory.PLAYERS, 1.0F + world.rand.nextFloat() / 10,
 				0.8F + world.rand.nextFloat() / 10, false);
 	}
 }
