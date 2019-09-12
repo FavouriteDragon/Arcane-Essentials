@@ -56,7 +56,7 @@ public class PotionInfernoForm extends PotionMagicEffect implements ISyncedPotio
 
 					}
 					if (ArcaneUtils.getRandomNumberInRange(1, 20) <= 10) {
-						ParticleBuilder.create(ParticleBuilder.Type.BUFF).entity(entity).time(20).
+						ParticleBuilder.create(ParticleBuilder.Type.BUFF).entity(entity).time(7).
 								clr(252, 2, 25).spawn(entity.world);
 					}
 				} else {
