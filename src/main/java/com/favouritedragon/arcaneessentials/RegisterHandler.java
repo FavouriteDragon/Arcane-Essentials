@@ -23,9 +23,11 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import javax.annotation.Nonnull;
 
+@GameRegistry.ObjectHolder(ArcaneEssentials.MODID)
 @Mod.EventBusSubscriber(modid = ArcaneEssentials.MODID)
 public class RegisterHandler {
 	private static final int LIVING_UPDATE_INTERVAL = 3;

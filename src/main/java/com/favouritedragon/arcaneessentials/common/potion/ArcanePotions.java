@@ -4,10 +4,12 @@ import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.annotation.Nonnull;
 
+@GameRegistry.ObjectHolder(ArcaneEssentials.MODID)
 public class ArcanePotions {
 
 	public static final Potion infernoForm = new PotionInfernoForm(false, 0xFc191);

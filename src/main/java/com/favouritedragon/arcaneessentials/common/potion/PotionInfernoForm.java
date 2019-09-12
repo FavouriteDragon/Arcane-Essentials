@@ -48,10 +48,11 @@ public class PotionInfernoForm extends PotionMagicEffect implements ISyncedPotio
 				entity.setInvisible(entity.isPotionActive(ArcanePotions.infernoForm));
 				if (entity.world.isRemote) {
 					assert entity.getActivePotionEffect(ArcanePotions.infernoForm) != null;
-					if (Objects.requireNonNull(entity.getActivePotionEffect(ArcanePotions.infernoForm)).getIsPotionDurationMax()) {
-						ArcaneUtils.spawnSpinningHelix(entity.world, 100, 7F, 1F, ParticleBuilder.Type.MAGIC_FIRE,
-								entity.getPositionVector(), -4, new Vec3d(entity.motionX, entity.motionY, entity.motionZ),
-								RegisterHandler.inferno_form.getProperty(Spell.EFFECT_DURATION).intValue() + ArcaneUtils.getRandomNumberInRange(1, 10), -1, -1, -1, 0.8f + entity.world.rand.nextFloat() / 2);
+					if (Objects.requireNonNull(entity.getActivePotionEffect(ArcanePotions.infernoForm)).getIsPotionDurationMax()
+							|| entity.ticksExisted % 2 == 0) {
+						ArcaneUtils.spawnSpinningHelix(entity.world, 60, 7F, 0.75F, ParticleBuilder.Type.MAGIC_FIRE,
+								entity.getPositionVector(), - 0.025, new Vec3d(entity.motionX, entity.motionY, entity.motionZ),
+								20 + ArcaneUtils.getRandomNumberInRange(1, 10), -1, -1, -1, 0.8f + entity.world.rand.nextFloat() / 2);
 
 					}
 					if (ArcaneUtils.getRandomNumberInRange(1, 20) <= 10) {
@@ -116,6 +117,8 @@ public class PotionInfernoForm extends PotionMagicEffect implements ISyncedPotio
 			}
 		}
 	}
+
+
 
 	@Override
 	public boolean isInstant() {

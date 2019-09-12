@@ -24,7 +24,7 @@ public class RenderFirePillar extends Render<EntityFlamePillar> {
 		ArcaneUtils.spawnSpinningHelix(entity.world, entity.getParticleAmount() / 2, entity.getVortexHeight(), entity.getRadius(), EnumParticleTypes.FLAME, entity.getPositionVector(),
 				new Vec3d(0.03, 0.075, 0.03), Vec3d.ZERO);
 		ArcaneUtils.spawnSpinningHelix(entity.world, entity.getParticleAmount() * 2 / 3, entity.getVortexHeight(), entity.getRadius() * 0.5F, ParticleBuilder.Type.MAGIC_FIRE, entity.getPositionVector(),
-				1, Vec3d.ZERO, 20, 1.0F, 1.0F, 1.0F, 2.0F + entity.world.rand.nextFloat());
+				-0.05, Vec3d.ZERO, 10, 1.0F, 1.0F, 1.0F, 2.0F + entity.world.rand.nextFloat());
 	}
 
 	@Nullable

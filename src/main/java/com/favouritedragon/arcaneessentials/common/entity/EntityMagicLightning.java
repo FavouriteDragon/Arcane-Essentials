@@ -46,7 +46,7 @@ public class EntityMagicLightning extends EntityMagicConstruct {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if (ticksExisted > 15) {
+		if (ticksExisted > 5) {
 			setDead();
 		}
 		List<Entity> targets = world.getEntitiesWithinAABB(Entity.class, getEntityBoundingBox().grow(1));
