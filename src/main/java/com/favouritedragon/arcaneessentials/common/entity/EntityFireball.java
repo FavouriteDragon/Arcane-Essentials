@@ -66,7 +66,7 @@ public class EntityFireball extends EntityMagicBolt {
 					if (target != this && target != getCaster()) {
 						if (target.canBeCollidedWith()) {
 							target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(getCaster(),
-									getDamageType()), (float) getDamage() * 0.4F);
+									getDamageType()), (float) getDamage() * 0.2F);
 							target.addVelocity(motionX / 4, motionY / 4, motionZ / 4);
 							target.setFire(burnDuration);
 							ArcaneUtils.applyPlayerKnockback(target);

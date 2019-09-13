@@ -1,4 +1,5 @@
 package com.favouritedragon.arcaneessentials.client.render;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
@@ -9,7 +10,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 
 public class RenderUtils {
@@ -41,7 +42,7 @@ public class RenderUtils {
 	// @formatter:on
 
 	public static void renderCube(float x, float y, float z, double u1, double u2, double v1, double v2, float size,
-							float rotateX, float rotateY, float rotateZ) {
+								  float rotateX, float rotateY, float rotateZ) {
 		Matrix4f mat = new Matrix4f();
 		mat.translate(x, y + .4f, z);
 
@@ -73,16 +74,17 @@ public class RenderUtils {
 
 	/**
 	 * Draws a sphere (using lat/long triangles) with the given parameters.
-	 * @param radius The radius of the sphere.
-	 * @param latStep The latitude step; smaller is smoother but increases performance cost.
+	 *
+	 * @param radius   The radius of the sphere.
+	 * @param latStep  The latitude step; smaller is smoother but increases performance cost.
 	 * @param longStep The longitude step; smaller is smoother but increases performance cost.
-	 * @param inside Whether to draw the outside or the inside of the sphere.
-	 * @param r The red component of the sphere colour.
-	 * @param g The green component of the sphere colour.
-	 * @param b The blue component of the sphere colour.
-	 * @param a The alpha component of the sphere colour.
+	 * @param inside   Whether to draw the outside or the inside of the sphere.
+	 * @param r        The red component of the sphere colour.
+	 * @param g        The green component of the sphere colour.
+	 * @param b        The blue component of the sphere colour.
+	 * @param a        The alpha component of the sphere colour.
 	 */
-	public static void drawSphere(float radius, float latStep, float longStep, boolean inside, float r, float g, float b, float a, @Nullable ResourceLocation texture){
+	public static void drawSphere(float radius, float latStep, float longStep, boolean inside, float r, float g, float b, float a) {
 
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder buffer = tessellator.getBuffer();
@@ -94,10 +96,10 @@ public class RenderUtils {
 
 		buffer.pos(0, goingUp ? -radius : radius, 0).color(r, g, b, a).endVertex(); // Start at the north pole
 
-		for(float longitude = -(float)Math.PI; longitude <= (float)Math.PI; longitude += longStep){
+		for (float longitude = -(float) Math.PI; longitude <= (float) Math.PI; longitude += longStep) {
 
 			// Leave the poles out since they only have a single point per stack instead of two
-			for(float theta = (float)Math.PI/2 - latStep; theta >= -(float)Math.PI/2 + latStep; theta -= latStep){
+			for (float theta = (float) Math.PI / 2 - latStep; theta >= -(float) Math.PI / 2 + latStep; theta -= latStep) {
 
 				float latitude = goingUp ? -theta : theta;
 
@@ -105,33 +107,78 @@ public class RenderUtils {
 				float vy = radius * MathHelper.sin(latitude);
 				float vx = hRadius * MathHelper.sin(longitude);
 				float vz = hRadius * MathHelper.cos(longitude);
-				if (texture != null) {
-					Minecraft.getMinecraft().renderEngine.bindTexture(texture);
-					buffer.pos(vx, vy, vz).color(r, g, b, a).tex(0, 0).endVertex();
-				}
-				else {
-					buffer.pos(vx, vy, vz).color(r, g, b, a).endVertex();
-				}
+				buffer.pos(vx, vy, vz).color(r, g, b, a).endVertex();
 				vx = hRadius * MathHelper.sin(longitude + longStep);
 				vz = hRadius * MathHelper.cos(longitude + longStep);
 
-				if (texture != null) {
-					Minecraft.getMinecraft().renderEngine.bindTexture(texture);
-					buffer.pos(vx, vy, vz).color(r, g, b, a).tex(0, 0).endVertex();
-				}
-				else {
-					buffer.pos(vx, vy, vz).color(r, g, b, a).endVertex();
-				}
+
+				buffer.pos(vx, vy, vz).color(r, g, b, a).endVertex();
+
+			}
+
+
+			buffer.pos(0, goingUp ? radius : -radius, 0).color(r, g, b, a).endVertex();
+
+			goingUp = !goingUp;
+		}
+
+		tessellator.draw();
+	}
+
+	/**
+	 * Draws a sphere (using lat/long triangles) with the given parameters.
+	 *
+	 * @param radius   The radius of the sphere.
+	 * @param latStep  The latitude step; smaller is smoother but increases performance cost.
+	 * @param longStep The longitude step; smaller is smoother but increases performance cost.
+	 * @param inside   Whether to draw the outside or the inside of the sphere.
+	 * @param r        The red component of the sphere colour.
+	 * @param g        The green component of the sphere colour.
+	 * @param b        The blue component of the sphere colour.
+	 * @param a        The alpha component of the sphere colour.
+	 * @param texture  The texture to use on the sphere
+	 */
+	public static void drawSphere(float radius, float latStep, float longStep, boolean inside, float r, float g, float b, float a, @Nonnull ResourceLocation texture) {
+
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder buffer = tessellator.getBuffer();
+
+		//Need to change this so it supports textures
+		buffer.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_TEX_COLOR);
+
+		boolean goingUp = inside;
+
+		buffer.pos(0, goingUp ? -radius : radius, 0).color(r, g, b, a).endVertex(); // Start at the north pole
+
+		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+		for (float longitude = -(float) Math.PI; longitude <= (float) Math.PI; longitude += longStep) {
+
+			// Leave the poles out since they only have a single point per stack instead of two
+			for (float theta = (float) Math.PI / 2 - latStep; theta >= -(float) Math.PI / 2 + latStep; theta -= latStep) {
+
+				float latitude = goingUp ? -theta : theta;
+
+				float hRadius = radius * MathHelper.cos(latitude);
+				float vy = radius * MathHelper.sin(latitude);
+				float vx = hRadius * MathHelper.sin(longitude);
+				float vz = hRadius * MathHelper.cos(longitude);
+
+				float u = longitude / (2 * (float) Math.PI) + 0.5f;
+				float v = 0.5f - latitude / (float) Math.PI; // Alternative mapping: v = 0.5f - vy / (2*radius);
+
+				buffer.pos(vx, vy, vz).tex(u, v).color(r, g, b, a).endVertex();
+
+				vx = hRadius * MathHelper.sin(longitude + longStep);
+				vz = hRadius * MathHelper.cos(longitude + longStep);
+
+				float u1 = (longitude + longStep) / (2 * (float) Math.PI) + 0.5f;
+
+				buffer.pos(vx, vy, vz).tex(u1, v).color(r, g, b, a).endVertex();
 			}
 
 			// The next pole
-			if (texture != null) {
-				Minecraft.getMinecraft().renderEngine.bindTexture(texture);
-				buffer.pos(0, goingUp ? radius : -radius, 0).tex(0, 0).color(r, g, b, a).endVertex();
-			}
-			else {
-				buffer.pos(0, goingUp ? radius : -radius, 0).color(r, g, b, a).endVertex();
-			}
+			float u = longitude / (2 * (float) Math.PI) + 0.5f;
+			buffer.pos(0, goingUp ? radius : -radius, 0).tex(u, goingUp ? 0 : 1).color(r, g, b, a).endVertex();
 
 			goingUp = !goingUp;
 		}

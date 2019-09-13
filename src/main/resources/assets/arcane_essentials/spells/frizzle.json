@@ -18,7 +18,7 @@
   "cooldown": 60,
   "base_properties": {
     "damage": 7,
-    "burn_duration": 8,
+    "burn_duration": 6,
     "range": 15,
     "size": 1
   }

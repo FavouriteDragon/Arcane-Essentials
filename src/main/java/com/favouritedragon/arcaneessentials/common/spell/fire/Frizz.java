@@ -29,6 +29,7 @@ public class Frizz extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+		caster.swingArm(hand);
 		return cast(world, caster, modifiers);
 	}
 
@@ -53,6 +54,7 @@ public class Frizz extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
+		caster.swingArm(hand);
 		return cast(world, caster, modifiers);
 	}
 
