@@ -37,6 +37,7 @@ public class FirePledge extends Spell implements IArcaneSpell {
 			spawner.motionY = 0;
 			spawner.motionZ = look.z;
 			world.spawnEntity(spawner);
+			caster.swingArm(hand);
 			return true;
 		}
 		return false;
@@ -55,6 +56,7 @@ public class FirePledge extends Spell implements IArcaneSpell {
 			spawner.motionY = 0;
 			spawner.motionZ = look.z;
 			world.spawnEntity(spawner);
+			caster.swingArm(hand);
 			return true;
 		}
 		return false;

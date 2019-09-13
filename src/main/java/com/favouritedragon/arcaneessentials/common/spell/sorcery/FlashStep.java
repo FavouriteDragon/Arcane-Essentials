@@ -42,12 +42,12 @@ public class FlashStep extends Spell {
 			tPos = result.hitVec.add(0, 1, 0);
 		}
 		if (ArcaneUtils.attemptTeleport(caster, tPos.x, tPos.y, tPos.z)) {
-			caster.playSound(WizardrySounds.ENTITY_FORCE_ORB_HIT, 1.0F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
-			caster.playSound(SoundEvents.ENTITY_ENDERMEN_TELEPORT, 0.5F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
 			if (world.isRemote) {
 				//spawn particles, play sounds
 				WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_FORCE_ORB_HIT_BLOCK, 1.0F + world.rand.nextFloat() / 10,
 						0.8F + world.rand.nextFloat() / 10);
+				caster.playSound(SoundEvents.ENTITY_ENDERMEN_TELEPORT, 0.5F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
+
 			}
 		}
 		WizardData.get(caster).setVariable(TELEPORTS, WizardData.get(caster).getVariable(TELEPORTS) - 1);

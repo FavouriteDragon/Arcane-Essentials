@@ -28,6 +28,7 @@ public class InfernoForm extends Spell {
 		int duration = getProperty(EFFECT_DURATION).intValue();
 		caster.addPotionEffect(new PotionEffect(ArcanePotions.infernoForm, duration, 0, false, false));
 		caster.playSound(WizardrySounds.ENTITY_FIREBOMB_FIRE, 1.0F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
+		caster.swingArm(hand);
 		return true;
 	}
 

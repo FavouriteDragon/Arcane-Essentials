@@ -18,6 +18,8 @@
   "cooldown": 70,
   "base_properties": {
     "damage": 5,
-    "range": 60
+    "range": 60,
+    "burn_duration": 10,
+    "effect_strength": 1.5
   }
 }

@@ -35,6 +35,7 @@ public class InfernoPillar extends Spell implements IArcaneSpell {
 		WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_GHAST_SHOOT, 2 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10);
 		WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_FIRE_RING_AMBIENT, 1 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10);
 		WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_FIRE_SIGIL_TRIGGER, 1 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10);
+		caster.swingArm(hand);
 
 		return true;
 	}
@@ -53,6 +54,8 @@ public class InfernoPillar extends Spell implements IArcaneSpell {
 				1 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10, true);
 		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_FIRE_SIGIL_TRIGGER, SoundCategory.NEUTRAL,
 				1 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10, true);
+		caster.swingArm(hand);
+
 		return true;
 	}
 

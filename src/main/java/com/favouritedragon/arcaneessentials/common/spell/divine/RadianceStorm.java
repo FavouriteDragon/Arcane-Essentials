@@ -37,15 +37,15 @@ public class RadianceStorm extends Spell implements IArcaneSpell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		return doCasting(world, caster, modifiers);
+		return doCasting(world, caster, hand, modifiers);
 	}
 
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
-		return doCasting(world, caster, modifiers);
+		return doCasting(world, caster, hand, modifiers);
 	}
 
-	private boolean doCasting(World world, EntityLivingBase caster, SpellModifiers modifiers){
+	private boolean doCasting(World world, EntityLivingBase caster, EnumHand hand, SpellModifiers modifiers){
 
 		if(world.canBlockSeeSky(new BlockPos(caster))){
 
@@ -74,6 +74,7 @@ public class RadianceStorm extends Spell implements IArcaneSpell {
 				handleSphericalExplosion(world, caster, caster.getPositionVector(), (float) maxRadius * 0.5F, getProperty(EXPLOSION_DAMAGE).floatValue() *
 						modifiers.get(SpellModifiers.POTENCY), new Vec3d(4, 8, 4), getProperty(BURN_DURATION).intValue() *
 						(int) modifiers.get(WizardryItems.duration_upgrade));
+				caster.swingArm(hand);
 			}
 
 			return true;
