@@ -70,7 +70,7 @@ public class RadiantBeam extends SpellRay implements IArcaneSpell {
 		ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), 180, distance, 0.5, ParticleBuilder.Type.SPARKLE, new Vec3d(caster.posX, caster.posY + caster.getEyeHeight() - 0.4F, caster.posZ),
 				new Vec3d(world.rand.nextGaussian() / 80, world.rand.nextGaussian() / 40, world.rand.nextGaussian() / 80), 15, 1.0F, 1.0F, 0.3F);
 		//Due to some weird positioning shenanigans, the entity's position gets added twice, you need to subtract it once.
-		ParticleBuilder.create(ParticleBuilder.Type.BEAM, caster).pos(origin.subtract(caster.getPositionVector())).target(origin.add(direction.scale(distance))).clr(1.0F, 1.0F, 0.3F).fade(1.0F,
+		ParticleBuilder.create(ParticleBuilder.Type.BEAM).entity(caster).pos(origin.subtract(caster.getPositionVector())).length(distance).clr(1.0F, 1.0F, 0.3F).fade(1.0F,
 				1.0F, 1.0F).scale(4F).time(4).spawn(world);
 	}
 
@@ -86,8 +86,8 @@ public class RadiantBeam extends SpellRay implements IArcaneSpell {
 
 	@Override
 	public void playSound(World world, EntityLivingBase caster) {
-		caster.playSound(WizardrySounds.BLOCK_ARCANE_WORKBENCH_SPELLBIND, 1.5F + world.rand.nextFloat() / 10, 1 + world.rand.nextFloat() / 10);
-		caster.playSound(WizardrySounds.ENTITY_FORCEFIELD_DEFLECT, 0.5F + world.rand.nextFloat() / 10, 1.0f + world.rand.nextFloat() / 10);
+		caster.playSound(WizardrySounds.BLOCK_ARCANE_WORKBENCH_SPELLBIND, 1.5F + world.rand.nextFloat() / 10, 0.6F + world.rand.nextFloat() / 10);
+		caster.playSound(WizardrySounds.ENTITY_FORCEFIELD_DEFLECT, 0.5F + world.rand.nextFloat() / 10, 0.6F + world.rand.nextFloat() / 10);
 	}
 
 	@Override
