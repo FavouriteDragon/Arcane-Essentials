@@ -56,19 +56,18 @@ public class RadiantBeam extends SpellRay implements IArcaneSpell {
 
 	@Override
 	protected void spawnParticleRay(World world, Vec3d origin, Vec3d direction, EntityLivingBase caster, double distance) {
-		for (int i = 0; i < 80; i++) {
-			boolean b = world.rand.nextBoolean();
+		int amount = distance / getProperty(RANGE).floatValue() >= 1 ? 80 : (int) (distance / getProperty(RANGE).floatValue() * 80);
+		for (int i = 0; i < amount; i++) {
 			double x1 = caster.posX + direction.x * i / 2 + world.rand.nextFloat() / 5 - 0.1f;
 			double y1 = origin.y + direction.y * i / 2
 					+ world.rand.nextFloat() / 5 - 0.1f;
 			double z1 = caster.posZ + direction.z * i / 2 + world.rand.nextFloat() / 5 - 0.1f;
-			ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x1, y1, z1).vel(b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 80,
-					world.rand.nextDouble() / 40,
-					b ? world.rand.nextDouble() / 80 : -world.rand.nextDouble() / 80).time(15).clr(1.0F, 1.0F, 0.3F).spawn(world);
+			ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x1, y1, z1).vel(world.rand.nextGaussian() / 120,
+					world.rand.nextGaussian() / 80, world.rand.nextGaussian() / 120).time(15).clr(1.0F, 1.0F, 0.3F).spawn(world);
 
 		}
-		ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), 180, distance, 0.5, ParticleBuilder.Type.SPARKLE, new Vec3d(caster.posX, caster.posY + caster.getEyeHeight() - 0.4F, caster.posZ),
-				new Vec3d(world.rand.nextGaussian() / 80, world.rand.nextGaussian() / 40, world.rand.nextGaussian() / 80), 15, 1.0F, 1.0F, 0.3F);
+		ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), (int) (amount * 2.25), distance, 0.5, ParticleBuilder.Type.SPARKLE, new Vec3d(caster.posX, caster.posY + caster.getEyeHeight() - 0.4F, caster.posZ),
+				new Vec3d(world.rand.nextGaussian() / 120, world.rand.nextGaussian() / 80, world.rand.nextGaussian() / 120), 15, 1.0F, 1.0F, 0.3F);
 		//Due to some weird positioning shenanigans, the entity's position gets added twice, you need to subtract it once.
 		ParticleBuilder.create(ParticleBuilder.Type.BEAM).entity(caster).pos(origin.subtract(caster.getPositionVector())).length(distance).clr(1.0F, 1.0F, 0.3F).fade(1.0F,
 				1.0F, 1.0F).scale(4F).time(4).spawn(world);
@@ -86,8 +85,8 @@ public class RadiantBeam extends SpellRay implements IArcaneSpell {
 
 	@Override
 	public void playSound(World world, EntityLivingBase caster) {
-		caster.playSound(WizardrySounds.BLOCK_ARCANE_WORKBENCH_SPELLBIND, 1.0F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
-		caster.playSound(WizardrySounds.ENTITY_FORCEFIELD_DEFLECT, 1.5F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
+		caster.playSound(WizardrySounds.BLOCK_ARCANE_WORKBENCH_SPELLBIND, 1.0F + world.rand.nextFloat() / 10, 0.9F + world.rand.nextFloat() / 10);
+		caster.playSound(WizardrySounds.ENTITY_FORCEFIELD_DEFLECT, 1.5F + world.rand.nextFloat() / 10, 0.9F + world.rand.nextFloat() / 10);
 	}
 
 	@Override
