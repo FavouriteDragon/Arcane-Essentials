@@ -86,8 +86,8 @@ public class RadiantBeam extends SpellRay implements IArcaneSpell {
 
 	@Override
 	public void playSound(World world, EntityLivingBase caster) {
-		caster.playSound(WizardrySounds.BLOCK_ARCANE_WORKBENCH_SPELLBIND, 1.5F + world.rand.nextFloat() / 10, 0.6F + world.rand.nextFloat() / 10);
-		caster.playSound(WizardrySounds.ENTITY_FORCEFIELD_DEFLECT, 0.5F + world.rand.nextFloat() / 10, 0.6F + world.rand.nextFloat() / 10);
+		caster.playSound(WizardrySounds.BLOCK_ARCANE_WORKBENCH_SPELLBIND, 1.0F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
+		caster.playSound(WizardrySounds.ENTITY_FORCEFIELD_DEFLECT, 1.5F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
 	}
 
 	@Override
