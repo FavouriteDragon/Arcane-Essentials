@@ -11,6 +11,7 @@ import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
@@ -49,6 +50,8 @@ public class FlashStep extends Spell {
 			}
 		}
 		WizardData.get(caster).setVariable(TELEPORTS, WizardData.get(caster).getVariable(TELEPORTS) - 1);
+		caster.playSound(WizardrySounds.ENTITY_FORCE_ORB_HIT, 1.0F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
+		caster.playSound(SoundEvents.ENTITY_ENDERMEN_TELEPORT, 0.5F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
 
 
 		return WizardData.get(caster).getVariable(TELEPORTS) < 1;

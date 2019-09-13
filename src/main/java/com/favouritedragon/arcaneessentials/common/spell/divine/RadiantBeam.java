@@ -116,4 +116,6 @@ public class RadiantBeam extends Spell implements IArcaneSpell {
 	public boolean isSwordCastable() {
 		return true;
 	}
+
+	//TODO: Refactor into SpelLRay
 }

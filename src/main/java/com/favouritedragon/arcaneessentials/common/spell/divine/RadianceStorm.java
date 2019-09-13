@@ -132,4 +132,9 @@ public class RadianceStorm extends Spell implements IArcaneSpell {
 					.spawn(world);
 		}
 	}
+
+	@Override
+	public boolean canBeCastByNPCs() {
+		return true;
+	}
 }

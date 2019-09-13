@@ -7,10 +7,13 @@ import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.WizardryUtilities;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.LIFETIME;
@@ -26,6 +29,15 @@ public class CycloneBolt extends Spell implements IArcaneSpell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+		return cast(world, caster, hand, modifiers);
+	}
+
+	@Override
+	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
+		return cast(world, caster, hand, modifiers);
+	}
+
+	private boolean cast(World world, EntityLivingBase caster, EnumHand hand, SpellModifiers modifiers) {
 		if (!world.isRemote) {
 			caster.swingArm(hand);
 			float speed = 0.5F * modifiers.get(WizardryItems.range_upgrade) + getProperty(SPEED).floatValue();
@@ -38,10 +50,15 @@ public class CycloneBolt extends Spell implements IArcaneSpell {
 			bolt.setDamage(getProperty(DAMAGE).floatValue() * damageMultiplier);
 			bolt.setKnockbackStrength(knockBackStrength);
 			world.spawnEntity(bolt);
-			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_FIREWORK_LAUNCH, 2.0F, 0.2F + world.rand.nextFloat());
+			caster.playSound(SoundEvents.ENTITY_FIREWORK_LAUNCH, 1.5F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public boolean canBeCastByNPCs() {
+		return true;
 	}
 
 	@Override

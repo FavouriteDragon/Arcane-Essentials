@@ -8,6 +8,7 @@ import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -33,7 +34,15 @@ public class KaThwack extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+		return doCast(world, caster, hand, ticksInUse, modifiers);
+	}
 
+	@Override
+	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
+		return doCast(world, caster, hand, ticksInUse, modifiers);
+	}
+
+	private boolean doCast(World world, EntityLivingBase caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		double radius = getProperty(BLAST_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade);
 
 		List<EntityLivingBase> targets = WizardryUtilities.getEntitiesWithinRadius(radius, caster.posX, caster.posY, caster.posZ, world);
@@ -42,7 +51,8 @@ public class KaThwack extends Spell {
 
 			if (MagicDamage.isEntityImmune(MagicDamage.DamageType.WITHER, target)) {
 
-				if (!world.isRemote) caster.sendStatusMessage(new TextComponentTranslation("spell.resist",
+				if (caster instanceof EntityPlayer)
+				if (!world.isRemote) ((EntityPlayer) caster).sendStatusMessage(new TextComponentTranslation("spell.resist",
 						target.getName(), this.getNameForTranslationFormatted()), true);
 				return false;
 			}
@@ -118,4 +128,8 @@ public class KaThwack extends Spell {
 		return true;
 	}
 
+	@Override
+	public boolean canBeCastByNPCs() {
+		return true;
+	}
 }

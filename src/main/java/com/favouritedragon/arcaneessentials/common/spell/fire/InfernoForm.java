@@ -30,4 +30,5 @@ public class InfernoForm extends Spell {
 		caster.playSound(WizardrySounds.ENTITY_FIREBOMB_FIRE, 1.0F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
 		return true;
 	}
+
 }

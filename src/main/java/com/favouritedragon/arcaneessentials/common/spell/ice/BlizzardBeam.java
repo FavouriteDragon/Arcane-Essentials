@@ -6,21 +6,20 @@ import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.registry.WizardrySounds;
-import electroblob.wizardry.util.*;
+import electroblob.wizardry.util.MagicDamage;
+import electroblob.wizardry.util.ParticleBuilder;
+import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumAction;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-import java.util.List;
-import java.util.function.Predicate;
 
 import static com.favouritedragon.arcaneessentials.common.util.ArcaneUtils.applyPlayerKnockback;
 
@@ -39,10 +38,9 @@ public class BlizzardBeam extends SpellRay {
 
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, @Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
-		Predicate<Entity> filter = RayTracer.ignoreEntityFilter(caster);
 		Vec3d knockBack = hit.subtract(origin).scale(.01 * getProperty(DIRECT_EFFECT_STRENGTH).floatValue());
 		float damage = getProperty(DAMAGE).floatValue() + modifiers.get(SpellModifiers.POTENCY);
-		if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, target) && target instanceof EntityLivingBase) {
+		if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, target) && target instanceof EntityLivingBase && caster != null) {
 			target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FROST), damage);
 			target.motionX += knockBack.x;
 			target.motionY += knockBack.y;
@@ -50,31 +48,6 @@ public class BlizzardBeam extends SpellRay {
 			((EntityLivingBase) target).addPotionEffect(new PotionEffect(WizardryPotions.frost, getProperty(EFFECT_DURATION).intValue() * (int) modifiers.get(WizardryItems.duration_upgrade),
 					getProperty(EFFECT_STRENGTH).intValue() * (int) modifiers.get(SpellModifiers.POTENCY)));
 			applyPlayerKnockback(target);
-			filter = filter.or(e -> e == target);
-		}
-		//This is actually just the area around the entity that gets hti
-		float radius = getProperty(EFFECT_RADIUS).floatValue() / 2;
-		Vec3d pos = target.getPositionVector().add(0, target.getEyeHeight(), 0);
-		AxisAlignedBB hitBox = new AxisAlignedBB(pos.x + radius, pos.y + radius, pos.z + radius, pos.x - radius, pos.y - radius, pos.z - radius);
-		List<Entity> nearby = world.getEntitiesWithinAABB(EntityLivingBase.class, hitBox);
-		nearby.removeIf(filter);
-		//This is so it doesn't count the entity that was hit by the raytrace and mess up the chain
-		if (!nearby.isEmpty()) {
-			for (Entity secondHit : nearby) {
-				if (secondHit != caster && secondHit != target && AllyDesignationSystem.isValidTarget(caster, secondHit)) {
-					if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, secondHit)) {
-						secondHit.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FROST), damage);
-						secondHit.motionX += knockBack.x;
-						secondHit.motionY += knockBack.y;
-						secondHit.motionZ += knockBack.z;
-						applyPlayerKnockback(secondHit);
-						if (secondHit instanceof EntityLivingBase)
-							((EntityLivingBase) secondHit).addPotionEffect(new PotionEffect(WizardryPotions.frost, getProperty(EFFECT_DURATION).intValue() * (int) modifiers.get(WizardryItems.duration_upgrade),
-									getProperty(EFFECT_STRENGTH).intValue() * (int) modifiers.get(SpellModifiers.POTENCY)));
-						filter = filter.or(e -> e == secondHit);
-					}
-				}
-			}
 		}
 		return true;
 	}
