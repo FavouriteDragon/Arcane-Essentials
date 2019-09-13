@@ -25,7 +25,7 @@ public class RadiantBeam extends SpellRay implements IArcaneSpell {
 
 	public RadiantBeam() {
 		super(ArcaneEssentials.MODID, "radiant_beam", false, EnumAction.BOW);
-		addProperties(DAMAGE, RANGE, EFFECT_STRENGTH, BURN_DURATION);
+		addProperties(DAMAGE, EFFECT_STRENGTH, BURN_DURATION);
 	}
 
 
