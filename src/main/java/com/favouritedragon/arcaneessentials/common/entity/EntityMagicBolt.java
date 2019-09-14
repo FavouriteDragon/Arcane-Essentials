@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
+import com.favouritedragon.arcaneessentials.common.entity.data.MagicBoltBehaviour;
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardryItems;
@@ -44,6 +45,8 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
 	public static final DataParameter<Float> SYNC_SIZE = EntityDataManager.createKey(EntityMagicBolt.class,
 			DataSerializers.FLOAT);
+	public static final DataParameter<MagicBoltBehaviour> SYNC_BEHAVIOUR = EntityDataManager.createKey(EntityMagicBolt.class,
+			MagicBoltBehaviour.DATA_SERIALIZER);
 
 	public static final double LAUNCH_Y_OFFSET = 0.2;
 	public static final int SEEKING_TIME = 15;
@@ -99,6 +102,15 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 	public float getSize() {
 		return dataManager.get(SYNC_SIZE);
 	}
+
+	public void setBehaviour(MagicBoltBehaviour behaviour) {
+		dataManager.set(SYNC_BEHAVIOUR, behaviour);
+	}
+
+	public MagicBoltBehaviour getBehaviour() {
+		return dataManager.get(SYNC_BEHAVIOUR);
+	}
+
 	// Initialiser methods
 
 	/**
@@ -279,6 +291,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
 		//super.onUpdate();
 
+		setBehaviour(getBehaviour());
 		setSize(getSize(), getSize());
 		// Projectile disappears after its lifetime (if it has one) has elapsed
 		if (getLifetime() >= 0 && this.ticksExisted > getLifetime()) {
@@ -740,6 +753,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 	protected void entityInit() {
 		super.entityInit();
 		dataManager.register(SYNC_SIZE, 1.0F);
+		dataManager.register(SYNC_BEHAVIOUR, new MagicBoltBehaviour.Idle());
 	}
 
 	@Override

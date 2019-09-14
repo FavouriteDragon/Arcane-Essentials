@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials;
 
+import com.favouritedragon.arcaneessentials.common.entity.data.Behaviour;
 import com.favouritedragon.arcaneessentials.proxy.IProxy;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -35,6 +36,7 @@ public class ArcaneEssentials
         proxy.preInit(event);
         proxy.registerRender();
         RegisterHandler.registerAll();
+		Behaviour.registerBehaviours();
     }
 
     @EventHandler
