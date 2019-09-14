@@ -45,7 +45,8 @@ public abstract class Behaviour<E extends Entity> {
 
 	// Static method called from preInit
 	public static void registerBehaviours() {
-
+		MagicBoltBehaviour.register();
+		MagicConstructBehaviour.register();
 	}
 
 	//Method used in abstract behaviour classes to register their own behaviours

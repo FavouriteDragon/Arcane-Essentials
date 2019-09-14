@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
+import com.favouritedragon.arcaneessentials.common.entity.data.MagicConstructBehaviour;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -18,8 +19,11 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 	private static final DataParameter<Float> SYNC_SIZE = EntityDataManager.createKey(EntityMagicConstruct.class,
 			DataSerializers.FLOAT);
 	//This is used for when the entity renders too big to fit normal hitboxes.
-	private static final DataParameter <Float> SYNC_RENDER_SIZE = EntityDataManager.createKey(EntityMagicConstruct.class,
+	private static final DataParameter<Float> SYNC_RENDER_SIZE = EntityDataManager.createKey(EntityMagicConstruct.class,
 			DataSerializers.FLOAT);
+
+	private static final DataParameter<MagicConstructBehaviour> SYNC_BEHAVIOUR = EntityDataManager.createKey(EntityMagicConstruct.class,
+			MagicConstructBehaviour.DATA_SERIALIZER);
 
 	public EntityMagicConstruct(World world) {
 		super(world);
@@ -45,12 +49,21 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 		return dataManager.get(SYNC_RENDER_SIZE);
 	}
 
+	public void setBehaviour(MagicConstructBehaviour behaviour) {
+		dataManager.set(SYNC_BEHAVIOUR, behaviour);
+	}
+
+	public MagicConstructBehaviour getBehaviour() {
+		return dataManager.get(SYNC_BEHAVIOUR);
+	}
+
 	@Override
 	protected void entityInit() {
 		//Random UUID
 		dataManager.register(SYNC_OWNER_ID, "cb2e7444-3287-4b97-adf1-e5e7ec266331");
 		dataManager.register(SYNC_SIZE, 1.0F);
 		dataManager.register(SYNC_RENDER_SIZE, 1.0F);
+		dataManager.register(SYNC_BEHAVIOUR, new MagicConstructBehaviour.Idle());
 	}
 
 
@@ -70,7 +83,8 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 	public void onUpdate() {
 		super.onUpdate();
 		setSize(getSize(), getSize());
-
+		setBehaviour(getBehaviour());
+		
 		if (getCaster() == null) {
 			despawn();
 		}
