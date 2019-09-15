@@ -1,4 +1,4 @@
-package com.favouritedragon.arcaneessentials.common.spell.earth;
+package com.favouritedragon.arcaneessentials.common.spell.ice;
 
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
@@ -7,9 +7,9 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public class Quake extends Spell {
+public class PerfectStorm extends Spell {
 
-	public Quake(String name, EnumAction action, boolean isContinuous) {
+	public PerfectStorm(String name, EnumAction action, boolean isContinuous) {
 		super(name, action, isContinuous);
 	}
 
@@ -17,4 +17,5 @@ public class Quake extends Spell {
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		return false;
 	}
+
 }

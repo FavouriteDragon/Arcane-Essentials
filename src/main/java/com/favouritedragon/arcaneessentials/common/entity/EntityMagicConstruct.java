@@ -2,6 +2,7 @@ package com.favouritedragon.arcaneessentials.common.entity;
 
 import com.favouritedragon.arcaneessentials.common.entity.data.MagicConstructBehaviour;
 import net.minecraft.entity.Entity;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -84,7 +85,7 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 		super.onUpdate();
 		setSize(getSize(), getSize());
 		setBehaviour(getBehaviour());
-		
+
 		if (getCaster() == null) {
 			despawn();
 		}
@@ -94,6 +95,18 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 	@Override
 	public void despawn() {
 		super.despawn();
+	}
+
+	@Override
+	protected void readEntityFromNBT(NBTTagCompound nbttagcompound){
+		lifetime = nbttagcompound.getInteger("lifetime");
+		damageMultiplier = nbttagcompound.getFloat("damageMultiplier");
+	}
+
+	@Override
+	protected void writeEntityToNBT(NBTTagCompound nbttagcompound){
+		nbttagcompound.setInteger("lifetime", lifetime);
+		nbttagcompound.setFloat("damageMultiplier", damageMultiplier);
 	}
 
 }

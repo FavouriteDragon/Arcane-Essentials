@@ -4,7 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 
-public abstract class EntityMagicSpawner extends EntityMagicConstruct {
+public class EntityMagicSpawner extends EntityMagicConstruct {
 
 
 
@@ -73,4 +73,5 @@ public abstract class EntityMagicSpawner extends EntityMagicConstruct {
 	public boolean canBePushed() {
 		return false;
 	}
+
 }
