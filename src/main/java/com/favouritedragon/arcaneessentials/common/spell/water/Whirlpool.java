@@ -29,7 +29,7 @@ public class Whirlpool extends Spell {
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		double range = getProperty(RANGE).floatValue() * modifiers.get(WizardryItems.range_upgrade);
 		float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
-		RayTraceResult result = RayTracer.standardBlockRayTrace(world, caster, range,true);
+		RayTraceResult result = RayTracer.standardBlockRayTrace(world, caster, range, true);
 		if (result != null) {
 			Vec3d pos = result.hitVec;
 			EntityWhirlpool pool = new EntityWhirlpool(world);
@@ -40,14 +40,13 @@ public class Whirlpool extends Spell {
 			pool.damageMultiplier = damage;
 			pool.setRenderSize(4);
 			pool.setVortexHeight(3);
-			world.spawnEntity(pool);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.BLOCK_WATER_AMBIENT, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_PLAYER_SPLASH, 1F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_GENERIC_SPLASH, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
-			return true;
+			return world.spawnEntity(pool);
 		} else {
 			Vec3d pos = caster.getPositionVector();
 			EntityWhirlpool pool = new EntityWhirlpool(world);
@@ -58,14 +57,13 @@ public class Whirlpool extends Spell {
 			pool.damageMultiplier = damage;
 			pool.setRenderSize(4);
 			pool.setVortexHeight(3);
-			world.spawnEntity(pool);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.BLOCK_WATER_AMBIENT, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_PLAYER_SPLASH, 1F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_GENERIC_SPLASH, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
-			return true;
+			return world.spawnEntity(pool);
 		}
 	}
 
@@ -73,7 +71,7 @@ public class Whirlpool extends Spell {
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
 		double range = getProperty(RANGE).floatValue() * modifiers.get(WizardryItems.range_upgrade);
 		float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
-		RayTraceResult result = RayTracer.standardBlockRayTrace(world, caster, range,true);
+		RayTraceResult result = RayTracer.standardBlockRayTrace(world, caster, range, true);
 		if (result != null) {
 			Vec3d pos = caster.getPositionVector();
 			EntityWhirlpool pool = new EntityWhirlpool(world);
@@ -84,14 +82,13 @@ public class Whirlpool extends Spell {
 			pool.damageMultiplier = damage;
 			pool.setRenderSize(4);
 			pool.setVortexHeight(3);
-			world.spawnEntity(pool);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.BLOCK_WATER_AMBIENT, SoundCategory.HOSTILE, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.HOSTILE, 1F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.HOSTILE, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
-			return true;
+			return world.spawnEntity(pool);
 		} else {
 			Vec3d pos = caster.getPositionVector();
 			EntityWhirlpool pool = new EntityWhirlpool(world);
@@ -102,14 +99,13 @@ public class Whirlpool extends Spell {
 			pool.damageMultiplier = damage;
 			pool.setRenderSize(4);
 			pool.setVortexHeight(3);
-			world.spawnEntity(pool);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.BLOCK_WATER_AMBIENT, SoundCategory.HOSTILE, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_PLAYER_SPLASH, SoundCategory.HOSTILE, 1F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.HOSTILE, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
-			return true;
+			return world.spawnEntity(pool);
 		}
 	}
 

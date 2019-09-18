@@ -5,6 +5,7 @@ import com.favouritedragon.arcaneessentials.common.spell.air.CycloneBolt;
 import com.favouritedragon.arcaneessentials.common.spell.air.CycloneShield;
 import com.favouritedragon.arcaneessentials.common.spell.divine.RadianceStorm;
 import com.favouritedragon.arcaneessentials.common.spell.divine.RadiantBeam;
+import com.favouritedragon.arcaneessentials.common.spell.earth.Quake;
 import com.favouritedragon.arcaneessentials.common.spell.earth.SolarBeam;
 import com.favouritedragon.arcaneessentials.common.spell.fire.*;
 import com.favouritedragon.arcaneessentials.common.spell.ice.BlizzardBeam;
@@ -93,7 +94,10 @@ public class RegisterHandler {
 
 	//TIL Why you have static final spells.
 
+	//Used for when spell properties are needed outside of the spell class
 	public static final Spell inferno_form = new InfernoForm();
+	public static final Spell quake = new Quake();
+
 	@SubscribeEvent
 	public static void register(RegistryEvent.Register<Spell> event) {
 		event.getRegistry().register(new BlizzardBeam());
