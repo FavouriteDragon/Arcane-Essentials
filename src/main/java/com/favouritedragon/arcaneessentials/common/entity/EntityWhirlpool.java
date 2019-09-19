@@ -112,9 +112,16 @@ public class EntityWhirlpool extends EntityMagicConstruct {
 			}
 
 		}
-
-
+		else {
+			if (ticksExisted <= 2) {
+				int maxAngle = 90 + (int) (getRenderSize() * 20);
+				ArcaneUtils.spawnSpinningVortex(world, maxAngle, getVortexHeight(), 0.01, maxAngle / getRenderSize(), ParticleBuilder.Type.MAGIC_BUBBLE,
+						new Vec3d(posX, posY, posZ), new Vec3d(-0.25, -0.25, 0.25), Vec3d.ZERO, lifetime);
+			}
+		}
 	}
+
+
 
 	@Override
 	public void setDead() {

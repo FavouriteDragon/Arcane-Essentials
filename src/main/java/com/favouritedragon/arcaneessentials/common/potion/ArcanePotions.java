@@ -9,7 +9,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.annotation.Nonnull;
 
-@GameRegistry.ObjectHolder(ArcaneEssentials.MODID)
+//@GameRegistry.ObjectHolder(ArcaneEssentials.MODID)
 public class ArcanePotions {
 
 	public static final Potion infernoForm = new PotionInfernoForm(false, 0xFc191);

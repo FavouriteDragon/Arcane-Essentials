@@ -3,6 +3,7 @@ package com.favouritedragon.arcaneessentials.client;
 import com.favouritedragon.arcaneessentials.client.render.*;
 import com.favouritedragon.arcaneessentials.common.entity.*;
 import com.favouritedragon.arcaneessentials.proxy.IProxy;
+import electroblob.wizardry.client.renderer.RenderBlank;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -26,6 +27,7 @@ public class ClientProxy implements IProxy {
 
 	@Override
 	public void registerRender() {
+		//TODO: Move all particle spawning to entity class
 		RenderingRegistry.registerEntityRenderingHandler(EntityCycloneBolt.class, RenderCycloneBolt::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityCycloneShield.class, RenderCycloneShield::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityFireball.class, RenderFireball::new);
@@ -37,7 +39,7 @@ public class ClientProxy implements IProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntitySolarBeam.class, RenderSolarBeam::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityThunderBurst.class, RenderThunderBurst::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityWaterBall.class, RenderWaterBall::new);
-		RenderingRegistry.registerEntityRenderingHandler(EntityWhirlpool.class, RenderWhirlpool::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityWhirlpool.class, RenderBlank::new);
 
 	}
 
