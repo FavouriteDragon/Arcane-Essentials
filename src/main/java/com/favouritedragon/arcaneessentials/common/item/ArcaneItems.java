@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@GameRegistry.ObjectHolder(ArcaneEssentials.MODID)
+//@GameRegistry.ObjectHolder(ArcaneEssentials.MODID)
 @Mod.EventBusSubscriber(modid = ArcaneEssentials.MODID)
 public class ArcaneItems {
 
