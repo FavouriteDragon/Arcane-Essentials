@@ -5,14 +5,12 @@ import com.favouritedragon.arcaneessentials.common.spell.SpellRay;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
-import electroblob.wizardry.util.MagicDamage;
-import electroblob.wizardry.util.ParticleBuilder;
-import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
+import electroblob.wizardry.util.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -31,7 +29,7 @@ public class Zammle extends SpellRay {
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, @Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
 		if (caster != null) {
-			if (target instanceof EntityLivingBase || target.canBeCollidedWith() && target.canBePushed()) {
+			if (target instanceof EntityLivingBase || target.canBeCollidedWith() && target.canBePushed() && AllyDesignationSystem.isValidTarget(caster, target)) {
 				if (!world.isRemote) {
 					if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.WITHER, target)) {
 						float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
@@ -42,7 +40,7 @@ public class Zammle extends SpellRay {
 								vel = vel.normalize().scale(getProperty(EFFECT_STRENGTH).doubleValue() * modifiers.get(WizardryItems.blast_upgrade));
 							}
 							target.addVelocity(vel.x, vel.y, vel.z);
-							world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_LIGHTNING_DISC_HIT, WizardrySounds.SPELLS,
+							world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_LIGHTNING_DISC_HIT, SoundCategory.PLAYERS,
 									1F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10F, false);
 						}
 

@@ -3,6 +3,7 @@ package com.favouritedragon.arcaneessentials.common.spell.necromancy;
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.spell.SpellRay;
 import electroblob.wizardry.registry.WizardrySounds;
+import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
@@ -31,13 +32,13 @@ public class Zam extends SpellRay {
 		if (caster != null) {
 			if (target instanceof EntityLivingBase || target.canBeCollidedWith() && target.canBePushed()) {
 				if (!world.isRemote) {
-					if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.WITHER, target)) {
+					if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.WITHER, target) && AllyDesignationSystem.isValidTarget(caster, target)) {
 						float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 						if (target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER), damage)) {
 							caster.heal(getProperty(LIFE_STEAL).floatValue() * damage * modifiers.get(SpellModifiers.POTENCY));
 							Vec3d vel = hit.subtract(origin).scale(0.25 * getProperty(EFFECT_STRENGTH).doubleValue()).add(0, 0.125F, 0);
 							target.addVelocity(vel.x, vel.y, vel.z);
-							world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_LIGHTNING_DISC_HIT, WizardrySounds.SPELLS,
+							world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_LIGHTNING_DISC_HIT, SoundCategory.PLAYERS,
 									0.8F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10F, false);
 						}
 
