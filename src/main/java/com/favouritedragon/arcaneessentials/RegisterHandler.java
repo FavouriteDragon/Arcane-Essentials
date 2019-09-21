@@ -24,7 +24,6 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import javax.annotation.Nonnull;
 
@@ -118,6 +117,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new KaZammle());
 		event.getRegistry().register(new LightningVortex());
 		event.getRegistry().register(new OceanBurst());
+		event.getRegistry().register(quake);
 		event.getRegistry().register(new RadianceStorm());
 		event.getRegistry().register(new RadiantBeam());
 		event.getRegistry().register(new SolarBeam());
