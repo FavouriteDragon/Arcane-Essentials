@@ -27,8 +27,17 @@ public class EntityMagicSpawner extends EntityMagicConstruct {
 		this.lifetime = time;
 	}
 
+
 	public int getLifetime() {
 		return lifetime;
+	}
+
+	@Override
+	public void setDead() {
+		super.setDead();
+		if (!world.isRemote) {
+			Thread.dumpStack();
+		}
 	}
 
 	@Override

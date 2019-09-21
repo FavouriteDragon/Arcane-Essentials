@@ -25,7 +25,7 @@ public class FirePledge extends Spell implements IArcaneSpell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		if (world.getBlockState(caster.getPosition().offset(EnumFacing.DOWN)).getBlock() != Blocks.AIR && !world.isRemote) {
+		if (world.getBlockState(caster.getPosition().offset(EnumFacing.DOWN)).getBlock() != Blocks.AIR) {
 			Vec3d look = caster.getLookVec();
 			float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 			int lifetime = getProperty(EFFECT_DURATION).intValue() * 20 * (int) modifiers.get(WizardryItems.duration_upgrade);
@@ -36,9 +36,10 @@ public class FirePledge extends Spell implements IArcaneSpell {
 			spawner.motionX = look.x;
 			spawner.motionY = 0;
 			spawner.motionZ = look.z;
-			world.spawnEntity(spawner);
 			caster.swingArm(hand);
-			return true;
+			if (!world.isRemote)
+				return world.spawnEntity(spawner);
+
 		}
 		return false;
 	}
