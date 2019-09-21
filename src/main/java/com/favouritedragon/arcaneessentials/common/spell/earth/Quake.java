@@ -5,6 +5,7 @@ import com.favouritedragon.arcaneessentials.common.entity.EntityMagicConstruct;
 import com.favouritedragon.arcaneessentials.common.entity.EntityMagicSpawner;
 import com.favouritedragon.arcaneessentials.common.entity.data.Behaviour;
 import com.favouritedragon.arcaneessentials.common.entity.data.MagicConstructBehaviour;
+import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.MagicDamage;
@@ -16,11 +17,13 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.List;
 
 import static com.favouritedragon.arcaneessentials.RegisterHandler.quake;
+import static com.favouritedragon.arcaneessentials.RegisterHandler.register;
 
 public class Quake extends Spell {
 
@@ -31,6 +34,21 @@ public class Quake extends Spell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+		Vec3d look = caster.getLookVec();
+
+		EntityMagicSpawner spawner = new EntityMagicSpawner(world);
+		spawner.setSize(getProperty(BLAST_RADIUS).floatValue() * 2);
+		spawner.setLifetime(getProperty(DURATION).intValue() * 20 + (int) (10 * modifiers.get(WizardryItems.duration_upgrade)));
+		spawner.damageMultiplier = modifiers.get(SpellModifiers.POTENCY) *  getProperty(DAMAGE).floatValue();
+		spawner.setPosition(caster.posX + look.x, caster.getEntityBoundingBox().minY, caster.posZ + look.z);
+		look = look.scale(getProperty(RANGE).floatValue() * modifiers.get(SpellModifiers.POTENCY));
+		spawner.motionX = look.x;
+		spawner.motionY = look.y;
+		spawner.motionZ = look.z;
+		spawner.setCaster(caster);
+		spawner.setBehaviour(new QuakeBehaviour());
+		if (!world.isRemote)
+			return world.spawnEntity(spawner);
 		return false;
 	}
 
@@ -53,7 +71,7 @@ public class Quake extends Spell {
 						for (Entity hit : nearby) {
 							if (AllyDesignationSystem.isValidTarget(entity, hit)) {
 								if (entity.canBeCollidedWith() && entity.canBePushed()) {
-									hit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(entity, entity.getCaster()), 1);
+									hit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(entity, entity.getCaster()), entity.damageMultiplier);
 									hit.addVelocity(entity.motionX / 2, entity.motionY / 2 + 0.15, entity.motionZ / 2);
 								}
 							}

@@ -21,6 +21,7 @@ spell.arcane_essentials:frizzle.desc=Burn enemies with a fireball.
 
 spell.arcane_essentials:inferno_form=Inferno Form
 spell.arcane_essentials:inferno_form.desc=Become one with the power of flame, turning into a living inferno for 12 seconds! Enemies within a 2 block radius will be pushed back, projectiles are blocked, and there's a chance for you to phase through attacks!
+
 spell.arcane_essentials:inferno_pillar=Inferno Pillar
 spell.arcane_essentials:inferno_pillar.desc=Create a massive flaming pillar around you! This pillar burns enemies and reflects projectiles for a couple seconds, great for protecting yourself from those pesky skeletons!
 
@@ -50,6 +51,9 @@ spell.arcane_essentials:lightning_vortex.desc=Create a spinning vortex of lightn
 
 spell.arcane_essentials:ocean_burst=Ocean Burst
 spell.arcane_essentials:ocean_burst.desc=Unleash a powerful burst of water that blasts enemies away!
+
+spell.arcane_essentials:quake=Quake
+spell.arcane_essentials:quake.desc=Create a small split in the earth, damaging enemies in front of you!
 
 spell.arcane_essentials:radiance_storm=Radiance Storm
 spell.arcane_essentials:radiance_storm.desc=Unleash pillars of divine light around you, severely damaging mobs, spiking them out of the sky, and blasting them away.
