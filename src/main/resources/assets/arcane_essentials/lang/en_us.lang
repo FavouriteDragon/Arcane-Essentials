@@ -31,14 +31,21 @@ spell.arcane_essentials:kafrizz.desc=Incinerate enemies with a huge fireball!
 spell.arcane_essentials:kafrizzle=KaFrizzle
 spell.arcane_essentials:kafrizzle.desc=Cremate enemies with an enormous fireball!
 
+spell.arcane_essentials:kaquake=KaQuake
+spell.arcane_essentials:kaquake.desc=Rend the earth in front of you, creating several instantaneous fissures!
+
+spell.arcane_essentials:kaquakele.desc=KaQuakele
+spell.arcane_Essentials:kaquakele.desc=Create a sunderous wave of earth that cleaves the ground in two!
+
 spell.arcane_essentials:kasploosh=KaSploosh
 spell.arcane_essentials:kasploosh.desc=Launch a huge hydraulic orb at your enemies, with a giant whirlpool!
 
 spell.arcane_essentials:kasplooshle=KaSplooshle
 spell.arcane_essentials:kasplooshle.desc=Release the power of posiedon's wrath contained in an enormous water bubble!
 
+#If you just use a single %, it causes a format error.
 spell.arcane_essentials:kathwack=KaThwack
-spell.arcane_essentials:kathwack.desc=Unleash a wave of instantaneous death around you, dealing around 5 damage, with a 20% chance to kill any enemy standing right next to you.
+spell.arcane_essentials:kathwack.desc=Unleash a wave of instantaneous death around you, dealing around 5 damage, with a 20%% chance to kill any enemy standing right next to you.
 
 spell.arcane_essentials:kazam=KaZam
 spell.arcane_essentials:kazam.desc=Smite enemies with lightning born from lost souls!
@@ -60,6 +67,9 @@ spell.arcane_essentials:radiance_storm.desc=Unleash pillars of divine light arou
 
 spell.arcane_essentials:radiant_beam=Radiant Beam
 spell.arcane_essentials:radiant_beam.desc=Fire a beam of holy energy where you're looking, setting enemies on fire and doing extra damage to undead.
+
+spell.arcane_essentials:shake=Shake
+spell.arcane_essentials:shake.desc=Create a split in the earth, knocking enemies back!
 
 spell.arcane_essentials:solar_beam=Solar Beam
 spell.arcane_essentials:solar_beam.desc=Unleash a massive mult-hitting laser in the direction you're looking! Use the powers of nature to crush your enemies!
