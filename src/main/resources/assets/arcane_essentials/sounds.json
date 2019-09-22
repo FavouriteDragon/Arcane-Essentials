@@ -1,0 +1,8 @@
+{
+  "spell.inferno_form": {
+    "category": "spells", "sounds": ["arcane_essentials:inferno_form"]
+  },
+  "spell.kafrizzle": {
+    "category": "spells", "sounds": ["arcane_essentials:kafrizzle"]
+  }
+}

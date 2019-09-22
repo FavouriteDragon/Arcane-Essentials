@@ -33,9 +33,4 @@ public class InfernoForm extends Spell {
 		playSound(world, caster, ticksInUse, 10, modifiers);
 		return true;
 	}
-
-	@Override
-	protected SoundEvent[] createSounds() {
-		return super.createSounds();
-	}
 }
