@@ -1,5 +1,7 @@
 package com.favouritedragon.arcaneessentials.common.util;
 
+import com.favouritedragon.arcaneessentials.ArcaneEssentials;
+import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.RayTracer;
@@ -12,6 +14,7 @@ import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
@@ -924,6 +927,12 @@ public class ArcaneUtils {
 
 			return true;
 		}
+	}
+
+	//Sound stuff
+	public static SoundEvent createSound(String name){
+		// All the setRegistryName methods delegate to this one, it doesn't matter which you use.
+		return new SoundEvent(new ResourceLocation(ArcaneEssentials.MODID, name)).setRegistryName(name);
 	}
 }
 

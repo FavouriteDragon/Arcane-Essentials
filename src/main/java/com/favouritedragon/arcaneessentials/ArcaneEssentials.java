@@ -12,6 +12,8 @@ import org.apache.logging.log4j.Logger;
 @Mod(modid = ArcaneEssentials.MODID, name = ArcaneEssentials.NAME, version = ArcaneEssentials.VERSION, dependencies ="required-after:ebwizardry")
 public class ArcaneEssentials
 {
+
+	//TODO: Fix spells sound registry modid
     public static final String MODID = "arcane_essentials";
     public static final String NAME = "Arcane Essentials";
     public static final String VERSION = "1.0";

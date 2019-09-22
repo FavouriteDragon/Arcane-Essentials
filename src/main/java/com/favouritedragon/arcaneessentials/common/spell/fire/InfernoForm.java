@@ -2,18 +2,17 @@ package com.favouritedragon.arcaneessentials.common.spell.fire;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.potion.ArcanePotions;
+import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.registry.WizardrySounds;
-import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
-public class InfernoForm extends Spell {
+public class InfernoForm extends ArcaneSpell {
 
 	public InfernoForm() {
 		super(ArcaneEssentials.MODID, "inferno_form", EnumAction.BOW, false);

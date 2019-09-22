@@ -2,6 +2,7 @@ package com.favouritedragon.arcaneessentials.common.spell.water;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityWaterBall;
+import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
@@ -16,7 +17,7 @@ import net.minecraft.world.World;
 
 import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SIZE;
 
-public class KaSplooshle extends Spell {
+public class KaSplooshle extends ArcaneSpell {
 
 	 public KaSplooshle() {
 		super(ArcaneEssentials.MODID, "kasplooshle", EnumAction.BOW, false);

@@ -1,16 +1,13 @@
 package com.favouritedragon.arcaneessentials.common.spell.water;
 
-import electroblob.wizardry.constants.Element;
-import electroblob.wizardry.constants.SpellType;
-import electroblob.wizardry.constants.Tier;
-import electroblob.wizardry.spell.Spell;
+import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public class TidalBomb extends Spell {
+public class TidalBomb extends ArcaneSpell {
 
 
 	public TidalBomb(String name, EnumAction action, boolean isContinuous) {

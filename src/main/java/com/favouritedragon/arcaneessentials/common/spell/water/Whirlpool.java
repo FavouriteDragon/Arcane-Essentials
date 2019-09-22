@@ -2,8 +2,8 @@ package com.favouritedragon.arcaneessentials.common.spell.water;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityWhirlpool;
+import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.registry.WizardryItems;
-import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.RayTracer;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.WizardryUtilities;
@@ -18,7 +18,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class Whirlpool extends Spell {
+public class Whirlpool extends ArcaneSpell {
 
 	public Whirlpool() {
 		super(ArcaneEssentials.MODID, "whirlpool", EnumAction.BOW, false);
@@ -55,7 +55,7 @@ public class Whirlpool extends Spell {
 			pool.setCaster(caster);
 			pool.lifetime = 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade);
 			pool.damageMultiplier = damage;
-			pool.setRenderSize(4);
+			pool.setRenderSize(2);
 			pool.setVortexHeight(3);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.BLOCK_WATER_AMBIENT, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
@@ -80,7 +80,7 @@ public class Whirlpool extends Spell {
 			pool.setCaster(caster);
 			pool.lifetime = 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade);
 			pool.damageMultiplier = damage;
-			pool.setRenderSize(4);
+			pool.setRenderSize(2);
 			pool.setVortexHeight(3);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.BLOCK_WATER_AMBIENT, SoundCategory.HOSTILE, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);
@@ -97,7 +97,7 @@ public class Whirlpool extends Spell {
 			pool.setCaster(caster);
 			pool.lifetime = 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade);
 			pool.damageMultiplier = damage;
-			pool.setRenderSize(4);
+			pool.setRenderSize(2);
 			pool.setVortexHeight(3);
 			world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.BLOCK_WATER_AMBIENT, SoundCategory.HOSTILE, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F, true);

@@ -1,6 +1,7 @@
 package com.favouritedragon.arcaneessentials.common.spell.water;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
+import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
@@ -20,7 +21,7 @@ import net.minecraft.world.World;
 
 import static com.favouritedragon.arcaneessentials.common.util.DamageSources.SPLASH;
 
-public class OceanBurst extends Spell {
+public class OceanBurst extends ArcaneSpell {
 
 	public OceanBurst() {
 		super(ArcaneEssentials.MODID, "ocean_burst", EnumAction.BOW, false);
