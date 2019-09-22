@@ -39,7 +39,6 @@ public class FirePledge extends Spell implements IArcaneSpell {
 			caster.swingArm(hand);
 			if (!world.isRemote)
 				return world.spawnEntity(spawner);
-
 		}
 		return false;
 	}

@@ -62,6 +62,7 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 	protected void entityInit() {
 		//Random UUID
 		dataManager.register(SYNC_OWNER_ID, "cb2e7444-3287-4b97-adf1-e5e7ec266331");
+
 		dataManager.register(SYNC_SIZE, 1.0F);
 		dataManager.register(SYNC_RENDER_SIZE, 1.0F);
 		dataManager.register(SYNC_BEHAVIOUR, new MagicConstructBehaviour.Idle());
@@ -92,10 +93,6 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 
 	}
 
-	@Override
-	public void despawn() {
-		super.despawn();
-	}
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound nbttagcompound){

@@ -18,6 +18,7 @@ import com.favouritedragon.arcaneessentials.common.spell.storm.ThunderingChain;
 import com.favouritedragon.arcaneessentials.common.spell.water.*;
 import electroblob.wizardry.spell.Spell;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -63,20 +64,30 @@ public class RegisterHandler {
 
 	public static void registerEntities() {
 		int id = 0;
-		registerEntity(EntityThunderBurst.class, "ThunderBurst", id++, 128, LIVING_UPDATE_INTERVAL, false);
-		registerEntity(EntityLightningVortex.class, "LightningVortex", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
-		registerEntity(EntityFlamePillar.class, "FlamePillar", id++, 128, LIVING_UPDATE_INTERVAL, false);
-		registerEntity(EntityFlamePillarSpawner.class, "FlamePillarSpawner", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
-		registerEntity(EntityMagicSpawner.class, "MagicSpawner", id++, 128, LIVING_UPDATE_INTERVAL, true);
-		registerEntity(EntityWhirlpool.class, "Whirlpool", id++, 128, LIVING_UPDATE_INTERVAL, false);
-		registerEntity(EntityMagicBolt.class, "MagicBolt", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
-		registerEntity(EntityCycloneBolt.class, "CycloneBolt", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
-		registerEntity(EntityCycloneShield.class, "CyloneShield", id++, 128, LIVING_UPDATE_INTERVAL, false);
-		registerEntity(EntitySolarBeam.class, "SolarBeam", id++, 128, LIVING_UPDATE_INTERVAL, false);
-		registerEntity(EntityFireball.class, "Fireball", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
-		registerEntity(EntityWaterBall.class, "Waterball", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
-		registerEntity(EntityMagicLightning.class, "MagicLightning", id++, 128, LIVING_UPDATE_INTERVAL, false);
-		registerEntity(EntityLightningSpawner.class, "LightningSpawner", id++, 128, LIVING_UPDATE_INTERVAL, true);
+
+		//Base classes
+		registerEntity(EntityMagicConstruct.class, "MagicConstruct", ++id, 128, LIVING_UPDATE_INTERVAL, false);
+		registerEntity(EntityMagicBolt.class, "MagicBolt", ++id, 128, PROJECTILE_UPDATE_INTERVAL, true);
+		registerEntity(EntityMagicSpawner.class, "MagicSpawner", ++id, 128, LIVING_UPDATE_INTERVAL, true);
+
+		//Constructs
+		registerEntity(EntityThunderBurst.class, "ThunderBurst", ++id, 128, LIVING_UPDATE_INTERVAL, false);
+		registerEntity(EntityLightningVortex.class, "LightningVortex", ++id, 128, PROJECTILE_UPDATE_INTERVAL, true);
+		registerEntity(EntityFlamePillar.class, "FlamePillar", ++id, 128, LIVING_UPDATE_INTERVAL, false);
+		registerEntity(EntityWhirlpool.class, "Whirlpool", ++id, 128, LIVING_UPDATE_INTERVAL, false);
+		registerEntity(EntityCycloneShield.class, "CyloneShield", ++id, 128, LIVING_UPDATE_INTERVAL, false);
+		registerEntity(EntitySolarBeam.class, "SolarBeam", ++id, 128, LIVING_UPDATE_INTERVAL, false);
+		registerEntity(EntityMagicLightning.class, "MagicLightning", ++id, 128, LIVING_UPDATE_INTERVAL, false);
+
+		//Spawners
+		registerEntity(EntityFlamePillarSpawner.class, "FlamePillarSpawner", ++id, 128, PROJECTILE_UPDATE_INTERVAL, true);
+		registerEntity(EntityLightningSpawner.class, "LightningSpawner", ++id, 128, LIVING_UPDATE_INTERVAL, true);
+		registerEntity(EntityFallingBlockSpawner.class, "BlockSpawner", ++id, 128, LIVING_UPDATE_INTERVAL, true);
+
+		//Projectiles
+		registerEntity(EntityCycloneBolt.class, "CycloneBolt", ++id, 128, PROJECTILE_UPDATE_INTERVAL, true);
+		registerEntity(EntityFireball.class, "Fireball", ++id, 128, PROJECTILE_UPDATE_INTERVAL, true);
+		registerEntity(EntityWaterBall.class, "Waterball", ++id, 128, PROJECTILE_UPDATE_INTERVAL, true);
 
 	}
 

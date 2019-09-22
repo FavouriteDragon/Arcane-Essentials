@@ -18,15 +18,6 @@ public class EntityFlamePillarSpawner extends EntityMagicSpawner {
 		super(world, x, y, z, caster, lifetime, damageMultiplier);
 	}
 
-	@Override
-	protected void readEntityFromNBT(@Nonnull NBTTagCompound compound) {
-
-	}
-
-	@Override
-	protected void writeEntityToNBT(@Nonnull NBTTagCompound compound) {
-
-	}
 
 
 	@Override

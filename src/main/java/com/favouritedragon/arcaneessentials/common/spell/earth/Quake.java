@@ -1,6 +1,7 @@
 package com.favouritedragon.arcaneessentials.common.spell.earth;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
+import com.favouritedragon.arcaneessentials.common.entity.EntityFlamePillarSpawner;
 import com.favouritedragon.arcaneessentials.common.entity.EntityMagicConstruct;
 import com.favouritedragon.arcaneessentials.common.entity.EntityMagicSpawner;
 import com.favouritedragon.arcaneessentials.common.entity.data.Behaviour;
@@ -12,6 +13,8 @@ import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -39,18 +42,41 @@ public class Quake extends Spell {
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		if (world.getBlockState(caster.getPosition().offset(EnumFacing.DOWN)).getBlock() != Blocks.AIR) {
 			Vec3d look = caster.getLookVec();
-
-			EntityMagicSpawner spawner = new EntityMagicSpawner(world);
+			float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
+			int lifetime = getProperty(EFFECT_DURATION).intValue() * 20 * (int) modifiers.get(WizardryItems.duration_upgrade);
+			EntityFlamePillarSpawner spawner = new EntityFlamePillarSpawner(world, caster.posX + look.x * 0.25, caster.getEntityBoundingBox().minY, caster.posZ + look.z * 0.25, caster,
+					lifetime, damage);
+			look.scale(getProperty(RANGE).doubleValue());
 			spawner.setOwner(caster);
-			spawner.setCaster(caster);
-			spawner.setLifetime(getProperty(DURATION).intValue() * 20 + (int) (10 * modifiers.get(WizardryItems.duration_upgrade)));
-			spawner.damageMultiplier = modifiers.get(SpellModifiers.POTENCY) * getProperty(DAMAGE).floatValue();
-			spawner.setPosition(caster.posX + look.x * 0.25, caster.getPosition().getY(), caster.posZ + look.z * 0.25);
-			look = look.scale(getProperty(RANGE).floatValue() * modifiers.get(SpellModifiers.POTENCY));
 			spawner.motionX = look.x;
 			spawner.motionY = 0;
 			spawner.motionZ = look.z;
-			spawner.setBehaviour(new QuakeBehaviour());
+			caster.swingArm(hand);
+			if (!world.isRemote)
+				return world.spawnEntity(spawner);
+		}
+		return false;
+	}
+
+
+	@Override
+	public boolean canBeCastByNPCs() {
+		return true;
+	}
+
+	@Override
+	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
+		if (world.getBlockState(caster.getPosition().offset(EnumFacing.DOWN)).getBlock() != Blocks.AIR) {
+			Vec3d look = caster.getLookVec();
+			float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
+			int lifetime = getProperty(EFFECT_DURATION).intValue() * 20 * (int) modifiers.get(WizardryItems.duration_upgrade);
+			EntityFlamePillarSpawner spawner = new EntityFlamePillarSpawner(world, caster.posX + look.x * 0.25, caster.getEntityBoundingBox().minY, caster.posZ + look.z * 0.25, caster,
+					lifetime, damage);
+			look.scale(getProperty(RANGE).doubleValue());
+			spawner.setOwner(caster);
+			spawner.motionX = look.x;
+			spawner.motionY = 0;
+			spawner.motionZ = look.z;
 			caster.swingArm(hand);
 			if (!world.isRemote)
 				return world.spawnEntity(spawner);
@@ -66,8 +92,7 @@ public class Quake extends Spell {
 			if (entity instanceof EntityMagicSpawner) {
 				World world = entity.world;
 				if (entity.ticksExisted % 3 == 0) {
-					EntityFallingBlock block = new EntityFallingBlock(entity.world);
-					block.setOrigin(entity.getPosition().add(0, 1, 0));
+					EntityFallingBlock block = new EntityFallingBlock(entity.world, entity.posX, entity.posY + 1, entity.posZ, world.getBlockState(entity.getPosition().down()));
 					block.setHurtEntities(true);
 					if (!world.isRemote)
 						world.spawnEntity(block);
