@@ -85,7 +85,7 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 	public void onUpdate() {
 		super.onUpdate();
 		setSize(getSize(), getSize());
-		setBehaviour(getBehaviour());
+		setBehaviour((MagicConstructBehaviour) getBehaviour().onUpdate(this));
 
 		if (getCaster() == null) {
 			despawn();

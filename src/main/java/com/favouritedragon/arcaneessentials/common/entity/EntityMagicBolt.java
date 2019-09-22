@@ -291,7 +291,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
 		//super.onUpdate();
 
-		setBehaviour(getBehaviour());
+		setBehaviour((MagicBoltBehaviour) getBehaviour().onUpdate(this));
 		setSize(getSize(), getSize());
 		// Projectile disappears after its lifetime (if it has one) has elapsed
 		if (getLifetime() >= 0 && this.ticksExisted > getLifetime()) {
