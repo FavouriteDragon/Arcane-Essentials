@@ -2,7 +2,6 @@ package com.favouritedragon.arcaneessentials.common.entity;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 public class EntityMagicSpawner extends EntityMagicConstruct {

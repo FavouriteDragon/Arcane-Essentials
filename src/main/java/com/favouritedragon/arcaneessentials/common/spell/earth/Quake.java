@@ -35,6 +35,7 @@ public class Quake extends Spell {
 			spawner.motionX = look.x;
 			spawner.motionY = 0;
 			spawner.motionZ = look.z;
+			spawner.setSize(getProperty(BLAST_RADIUS).floatValue());
 			caster.swingArm(hand);
 			if (!world.isRemote)
 				return world.spawnEntity(spawner);
@@ -61,6 +62,7 @@ public class Quake extends Spell {
 			spawner.motionX = look.x;
 			spawner.motionY = 0;
 			spawner.motionZ = look.z;
+			spawner.setSize(getProperty(BLAST_RADIUS).floatValue());
 			caster.swingArm(hand);
 			if (!world.isRemote)
 				return world.spawnEntity(spawner);
