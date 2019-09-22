@@ -32,7 +32,7 @@ public class EntityFallingBlockSpawner extends EntityMagicSpawner {
 				if (hit != this && AllyDesignationSystem.isValidTarget(getCaster(), hit) && hit.canBePushed() && hit.canBeCollidedWith()) {
 					if (!world.isRemote) {
 						hit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(this, getCaster(), EARTH), damageMultiplier);
-						hit.addVelocity(motionX / 2, motionY / 2 + 0.15F, motionZ / 2);
+						hit.addVelocity(motionX / 4, 0.05F, motionZ / 4);
 					}
 				}
 			}
@@ -44,7 +44,7 @@ public class EntityFallingBlockSpawner extends EntityMagicSpawner {
 
 	@Override
 	protected int getFrequency() {
-		return 3;
+		return 2;
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class EntityFallingBlockSpawner extends EntityMagicSpawner {
 		EntityFallingBlock block = new EntityFallingBlock(world, posX, posY + 1, posZ, world.getBlockState(getPosition().down()));
 		block.setHurtEntities(true);
 		//Fall ticks upwards, so if you make it positive, it'll stay for a long time.
-		block.fallTime = -4;
+		block.fallTime = -5;
 		if (!world.isRemote)
 			return world.spawnEntity(block);
 		else return false;

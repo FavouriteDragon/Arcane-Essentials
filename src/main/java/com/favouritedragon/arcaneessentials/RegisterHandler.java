@@ -6,6 +6,7 @@ import com.favouritedragon.arcaneessentials.common.spell.air.CycloneShield;
 import com.favouritedragon.arcaneessentials.common.spell.divine.RadianceStorm;
 import com.favouritedragon.arcaneessentials.common.spell.divine.RadiantBeam;
 import com.favouritedragon.arcaneessentials.common.spell.earth.Quake;
+import com.favouritedragon.arcaneessentials.common.spell.earth.Shake;
 import com.favouritedragon.arcaneessentials.common.spell.earth.SolarBeam;
 import com.favouritedragon.arcaneessentials.common.spell.fire.*;
 import com.favouritedragon.arcaneessentials.common.spell.ice.BlizzardBeam;
@@ -18,7 +19,6 @@ import com.favouritedragon.arcaneessentials.common.spell.storm.ThunderingChain;
 import com.favouritedragon.arcaneessentials.common.spell.water.*;
 import electroblob.wizardry.spell.Spell;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
@@ -106,7 +106,6 @@ public class RegisterHandler {
 
 	//Used for when spell properties are needed outside of the spell class
 	public static final Spell inferno_form = new InfernoForm();
-	public static final Spell quake = new Quake();
 
 	@SubscribeEvent
 	public static void register(RegistryEvent.Register<Spell> event) {
@@ -128,9 +127,10 @@ public class RegisterHandler {
 		event.getRegistry().register(new KaZammle());
 		event.getRegistry().register(new LightningVortex());
 		event.getRegistry().register(new OceanBurst());
-		event.getRegistry().register(quake);
+		event.getRegistry().register(new Quake());
 		event.getRegistry().register(new RadianceStorm());
 		event.getRegistry().register(new RadiantBeam());
+		event.getRegistry().register(new Shake());
 		event.getRegistry().register(new SolarBeam());
 		event.getRegistry().register(new Splash());
 		event.getRegistry().register(new Sploosh());

@@ -10,16 +10,16 @@
     "trades": true,
     "looting": true
   },
-  "tier": "apprentice",
+  "tier": "novice",
   "element": "earth",
   "type": "attack",
-  "cost": 30,
+  "cost": 15,
   "chargeup": 0,
-  "cooldown": 50,
+  "cooldown": 30,
   "base_properties": {
-    "damage": 8,
-    "range": 2,
-    "duration": 3,
-    "blast_radius": 1
+    "damage": 6,
+    "range": 0.5,
+    "duration": 2,
+    "blast_radius": 0.75
   }
 }
