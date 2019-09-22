@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -52,8 +53,8 @@ public class EntityFallingBlockSpawner extends EntityMagicSpawner {
 		EntityFallingBlock block = new EntityFallingBlock(world, posX, posY, posZ, world.getBlockState(getPosition().down()));
 		block.setHurtEntities(true);
 		//Fall ticks upwards, so if you make it positive, it'll stay for a long time.
-		block.fallTime = -7;
-		block.motionY = 0.3;
+		block.fallTime = MathHelper.clamp(-10 * (int) getSize(), -40, -10);
+		block.motionY = MathHelper.clamp(0.3 * getSize(), 0.25F, 1.5F);
 		block.shouldDropItem = false;
 		if (!world.isRemote)
 			return world.spawnEntity(block);

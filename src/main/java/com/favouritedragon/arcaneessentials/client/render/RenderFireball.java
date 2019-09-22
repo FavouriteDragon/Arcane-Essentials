@@ -46,8 +46,8 @@ public class RenderFireball extends Render<EntityFireball> {
 		float longStep = (float) Math.PI / 20;
 
 
-		//float r = 245 / 255F, g = 0.05f, b = 0;
-		//float r1 = 1F, g1 = 175 / 255F, b1 = 51 / 255F;
+		float r = 245 / 255F, g = 0.05f, b = 0;
+		float r1 = 1F, g1 = 175 / 255F, b1 = 51 / 255F;
 		float r2 = 252 / 255F, g2 = 1F, b2 = 51 / 255F;
 
 		float radius = entity.getSize() / 2;
@@ -106,11 +106,11 @@ public class RenderFireball extends Render<EntityFireball> {
 						alpha = MathHelper.clamp(alpha, aMin, aMax);
 						break;
 				}
-				//drawSphere(radius, latStep, longStep, false, red, green, blue, alpha, TEXTURE);
+				drawSphere(radius, latStep, longStep, false, red, green, blue, alpha);
 			}
-		//drawSphere(radius - 0.05f, latStep, longStep, true, r1, g1, b1, a * 1F);
-		drawSphere(radius / 2, latStep, longStep, false, r2, g2, b2, 1.4f * a, TEXTURE);
-		GlStateManager.rotate(entity.ticksExisted * 2, 0, 0, 1);
+		drawSphere(radius - 0.05f, latStep, longStep, true, r1, g1, b1, a * 1F);
+		drawSphere(radius / 2, latStep, longStep, false, r2, g2, b2, 1.4f * a);
+		GlStateManager.rotate(entity.ticksExisted * 20, 0, 0, 1);
 
 		//Particles
 

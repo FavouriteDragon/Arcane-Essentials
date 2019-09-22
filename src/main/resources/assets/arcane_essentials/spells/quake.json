@@ -13,11 +13,11 @@
   "tier": "apprentice",
   "element": "earth",
   "type": "attack",
-  "cost": 30,
+  "cost": 40,
   "chargeup": 0,
-  "cooldown": 50,
+  "cooldown": 65,
   "base_properties": {
-    "damage": 8,
+    "damage": 7.5,
     "range": 2,
     "duration": 3,
     "blast_radius": 1

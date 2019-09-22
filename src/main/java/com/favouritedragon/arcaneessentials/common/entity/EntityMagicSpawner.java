@@ -31,31 +31,22 @@ public class EntityMagicSpawner extends EntityMagicConstruct {
 	}
 
 	@Override
-	public void setDead() {
-		super.setDead();
-		if (!world.isRemote) {
-			Thread.dumpStack();
-		}
-	}
-
-	@Override
 	public void onUpdate() {
 		super.onUpdate();
 		//Using this does hella weird stuff with the positioning
 		//this.move(MoverType.SELF, motionX, 0, motionZ);
 		setPosition(posX + motionX, posY, posZ + motionZ);
 		boolean inSolid = world.getBlockState(getPosition()).isFullBlock() && world.getBlockState(getPosition()).getBlock() != Blocks.AIR;
-		if (!world.isRemote) {
-			if (this.collidedHorizontally || (!onGround && world.getBlockState(getPosition().down()).getBlock() == Blocks.AIR) || inSolid) {
-				this.setDead();
+		if (this.collidedHorizontally || (!onGround && (!world.getBlockState(getPosition().down()).isFullBlock() ||
+				world.getBlockState(getPosition().down()).getBlock() == Blocks.AIR)) || inSolid) {
+			this.setDead();
+		}
+		if (getCaster() != null && ticksExisted % getFrequency() == 0) {
+			if (spawnEntity()) {
+				playSound();
 			}
 		}
-			if (getCaster() != null && ticksExisted % getFrequency() == 0) {
-				if (spawnEntity()) {
-					playSound();
-				}
-			}
-		}
+	}
 
 	protected boolean spawnEntity() {
 		return false;
