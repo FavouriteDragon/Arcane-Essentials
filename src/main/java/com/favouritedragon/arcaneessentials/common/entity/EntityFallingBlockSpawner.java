@@ -16,13 +16,15 @@ public class EntityFallingBlockSpawner extends EntityMagicSpawner {
 
 	@Override
 	protected int getFrequency() {
-		return 4;
+		return 3;
 	}
 
 	@Override
 	protected boolean spawnEntity() {
 		EntityFallingBlock block = new EntityFallingBlock(world, posX, posY + 1, posZ, world.getBlockState(getPosition().down()));
 		block.setHurtEntities(true);
+		//Fall ticks upwards, so if you make it positive, it'll stay for a long time.
+		block.fallTime = -3;
 		if (!world.isRemote)
 			return world.spawnEntity(block);
 		else return false;

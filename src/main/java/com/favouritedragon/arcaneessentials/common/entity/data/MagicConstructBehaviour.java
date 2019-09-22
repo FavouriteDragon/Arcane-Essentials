@@ -1,8 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.entity.data;
 
-import com.favouritedragon.arcaneessentials.common.entity.EntityMagicBolt;
 import com.favouritedragon.arcaneessentials.common.entity.EntityMagicConstruct;
-import com.favouritedragon.arcaneessentials.common.spell.earth.Quake;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataSerializer;
@@ -15,7 +13,6 @@ public abstract class MagicConstructBehaviour extends Behaviour<EntityMagicConst
 	public static void register() {
 		DataSerializers.registerSerializer(DATA_SERIALIZER);
 		registerBehaviour(MagicConstructBehaviour.Idle.class);
-		registerBehaviour(Quake.QuakeBehaviour.class);
 	}
 
 	public static class Idle extends MagicConstructBehaviour {

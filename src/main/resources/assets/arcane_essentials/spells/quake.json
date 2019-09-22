@@ -18,7 +18,7 @@
   "cooldown": 90,
   "base_properties": {
     "damage": 4,
-    "range": 10,
+    "range": 7,
     "duration": 3,
     "blast_radius": 1
   }

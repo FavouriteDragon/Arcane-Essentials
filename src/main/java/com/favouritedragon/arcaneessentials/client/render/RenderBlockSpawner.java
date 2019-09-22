@@ -7,16 +7,17 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class RenderBlockSpawner extends Render<EntityFallingBlockSpawner> {
 
-	protected RenderBlockSpawner(RenderManager renderManager) {
+	public RenderBlockSpawner(RenderManager renderManager) {
 		super(renderManager);
 	}
 
 	@Override
-	public void doRender(EntityFallingBlockSpawner entity, double x, double y, double z, float entityYaw, float partialTicks) {
+	public void doRender(@Nonnull EntityFallingBlockSpawner entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 		entity.world.spawnParticle(EnumParticleTypes.BLOCK_CRACK, entity.posX, entity.posY, entity.posZ, entity.world.rand.nextGaussian() * 0.5,
 				entity.world.rand.nextDouble() / 5, entity.world.rand.nextGaussian() * 0.4,
@@ -25,7 +26,7 @@ public class RenderBlockSpawner extends Render<EntityFallingBlockSpawner> {
 
 	@Nullable
 	@Override
-	protected ResourceLocation getEntityTexture(EntityFallingBlockSpawner entity) {
+	protected ResourceLocation getEntityTexture(@Nonnull EntityFallingBlockSpawner entity) {
 		return null;
 	}
 }
