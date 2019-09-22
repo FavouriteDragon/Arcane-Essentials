@@ -95,8 +95,7 @@ public class KaFrizzle extends Spell {
 		@Override
 		public Behaviour onUpdate(EntityMagicBolt entity) {
 			if (entity instanceof EntityFireball) {
-				System.out.println("huh");
-				if (entity.collided) {
+				if (entity.isDead || entity.collided) {
 					EntityFlamePillar pillar = new EntityFlamePillar(entity.world, entity.posX, entity.posY, entity.posZ, entity.getCaster(),
 							(int) entity.getSize() * 30, (float) entity.getDamage() / 6F, entity.getSize() / 2, entity.getSize() * 5,
 							75 + (int) (entity.getSize() * 5));
