@@ -18,6 +18,7 @@ public class InfernoForm extends Spell {
 	public InfernoForm() {
 		super(ArcaneEssentials.MODID, "inferno_form", EnumAction.BOW, false);
 		addProperties(BURN_DURATION, DAMAGE, EFFECT_RADIUS, EFFECT_DURATION);
+		soundValues(2.0F, 0.7F, 0.15F);
 	}
 
 	@Override
@@ -29,7 +30,12 @@ public class InfernoForm extends Spell {
 		caster.addPotionEffect(new PotionEffect(ArcanePotions.infernoForm, duration, 0, false, false));
 		caster.playSound(WizardrySounds.ENTITY_FIREBOMB_FIRE, 1.0F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
 		caster.swingArm(hand);
+		playSound(world, caster, ticksInUse, 10, modifiers);
 		return true;
 	}
 
+	@Override
+	protected SoundEvent[] createSounds() {
+		return super.createSounds();
+	}
 }
