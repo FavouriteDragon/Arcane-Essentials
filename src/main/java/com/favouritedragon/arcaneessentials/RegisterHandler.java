@@ -63,16 +63,16 @@ public class RegisterHandler {
 
 	public static void registerEntities() {
 		int id = 0;
-		registerEntity(EntityThunderBurst.class, "Thunder Burst", id++, 128, LIVING_UPDATE_INTERVAL, false);
-		registerEntity(EntityLightningVortex.class, "Lightning Vortex", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
-		registerEntity(EntityFlamePillar.class, "Flame Pillar", id++, 128, LIVING_UPDATE_INTERVAL, false);
-		registerEntity(EntityFlamePillarSpawner.class, "Flame Pillar Spawner", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
-		registerEntity(EntityMagicSpawner.class, "Magic Spawner", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
+		registerEntity(EntityThunderBurst.class, "ThunderBurst", id++, 128, LIVING_UPDATE_INTERVAL, false);
+		registerEntity(EntityLightningVortex.class, "LightningVortex", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
+		registerEntity(EntityFlamePillar.class, "FlamePillar", id++, 128, LIVING_UPDATE_INTERVAL, false);
+		registerEntity(EntityFlamePillarSpawner.class, "FlamePillarSpawner", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
+		registerEntity(EntityMagicSpawner.class, "MagicSpawner", id++, 128, LIVING_UPDATE_INTERVAL, true);
 		registerEntity(EntityWhirlpool.class, "Whirlpool", id++, 128, LIVING_UPDATE_INTERVAL, false);
-		registerEntity(EntityMagicBolt.class, "Magic Bolt", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
-		registerEntity(EntityCycloneBolt.class, "Cyclone Bolt", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
-		registerEntity(EntityCycloneShield.class, "Cylone Shield", id++, 128, LIVING_UPDATE_INTERVAL, false);
-		registerEntity(EntitySolarBeam.class, "Solar Beam", id++, 128, LIVING_UPDATE_INTERVAL, false);
+		registerEntity(EntityMagicBolt.class, "MagicBolt", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
+		registerEntity(EntityCycloneBolt.class, "CycloneBolt", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
+		registerEntity(EntityCycloneShield.class, "CyloneShield", id++, 128, LIVING_UPDATE_INTERVAL, false);
+		registerEntity(EntitySolarBeam.class, "SolarBeam", id++, 128, LIVING_UPDATE_INTERVAL, false);
 		registerEntity(EntityFireball.class, "Fireball", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
 		registerEntity(EntityWaterBall.class, "Waterball", id++, 128, PROJECTILE_UPDATE_INTERVAL, true);
 		registerEntity(EntityMagicLightning.class, "MagicLightning", id++, 128, LIVING_UPDATE_INTERVAL, false);

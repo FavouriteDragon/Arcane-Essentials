@@ -29,6 +29,7 @@ public class LightningVortex extends Spell {
 		addProperties(DAMAGE, RANGE, SPEED);
 	}
 
+	//TODO: Fix lightning vortex rendering
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		double range = getProperty(RANGE).doubleValue() + 1 * modifiers.get(WizardryItems.range_upgrade);
@@ -37,26 +38,24 @@ public class LightningVortex extends Spell {
 		RayTraceResult result = RayTracer.standardBlockRayTrace(world, caster, range,true);
 		if (result != null) {
 			Vec3d pos = result.hitVec;
-			world.spawnEntity(new EntityLightningVortex(world, pos.x, pos.y, pos.z, vel,
-					caster, 100 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage));
 			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_LIGHTNING_SIGIL_TRIGGER, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_LIGHTNING_THUNDER, 1F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_LIGHTNING_IMPACT, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
-			return true;
+			return world.spawnEntity(new EntityLightningVortex(world, pos.x, pos.y, pos.z, vel,
+					caster, 100 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage));
 		} else {
 			Vec3d pos = caster.getLookVec().scale(1.5).add(caster.getPositionVector());
-			world.spawnEntity(new EntityLightningVortex(world, pos.x, pos.y, pos.z, vel,
-					caster, 100 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage));
 			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_LIGHTNING_SIGIL_TRIGGER, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_LIGHTNING_THUNDER, 1F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_LIGHTNING_IMPACT, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);
-			return true;
+			return world.spawnEntity(new EntityLightningVortex(world, pos.x, pos.y, pos.z, vel,
+					caster, 100 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade), damage));
 		}
 	}
 

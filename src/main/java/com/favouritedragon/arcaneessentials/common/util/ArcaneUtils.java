@@ -251,7 +251,7 @@ public class ArcaneUtils {
 	 * @param maxAge        The maximum age of the particle. Wizardry particles already have a predetermined age, this just adds onto it.
 	 */
 	public static void spawnSpinningVortex(World world, int maxAngle, double vortexHeight, double minRadius, double radiusScale, ResourceLocation particle, Vec3d position,
-										   Vec3d particleSpeed, Vec3d entitySpeed, int maxAge) {
+										   double particleSpeed, Vec3d entitySpeed, int maxAge) {
 		Vec3d prevpos = position;
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double radius = minRadius + (angle / radiusScale);
@@ -261,11 +261,11 @@ public class ArcaneUtils {
 			double z = radius * sin(angle);
 			Vec3d pos = new Vec3d(position.x + x, position.y + y, position.z + z);
 			if (particle.equals(ParticleBuilder.Type.LIGHTNING)) {
-				ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING).vel(entitySpeed).spin(radius, ArcaneUtils.getMagnitude(particleSpeed))
+				ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING).vel(entitySpeed).spin(radius, particleSpeed)
 						.time(maxAge).target(prevpos).pos(pos).spawn(world);
 				prevpos = pos;
 			} else {
-				ParticleBuilder.create(particle).vel(entitySpeed).spin(radius, ArcaneUtils.getMagnitude(particleSpeed))
+				ParticleBuilder.create(particle).vel(entitySpeed).spin(radius, particleSpeed)
 						.time(maxAge).pos(pos).spawn(world);
 			}
 		}

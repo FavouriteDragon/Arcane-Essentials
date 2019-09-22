@@ -38,7 +38,7 @@ public class Whirlpool extends Spell {
 			pool.setCaster(caster);
 			pool.lifetime = 80 + 10 * (int) modifiers.get(WizardryItems.duration_upgrade);
 			pool.damageMultiplier = damage;
-			pool.setRenderSize(4);
+			pool.setRenderSize(2);
 			pool.setVortexHeight(3);
 			WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.BLOCK_WATER_AMBIENT, 2.0F,
 					world.rand.nextFloat() * 0.2F + 1.0F);

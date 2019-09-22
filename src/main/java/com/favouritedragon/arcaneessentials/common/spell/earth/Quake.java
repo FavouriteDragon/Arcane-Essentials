@@ -41,15 +41,15 @@ public class Quake extends Spell {
 			Vec3d look = caster.getLookVec();
 
 			EntityMagicSpawner spawner = new EntityMagicSpawner(world);
-			spawner.setSize(getProperty(BLAST_RADIUS).floatValue() * 2);
+			spawner.setOwner(caster);
+			spawner.setCaster(caster);
 			spawner.setLifetime(getProperty(DURATION).intValue() * 20 + (int) (10 * modifiers.get(WizardryItems.duration_upgrade)));
 			spawner.damageMultiplier = modifiers.get(SpellModifiers.POTENCY) * getProperty(DAMAGE).floatValue();
-			spawner.setPosition(caster.posX + look.x, caster.getEntityBoundingBox().minY, caster.posZ + look.z);
+			spawner.setPosition(caster.posX + look.x * 0.25, caster.getPosition().getY(), caster.posZ + look.z * 0.25);
 			look = look.scale(getProperty(RANGE).floatValue() * modifiers.get(SpellModifiers.POTENCY));
 			spawner.motionX = look.x;
 			spawner.motionY = 0;
 			spawner.motionZ = look.z;
-			spawner.setOwner(caster);
 			spawner.setBehaviour(new QuakeBehaviour());
 			caster.swingArm(hand);
 			if (!world.isRemote)
@@ -81,8 +81,8 @@ public class Quake extends Spell {
 				if (!nearby.isEmpty()) {
 					if (!world.isRemote) {
 						for (Entity hit : nearby) {
-							if (AllyDesignationSystem.isValidTarget(entity, hit)) {
-								if (entity.canBeCollidedWith() && entity.canBePushed()) {
+							if (AllyDesignationSystem.isValidTarget(entity, hit) && hit != entity) {
+								if (hit.canBeCollidedWith() && hit.canBePushed()) {
 									hit.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(entity, entity.getCaster()), entity.damageMultiplier);
 									hit.addVelocity(entity.motionX / 2, entity.motionY / 2 + 0.15, entity.motionZ / 2);
 								}

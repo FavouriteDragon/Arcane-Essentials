@@ -147,5 +147,6 @@ public class EntityWaterBall extends EntityMagicBolt {
 	@Override
 	public void setDead() {
 		Splash();
+		super.setDead();
 	}
 }

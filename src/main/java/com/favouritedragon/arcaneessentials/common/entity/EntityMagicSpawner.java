@@ -7,7 +7,6 @@ import net.minecraft.world.World;
 public class EntityMagicSpawner extends EntityMagicConstruct {
 
 
-
 	public EntityMagicSpawner(World world) {
 		super(world);
 	}
@@ -23,13 +22,12 @@ public class EntityMagicSpawner extends EntityMagicConstruct {
 		this.damageMultiplier = damageMultiplier;
 	}
 
-	public void setLifetime(int time) {
-		this.lifetime = time;
-	}
-
-
 	public int getLifetime() {
 		return lifetime;
+	}
+
+	public void setLifetime(int time) {
+		this.lifetime = time;
 	}
 
 	@Override
@@ -45,21 +43,19 @@ public class EntityMagicSpawner extends EntityMagicConstruct {
 		super.onUpdate();
 		//Using this does hella weird stuff with the positioning
 		//this.move(MoverType.SELF, motionX, 0, motionZ);
-		this.setNoGravity(true);
 		setPosition(posX + motionX, posY, posZ + motionZ);
-		boolean inSolid = world.getBlockState(getPosition()).isFullCube() && world.getBlockState(getPosition()).getBlock() != Blocks.AIR;
-		boolean solid = world.getBlockState(getPosition().down()).isFullBlock();
+		boolean inSolid = world.getBlockState(getPosition()).isFullBlock() && world.getBlockState(getPosition()).getBlock() != Blocks.AIR;
 		if (!world.isRemote) {
-			if (this.collided || !solid || inSolid) {
+			if (this.collidedHorizontally || (!onGround && world.getBlockState(getPosition().down()).getBlock() == Blocks.AIR) || inSolid) {
 				this.setDead();
 			}
 		}
-		if (getCaster() != null && ticksExisted % getFrequency() == 0) {
-			if (spawnEntity()) {
-				playSound();
+			if (getCaster() != null && ticksExisted % getFrequency() == 0) {
+				if (spawnEntity()) {
+					playSound();
+				}
 			}
 		}
-	}
 
 	protected boolean spawnEntity() {
 		return false;
