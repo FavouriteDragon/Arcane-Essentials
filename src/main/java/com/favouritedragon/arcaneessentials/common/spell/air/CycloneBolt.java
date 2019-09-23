@@ -2,25 +2,22 @@ package com.favouritedragon.arcaneessentials.common.spell.air;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityCycloneBolt;
-import com.favouritedragon.arcaneessentials.common.spell.IArcaneSpell;
+import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.registry.WizardryItems;
-import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.LIFETIME;
 import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SPEED;
 
 
-public class CycloneBolt extends Spell implements IArcaneSpell {
+public class CycloneBolt extends ArcaneSpell {
 
 	public CycloneBolt() {
 		super(ArcaneEssentials.MODID, "cyclone_bolt", EnumAction.BOW, false);

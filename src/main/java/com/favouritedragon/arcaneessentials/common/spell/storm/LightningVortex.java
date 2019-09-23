@@ -2,9 +2,9 @@ package com.favouritedragon.arcaneessentials.common.spell.storm;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityLightningVortex;
+import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
-import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.RayTracer;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.WizardryUtilities;
@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SPEED;
 
 
-public class LightningVortex extends Spell {
+public class LightningVortex extends ArcaneSpell {
 
 	public LightningVortex() {
 		super(ArcaneEssentials.MODID, "lightning_vortex", EnumAction.BOW, false);

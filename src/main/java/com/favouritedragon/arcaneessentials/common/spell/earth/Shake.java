@@ -2,8 +2,8 @@ package com.favouritedragon.arcaneessentials.common.spell.earth;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityFallingBlockSpawner;
+import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.registry.WizardryItems;
-import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,7 +14,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class Shake extends Spell {
+public class Shake extends ArcaneSpell {
 
 	public Shake() {
 		super(ArcaneEssentials.MODID, "shake", EnumAction.BOW, false);

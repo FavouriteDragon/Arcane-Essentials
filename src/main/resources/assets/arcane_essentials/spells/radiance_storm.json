@@ -23,6 +23,7 @@
     "effect_radius": 6,
     "light_beams": 9,
     "knockback_mult": 1.5,
-    "explosion_damage": 5
+    "explosion_damage": 5,
+    "swords": 0
   }
 }

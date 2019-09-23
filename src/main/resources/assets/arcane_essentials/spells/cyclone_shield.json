@@ -19,6 +19,7 @@
   "base_properties": {
     "effect_radius": 4,
     "damage": 2,
-    "effect_duration": 5
+    "effect_duration": 5,
+    "swords": 0
   }
 }

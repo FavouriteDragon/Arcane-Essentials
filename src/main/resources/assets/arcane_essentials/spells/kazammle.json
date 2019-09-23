@@ -21,6 +21,7 @@
     "life_steal": 0.8,
     "range": 35,
     "effect_radius": 1.75,
-    "effect_strength": 5
+    "effect_strength": 5,
+    "swords": 1
   }
 }

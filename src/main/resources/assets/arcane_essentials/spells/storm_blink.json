@@ -19,6 +19,7 @@
   "base_properties": {
     "effect_radius": 3.5,
     "range": 80,
-    "damage": 5
+    "damage": 5,
+    "swords": 1
   }
 }

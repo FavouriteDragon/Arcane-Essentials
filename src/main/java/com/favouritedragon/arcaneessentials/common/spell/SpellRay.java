@@ -1,12 +1,15 @@
 package com.favouritedragon.arcaneessentials.common.spell;
 
+import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.util.RayTracer;
 import electroblob.wizardry.util.SpellModifiers;
+import electroblob.wizardry.util.SpellProperties;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -14,16 +17,18 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
+import static com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell.SWORDS;
+
 public abstract class SpellRay extends electroblob.wizardry.spell.SpellRay implements IArcaneSpell {
 
 	public SpellRay(String name, boolean isContinuous, EnumAction action) {
 		super(name, isContinuous, action);
-		addProperties(EFFECT_RADIUS);
+		addProperties(EFFECT_RADIUS, SWORDS);
 	}
 
 	public SpellRay(String modID, String name, boolean isContinuous, EnumAction action) {
 		super(modID, name, isContinuous, action);
-		addProperties(EFFECT_RADIUS);
+		addProperties(EFFECT_RADIUS, SWORDS);
 	}
 
 	@Override
@@ -43,7 +48,6 @@ public abstract class SpellRay extends electroblob.wizardry.spell.SpellRay imple
 
 			boolean flag = false;
 
-			//TODO: Piercing
 			if (rayTrace != null) {
 				// Doesn't matter which way round these are, they're mutually exclusive
 				if (rayTrace.typeOfHit == RayTraceResult.Type.ENTITY) {
@@ -136,6 +140,20 @@ public abstract class SpellRay extends electroblob.wizardry.spell.SpellRay imple
 		return false;
 	}
 
-
 	public abstract void playSound(World world, EntityLivingBase caster);
+
+	@Override
+	protected SoundEvent[] createSounds() {
+		return new SoundEvent[]{ArcaneUtils.createSound("spell." + this.getRegistryName().getPath())};
+	}
+
+	@Override
+	public boolean isSwordCastable() {
+		return getProperty(SWORDS).equals(true);
+	}
+
+	@Override
+	public boolean isWandCastable() {
+		return isEnabled(SpellProperties.Context.WANDS);
+	}
 }

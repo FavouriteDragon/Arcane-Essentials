@@ -20,6 +20,7 @@
     "damage": 3,
     "range": 20,
     "effect_radius": 2,
-    "effect_duration": 4
+    "effect_duration": 4,
+    "swords": 0
   }
 }

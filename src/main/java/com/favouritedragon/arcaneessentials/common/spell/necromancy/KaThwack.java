@@ -1,10 +1,10 @@
 package com.favouritedragon.arcaneessentials.common.spell.necromancy;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
+import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
-import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class KaThwack extends Spell {
+public class KaThwack extends ArcaneSpell {
 	/**
 	 * The radius within which maximum damage is dealt and maximum repulsion velocity is applied.
 	 */

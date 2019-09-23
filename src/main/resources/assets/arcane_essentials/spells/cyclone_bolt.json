@@ -19,6 +19,7 @@
   "base_properties": {
     "damage": 3,
     "speed": 10,
-    "lifetime": 5
+    "lifetime": 5,
+    "swords": 1
   }
 }

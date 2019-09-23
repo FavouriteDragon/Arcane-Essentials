@@ -20,6 +20,7 @@
     "damage": 9,
     "burn_duration": 7,
     "range": 30,
-    "size": 1.75
+    "size": 1.75,
+    "swords": 0
   }
 }

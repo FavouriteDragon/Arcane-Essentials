@@ -19,6 +19,7 @@
   "base_properties": {
     "death_chance": 20,
     "damage": 3.5,
-    "blast_radius": 8
+    "blast_radius": 8,
+    "swords": 0
   }
 }

@@ -25,7 +25,8 @@ public abstract class ArcaneSpell extends Spell implements IArcaneSpell {
 	//For now, the spell context will be specific to this mod's spells.
 	@Override
 	public boolean isSwordCastable() {
-		return getProperty(SWORDS).equals(true);
+		//0 is false, 1 is true.
+		return getProperty(SWORDS).intValue() == 1;
 	}
 
 	@Override

@@ -1,17 +1,16 @@
 package com.favouritedragon.arcaneessentials.common.spell.storm;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
-import com.favouritedragon.arcaneessentials.common.spell.IArcaneSpell;
+import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.data.IVariable;
 import electroblob.wizardry.data.Persistence;
-import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public class ThunderStrike extends Spell implements IArcaneSpell {
+public class ThunderStrike extends ArcaneSpell {
 
 	private static final IVariable<Boolean> IS_POWERED = new IVariable.Variable<Boolean>(Persistence.DIMENSION_CHANGE);
 	public ThunderStrike() {

@@ -2,8 +2,7 @@ package com.favouritedragon.arcaneessentials.common.spell.fire;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityFireball;
-import electroblob.wizardry.registry.WizardrySounds;
-import electroblob.wizardry.spell.Spell;
+import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,7 +18,7 @@ import net.minecraft.world.World;
 import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SIZE;
 
 
-public class Frizz extends Spell {
+public class Frizz extends ArcaneSpell {
 
 	public Frizz() {
 		super(ArcaneEssentials.MODID, "frizz", EnumAction.BOW, false);

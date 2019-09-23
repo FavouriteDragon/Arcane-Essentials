@@ -20,6 +20,7 @@
     "damage": 5,
     "range": 0.4,
     "duration": 2,
-    "blast_radius": 0.75
+    "blast_radius": 0.75,
+    "swords": 1
   }
 }

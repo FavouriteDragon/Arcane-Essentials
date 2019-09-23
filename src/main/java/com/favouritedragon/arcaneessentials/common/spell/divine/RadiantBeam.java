@@ -1,7 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.spell.divine;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
-import com.favouritedragon.arcaneessentials.common.spell.IArcaneSpell;
 import com.favouritedragon.arcaneessentials.common.spell.SpellRay;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardryItems;
@@ -21,7 +20,7 @@ import javax.annotation.Nullable;
 
 import static com.favouritedragon.arcaneessentials.common.util.ArcaneUtils.applyPlayerKnockback;
 
-public class RadiantBeam extends SpellRay implements IArcaneSpell {
+public class RadiantBeam extends SpellRay {
 
 	public RadiantBeam() {
 		super(ArcaneEssentials.MODID, "radiant_beam", false, EnumAction.BOW);

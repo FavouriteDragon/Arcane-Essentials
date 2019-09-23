@@ -19,6 +19,7 @@
   "base_properties": {
     "damage": 12,
     "effect_duration": 5,
-    "duration": 50
+    "duration": 50,
+    "swords": 1
   }
 }

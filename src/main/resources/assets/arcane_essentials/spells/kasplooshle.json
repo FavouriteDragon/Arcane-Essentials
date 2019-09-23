@@ -20,6 +20,7 @@
     "damage": 16,
     "range": 15,
     "size": 4,
-    "effect_strength": 2.5
+    "effect_strength": 2.5,
+    "swords": 0
   }
 }

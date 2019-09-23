@@ -16,5 +16,7 @@
   "cost": 80,
   "chargeup": 0,
   "cooldown": 300,
-  "base_properties": {}
+  "base_properties": {
+    "swords": 1
+  }
 }

@@ -18,6 +18,7 @@
   "cooldown": 80,
   "base_properties": {
     "range": 3,
-    "teleport_count": 2
+    "teleport_count": 2,
+    "swords": 1
   }
 }

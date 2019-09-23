@@ -2,8 +2,8 @@ package com.favouritedragon.arcaneessentials.common.spell.storm;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityThunderBurst;
+import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.registry.WizardrySounds;
-import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLiving;
@@ -14,12 +14,12 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
-public class ThunderBurst extends Spell {
+public class ThunderBurst extends ArcaneSpell {
 
 	public ThunderBurst() {
 		super(ArcaneEssentials.MODID, "thunder_burst", EnumAction.BOW, false);
 	}
-//TODO: Config for particles
+	//TODO: Config for particles
 	@Override
 	public boolean cast(World world, EntityPlayer entityPlayer, EnumHand enumHand, int i, SpellModifiers spellModifiers) {
 		if (!world.isRemote) {

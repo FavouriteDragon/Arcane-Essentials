@@ -6,8 +6,8 @@ import com.favouritedragon.arcaneessentials.common.entity.EntityFlamePillar;
 import com.favouritedragon.arcaneessentials.common.entity.EntityMagicBolt;
 import com.favouritedragon.arcaneessentials.common.entity.data.Behaviour;
 import com.favouritedragon.arcaneessentials.common.entity.data.MagicBoltBehaviour;
+import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.registry.WizardrySounds;
-import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -23,7 +23,7 @@ import net.minecraft.world.World;
 
 import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SIZE;
 
-public class KaFrizzle extends Spell {
+public class KaFrizzle extends ArcaneSpell {
 
 	public KaFrizzle() {
 		super(ArcaneEssentials.MODID, "kafrizzle", EnumAction.BOW, false);
@@ -99,7 +99,7 @@ public class KaFrizzle extends Spell {
 					EntityFlamePillar pillar = new EntityFlamePillar(entity.world, entity.posX, entity.posY, entity.posZ, entity.getCaster(),
 							(int) entity.getSize() * 30, (float) entity.getDamage() / 6F, entity.getSize() / 2, entity.getSize() * 5,
 							75 + (int) (entity.getSize() * 5));
-					if (!entity.world.isRemote)
+					//if (!entity.world.isRemote)
 						entity.world.spawnEntity(pillar);
 				}
 			}

@@ -2,10 +2,9 @@ package com.favouritedragon.arcaneessentials.common.spell.fire;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityFlamePillar;
-import com.favouritedragon.arcaneessentials.common.spell.IArcaneSpell;
+import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
-import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLiving;
@@ -17,7 +16,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
-public class InfernoPillar extends Spell implements IArcaneSpell {
+public class InfernoPillar extends ArcaneSpell {
 
 	public InfernoPillar() {
 			super(ArcaneEssentials.MODID, "inferno_pillar", EnumAction.BOW, false);

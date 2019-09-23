@@ -20,6 +20,7 @@
     "damage": 1.5,
     "burn_duration": 4,
     "effect_duration": 240,
-    "effect_radius": 2
+    "effect_radius": 2,
+    "swords": 0
   }
 }

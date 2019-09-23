@@ -21,6 +21,7 @@
     "range": 60,
     "burn_duration": 10,
     "effect_strength": 1.5,
-    "effect_radius": 0.5
+    "effect_radius": 0.5,
+    "swords": 1
   }
 }
