@@ -1,6 +1,7 @@
 package com.favouritedragon.arcaneessentials.common.item.weapon;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
+import com.favouritedragon.arcaneessentials.common.util.SpellUtils;
 import com.google.common.collect.Multimap;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.constants.Constants;
@@ -403,6 +404,8 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 				&& spell.getTier().level <= this.tier.level
 				// ...and either the spell is not in cooldown or the player is in creative mode
 				&& (WandHelper.getCurrentCooldown(stack) == 0 || caster.isCreative())
+				//And the spell is castable by swords
+				&& SpellUtils.isSwordCastable(spell)
 				//And the spell is the same element, or the generic one
 				&& spell.getElement() == this.element || spell.getElement().equals(Element.MAGIC) || spell.getElement().equals(ARCANE);
 	}
@@ -645,7 +648,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 				changed = true;
 			}
 
-		}else if(WandHelper.isWandUpgrade(upgrade.getStack().getItem())){
+		} else if(WandHelper.isWandUpgrade(upgrade.getStack().getItem())){
 
 			// Special upgrades
 			Item specialUpgrade = upgrade.getStack().getItem();
@@ -717,7 +720,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 				Spell spell = Spell.byMetadata(spellBooks[i].getStack().getItemDamage());
 				// If the wand is powerful enough for the spell, it's not already bound to that slot and it's enabled for wands
 				//TODO: Change the context to swords, add a fail message
-				if(!(spell.getTier().level > this.tier.level) && spells[i] != spell && spell.isEnabled(SpellProperties.Context.WANDS) &&
+				if(!(spell.getTier().level > this.tier.level) && spells[i] != spell && SpellUtils.isSwordCastable(spell) &&
 						(spell.getElement() == this.element || spell.getElement().equals(Element.MAGIC) || spell.getElement().equals(ARCANE))){
 					spells[i] = spell;
 					changed = true;

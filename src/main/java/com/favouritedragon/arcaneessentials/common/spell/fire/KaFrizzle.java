@@ -28,12 +28,14 @@ public class KaFrizzle extends ArcaneSpell {
 	public KaFrizzle() {
 		super(ArcaneEssentials.MODID, "kafrizzle", EnumAction.BOW, false);
 		addProperties(DAMAGE, RANGE, BURN_DURATION, SIZE);
+		soundValues(2.0F, 0.9F, 0.15F);
 	}
 
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		caster.swingArm(hand);
+		playSound(world, caster, ticksInUse, - 1, modifiers);
 		return cast(world, caster, modifiers);
 	}
 
@@ -60,6 +62,7 @@ public class KaFrizzle extends ArcaneSpell {
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
 		caster.swingArm(hand);
+		playSound(world, caster, ticksInUse, - 1, modifiers);
 		return cast(world, caster, modifiers);
 	}
 
@@ -74,6 +77,7 @@ public class KaFrizzle extends ArcaneSpell {
 		fireball.setPosition(x, y, z);
 		fireball.shoot(dir.getX(), dir.getY(), dir.getZ(), getProperty(RANGE).floatValue(), 0F);
 		fireball.setBehaviour(new KaFrizzleBehaviour());
+		playSound(world, x, y, z, ticksInUse, -1, modifiers);
 		if (!world.isRemote)
 			return world.spawnEntity(fireball);
 

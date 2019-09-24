@@ -24,7 +24,7 @@ public class SpellUtils {
 		if (spell instanceof IArcaneSpell) {
 			return ((IArcaneSpell) spell).isSwordCastable();
 		}
-		return false; //spell.isEnabled(SWORDS);
+		return true; //spell.isEnabled(SWORDS);
 	}
 
 	public static boolean isWandCastable(Spell spell) {
