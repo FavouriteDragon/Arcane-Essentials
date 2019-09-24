@@ -86,23 +86,23 @@ public abstract class SpellRay extends electroblob.wizardry.spell.SpellRay imple
 		Vec3d endpoint = origin.add(direction.scale(range));
 
 		// Change the filter depending on whether living entities are ignored or not
-		RayTraceResult rayTrace = RayTracer.rayTrace(world, origin, endpoint, getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(SpellModifiers.POTENCY), hitLiquids,
+		RayTraceResult rayTrace = RayTracer.rayTrace(world, origin, endpoint, getProperty(EFFECT_RADIUS).floatValue(), hitLiquids,
 				ignoreUncollidables, false, Entity.class, ignoreLivingEntities ? WizardryUtilities::isLiving
 						: filter);
 
 		boolean flag = false;
 
-		//TODO: Piercing
 		if (rayTrace != null) {
 			// Doesn't matter which way round these are, they're mutually exclusive
 			if (rayTrace.typeOfHit == RayTraceResult.Type.ENTITY) {
 				// Do whatever the spell does when it hits an entity
 				flag = onEntityHit(world, rayTrace.entityHit, rayTrace.hitVec, caster, origin, ticksInUse, modifiers);
 				// If the spell succeeded, clip the particles to the correct distance so they don't go through the entity
-				if (flag) range = origin.distanceTo(rayTrace.hitVec);
-				filter = filter.or(e -> e == rayTrace.entityHit);
-				shootPiercingSpell(world, origin, direction, caster, ticksInUse, modifiers, filter);
-
+				if (flag) {
+					range = origin.distanceTo(rayTrace.hitVec);
+					filter = filter.or(e -> e == rayTrace.entityHit);
+					shootPiercingSpell(world, origin, direction, caster, ticksInUse, modifiers, filter);
+				}
 
 			} else if (rayTrace.typeOfHit == RayTraceResult.Type.BLOCK) {
 				// Do whatever the spell does when it hits an block
