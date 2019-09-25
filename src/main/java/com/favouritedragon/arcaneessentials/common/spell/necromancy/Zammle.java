@@ -28,14 +28,18 @@ public class Zammle extends SpellRay {
 
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, @Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
+		Vec3d vel;
 		if (caster != null) {
-			if (target instanceof EntityLivingBase || target.canBeCollidedWith() && target.canBePushed() && AllyDesignationSystem.isValidTarget(caster, target)) {
+			if (target instanceof EntityLivingBase || target.canBeCollidedWith() && target.canBePushed()) {
 				if (!world.isRemote) {
-					if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.WITHER, target)) {
+					if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.WITHER, target) && AllyDesignationSystem.isValidTarget(caster, target)) {
 						float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 						if (target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER), damage)) {
+							if (origin == null || hit == null)
+								vel = caster.getLookVec().scale(getProperty(EFFECT_STRENGTH).floatValue());
+							else
+								vel = hit.subtract(origin).scale(0.25F * getProperty(EFFECT_STRENGTH).doubleValue()).add(0, 0.125F, 0);
 							caster.heal(getProperty(LIFE_STEAL).floatValue() * damage * modifiers.get(SpellModifiers.POTENCY));
-							Vec3d vel = hit.subtract(origin).scale(modifiers.get(WizardryItems.blast_upgrade) * getProperty(EFFECT_STRENGTH).doubleValue()).add(0, 0.125F, 0);
 							if (ArcaneUtils.getMagnitude(vel) >= getProperty(EFFECT_STRENGTH).doubleValue() * 1.5) {
 								vel = vel.normalize().scale(getProperty(EFFECT_STRENGTH).doubleValue() * modifiers.get(WizardryItems.blast_upgrade));
 							}

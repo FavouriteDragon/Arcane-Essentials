@@ -22,7 +22,7 @@ public class CycloneBolt extends ArcaneSpell {
 	public CycloneBolt() {
 		super(ArcaneEssentials.MODID, "cyclone_bolt", EnumAction.BOW, false);
 		addProperties(DAMAGE, SPEED, LIFETIME);
-		soundValues(1.5F, 1.0F, 0.15F);
+		soundValues(2F, 1.0F, 0.15F);
 	}
 
 	@Override
@@ -40,11 +40,11 @@ public class CycloneBolt extends ArcaneSpell {
 	private boolean cast(World world, EntityLivingBase caster, EnumHand hand, SpellModifiers modifiers) {
 		caster.swingArm(hand);
 		float speed = 0.5F * modifiers.get(WizardryItems.range_upgrade) + getProperty(SPEED).floatValue();
-		int knockBackStrength = getProperty(SPEED).intValue() / 3 + (int) modifiers.get(WizardryItems.blast_upgrade);
+		float knockBackStrength = getProperty(SPEED).floatValue() / 6F * modifiers.get(WizardryItems.blast_upgrade);
 		float damageMultiplier = modifiers.get(SpellModifiers.POTENCY);
 		EntityCycloneBolt bolt = new EntityCycloneBolt(world);
 		bolt.setCaster(caster);
-		bolt.aim(caster, speed / 25, 0);
+		bolt.aim(caster, speed / 20, 0);
 		bolt.setLifetime(getProperty(LIFETIME).intValue() * 20);
 		bolt.setDamage(getProperty(DAMAGE).floatValue() * damageMultiplier);
 		bolt.setKnockbackStrength(knockBackStrength);
@@ -60,8 +60,4 @@ public class CycloneBolt extends ArcaneSpell {
 		return true;
 	}
 
-	@Override
-	public boolean isSwordCastable() {
-		return true;
-	}
 }
