@@ -99,7 +99,7 @@ public class KaFrizzle extends ArcaneSpell {
 		@Override
 		public Behaviour onUpdate(EntityMagicBolt entity) {
 			if (entity instanceof EntityFireball) {
-				if (entity.isDead || entity.collided) {
+				if (entity.isDead || entity.collided || entity.onGround) {
 					EntityFlamePillar pillar = new EntityFlamePillar(entity.world, entity.posX, entity.posY, entity.posZ, entity.getCaster(),
 							(int) entity.getSize() * 30, (float) entity.getDamage() / 6F, entity.getSize() / 2, entity.getSize() * 5,
 							75 + (int) (entity.getSize() * 5));

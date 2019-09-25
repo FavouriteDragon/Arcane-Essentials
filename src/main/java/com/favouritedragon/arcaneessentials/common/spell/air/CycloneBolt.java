@@ -22,18 +22,18 @@ public class CycloneBolt extends ArcaneSpell {
 	public CycloneBolt() {
 		super(ArcaneEssentials.MODID, "cyclone_bolt", EnumAction.BOW, false);
 		addProperties(DAMAGE, SPEED, LIFETIME);
-		soundValues(2F, 1.0F, 0.15F);
+		//soundValues(2F, 1.0F, 0.15F);
 	}
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		playSound(world, caster, ticksInUse, -1, modifiers);
+	//	playSound(world, caster, ticksInUse, -1, modifiers);
 		return cast(world, caster, hand, modifiers);
 	}
 
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
-		playSound(world, caster, ticksInUse, -1, modifiers);
+		//playSound(world, caster, ticksInUse, -1, modifiers);
 		return cast(world, caster, hand, modifiers);
 	}
 

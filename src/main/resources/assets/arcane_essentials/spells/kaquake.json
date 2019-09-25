@@ -10,17 +10,17 @@
     "trades": true,
     "looting": true
   },
-  "tier": "master",
-  "element": "fire",
-  "type": "projectile",
-  "cost": 100,
+  "tier": "advanced",
+  "element": "earth",
+  "type": "attack",
+  "cost": 65,
   "chargeup": 0,
-  "cooldown": 200,
+  "cooldown": 90,
   "base_properties": {
-    "damage": 12,
-    "burn_duration": 10,
-    "range": 30,
-    "size": 3.25,
-    "swords": 0
+    "damage": 11,
+    "range": 5,
+    "duration": 4,
+    "blast_radius": 1.5,
+    "swords": 1
   }
 }

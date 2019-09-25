@@ -5,6 +5,7 @@ import com.favouritedragon.arcaneessentials.common.spell.air.CycloneBolt;
 import com.favouritedragon.arcaneessentials.common.spell.air.CycloneShield;
 import com.favouritedragon.arcaneessentials.common.spell.divine.RadianceStorm;
 import com.favouritedragon.arcaneessentials.common.spell.divine.RadiantBeam;
+import com.favouritedragon.arcaneessentials.common.spell.earth.KaQuake;
 import com.favouritedragon.arcaneessentials.common.spell.earth.Quake;
 import com.favouritedragon.arcaneessentials.common.spell.earth.Shake;
 import com.favouritedragon.arcaneessentials.common.spell.earth.SolarBeam;
@@ -120,6 +121,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new InfernoPillar());
 		event.getRegistry().register(new KaFrizz());
 		event.getRegistry().register(new KaFrizzle());
+		event.getRegistry().register(new KaQuake());
 		event.getRegistry().register(new KaSploosh());
 		event.getRegistry().register(new KaSplooshle());
 		event.getRegistry().register(new KaThwack());

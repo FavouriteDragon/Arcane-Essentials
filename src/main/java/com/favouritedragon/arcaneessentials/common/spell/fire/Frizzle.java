@@ -22,12 +22,14 @@ public class Frizzle extends ArcaneSpell {
 	public Frizzle() {
 		super(ArcaneEssentials.MODID, "frizzle", EnumAction.BOW, false);
 		addProperties(DAMAGE, RANGE, BURN_DURATION, SIZE);
+		soundValues(1.5F, 1.0F, 0.15F);
 	}
 
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		caster.swingArm(hand);
+		playSound(world, caster, ticksInUse, -1, modifiers);
 		return cast(world, caster, modifiers);
 	}
 
@@ -53,20 +55,22 @@ public class Frizzle extends ArcaneSpell {
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
 		caster.swingArm(hand);
+		playSound(world, caster, ticksInUse, -1, modifiers);
 		return cast(world, caster, modifiers);
 	}
 
 	@Override
 	public boolean cast(World world, double x, double y, double z, EnumFacing direction, int ticksInUse, int duration, SpellModifiers modifiers) {
+		playSound(world, x, y, z, ticksInUse, -1, modifiers);
+		float size = getProperty(SIZE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
+		float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
+		Vec3i dir = direction.getDirectionVec();
+		EntityFireball fireball = new EntityFireball(world);
+		fireball.setSize(size);
+		fireball.setDamage(damage);
+		fireball.setPosition(x, y, z);
+		fireball.shoot(dir.getX(), dir.getY(), dir.getZ(), getProperty(RANGE).floatValue(), 0F);
 		if (!world.isRemote) {
-			float size = getProperty(SIZE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
-			float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
-			Vec3i dir = direction.getDirectionVec();
-			EntityFireball fireball = new EntityFireball(world);
-			fireball.setSize(size);
-			fireball.setDamage(damage);
-			fireball.setPosition(x, y, z);
-			fireball.shoot(dir.getX(), dir.getY(), dir.getZ(), getProperty(RANGE).floatValue(), 0F);
 			world.spawnEntity(fireball);
 			return true;
 		}
