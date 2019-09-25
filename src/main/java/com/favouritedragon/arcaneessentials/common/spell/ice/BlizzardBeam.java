@@ -38,16 +38,22 @@ public class BlizzardBeam extends SpellRay {
 
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, @Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
-		Vec3d knockBack = hit.subtract(origin).scale(.01 * getProperty(DIRECT_EFFECT_STRENGTH).floatValue());
-		float damage = getProperty(DAMAGE).floatValue() + modifiers.get(SpellModifiers.POTENCY);
-		if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, target) && target instanceof EntityLivingBase && caster != null) {
-			target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FROST), damage);
-			target.motionX += knockBack.x;
-			target.motionY += knockBack.y;
-			target.motionZ += knockBack.z;
-			((EntityLivingBase) target).addPotionEffect(new PotionEffect(WizardryPotions.frost, getProperty(EFFECT_DURATION).intValue() * (int) modifiers.get(WizardryItems.duration_upgrade),
-					getProperty(EFFECT_STRENGTH).intValue() * (int) modifiers.get(SpellModifiers.POTENCY)));
-			applyPlayerKnockback(target);
+		Vec3d knockBack;
+		if (caster != null) {
+			if (hit == null || origin == null)
+				knockBack = caster.getLookVec().scale(getProperty(DIRECT_EFFECT_STRENGTH).floatValue());
+			else
+				knockBack = hit.subtract(origin).scale(.01 * getProperty(DIRECT_EFFECT_STRENGTH).floatValue());
+			float damage = getProperty(DAMAGE).floatValue() + modifiers.get(SpellModifiers.POTENCY);
+			if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, target) && target instanceof EntityLivingBase) {
+				target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FROST), damage);
+				target.motionX += knockBack.x;
+				target.motionY += knockBack.y;
+				target.motionZ += knockBack.z;
+				((EntityLivingBase) target).addPotionEffect(new PotionEffect(WizardryPotions.frost, getProperty(EFFECT_DURATION).intValue() * (int) modifiers.get(WizardryItems.duration_upgrade),
+						getProperty(EFFECT_STRENGTH).intValue() * (int) modifiers.get(SpellModifiers.POTENCY)));
+				applyPlayerKnockback(target);
+			}
 		}
 		return true;
 	}

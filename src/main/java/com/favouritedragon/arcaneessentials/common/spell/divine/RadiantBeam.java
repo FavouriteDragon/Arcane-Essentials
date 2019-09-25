@@ -30,15 +30,21 @@ public class RadiantBeam extends SpellRay {
 
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, @Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
-		Vec3d knockBack = hit.subtract(origin).scale(.01 * getProperty(EFFECT_STRENGTH).floatValue());
-		float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
-		if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.RADIANT, target) && target instanceof EntityLivingBase && caster != null) {
-			target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.RADIANT), damage);
-			target.motionX += knockBack.x;
-			target.motionY += knockBack.y;
-			target.motionZ += knockBack.z;
-			target.setFire(getProperty(BURN_DURATION).intValue() * (int) modifiers.get(WizardryItems.duration_upgrade));
-			applyPlayerKnockback(target);
+		Vec3d knockBack;
+		if (caster != null) {
+			if (origin == null || hit == null)
+				knockBack = caster.getLookVec().scale(getProperty(EFFECT_STRENGTH).floatValue());
+			else
+				knockBack = hit.subtract(origin).scale(.01 * getProperty(EFFECT_STRENGTH).floatValue());
+			float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
+			if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.RADIANT, target) && target instanceof EntityLivingBase) {
+				target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.RADIANT), damage);
+				target.motionX += knockBack.x;
+				target.motionY += knockBack.y;
+				target.motionZ += knockBack.z;
+				target.setFire(getProperty(BURN_DURATION).intValue() * (int) modifiers.get(WizardryItems.duration_upgrade));
+				applyPlayerKnockback(target);
+			}
 		}
 		return true;
 	}

@@ -1,5 +1,5 @@
 {
-  "spell:cyclone_bolt": {
+  "spell.cyclone_bolt": {
     "category": "player", "sounds": ["arcane_essentials:cyclone_bolt"]
   },
   "spell.inferno_form": {
