@@ -1,8 +1,14 @@
 {
+  "spell:cyclone_bolt": {
+    "category": "player", "sounds": ["arcane_essentials:cyclone_bolt"]
+  },
   "spell.inferno_form": {
-    "category": "spells", "sounds": ["arcane_essentials:inferno_form"]
+    "category": "player", "sounds": ["arcane_essentials:inferno_form"]
+  },
+  "spell.inferno_pillar": {
+    "category": "player", "sounds": ["arcane_essentials:inferno_pillar"]
   },
   "spell.kafrizzle": {
-    "category": "spells", "sounds": ["arcane_essentials:kafrizzle"]
+    "category": "player", "sounds": ["arcane_essentials:kafrizzle"]
   }
 }

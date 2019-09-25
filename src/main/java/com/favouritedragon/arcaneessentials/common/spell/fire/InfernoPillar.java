@@ -21,6 +21,7 @@ public class InfernoPillar extends ArcaneSpell {
 	public InfernoPillar() {
 			super(ArcaneEssentials.MODID, "inferno_pillar", EnumAction.BOW, false);
 			addProperties(DAMAGE, EFFECT_RADIUS, EFFECT_DURATION, RANGE);
+			soundValues(1.5F, 0.8F, 0.15F);
 	}
 
 	@Override
@@ -31,7 +32,7 @@ public class InfernoPillar extends ArcaneSpell {
 		float height = getProperty(RANGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 		world.spawnEntity(new EntityFlamePillar(world, caster.posX, caster.posY, caster.posZ, caster, lifetime,
 				damage, radius, height, 120));
-		WizardryUtilities.playSoundAtPlayer(caster, SoundEvents.ENTITY_GHAST_SHOOT, 2 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10);
+		playSound(world, caster, ticksInUse, -1, modifiers);
 		WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_FIRE_RING_AMBIENT, 1 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10);
 		WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_FIRE_SIGIL_TRIGGER, 1 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10);
 		caster.swingArm(hand);
@@ -47,8 +48,7 @@ public class InfernoPillar extends ArcaneSpell {
 		float height = getProperty(RANGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 		world.spawnEntity(new EntityFlamePillar(world, caster.posX, caster.posY, caster.posZ, caster, lifetime,
 				damage, radius, height, 120));
-		world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.NEUTRAL,
-				2 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10, true);
+		playSound(world, caster, ticksInUse, -1, modifiers);
 		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_FIRE_RING_AMBIENT, SoundCategory.NEUTRAL,
 				1 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10, true);
 		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_FIRE_SIGIL_TRIGGER, SoundCategory.NEUTRAL,

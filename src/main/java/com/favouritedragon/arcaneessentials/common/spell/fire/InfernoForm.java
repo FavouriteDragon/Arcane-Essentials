@@ -29,7 +29,7 @@ public class InfernoForm extends ArcaneSpell {
 		caster.addPotionEffect(new PotionEffect(ArcanePotions.infernoForm, duration, 0, false, false));
 		caster.playSound(WizardrySounds.ENTITY_FIREBOMB_FIRE, 1.0F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
 		caster.swingArm(hand);
-		playSound(world, caster, ticksInUse, 10, modifiers);
+		playSound(world, caster, ticksInUse, -1, modifiers);
 		return true;
 	}
 }
