@@ -1,14 +1,12 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
-import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -84,28 +82,17 @@ public class EntityFireball extends EntityMagicBolt {
 						scale(0.75F + getSize() / 2 + world.rand.nextFloat()).spawn(world);
 			}
 		}
-		this.isDead = true;
 	}
 
 	@Override
 	public void setDead() {
 		Explode();
 		super.setDead();
-	}
-
-	@Override
-	protected void onEntityHit(EntityLivingBase entityHit) {
-		super.onEntityHit(entityHit);
-		if (entityHit != getCaster()) {
-			setDead();
+		if (this.isDead && !world.isRemote) {
+			Thread.dumpStack();
 		}
 	}
 
-	@Override
-	protected void onBlockHit(RayTraceResult hit) {
-		super.onBlockHit(hit);
-		setDead();
-	}
 
 	@Override
 	protected void tickInGround() {

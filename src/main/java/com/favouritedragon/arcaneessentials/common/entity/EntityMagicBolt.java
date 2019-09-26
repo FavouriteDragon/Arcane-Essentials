@@ -11,7 +11,6 @@ import electroblob.wizardry.util.RayTracer;
 import electroblob.wizardry.util.WizardryUtilities;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -272,18 +271,50 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 	}
 
 	/**
-	 * Called when the projectile hits an entity. Override to add potion effects and such like.
+	 * Called when the projectile hits an entity. Override to add potion effects and the like.
+	 * Used to determine whether the projectile hit an entity
 	 */
 	protected void onEntityHit(EntityLivingBase entityHit) {
+		if (canCollideWithEntity(entityHit)) {
+			if (!doOverpenetration())
+				setDead();
+		}
 	}
 
 	/**
-	 * Called when the projectile hits a block. Override to add sound effects and such like.
+	 * Called when the projectile hits a block. Override to add sound effects and the like.
+	 * Can also be used for whether to set the entity dead upon hitting a block/whether it hit a block.
 	 *
 	 * @param hit A vector representing the exact coordinates of the hit; use this to centre particle effects, for
 	 *            example.
 	 */
 	protected void onBlockHit(RayTraceResult hit) {
+		if (canCollideWithSolid(hit)) {
+			setDead();
+		}
+	}
+
+	/**
+	 * Similar to onBlockHit, but this just checks whether to do anything, rather than performing a function.
+	 * @param hit The raytrace used to hit something
+	 * @return Whether the entity can collide/has collided
+	 */
+	public boolean canCollideWithSolid(RayTraceResult hit) {
+		if (hit != null) {
+			if (hit.typeOfHit == RayTraceResult.Type.BLOCK) {
+				return world.getBlockState(hit.getBlockPos()).isFullBlock() && world.getBlockState(hit.getBlockPos()) != Blocks.AIR;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Same as onCollideWithSolid, except for entities.
+	 * @param entityHit The entity hit.
+	 * @return Whether the entity hit can be affected.
+	 */
+	public boolean canCollideWithEntity(EntityLivingBase entityHit) {
+		return AllyDesignationSystem.isValidTarget(this, entityHit) && entityHit != getCaster() && entityHit.canBeCollidedWith() && entityHit.canBePushed();
 	}
 
 	@Override
@@ -532,7 +563,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 					this.arrowShake = 7;
 
 					if (this.collided && (world.getBlockState(getPosition()).getBlock() != Blocks.AIR &&
-							!(world.getBlockState(getPosition()).getBlock() instanceof BlockTallGrass)))
+							!(world.getBlockState(getPosition()).isFullCube())))
 						this.onBlockHit(raytraceresult);
 
 					if (this.stuckInBlock.getMaterial() != Material.AIR) {
@@ -762,4 +793,5 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 			onEntityHit((EntityLivingBase) result.entityHit);
 		}
 	}
+
 }

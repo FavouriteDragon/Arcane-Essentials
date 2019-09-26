@@ -18,8 +18,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SIZE;
 
@@ -35,7 +39,7 @@ public class KaFrizzle extends ArcaneSpell {
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		caster.swingArm(hand);
-		playSound(world, caster, ticksInUse, - 1, modifiers);
+		playSound(world, caster, ticksInUse, -1, modifiers);
 		return cast(world, caster, modifiers);
 	}
 
@@ -62,7 +66,7 @@ public class KaFrizzle extends ArcaneSpell {
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
 		caster.swingArm(hand);
-		playSound(world, caster, ticksInUse, - 1, modifiers);
+		playSound(world, caster, ticksInUse, -1, modifiers);
 		return cast(world, caster, modifiers);
 	}
 
@@ -99,13 +103,18 @@ public class KaFrizzle extends ArcaneSpell {
 		@Override
 		public Behaviour onUpdate(EntityMagicBolt entity) {
 			if (entity instanceof EntityFireball) {
-				if (entity.isDead || entity.collided || entity.onGround) {
-					EntityFlamePillar pillar = new EntityFlamePillar(entity.world, entity.posX, entity.posY, entity.posZ, entity.getCaster(),
-							(int) entity.getSize() * 30, (float) entity.getDamage() / 6F, entity.getSize() / 2, entity.getSize() * 5,
-							75 + (int) (entity.getSize() * 5));
-					if (!entity.world.isRemote)
-						entity.world.spawnEntity(pillar);
-				}
+					Vec3d vec3d1 = new Vec3d(entity.posX, entity.posY, entity.posZ);
+					Vec3d vec3d = new Vec3d(entity.posX + entity.motionX, entity.posY + entity.motionY, entity.posZ + entity.motionZ);
+					RayTraceResult raytraceresult = entity.world.rayTraceBlocks(vec3d1, vec3d, false, true, false);
+					List<EntityLivingBase> nearby = entity.world.getEntitiesWithinAABB(EntityLivingBase.class, entity.getEntityBoundingBox());
+					nearby.remove(entity.getCaster());
+					if ((raytraceresult != null && entity.canCollideWithSolid(raytraceresult)) || (!nearby.isEmpty() && entity.canCollideWithEntity(nearby.get(0)))) {
+						EntityFlamePillar pillar = new EntityFlamePillar(entity.world, entity.posX, entity.posY, entity.posZ, entity.getCaster(),
+								(int) entity.getSize() * 30, (float) entity.getDamage() / 6F, entity.getSize() / 2, entity.getSize() * 5,
+								120 + (int) (entity.getSize() * 5));
+						if (!entity.world.isRemote)
+							entity.world.spawnEntity(pillar);
+					}
 			}
 			return this;
 		}

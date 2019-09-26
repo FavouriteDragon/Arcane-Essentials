@@ -6,6 +6,7 @@ import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.util.SpellModifiers;
+import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,12 +29,17 @@ public class KaQuake extends ArcaneSpell {
 			float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 			int lifetime = getProperty(DURATION).intValue() * 20 * (int) modifiers.get(WizardryItems.duration_upgrade);
 			caster.swingArm(hand);
-			for (int i = 0; i < 6; i++) {
+			for (int i = 0; i < 7; i++) {
 				//Starts 45 degrees to the left, then iterates right
 				Vec3d look = ArcaneUtils.toRectangular(Math.toRadians(caster.rotationYaw - 45 + i * 15), 0);
-				EntityFallingBlockSpawner spawner = new EntityFallingBlockSpawner(world, caster.posX + look.x * 0.25, caster.getEntityBoundingBox().minY, caster.posZ + look.z * 0.25, caster,
+				//Ensures its positioning is good
+				EntityFallingBlockSpawner spawner = new EntityFallingBlockSpawner(world, caster.posX + look.x * 0.25, caster.getEntityBoundingBox().minY
+						+ Math.round(getProperty(BLAST_RADIUS).floatValue() - 1), caster.posZ + look.z * 0.25, caster,
 						lifetime, damage);
+				int y = WizardryUtilities.getNearestFloor(world, spawner.getPosition().add(0, Math.round(getProperty(BLAST_RADIUS).floatValue() - 1), 0), 1) != null ?
+						WizardryUtilities.getNearestFloor(world, spawner.getPosition().add(0, Math.round(getProperty(BLAST_RADIUS).floatValue() - 1), 0), 1) : 1;
 				look.scale(getProperty(RANGE).doubleValue());
+				spawner.posY = y;
 				spawner.setOwner(caster);
 				spawner.motionX = look.x;
 				spawner.motionY = 0;

@@ -4,11 +4,9 @@ import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -124,19 +122,6 @@ public class EntityWaterBall extends EntityMagicBolt {
 			}
 			this.isDead = true;
 		}
-	}
-
-	@Override
-	protected void onEntityHit(EntityLivingBase entityHit) {
-		super.onEntityHit(entityHit);
-		if (entityHit != getCaster()) {
-			setDead();
-		}
-	}
-
-	@Override
-	protected void onBlockHit(RayTraceResult hit) {
-		setDead();
 	}
 
 	@Override

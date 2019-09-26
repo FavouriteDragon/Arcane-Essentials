@@ -27,7 +27,6 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 	private float damage;
 
 
-
 	public EntityCycloneBolt(World world) {
 		super(world);
 		this.setSize(0.75F, 0.75F);
@@ -44,13 +43,14 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 		return damage;
 	}
 
-	@Override
-	protected void onBlockHit(RayTraceResult hit) {
-		Dissipate();
-	}
-
 	public void setDamage(float damage) {
 		this.damage = damage;
+	}
+
+	@Override
+	protected void onBlockHit(RayTraceResult hit) {
+		if (canCollideWithSolid(hit))
+			Dissipate();
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 						if (target.canBeCollidedWith()) {
 							target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(getCaster(),
 									getDamageType()), (float) getDamage() * 0.4F);
-							target.addVelocity(motionX / 4, motionY / 4, motionZ /4);
+							target.addVelocity(motionX / 4, motionY / 4, motionZ / 4);
 							ArcaneUtils.applyPlayerKnockback(target);
 						}
 					}
@@ -100,8 +100,8 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 
 	@Override
 	protected void onEntityHit(EntityLivingBase entityHit) {
-		super.onEntityHit(entityHit);
-		Dissipate();
+		if (canCollideWithEntity(entityHit))
+			Dissipate();
 	}
 
 	@Override
