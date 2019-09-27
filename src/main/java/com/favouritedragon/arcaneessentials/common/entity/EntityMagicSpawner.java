@@ -2,6 +2,7 @@ package com.favouritedragon.arcaneessentials.common.entity;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class EntityMagicSpawner extends EntityMagicConstruct {
@@ -36,10 +37,14 @@ public class EntityMagicSpawner extends EntityMagicConstruct {
 		//Using this does hella weird stuff with the positioning
 		//this.move(MoverType.SELF, motionX, 0, motionZ);
 		setPosition(posX + motionX, posY, posZ + motionZ);
-		boolean inSolid = world.getBlockState(getPosition()).isFullBlock() && world.getBlockState(getPosition()).getBlock() != Blocks.AIR;
-		if (this.collidedHorizontally || (!onGround && (!world.getBlockState(getPosition().down()).isFullBlock() ||
-				world.getBlockState(getPosition().down()).getBlock() == Blocks.AIR)) || inSolid) {
-			this.setDead();
+		BlockPos pos = new BlockPos(posX, getEntityBoundingBox().minY, posZ);
+		boolean inSolid = world.getBlockState(getPosition()).getBlock() != Blocks.AIR &&
+				world.getBlockState(getPosition()).isFullBlock();
+		//Ensures that if the size is greater than 1 it doesn't think it's in a solid
+		//inSolid &= world.getBlockState(getPosition().add(0, Math.round(getSize() - 1), 0)).getBlock() != Blocks.AIR &&
+		//		world.getBlockState(getPosition().add(0, Math.round(getSize() - 1), 0)).isFullBlock();
+			if (inSolid || (!world.getBlockState(getPosition().down()).isFullBlock())) {
+				this.setDead();
 		}
 		if (getCaster() != null && ticksExisted % getFrequency() == 0) {
 			if (spawnEntity()) {

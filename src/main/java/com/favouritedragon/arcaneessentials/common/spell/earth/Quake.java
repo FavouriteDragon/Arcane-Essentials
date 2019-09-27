@@ -68,7 +68,7 @@ public class Quake extends ArcaneSpell {
 				spawner.motionX = look.x;
 				spawner.motionY = 0;
 				spawner.motionZ = look.z;
-				spawner.setSize(getProperty(BLAST_RADIUS).floatValue());
+				spawner.setRenderSize(getProperty(BLAST_RADIUS).floatValue());
 				world.spawnEntity(spawner);
 			}
 			return true;

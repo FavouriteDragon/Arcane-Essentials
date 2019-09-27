@@ -84,14 +84,6 @@ public class EntityFireball extends EntityMagicBolt {
 		}
 	}
 
-	@Override
-	public void setDead() {
-		Explode();
-		super.setDead();
-		if (this.isDead && !world.isRemote) {
-			Thread.dumpStack();
-		}
-	}
 
 
 	@Override

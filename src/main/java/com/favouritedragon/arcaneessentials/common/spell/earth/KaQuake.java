@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -33,19 +34,15 @@ public class KaQuake extends ArcaneSpell {
 				//Starts 45 degrees to the left, then iterates right
 				Vec3d look = ArcaneUtils.toRectangular(Math.toRadians(caster.rotationYaw - 45 + i * 15), 0);
 				//Ensures its positioning is good
-				EntityFallingBlockSpawner spawner = new EntityFallingBlockSpawner(world, caster.posX + look.x * 0.25, caster.getEntityBoundingBox().minY
-						+ Math.round(getProperty(BLAST_RADIUS).floatValue() - 1), caster.posZ + look.z * 0.25, caster,
+				EntityFallingBlockSpawner spawner = new EntityFallingBlockSpawner(world, caster.posX + look.x * 0.5, caster.getEntityBoundingBox().minY, caster.posZ + look.z * 0.5, caster,
 						lifetime, damage);
-				int y = WizardryUtilities.getNearestFloor(world, spawner.getPosition().add(0, Math.round(getProperty(BLAST_RADIUS).floatValue() - 1), 0), 1) != null ?
-						WizardryUtilities.getNearestFloor(world, spawner.getPosition().add(0, Math.round(getProperty(BLAST_RADIUS).floatValue() - 1), 0), 1) : 1;
 				look.scale(getProperty(RANGE).doubleValue());
-				spawner.posY = y;
 				spawner.setOwner(caster);
 				spawner.motionX = look.x;
 				spawner.motionY = 0;
 				spawner.motionZ = look.z;
-				spawner.setSize(getProperty(BLAST_RADIUS).floatValue());
-				if (!world.isRemote)
+				spawner.setRenderSize(getProperty(BLAST_RADIUS).floatValue());
+				//if (!world.isRemote)
 					world.spawnEntity(spawner);
 			}
 			return true;
