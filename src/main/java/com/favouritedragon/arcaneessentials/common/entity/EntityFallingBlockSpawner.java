@@ -1,12 +1,12 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
+import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.MagicDamage;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -52,12 +52,13 @@ public class EntityFallingBlockSpawner extends EntityMagicSpawner {
 
 	@Override
 	protected boolean spawnEntity() {
-		EntityFallingBlock block = new EntityFallingBlock(world, posX, posY, posZ, world.getBlockState(getPosition().down()));
-		block.setHurtEntities(true);
+		EntityFloatingBlock block = new EntityFloatingBlock(world, posX, posY + getRenderSize(), posZ, getCaster(), (float) ArcaneUtils.getMagnitude(new Vec3d(motionX, motionY, motionZ)) + 15,
+				damageMultiplier, (int) (10 * getRenderSize()), world.getBlockState(getPosition().down()).getBlock());
 		//Fall ticks upwards, so if you make it positive, it'll stay for a long time.
-		block.fallTime = MathHelper.clamp((int) (-10 * getRenderSize() + getRenderSize() > 0 ? (10 * getRenderSize()) % 10 : 0), -40, -10);
-		block.motionY = MathHelper.clamp(0.3 * getRenderSize(), 0.25F, 1.5F);
-		block.shouldDropItem = false;
+		//block.fallTime = MathHelper.clamp((int) (-10 * getRenderSize() + getRenderSize() > 0 ? (10 * getRenderSize()) % 10 : 0), -40, -10);
+		//block.motionX = block.motionZ = 0;
+		//block.motionY = MathHelper.clamp(0.3 * getRenderSize(), 0.25F, 1.5F);
+		//block.shouldDropItem = false;
 		if (!world.isRemote)
 			return world.spawnEntity(block);
 		else return false;

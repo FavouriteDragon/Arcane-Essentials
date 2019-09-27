@@ -104,7 +104,7 @@ public class KaFrizzle extends ArcaneSpell {
 		public Behaviour onUpdate(EntityMagicBolt entity) {
 			if (entity instanceof EntityFireball) {
 					Vec3d vec3d1 = new Vec3d(entity.posX, entity.posY, entity.posZ);
-					Vec3d vec3d = new Vec3d(entity.posX + entity.motionX, entity.posY + entity.motionY, entity.posZ + entity.motionZ);
+					Vec3d vec3d = new Vec3d(entity.posX + entity.motionX / 2, entity.posY + entity.motionY / 2, entity.posZ + entity.motionZ / 2);
 					RayTraceResult raytraceresult = entity.world.rayTraceBlocks(vec3d1, vec3d, false, true, false);
 					List<EntityLivingBase> nearby = entity.world.getEntitiesWithinAABB(EntityLivingBase.class, entity.getEntityBoundingBox());
 					nearby.remove(entity.getCaster());

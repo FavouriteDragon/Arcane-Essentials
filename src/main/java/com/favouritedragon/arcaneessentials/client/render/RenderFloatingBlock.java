@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderFallingBlock;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -22,7 +21,7 @@ import javax.annotation.Nullable;
 
 public class RenderFloatingBlock extends Render<EntityFloatingBlock> {
 
-	protected RenderFloatingBlock(RenderManager renderManager) {
+	public RenderFloatingBlock(RenderManager renderManager) {
 		super(renderManager);
 	}
 
@@ -55,8 +54,9 @@ public class RenderFloatingBlock extends Render<EntityFloatingBlock> {
 					GlStateManager.translate((float)(x - (double)blockpos.getX() - 0.5D), (float)(y - (double)blockpos.getY()), (float)(z - (double)blockpos.getZ() - 0.5D));
 					BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
 					//Use getOrigin instead of getPosition if issues arise
-					blockrendererdispatcher.getBlockModelRenderer().renderModel(world, blockrendererdispatcher.getModelForState(iblockstate), iblockstate, blockpos, bufferbuilder, false, MathHelper.getPositionRandom(entity.getPosition()));
+					blockrendererdispatcher.getBlockModelRenderer().renderModel(world, blockrendererdispatcher.getModelForState(iblockstate), iblockstate, blockpos, bufferbuilder, false, MathHelper.getPositionRandom(entity.getOrigin()));
 					tessellator.draw();
+					GlStateManager.scale(entity.getSize(), entity.getSize(), entity.getSize());
 
 					if (this.renderOutlines)
 					{

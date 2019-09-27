@@ -376,7 +376,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 			// Does a ray trace to determine whether the projectile will hit a block in the next tick
 
 			Vec3d vec3d1 = new Vec3d(this.posX, this.posY, this.posZ);
-			Vec3d vec3d = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+			Vec3d vec3d = new Vec3d(this.posX + this.motionX / 2, this.posY + this.motionY / 2, this.posZ + this.motionZ / 2);
 			RayTraceResult raytraceresult = this.world.rayTraceBlocks(vec3d1, vec3d, false, true, false);
 			vec3d1 = new Vec3d(this.posX, this.posY, this.posZ);
 			vec3d = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
@@ -777,7 +777,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
 	@Override
 	public SoundCategory getSoundCategory() {
-		return WizardrySounds.SPELLS;
+		return SoundCategory.PLAYERS;
 	}
 
 	@Override

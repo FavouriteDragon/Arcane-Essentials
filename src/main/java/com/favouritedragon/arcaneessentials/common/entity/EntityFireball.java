@@ -4,7 +4,6 @@ import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
@@ -85,9 +84,14 @@ public class EntityFireball extends EntityMagicBolt {
 	}
 
 
-
 	@Override
 	protected void tickInGround() {
 		setDead();
+	}
+
+	@Override
+	public void setDead() {
+		Explode();
+		super.setDead();
 	}
 }
