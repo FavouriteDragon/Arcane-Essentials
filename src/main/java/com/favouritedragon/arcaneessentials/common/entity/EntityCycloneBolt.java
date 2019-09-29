@@ -49,8 +49,9 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 
 	@Override
 	protected void onBlockHit(RayTraceResult hit) {
-		if (canCollideWithSolid(hit))
+		if (hit.typeOfHit == RayTraceResult.Type.BLOCK && canCollideWithSolid(world.getBlockState(hit.getBlockPos()))) {
 			Dissipate();
+		}
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import com.favouritedragon.arcaneessentials.common.entity.EntityMagicBolt;
 import com.favouritedragon.arcaneessentials.common.entity.data.Behaviour;
 import com.favouritedragon.arcaneessentials.common.entity.data.MagicBoltBehaviour;
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
+import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLiving;
@@ -18,8 +19,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
@@ -103,12 +104,27 @@ public class KaFrizzle extends ArcaneSpell {
 		@Override
 		public Behaviour onUpdate(EntityMagicBolt entity) {
 			if (entity instanceof EntityFireball) {
-					Vec3d vec3d1 = new Vec3d(entity.posX, entity.posY, entity.posZ);
-					Vec3d vec3d = new Vec3d(entity.posX + entity.motionX / 2, entity.posY + entity.motionY / 2, entity.posZ + entity.motionZ / 2);
-					RayTraceResult raytraceresult = entity.world.rayTraceBlocks(vec3d1, vec3d, false, true, false);
 					List<EntityLivingBase> nearby = entity.world.getEntitiesWithinAABB(EntityLivingBase.class, entity.getEntityBoundingBox());
 					nearby.remove(entity.getCaster());
-					if ((raytraceresult != null && entity.canCollideWithSolid(raytraceresult)) || (!nearby.isEmpty() && entity.canCollideWithEntity(nearby.get(0)))) {
+
+				//Makes sure the positioning covers the whole bounding box
+				for (int i = 0; i < entity.getSize() * 10; i++) {
+					if (entity.world.isRemote) {
+						AxisAlignedBB boundingBox = entity.getEntityBoundingBox();
+						double x = boundingBox.minX + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxX - boundingBox.minX);
+						double y = boundingBox.minY + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxY - boundingBox.minY);
+						double z = boundingBox.minZ + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxZ - boundingBox.minZ);
+						if (entity.canCollideWithSolid(entity.world.getBlockState(new BlockPos(x, y, z)))) {
+							EntityFlamePillar pillar = new EntityFlamePillar(entity.world, entity.posX, entity.posY, entity.posZ, entity.getCaster(),
+									(int) entity.getSize() * 30, (float) entity.getDamage() / 6F, entity.getSize() / 2, entity.getSize() * 5,
+									120 + (int) (entity.getSize() * 5));
+							if (!entity.world.isRemote)
+								entity.world.spawnEntity(pillar);
+							entity.setDead();
+						}
+					}
+				}
+					if (entity.canCollideWithSolid(entity.world.getBlockState(entity.getPosition())) || (!nearby.isEmpty() && entity.canCollideWithEntity(nearby.get(0)))) {
 						EntityFlamePillar pillar = new EntityFlamePillar(entity.world, entity.posX, entity.posY, entity.posZ, entity.getCaster(),
 								(int) entity.getSize() * 30, (float) entity.getDamage() / 6F, entity.getSize() / 2, entity.getSize() * 5,
 								120 + (int) (entity.getSize() * 5));

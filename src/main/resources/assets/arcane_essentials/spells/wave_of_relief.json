@@ -10,12 +10,12 @@
     "trades": true,
     "looting": true
   },
-  "tier": "advanced",
+  "tier": "apprentice",
   "element": "healing",
-  "type": "defense",
-  "cost": 60,
+  "type": "buff",
+  "cost": 45,
   "chargeup": 0,
-  "cooldown": 90,
+  "cooldown": 65,
   "base_properties": {
     "effect_radius": 8,
     "health": 4

@@ -37,8 +37,8 @@ public class RenderCycloneBolt extends Render<EntityCycloneBolt> {
 
 		GlStateManager.translate(x, y + entity.height / 1.5, z);
 
-		float latStep = (float) Math.PI / 20;
-		float longStep = (float) Math.PI / 20;
+		float latStep = (float) Math.PI / 5;
+		float longStep = (float) Math.PI / 5;
 
 		float pulse = MathHelper.sin((entity.ticksExisted + partialTicks) / 10f);
 

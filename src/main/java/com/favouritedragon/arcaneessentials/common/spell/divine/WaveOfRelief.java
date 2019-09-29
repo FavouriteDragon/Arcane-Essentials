@@ -3,12 +3,10 @@ package com.favouritedragon.arcaneessentials.common.spell.divine;
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Spell;
-import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.potion.PotionEffect;
@@ -30,29 +28,32 @@ public class WaveOfRelief extends Spell {
 		float healAmount = modifiers.get(SpellModifiers.POTENCY) * getProperty(HEALTH).floatValue();
 		float radius = modifiers.get(WizardryItems.range_upgrade) * getProperty(EFFECT_RADIUS).floatValue();
 
+		if (world.isRemote) {
+			ParticleBuilder.create(ParticleBuilder.Type.SPHERE).clr(1.0F, 1.0F, 0.3F).pos(caster.getPositionVector()).time(7).scale(radius / 2).spawn(world);
+		}
+
 		List<EntityLivingBase> nearby = world.getEntitiesWithinAABB(EntityLivingBase.class, caster.getEntityBoundingBox().grow(radius));
 		if (!nearby.isEmpty()) {
-				for (EntityLivingBase ally : nearby) {
-					if (ally instanceof IEntityOwnable && AllyDesignationSystem.isOwnerAlly(caster, (IEntityOwnable) ally) ||
-					AllyDesignationSystem.isAllied(caster, ally)) {
-						if (!world.isRemote) {
-							Collection<PotionEffect> potions = ally.getActivePotionEffects();
-							for (PotionEffect effect : potions) {
-								if (effect.getPotion().isBadEffect()) {
-									ally.removeActivePotionEffect(effect.getPotion());
-								}
-							}
-							ally.heal(healAmount);
+			for (EntityLivingBase ally : nearby) {
+				if (ally.getTeam() != null && ally.getTeam() == caster.getTeam() || caster == ally) {
+					Collection<PotionEffect> potions = ally.getActivePotionEffects();
+					for (PotionEffect effect : potions) {
+						if (effect.getPotion().isBadEffect()) {
+							ally.removePotionEffect(effect.getPotion());
 						}
-						else {
-							ParticleBuilder.spawnHealParticles(world, ally);
+					}
+					ally.heal(healAmount);
+					if (ally instanceof EntityPlayer) {
+						((EntityPlayer) ally).getFoodStats().setFoodLevel(((EntityPlayer) ally).getFoodStats().getFoodLevel() + 4);
+					}
+					if (world.isRemote){
+						ParticleBuilder.spawnHealParticles(world, ally);
 					}
 				}
 			}
 		}
-		if (world.isRemote) {
-			ParticleBuilder.create(ParticleBuilder.Type.SPHERE).clr(1.0F, 0.3F, 0.3F).entity(caster).pos(caster.getPositionVector()).time(30).scale(radius / 15).spawn(world);
-		}
+
+		caster.swingArm(hand);
 		return true;
 	}
 
@@ -61,28 +62,32 @@ public class WaveOfRelief extends Spell {
 		float healAmount = modifiers.get(SpellModifiers.POTENCY) * getProperty(HEALTH).floatValue();
 		float radius = modifiers.get(WizardryItems.range_upgrade) * getProperty(EFFECT_RADIUS).floatValue();
 
+		if (world.isRemote) {
+			ParticleBuilder.create(ParticleBuilder.Type.SPHERE).clr(1.0F, 1.0F, 0.3F).pos(caster.getPositionVector()).time(7).scale(radius / 2).spawn(world);
+		}
+
 		List<EntityLivingBase> nearby = world.getEntitiesWithinAABB(EntityLivingBase.class, caster.getEntityBoundingBox().grow(radius));
 		if (!nearby.isEmpty()) {
 			for (EntityLivingBase ally : nearby) {
-				if (ally.getTeam() != null && ally.getTeam() == caster.getTeam()) {
-					if (!world.isRemote) {
-						Collection<PotionEffect> potions = ally.getActivePotionEffects();
-						for (PotionEffect effect : potions) {
-							if (effect.getPotion().isBadEffect()) {
-								ally.removeActivePotionEffect(effect.getPotion());
-							}
+				if (ally.getTeam() != null && ally.getTeam() == caster.getTeam() || caster == ally) {
+					Collection<PotionEffect> potions = ally.getActivePotionEffects();
+					for (PotionEffect effect : potions) {
+						if (effect.getPotion().isBadEffect()) {
+							ally.removePotionEffect(effect.getPotion());
 						}
-						ally.heal(healAmount);
 					}
-					else {
+					ally.heal(healAmount);
+					if (ally instanceof EntityPlayer) {
+						((EntityPlayer) ally).getFoodStats().setFoodLevel(((EntityPlayer) ally).getFoodStats().getFoodLevel() + 4);
+					}
+					if (world.isRemote){
 						ParticleBuilder.spawnHealParticles(world, ally);
 					}
 				}
 			}
 		}
-		if (world.isRemote) {
-			ParticleBuilder.create(ParticleBuilder.Type.SPHERE).clr(1.0F, 0.3F, 0.3F).entity(caster).pos(caster.getPositionVector()).time(30).scale(radius / 15).spawn(world);
-		}
+
+		caster.swingArm(hand);
 		return true;
 	}
 

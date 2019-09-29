@@ -1,8 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
-import com.favouritedragon.arcaneessentials.common.entity.data.Behaviour;
 import com.favouritedragon.arcaneessentials.common.entity.data.MagicBoltBehaviour;
-import com.favouritedragon.arcaneessentials.common.util.NBTUtils;
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardryItems;
@@ -290,7 +288,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 	 *            example.
 	 */
 	protected void onBlockHit(RayTraceResult hit) {
-		if (canCollideWithSolid(hit)) {
+		if (hit.typeOfHit == RayTraceResult.Type.BLOCK && canCollideWithSolid(world.getBlockState(hit.getBlockPos()))) {
 			setDead();
 		}
 	}
@@ -300,13 +298,9 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 	 * @param hit The raytrace used to hit something
 	 * @return Whether the entity can collide/has collided
 	 */
-	public boolean canCollideWithSolid(RayTraceResult hit) {
-		if (hit != null) {
-			if (hit.typeOfHit == RayTraceResult.Type.BLOCK) {
-				return world.getBlockState(hit.getBlockPos()).isFullBlock() && world.getBlockState(hit.getBlockPos()) != Blocks.AIR;
-			}
-		}
-		return false;
+	public boolean canCollideWithSolid(IBlockState hit) {
+		return hit.isFullBlock() && hit.getBlock() != Blocks.AIR || hit.isFullCube() && hit.getBlock() != Blocks.AIR;
+
 	}
 
 	/**
@@ -377,7 +371,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 			// Does a ray trace to determine whether the projectile will hit a block in the next tick
 
 			Vec3d vec3d1 = new Vec3d(this.posX, this.posY, this.posZ);
-			Vec3d vec3d = new Vec3d(this.posX + this.motionX / 2, this.posY + this.motionY / 2, this.posZ + this.motionZ / 2);
+			Vec3d vec3d = new Vec3d(this.posX + this.motionX / 1.5, this.posY + this.motionY / 1.5, this.posZ + this.motionZ / 1.5);
 			RayTraceResult raytraceresult = this.world.rayTraceBlocks(vec3d1, vec3d, false, true, false);
 			vec3d1 = new Vec3d(this.posX, this.posY, this.posZ);
 			vec3d = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
@@ -392,7 +386,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
 			Entity entity = null;
 			List<?> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox()
-					.expand(this.motionX / 2, this.motionY / 2, this.motionZ / 2).grow(0.5));
+					.expand(this.motionX / 1.5, this.motionY / 1.5, this.motionZ / 1.5).grow(0.5));
 			double d0 = 0.0D;
 			int i;
 			float f1;

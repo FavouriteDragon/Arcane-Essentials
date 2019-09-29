@@ -1,6 +1,8 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
+import electroblob.wizardry.entity.projectile.EntityMagicArrow;
 import electroblob.wizardry.registry.WizardrySounds;
+import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.MagicDamage;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -95,7 +97,7 @@ public class EntityFlamePillar extends EntityMagicConstruct {
 			if (!hit.isEmpty()) {
 				for (Entity e : hit) {
 					if (this.isValidTarget(e)) {
-						if (e instanceof EntityLivingBase && e != getCaster()) {
+						if (e instanceof EntityLivingBase && e != getCaster() && AllyDesignationSystem.isValidTarget(this, e) && e.canBePushed() && e.canBeCollidedWith()) {
 							if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.FIRE, e)) {
 								e.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(this, getCaster()), 0.5F * damageMultiplier);
 								e.motionX += 0.025;
@@ -105,7 +107,7 @@ public class EntityFlamePillar extends EntityMagicConstruct {
 								e.setEntityInvulnerable(false);
 							}
 						}
-						if (e instanceof EntityThrowable || e instanceof EntityArrow) {
+						if (e instanceof EntityThrowable && !(e instanceof EntityMagicBolt) || e instanceof EntityArrow) {
 							e.motionX *= -1.1;
 							e.motionZ *= -1.1;
 						}
