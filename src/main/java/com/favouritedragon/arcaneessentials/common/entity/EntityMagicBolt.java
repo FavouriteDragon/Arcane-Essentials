@@ -4,7 +4,6 @@ import com.favouritedragon.arcaneessentials.common.entity.data.MagicBoltBehaviou
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardryItems;
-import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.RayTracer;
@@ -391,7 +390,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
 			Entity entity = null;
 			List<?> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox()
-					.expand(this.motionX, this.motionY, this.motionZ).grow(0.5));
+					.expand(this.motionX / 2, this.motionY / 2, this.motionZ / 2).grow(0.5));
 			double d0 = 0.0D;
 			int i;
 			float f1;

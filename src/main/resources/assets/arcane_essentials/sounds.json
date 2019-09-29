@@ -1,5 +1,6 @@
 {
 
+  "entity.InfernoPillar" : {},
   "spell.frizz": {
     "category": "player", "sounds": ["arcane_essentials:kafrizzle"]
   },

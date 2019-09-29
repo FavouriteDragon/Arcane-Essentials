@@ -1,7 +1,9 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
 import com.favouritedragon.arcaneessentials.common.entity.data.MagicConstructBehaviour;
+import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -69,7 +71,7 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 	}
 
 
-	@Nullable
+
 	@Override
 	public UUID getOwnerId() {
 		return UUID.fromString(dataManager.get(SYNC_OWNER_ID));
@@ -78,7 +80,13 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 	@Nullable
 	@Override
 	public Entity getOwner() {
-		return getCaster();
+		return ArcaneUtils.getEntityFromStringID(dataManager.get(SYNC_OWNER_ID));
+	}
+
+	@Nullable
+	@Override
+	public EntityLivingBase getCaster() {
+		return (EntityLivingBase) getOwner();
 	}
 
 	@Override
@@ -86,7 +94,6 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 		super.onUpdate();
 		setSize(getSize(), getSize());
 		setBehaviour((MagicConstructBehaviour) getBehaviour().onUpdate(this));
-
 		if (getCaster() == null) {
 			despawn();
 		}

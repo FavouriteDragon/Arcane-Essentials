@@ -1,17 +1,20 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.MoverType;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityFloatingBlock extends EntityMagicBolt {
+import java.util.List;
+
+public class EntityFloatingBlock extends EntityMagicConstruct {
 	private static final DataParameter<Integer> SYNC_BLOCK = EntityDataManager.createKey(EntityFloatingBlock.class,
 			DataSerializers.VARINT);
 
@@ -30,8 +33,9 @@ public class EntityFloatingBlock extends EntityMagicBolt {
 	public BlockPos getOrigin() {
 		return new BlockPos(x, y, z);
 	}
-	public EntityFloatingBlock(World world, double posX, double posY, double posZ, EntityLivingBase caster, float speed, float damage, int lifetime, Block block) {
+	public EntityFloatingBlock(World world, double posX, double posY, double posZ, EntityLivingBase caster, float damage, int lifetime, Block block) {
 		super(world);
+		setOwner(caster);
 		setCaster(caster);
 		setBlock(block);
 		this.lifetime = lifetime;
@@ -39,16 +43,7 @@ public class EntityFloatingBlock extends EntityMagicBolt {
 		x = posX;
 		y = posY;
 		z = posZ;
-		this.noClip = true;
-		//Makes the block face directly up
-		this.setLocationAndAngles(x, y, z, caster.rotationYaw, (float) Math.PI);
-		this.setPositionAndUpdate(posX, posY, posZ);
-		this.motionX = -MathHelper.sin(this.rotationYaw / 180.0F * (float) Math.PI)
-				* MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI);
-		this.motionY = -MathHelper.sin(this.rotationPitch / 180.0F * (float) Math.PI);
-		this.motionZ = MathHelper.cos(this.rotationYaw / 180.0F * (float) Math.PI)
-				* MathHelper.cos(this.rotationPitch / 180.0F * (float) Math.PI);
-		this.shoot(this.motionX, this.motionY, this.motionZ, speed * 1.5F, 0);
+		setPositionAndUpdate(posX, posY, posZ);
 	}
 
 	public void setBlock(Block block) {
@@ -59,25 +54,6 @@ public class EntityFloatingBlock extends EntityMagicBolt {
 		return Block.getStateById(dataManager.get(SYNC_BLOCK)).getBlock();
 	}
 
-	@Override
-	public double getDamage() {
-		return damage;
-	}
-
-	@Override
-	public int getLifetime() {
-		return lifetime;
-	}
-
-	@Override
-	public boolean doDeceleration() {
-		return false;
-	}
-
-	@Override
-	protected boolean doGravity() {
-		return true;
-	}
 
 	@Override
 	protected void entityInit() {
@@ -98,4 +74,25 @@ public class EntityFloatingBlock extends EntityMagicBolt {
 		tag.setInteger("Lifetime", lifetime);
 		tag.setFloat("Damage", damage);
 	}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+		this.move(MoverType.SELF, motionX, motionY, motionZ);
+
+		if (world.getBlockState(getPosition()).isFullBlock() || world.getBlockState(getPosition()).getBlock() == Blocks.AIR)
+			setDead();
+
+		List<Entity> nearby = world.getEntitiesWithinAABB(Entity.class, getEntityBoundingBox());
+		nearby.remove(getCaster());
+		nearby.remove(this);
+		/*if (!nearby.isEmpty()) {
+			for (Entity hit : nearby) {
+				if (AllyDesignationSystem.isValidTarget(this, hit) && hit != this && hit != getCaster() && hit.canBeCollidedWith() && hit.canBePushed()) {
+
+				}
+			}
+		}**/
+	}
+
 }

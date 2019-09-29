@@ -1,12 +1,15 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
-import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
+import com.favouritedragon.arcaneessentials.common.entity.data.Behaviour;
+import com.favouritedragon.arcaneessentials.common.entity.data.MagicConstructBehaviour;
 import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.MagicDamage;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -15,6 +18,7 @@ import static com.favouritedragon.arcaneessentials.common.util.DamageSources.EAR
 
 public class EntityFallingBlockSpawner extends EntityMagicSpawner {
 
+	//TODO: Rewrite projectile code
 	public EntityFallingBlockSpawner(World world) {
 		super(world);
 	}
@@ -52,15 +56,17 @@ public class EntityFallingBlockSpawner extends EntityMagicSpawner {
 
 	@Override
 	protected boolean spawnEntity() {
-		EntityFloatingBlock block = new EntityFloatingBlock(world, posX, posY + getRenderSize(), posZ, getCaster(), (float) ArcaneUtils.getMagnitude(new Vec3d(motionX, motionY, motionZ)) + 15,
+		EntityFloatingBlock block = new EntityFloatingBlock(world, posX, posY + getRenderSize(), posZ, getCaster(),
 				damageMultiplier, (int) (10 * getRenderSize()), world.getBlockState(getPosition().down()).getBlock());
 		//Fall ticks upwards, so if you make it positive, it'll stay for a long time.
 		//block.fallTime = MathHelper.clamp((int) (-10 * getRenderSize() + getRenderSize() > 0 ? (10 * getRenderSize()) % 10 : 0), -40, -10);
-		//block.motionX = block.motionZ = 0;
-		//block.motionY = MathHelper.clamp(0.3 * getRenderSize(), 0.25F, 1.5F);
+		block.motionX = block.motionZ = 0;
+		block.motionY = 0.5 * MathHelper.clamp(0.3 * getRenderSize(), 0.25F, 1.5F);
+		block.setBehaviour(new FallingBlockBehaviour());
 		//block.shouldDropItem = false;
-		if (!world.isRemote)
+		if (!world.isRemote) {
 			return world.spawnEntity(block);
+		}
 		else return false;
 	}
 
@@ -69,11 +75,39 @@ public class EntityFallingBlockSpawner extends EntityMagicSpawner {
 		playSound(SoundEvents.BLOCK_SAND_FALL, 1.0F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10F);
 	}
 
-	@Override
-	public void setDead() {
-		super.setDead();
-		if (this.isDead && !world.isRemote) {
-			Thread.dumpStack();
+	public static class FallingBlockBehaviour extends MagicConstructBehaviour {
+
+		@Override
+		public Behaviour onUpdate(EntityMagicConstruct entity) {
+			if (entity instanceof EntityFloatingBlock) {
+				entity.motionY -= 0.0184;
+				//Gravity is 9.2 m/s^2 on Earth
+				if (entity.collided && !entity.world.isRemote) {
+					entity.setDead();
+
+				}
+			}
+			return this;
+		}
+
+		@Override
+		public void fromBytes(PacketBuffer buf) {
+
+		}
+
+		@Override
+		public void toBytes(PacketBuffer buf) {
+
+		}
+
+		@Override
+		public void load(NBTTagCompound nbt) {
+
+		}
+
+		@Override
+		public void save(NBTTagCompound nbt) {
+
 		}
 	}
 }

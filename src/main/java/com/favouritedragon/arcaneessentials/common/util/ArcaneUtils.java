@@ -9,6 +9,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.util.DamageSource;
@@ -17,6 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -934,5 +936,19 @@ public class ArcaneUtils {
 		// All the setRegistryName methods delegate to this one, it doesn't matter which you use.
 		return new SoundEvent(new ResourceLocation(ArcaneEssentials.MODID, name)).setRegistryName(name);
 	}
+
+
+	public static Entity getEntityFromStringID(String UUID) {
+		return FMLCommonHandler.instance().getMinecraftServerInstance().getEntityFromUuid(java.util.UUID.fromString(UUID));
+	}
+
+	public static EntityPlayer getPlayerFromStringID(String UUID) {
+		return FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(java.util.UUID.fromString(UUID));
+	}
+
+	public static EntityPlayer getPlayerFromUsername(String username) {
+		return FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUsername(username);
+	}
+
 }
 
