@@ -1,6 +1,7 @@
 package com.favouritedragon.arcaneessentials.client.render;
 
 import com.favouritedragon.arcaneessentials.common.entity.EntityFloatingBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
@@ -11,70 +12,118 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
 
-public class RenderFloatingBlock extends Render<EntityFloatingBlock> {
+@SideOnly(Side.CLIENT)
+public class RenderFloatingBlock extends Render {
+	// [1.10] Find out substitution for Renderblocks- maybe ModelLoader?
+	private static final String __OBFID = "CL_00000994";
 
 	public RenderFloatingBlock(RenderManager renderManager) {
 		super(renderManager);
+		this.shadowSize = 0.5F;
 	}
 
-	@Override
-	public void doRender(EntityFloatingBlock entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		if (entity.getBlock() != null)
-		{
+	/**
+	 *
+	 */
+	public void doRender(EntityFloatingBlock entity, double x, double y, double z, float entityYaw,
+						 float lerp) {
+		World world = entity.world;
+		Block block = entity.getBlock();
+		int i = MathHelper.floor(entity.posX);
+		int j = MathHelper.floor(entity.posY);
+		int k = MathHelper.floor(entity.posZ);
+
+		// x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) *
+		// ((lerp -
+		// entity.lastTickPosX) / (entity.posX - entity.lastTickPosX)) -
+		// RenderManager.renderPosX;
+		// z = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) *
+		// ((lerp -
+		// entity.lastTickPosZ) / (entity.posZ - entity.lastTickPosZ)) -
+		// RenderManager.renderPosZ;
+
+		if (block != null) {
+			Tessellator tessellator = Tessellator.getInstance();
+
 			IBlockState iblockstate = entity.getBlock().getBlockState().getBaseState();
 
-			if (iblockstate.getRenderType() == EnumBlockRenderType.MODEL)
-			{
-				World world = entity.world;
+			if (iblockstate.getRenderType() == EnumBlockRenderType.MODEL) {
 
-				if (iblockstate != world.getBlockState(new BlockPos(entity)) && iblockstate.getRenderType() != EnumBlockRenderType.INVISIBLE)
-				{
+				if (iblockstate.getRenderType() != EnumBlockRenderType.INVISIBLE) {
 					this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 					GlStateManager.pushMatrix();
 					GlStateManager.disableLighting();
-					Tessellator tessellator = Tessellator.getInstance();
-					BufferBuilder bufferbuilder = tessellator.getBuffer();
+					BufferBuilder BufferBuilder = tessellator.getBuffer();
 
-					if (this.renderOutlines)
-					{
+					if (this.renderOutlines) {
 						GlStateManager.enableColorMaterial();
 						GlStateManager.enableOutlineMode(this.getTeamColor(entity));
 					}
 
-					bufferbuilder.begin(7, DefaultVertexFormats.BLOCK);
-					BlockPos blockpos = new BlockPos(entity.posX, entity.getEntityBoundingBox().maxY, entity.posZ);
-					GlStateManager.translate((float)(x - (double)blockpos.getX() - 0.5D), (float)(y - (double)blockpos.getY()), (float)(z - (double)blockpos.getZ() - 0.5D));
-					BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
-					//Use getOrigin instead of getPosition if issues arise
-					blockrendererdispatcher.getBlockModelRenderer().renderModel(world, blockrendererdispatcher.getModelForState(iblockstate), iblockstate, blockpos, bufferbuilder, false);
+					BufferBuilder.begin(7, DefaultVertexFormats.BLOCK);
+					BlockPos blockpos = new BlockPos(entity.posX, entity.getEntityBoundingBox().maxY,
+							entity.posZ);
+					GlStateManager.translate(x - blockpos.getX() - 0.5, y - blockpos.getY(),
+							z - blockpos.getZ() - 0.5);
+					BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft()
+							.getBlockRendererDispatcher();
+					blockrendererdispatcher.getBlockModelRenderer().renderModel(world,
+							blockrendererdispatcher.getModelForState(iblockstate), iblockstate, blockpos,
+							BufferBuilder, false, 0);
 					tessellator.draw();
 					GlStateManager.scale(entity.getSize(), entity.getSize(), entity.getSize());
 
-					if (this.renderOutlines)
-					{
+					if (this.renderOutlines) {
 						GlStateManager.disableOutlineMode();
 						GlStateManager.disableColorMaterial();
 					}
 
 					GlStateManager.enableLighting();
 					GlStateManager.popMatrix();
-					super.doRender(entity, x, y, z, entityYaw, partialTicks);
+					super.doRender(entity, x, y, z, entityYaw, lerp);
 				}
 			}
+
 		}
 	}
 
-	@Nullable
-	@Override
-	protected ResourceLocation getEntityTexture(EntityFloatingBlock entity) {
+	/**
+	 * Returns the location of an entity's texture. Doesn't seem to be called
+	 * unless you call Render.bindEntityTexture.
+	 */
+	protected ResourceLocation getEntityTexture(EntityFloatingBlock p_110775_1_) {
 		return TextureMap.LOCATION_BLOCKS_TEXTURE;
+	}
+
+	/**
+	 * Returns the location of an entity's texture. Doesn't seem to be called
+	 * unless you call Render.bindEntityTexture.
+	 */
+	protected ResourceLocation getEntityTexture(Entity p_110775_1_) {
+		return this.getEntityTexture((EntityFloatingBlock) p_110775_1_);
+	}
+
+	/**
+	 * Actually renders the given argument. This is a synthetic bridge method,
+	 * always casting down its argument and then handing it off to a worker
+	 * function which does the actual work. In all probabilty, the class Render
+	 * is generic (Render<T extends Entity) and this method has signature public
+	 * void func_76986_a(T entity, double d, double d1, double d2, float f,
+	 * float f1). But JAD is pre 1.5 so doesn't do that.
+	 */
+	public void doRender(Entity p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_,
+						 float p_76986_8_, float p_76986_9_) {
+		this.doRender((EntityFloatingBlock) p_76986_1_, p_76986_2_, p_76986_4_, p_76986_6_, p_76986_8_,
+				p_76986_9_);
 	}
 }

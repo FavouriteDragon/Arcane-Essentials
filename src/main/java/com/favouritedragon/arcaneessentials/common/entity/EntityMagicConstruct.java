@@ -105,12 +105,16 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 	protected void readEntityFromNBT(NBTTagCompound nbttagcompound){
 		lifetime = nbttagcompound.getInteger("lifetime");
 		damageMultiplier = nbttagcompound.getFloat("damageMultiplier");
+		//setBehaviour((MagicConstructBehaviour) Behaviour.lookup(nbttagcompound.getInteger("Behaviour"), this));
+		//getBehaviour().load(nbttagcompound.getCompoundTag("BehaviourData"));
 	}
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound nbttagcompound){
 		nbttagcompound.setInteger("lifetime", lifetime);
 		nbttagcompound.setFloat("damageMultiplier", damageMultiplier);
+		//nbttagcompound.setInteger("Behaviour", getBehaviour().getId());
+		//getBehaviour().save(NBTUtils.nestedCompound(nbttagcompound, "BehaviorData"));
 	}
 
 }

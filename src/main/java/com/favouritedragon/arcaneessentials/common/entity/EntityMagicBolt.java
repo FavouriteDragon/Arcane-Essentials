@@ -1,6 +1,8 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
+import com.favouritedragon.arcaneessentials.common.entity.data.Behaviour;
 import com.favouritedragon.arcaneessentials.common.entity.data.MagicBoltBehaviour;
+import com.favouritedragon.arcaneessentials.common.util.NBTUtils;
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardryItems;
@@ -718,6 +720,8 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 		if (this.getCaster() != null) {
 			tag.setUniqueId("casterUUID", this.getCaster().getUniqueID());
 		}
+		//tag.setInteger("Behaviour", getBehaviour().getId());
+	//	getBehaviour().save(NBTUtils.nestedCompound(tag, "BehaviorData"));
 
 	}
 
@@ -735,6 +739,8 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 		this.inGround = tag.getByte("inGround") == 1;
 		this.damageMultiplier = tag.getFloat("damageMultiplier");
 		casterUUID = tag.getUniqueId("casterUUID");
+		//setBehaviour((MagicBoltBehaviour) Behaviour.lookup(tag.getInteger("Behaviour"), this));
+		//getBehaviour().load(tag.getCompoundTag("BehaviourData"));
 
 	}
 

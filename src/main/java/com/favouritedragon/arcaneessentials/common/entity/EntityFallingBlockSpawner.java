@@ -56,18 +56,22 @@ public class EntityFallingBlockSpawner extends EntityMagicSpawner {
 
 	@Override
 	protected boolean spawnEntity() {
-		EntityFloatingBlock block = new EntityFloatingBlock(world, posX, posY + getRenderSize(), posZ, getCaster(),
-				damageMultiplier, (int) (10 * getRenderSize()), world.getBlockState(getPosition().down()).getBlock());
-		//Fall ticks upwards, so if you make it positive, it'll stay for a long time.
-		//block.fallTime = MathHelper.clamp((int) (-10 * getRenderSize() + getRenderSize() > 0 ? (10 * getRenderSize()) % 10 : 0), -40, -10);
-		block.motionX = block.motionZ = 0;
-		block.motionY = 0.5 * MathHelper.clamp(0.3 * getRenderSize(), 0.25F, 1.5F);
-		block.setBehaviour(new FallingBlockBehaviour());
-		//block.shouldDropItem = false;
 		if (!world.isRemote) {
+			EntityFloatingBlock block = new EntityFloatingBlock(world, posX, posY + 0.5, posZ, getCaster(),
+					damageMultiplier, (int) (30 * getRenderSize()), world.getBlockState(getPosition().down()).getBlock());
+			//Fall ticks upwards, so if you make it positive, it'll stay for a long time.
+			//block.fallTime = MathHelper.clamp((int) (-10 * getRenderSize() + getRenderSize() > 0 ? (10 * getRenderSize()) % 10 : 0), -40, -10);
+			block.motionX = block.motionZ = 0;
+			block.motionY = 0.675 * MathHelper.clamp(0.3 * getRenderSize(), 0.25F, 1.5F);
+			block.setBehaviour(new FallingBlockBehaviour());
+			block.setBlockState(world.getBlockState(getPosition().down()));
+			block.setSize(getRenderSize());
+			//block.shouldDropItem = false;
+
+			//System.out.println(block);
+			//System.out.println(world.spawnEntity(block));
 			return world.spawnEntity(block);
-		}
-		else return false;
+		} else return false;
 	}
 
 	@Override
@@ -80,9 +84,8 @@ public class EntityFallingBlockSpawner extends EntityMagicSpawner {
 		@Override
 		public Behaviour onUpdate(EntityMagicConstruct entity) {
 			if (entity instanceof EntityFloatingBlock) {
-				entity.motionY -= 0.0184;
-				//Gravity is 9.2 m/s^2 on Earth
-				if (entity.collided && !entity.world.isRemote) {
+				entity.motionY -= 0.0240;
+				if (entity.collided) {
 					entity.setDead();
 
 				}
