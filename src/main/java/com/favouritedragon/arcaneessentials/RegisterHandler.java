@@ -5,6 +5,7 @@ import com.favouritedragon.arcaneessentials.common.spell.air.CycloneBolt;
 import com.favouritedragon.arcaneessentials.common.spell.air.CycloneShield;
 import com.favouritedragon.arcaneessentials.common.spell.divine.RadianceStorm;
 import com.favouritedragon.arcaneessentials.common.spell.divine.RadiantBeam;
+import com.favouritedragon.arcaneessentials.common.spell.divine.WaveOfRelief;
 import com.favouritedragon.arcaneessentials.common.spell.earth.KaQuake;
 import com.favouritedragon.arcaneessentials.common.spell.earth.Quake;
 import com.favouritedragon.arcaneessentials.common.spell.earth.Shake;
@@ -140,6 +141,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new StormBlink());
 		event.getRegistry().register(new ThunderBurst());
 		event.getRegistry().register(new ThunderingChain());
+		event.getRegistry().register(new WaveOfRelief());
 		event.getRegistry().register(new Whirlpool());
 		event.getRegistry().register(new Zam());
 		event.getRegistry().register(new Zammle());

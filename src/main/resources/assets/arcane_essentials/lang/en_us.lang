@@ -89,6 +89,9 @@ spell.arcane_essentials:thunder_burst.desc=Unleash a shockwave of raw lightning 
 spell.arcane_essentials:thundering_chain=Thundering Chain
 spell.arcane_essentials:thundering_chain.desc=Unleash torrential lightning from the sky, striking all enemies in a line!
 
+spell.arcane_essentials:wave_of_relief=Wave Of Relief
+spell.arcane_essentials:wave_of_relief.desc=Unleash a wave of soothing energy, removing all bad potion effects, and healing nearby allies for a small amount!
+
 spell.arcane_essentials:whirlpool=Whirlpool
 spell.arcane_essentials:whirlpool.desc=Create a swirling vortex of water where you're looking within a couple blocks, OR around you! Draws enemies inwards and slowly damanges them- great for trapping mobs for EXPLOSIONS!
 
