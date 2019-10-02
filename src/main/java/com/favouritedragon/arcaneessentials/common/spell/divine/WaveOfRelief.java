@@ -23,6 +23,8 @@ public class WaveOfRelief extends Spell {
 		addProperties(EFFECT_RADIUS, HEALTH);
 	}
 
+	//TODO: Sounds
+
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		float healAmount = modifiers.get(SpellModifiers.POTENCY) * getProperty(HEALTH).floatValue();

@@ -1,9 +1,11 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
+import com.favouritedragon.arcaneessentials.common.spell.fire.KaFrizzle;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
@@ -72,6 +74,13 @@ public class EntityFireball extends EntityMagicBolt {
 				}
 			}
 		}
+		if (getBehaviour() instanceof KaFrizzle.KaFrizzleBehaviour) {
+			EntityFlamePillar pillar = new EntityFlamePillar(world, posX, posY, posZ, getCaster(),
+					(int) getSize() * 30, (float) getDamage() / 6F, getSize() / 2, getSize() * 5,
+					120 + (int) (getSize() * 5));
+			if (!world.isRemote)
+				world.spawnEntity(pillar);
+		}
 
 		if (world.isRemote) {
 			for (int i = 0; i < 60 - getSize(); i++) {
@@ -81,6 +90,7 @@ public class EntityFireball extends EntityMagicBolt {
 						scale(0.75F + getSize() / 2 + world.rand.nextFloat()).spawn(world);
 			}
 		}
+		this.isDead = true;
 	}
 
 
@@ -93,5 +103,12 @@ public class EntityFireball extends EntityMagicBolt {
 	public void setDead() {
 		Explode();
 		super.setDead();
+	}
+
+	@Override
+	protected void onEntityHit(EntityLivingBase entityHit) {
+		super.onEntityHit(entityHit);
+		if (canCollideWithEntity(entityHit))
+			entityHit.setFire((int) getSize() * 5);
 	}
 }

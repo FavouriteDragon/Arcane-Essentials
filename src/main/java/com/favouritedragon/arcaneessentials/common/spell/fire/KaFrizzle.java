@@ -103,35 +103,8 @@ public class KaFrizzle extends ArcaneSpell {
 
 		@Override
 		public Behaviour onUpdate(EntityMagicBolt entity) {
-			if (entity instanceof EntityFireball) {
-					List<EntityLivingBase> nearby = entity.world.getEntitiesWithinAABB(EntityLivingBase.class, entity.getEntityBoundingBox());
-					nearby.remove(entity.getCaster());
-
-				//Makes sure the positioning covers the whole bounding box
-				for (int i = 0; i < entity.getSize() * 10; i++) {
-					if (entity.world.isRemote) {
-						AxisAlignedBB boundingBox = entity.getEntityBoundingBox();
-						double x = boundingBox.minX + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxX - boundingBox.minX);
-						double y = boundingBox.minY + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxY - boundingBox.minY);
-						double z = boundingBox.minZ + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxZ - boundingBox.minZ);
-						if (entity.canCollideWithSolid(entity.world.getBlockState(new BlockPos(x, y, z)))) {
-							EntityFlamePillar pillar = new EntityFlamePillar(entity.world, entity.posX, entity.posY, entity.posZ, entity.getCaster(),
-									(int) entity.getSize() * 30, (float) entity.getDamage() / 6F, entity.getSize() / 2, entity.getSize() * 5,
-									120 + (int) (entity.getSize() * 5));
-							if (!entity.world.isRemote)
-								entity.world.spawnEntity(pillar);
-							entity.setDead();
-						}
-					}
-				}
-					if (entity.canCollideWithSolid(entity.world.getBlockState(entity.getPosition())) || (!nearby.isEmpty() && entity.canCollideWithEntity(nearby.get(0)))) {
-						EntityFlamePillar pillar = new EntityFlamePillar(entity.world, entity.posX, entity.posY, entity.posZ, entity.getCaster(),
-								(int) entity.getSize() * 30, (float) entity.getDamage() / 6F, entity.getSize() / 2, entity.getSize() * 5,
-								120 + (int) (entity.getSize() * 5));
-						if (!entity.world.isRemote)
-							entity.world.spawnEntity(pillar);
-					}
-			}
+			//Actual code is relegated to the entity class, due to how the entity is coded.
+			//TODO: Properly rewrite the entity code
 			return this;
 		}
 

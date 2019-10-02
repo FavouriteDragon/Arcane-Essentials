@@ -1,6 +1,7 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
 import com.favouritedragon.arcaneessentials.common.entity.data.MagicBoltBehaviour;
+import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.item.ItemArtefact;
 import electroblob.wizardry.registry.WizardryItems;
@@ -93,20 +94,20 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 		this.setSize(0.5F, 0.5F);
 	}
 
-	public void setSize(float size) {
-		dataManager.set(SYNC_SIZE, size);
-	}
-
 	public float getSize() {
 		return dataManager.get(SYNC_SIZE);
 	}
 
-	public void setBehaviour(MagicBoltBehaviour behaviour) {
-		dataManager.set(SYNC_BEHAVIOUR, behaviour);
+	public void setSize(float size) {
+		dataManager.set(SYNC_SIZE, size);
 	}
 
 	public MagicBoltBehaviour getBehaviour() {
 		return dataManager.get(SYNC_BEHAVIOUR);
+	}
+
+	public void setBehaviour(MagicBoltBehaviour behaviour) {
+		dataManager.set(SYNC_BEHAVIOUR, behaviour);
 	}
 
 	// Initialiser methods
@@ -295,6 +296,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
 	/**
 	 * Similar to onBlockHit, but this just checks whether to do anything, rather than performing a function.
+	 *
 	 * @param hit The raytrace used to hit something
 	 * @return Whether the entity can collide/has collided
 	 */
@@ -305,6 +307,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
 	/**
 	 * Same as onCollideWithSolid, except for entities.
+	 *
 	 * @param entityHit The entity hit.
 	 * @return Whether the entity hit can be affected.
 	 */
@@ -371,7 +374,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 			// Does a ray trace to determine whether the projectile will hit a block in the next tick
 
 			Vec3d vec3d1 = new Vec3d(this.posX, this.posY, this.posZ);
-			Vec3d vec3d = new Vec3d(this.posX + this.motionX / 1.5, this.posY + this.motionY / 1.5, this.posZ + this.motionZ / 1.5);
+			Vec3d vec3d = new Vec3d(this.posX + this.motionX / 1.75, this.posY + this.motionY / 1.75, this.posZ + this.motionZ / 1.75);
 			RayTraceResult raytraceresult = this.world.rayTraceBlocks(vec3d1, vec3d, false, true, false);
 			vec3d1 = new Vec3d(this.posX, this.posY, this.posZ);
 			vec3d = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
@@ -386,7 +389,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
 			Entity entity = null;
 			List<?> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox()
-					.expand(this.motionX / 1.5, this.motionY / 1.5, this.motionZ / 1.5).grow(0.5));
+					.expand(this.motionX / 1.75, this.motionY / 1.75, this.motionZ / 1.75).grow(0.5));
 			double d0 = 0.0D;
 			int i;
 			float f1;
@@ -426,11 +429,12 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 				}
 			}
 
+			List<Entity> hit = world.getEntitiesWithinAABB(Entity.class, getEntityBoundingBox());
+
 			// If the arrow hits something
 			if (raytraceresult != null) {
 				// If the arrow hits an entity
 				if (raytraceresult.entityHit != null && raytraceresult.entityHit != getCaster()) {
-					List<Entity> hit = world.getEntitiesWithinAABB(Entity.class, getEntityBoundingBox());
 					if (!hit.isEmpty() && hit.contains(raytraceresult.entityHit)) {
 						DamageSource damagesource;
 
@@ -485,62 +489,65 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 							 * this.ticksInAir = 0; */
 						}
 					}
-					if (!hit.isEmpty()) {
-						hit.remove(raytraceresult.entityHit);
-						for (Entity e : hit) {
-							if (AllyDesignationSystem.isValidTarget(this, e) && e != getCaster()) {
-								DamageSource damagesource;
+				}
+			}
+			if (!hit.isEmpty()) {
+				if (raytraceresult != null)
+					hit.remove(raytraceresult.entityHit);
+				for (Entity e : hit) {
+					if (AllyDesignationSystem.isValidTarget(this, e) && e != getCaster()) {
+						DamageSource damagesource;
 
-								if (this.getCaster() == null) {
-									damagesource = DamageSource.causeThrownDamage(this, this);
-								} else {
-									damagesource = MagicDamage.causeIndirectMagicDamage(this, this.getCaster(), this.getDamageType()).setProjectile();
+						if (this.getCaster() == null) {
+							damagesource = DamageSource.causeThrownDamage(this, this);
+						} else {
+							damagesource = MagicDamage.causeIndirectMagicDamage(this, this.getCaster(), this.getDamageType()).setProjectile();
+						}
+
+						if (e.attackEntityFrom(damagesource,
+								(float) (this.getDamage() * this.damageMultiplier))) {
+							if (e instanceof EntityLivingBase) {
+
+								this.onEntityHit((EntityLivingBase) e);
+
+								if (this.knockbackStrength > 0) {
+									float f4 = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
+
+									if (f4 > 0.0F) {
+										e.addVelocity(
+												this.motionX * this.knockbackStrength * 0.6000000238418579D
+														/ (double) f4,
+												0.1D, this.motionZ * this.knockbackStrength * 0.6000000238418579D
+														/ (double) f4);
+									}
 								}
 
-								if (e.attackEntityFrom(damagesource,
-										(float) (this.getDamage() * this.damageMultiplier))) {
-									if (e instanceof EntityLivingBase) {
+								// Thorns enchantment
+								if (this.getCaster() != null) {
+									EnchantmentHelper.applyThornEnchantments((EntityLivingBase) e, this.getCaster());
+									EnchantmentHelper.applyArthropodEnchantments(this.getCaster(), e);
+								}
 
-										this.onEntityHit((EntityLivingBase) e);
-
-										if (this.knockbackStrength > 0) {
-											float f4 = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
-
-											if (f4 > 0.0F) {
-												raytraceresult.entityHit.addVelocity(
-														this.motionX *  this.knockbackStrength * 0.6000000238418579D
-																/ (double) f4,
-														0.1D, this.motionZ * this.knockbackStrength * 0.6000000238418579D
-																/ (double) f4);
-											}
-										}
-
-										// Thorns enchantment
-										if (this.getCaster() != null) {
-											EnchantmentHelper.applyThornEnchantments((EntityLivingBase) e, this.getCaster());
-											EnchantmentHelper.applyArthropodEnchantments(this.getCaster(), e);
-										}
-
-										if (this.getCaster() != null && e != this.getCaster()
-												&& e instanceof EntityPlayer
-												&& this.getCaster() instanceof EntityPlayerMP) {
-											((EntityPlayerMP) this.getCaster()).connection
-													.sendPacket(new SPacketChangeGameState(6, 0.0F));
-										}
-									}
-
-									if (!(e instanceof EntityEnderman) && !this.doOverpenetration()) {
-										this.setDead();
-									}
-								} else {
-									if (!this.doOverpenetration()) this.setDead();
+								if (this.getCaster() != null && e != this.getCaster()
+										&& e instanceof EntityPlayer
+										&& this.getCaster() instanceof EntityPlayerMP) {
+									((EntityPlayerMP) this.getCaster()).connection
+											.sendPacket(new SPacketChangeGameState(6, 0.0F));
 								}
 							}
+
+							if (!(e instanceof EntityEnderman) && !this.doOverpenetration()) {
+								this.setDead();
+							}
+						} else {
+							if (!this.doOverpenetration()) this.setDead();
 						}
 					}
 				}
-				// If the arrow hits a block
-				else {
+			}
+			// If the arrow hits a block
+			else {
+				if (raytraceresult != null) {
 					this.blockX = raytraceresult.getBlockPos().getX();
 					this.blockY = raytraceresult.getBlockPos().getY();
 					this.blockZ = raytraceresult.getBlockPos().getZ();
@@ -567,6 +574,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 					}
 				}
 			}
+		}
 
 			// Seeking
 			if (getSeekingStrength() > 0) {
@@ -590,6 +598,22 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 					}
 				}
 			}
+
+			//Failsafes in case the default raytrace stuff fails
+			if (!noClip) {
+				for (int j = 0; j < getSize() * 10; j++) {
+					AxisAlignedBB boundingBox = getEntityBoundingBox();
+					double x = boundingBox.minX + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxX - boundingBox.minX);
+					double y = boundingBox.minY + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxY - boundingBox.minY);
+					double z = boundingBox.minZ + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxZ - boundingBox.minZ);
+					BlockPos pos = new BlockPos(x, y, z);
+					if (world.getBlockState(pos).isFullCube() && world.getBlockState(pos).getBlock() != Blocks.AIR || world.getBlockState(pos).isFullBlock() &&
+							world.getBlockState(pos).getBlock() != Blocks.AIR) {
+						setDead();
+					}
+				}
+			}
+
 
 			this.posX += this.motionX;
 			this.posY += this.motionY;
@@ -647,7 +671,6 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 			this.setPosition(this.posX, this.posY, this.posZ);
 			this.doBlockCollisions();
 		}
-	}
 
 	@Override
 	public void shoot(double x, double y, double z, float speed, float randomness) {
@@ -715,7 +738,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 			tag.setUniqueId("casterUUID", this.getCaster().getUniqueID());
 		}
 		//tag.setInteger("Behaviour", getBehaviour().getId());
-	//	getBehaviour().save(NBTUtils.nestedCompound(tag, "BehaviorData"));
+		//	getBehaviour().save(NBTUtils.nestedCompound(tag, "BehaviorData"));
 
 	}
 
