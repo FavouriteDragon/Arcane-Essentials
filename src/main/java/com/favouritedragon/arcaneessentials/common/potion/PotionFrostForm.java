@@ -23,7 +23,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -54,13 +53,13 @@ public class PotionFrostForm extends PotionMagicEffect implements ISyncedPotion 
 					assert entity.getActivePotionEffect(ArcanePotions.frostForm) != null;
 					if (Objects.requireNonNull(entity.getActivePotionEffect(ArcanePotions.frostForm)).getIsPotionDurationMax()
 							|| entity.ticksExisted % 2 == 0) {
-						ArcaneUtils.spawnSpinningHelix(entity.world, 90, 7F, 1.25F * RegisterHandler.frost_form.getProperty(Spell.EFFECT_RADIUS).floatValue(), ParticleBuilder.Type.SNOW,
+						ArcaneUtils.spawnSpinningHelix(entity.world, 120, 7F, 1F * RegisterHandler.frost_form.getProperty(Spell.EFFECT_RADIUS).floatValue(), ParticleBuilder.Type.SNOW,
 								entity.getPositionVector(), - 0.025, new Vec3d(entity.motionX, entity.motionY, entity.motionZ),
 								20 + ArcaneUtils.getRandomNumberInRange(1, 10), -1, -1, -1, 0.8f + entity.world.rand.nextFloat() / 2);
 
 					}
 					if (ArcaneUtils.getRandomNumberInRange(1, 20) <= 10) {
-						ParticleBuilder.create(ParticleBuilder.Type.BUFF).entity(entity).time(7).
+						ParticleBuilder.create(ParticleBuilder.Type.BUFF).entity(entity).time(20).
 								clr(205, 254, 255).spawn(entity.world);
 					}
 				} else {
@@ -75,11 +74,11 @@ public class PotionFrostForm extends PotionMagicEffect implements ISyncedPotion 
 									if (hit instanceof EntityArrow || (hit instanceof EntityThrowable && !(hit instanceof EntityMagicProjectile))) {
 										hit.addVelocity(hit.motionX * -1.01, 0, hit.motionZ * -1.01);
 									} else {
-										if (entity.ticksExisted % 3 == 0) {
+										if (entity.ticksExisted % 6 == 0) {
 											if (hit instanceof EntityLivingBase) {
 												PotionEffect effect = ((EntityLivingBase) hit).getActivePotionEffect(WizardryPotions.frost);
 												int effectLevel = effect == null ? 0 : effect.getAmplifier();
-												((EntityLivingBase) hit).addPotionEffect(new PotionEffect(WizardryPotions.frost, RegisterHandler.frost_form.getProperty(Spell.EFFECT_DURATION).intValue(),
+												((EntityLivingBase) hit).addPotionEffect(new PotionEffect(WizardryPotions.frost,  RegisterHandler.frost_form.getProperty(Spell.EFFECT_DURATION).intValue() / 8,
 														effectLevel + 1));
 												if (effectLevel == 7 - RegisterHandler.frost_form.getProperty(Spell.EFFECT_STRENGTH).intValue()) {
 													((BlockStatue) WizardryBlocks.ice_statue).convertToStatue((EntityLiving) hit, RegisterHandler.frost_form.getProperty(Spell.EFFECT_DURATION).intValue());

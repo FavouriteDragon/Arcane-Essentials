@@ -12,16 +12,15 @@
   },
   "tier": "master",
   "element": "ice",
-  "type": "defence",
-  "cost": 140,
+  "type": "attack",
+  "cost": 90,
   "chargeup": 0,
-  "cooldown": 220,
+  "cooldown": 170,
   "base_properties": {
-    "damage": 0.25,
-    "effect_strength": 3,
-    "effect_duration": 120,
-    "direct_effect_duration": 240,
+    "damage": 13,
+    "range": 6,
     "effect_radius": 2,
-    "swords": 0
+    "effect_strength": 2,
+    "swords": 1
   }
 }
