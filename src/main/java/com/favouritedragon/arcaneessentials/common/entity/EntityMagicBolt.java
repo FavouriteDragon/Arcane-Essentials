@@ -92,6 +92,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 	public EntityMagicBolt(World world) {
 		super(world);
 		this.setSize(0.5F, 0.5F);
+		this.noClip = false;
 	}
 
 	public float getSize() {
@@ -374,7 +375,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 			// Does a ray trace to determine whether the projectile will hit a block in the next tick
 
 			Vec3d vec3d1 = new Vec3d(this.posX, this.posY, this.posZ);
-			Vec3d vec3d = new Vec3d(this.posX + this.motionX / 1.75, this.posY + this.motionY / 1.75, this.posZ + this.motionZ / 1.75);
+			Vec3d vec3d = new Vec3d(this.posX + this.motionX / 1.625, this.posY + this.motionY / 1.625, this.posZ + this.motionZ / 1.625);
 			RayTraceResult raytraceresult = this.world.rayTraceBlocks(vec3d1, vec3d, false, true, false);
 			vec3d1 = new Vec3d(this.posX, this.posY, this.posZ);
 			vec3d = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
@@ -565,7 +566,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 					this.arrowShake = 7;
 
 					if (this.collided && (world.getBlockState(getPosition()).getBlock() != Blocks.AIR &&
-							!(world.getBlockState(getPosition()).isFullCube())))
+							world.getBlockState(getPosition()).isFullCube()))
 						this.onBlockHit(raytraceresult);
 
 					if (this.stuckInBlock.getMaterial() != Material.AIR) {
@@ -607,8 +608,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 					double y = boundingBox.minY + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxY - boundingBox.minY);
 					double z = boundingBox.minZ + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxZ - boundingBox.minZ);
 					BlockPos pos = new BlockPos(x, y, z);
-					if (world.getBlockState(pos).isFullCube() && world.getBlockState(pos).getBlock() != Blocks.AIR || world.getBlockState(pos).isFullBlock() &&
-							world.getBlockState(pos).getBlock() != Blocks.AIR) {
+					if (canCollideWithSolid(world.getBlockState(pos))) {
 						setDead();
 					}
 				}
