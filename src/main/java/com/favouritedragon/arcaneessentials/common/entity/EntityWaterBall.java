@@ -21,7 +21,7 @@ public class EntityWaterBall extends EntityMagicBolt {
 
 	public EntityWaterBall(World world) {
 		super(world);
-		this.blockBoxX = blockBoxY = blockBoxZ = getSize() / 20;
+		this.blockBoxX = blockBoxY = blockBoxZ = getSize() / 10;
 	}
 
 	public void setSpawnWhirlPool(boolean whirlPool) {
