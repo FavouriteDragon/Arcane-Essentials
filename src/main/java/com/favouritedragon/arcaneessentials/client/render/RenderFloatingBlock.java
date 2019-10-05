@@ -80,7 +80,7 @@ public class RenderFloatingBlock extends Render {
 					blockrendererdispatcher.getBlockModelRenderer().renderModel(world,
 							blockrendererdispatcher.getModelForState(iblockstate), iblockstate, blockpos,
 							BufferBuilder, false, 0);
-					GlStateManager.scale(entity.getSize(), entity.getSize(), entity.getSize());
+				//	GlStateManager.scale(entity.getSize(), entity.getSize(), entity.getSize());
 					tessellator.draw();
 
 					if (this.renderOutlines) {
