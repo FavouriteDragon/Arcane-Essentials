@@ -1,0 +1,27 @@
+{
+  "enabled": {
+    "book": true,
+    "scroll": true,
+    "wands": true,
+    "npcs": true,
+    "dispensers": true,
+    "commands": true,
+    "treasure": true,
+    "trades": true,
+    "looting": true
+  },
+  "tier": "master",
+  "element": "ice",
+  "type": "defence",
+  "cost": 140,
+  "chargeup": 0,
+  "cooldown": 220,
+  "base_properties": {
+    "damage": 0.75,
+    "effect_strength": 3,
+    "effect_duration": 120,
+    "direct_effect_duration": 240,
+    "effect_radius": 2,
+    "swords": 0
+  }
+}

@@ -613,7 +613,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 					double y = boundingBox.minY + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxY - boundingBox.minY);
 					double z = boundingBox.minZ + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxZ - boundingBox.minZ);
 					BlockPos pos = new BlockPos(x, y, z);
-					if (canCollideWithSolid(world.getBlockState(pos)) || world.collidesWithAnyBlock(getEntityBoundingBox().grow(blockBoxX, blockBoxY, blockBoxZ))) {
+					if (canCollideWithSolid(world.getBlockState(pos)) && world.collidesWithAnyBlock(getEntityBoundingBox().grow(blockBoxX, blockBoxY, blockBoxZ))) {
 						onGround = true;
 						setDead();
 					}
@@ -720,6 +720,15 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 			this.prevRotationYaw = this.rotationYaw;
 			this.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
 			this.ticksInGround = 0;
+		}
+	}
+
+	@Override
+	public void setDead() {
+		super.setDead();
+		//There was some weird shenanigans going on with projectiles instantly dying
+		if (this.isDead && !world.isRemote) {
+			//Thread.dumpStack();
 		}
 	}
 

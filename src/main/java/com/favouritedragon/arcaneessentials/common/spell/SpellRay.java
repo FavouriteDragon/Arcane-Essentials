@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.spell;
 
+import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.util.RayTracer;
 import electroblob.wizardry.util.SpellModifiers;
@@ -22,7 +23,7 @@ import static com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell.SWOR
 public abstract class SpellRay extends electroblob.wizardry.spell.SpellRay implements IArcaneSpell {
 
 	public SpellRay(String name, boolean isContinuous, EnumAction action) {
-		super(name, isContinuous, action);
+		super(ArcaneEssentials.MODID, name, isContinuous, action);
 		addProperties(EFFECT_RADIUS, SWORDS);
 	}
 

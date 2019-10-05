@@ -3,7 +3,12 @@ package com.favouritedragon.arcaneessentials.common.entity;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
+import net.minecraft.block.BlockBush;
+import net.minecraft.block.BlockFlower;
+import net.minecraft.block.BlockTallGrass;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
@@ -131,4 +136,8 @@ public class EntityWaterBall extends EntityMagicBolt {
 		super.setDead();
 	}
 
+	@Override
+	public boolean canCollideWithSolid(IBlockState hit) {
+		return getSize() < 1 ? hit.getBlock() != Blocks.AIR && !(hit.getBlock() instanceof BlockBush) : super.canCollideWithSolid(hit);
+	}
 }

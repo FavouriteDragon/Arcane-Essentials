@@ -13,6 +13,7 @@ import javax.annotation.Nonnull;
 public class ArcanePotions {
 
 	public static final Potion infernoForm = new PotionInfernoForm(false, 0xFc191);
+	public static final Potion frostForm = new PotionInfernoForm(false, 0xCDFEFF);
 
 	private ArcanePotions() {
 	} // No instances!
@@ -47,24 +48,8 @@ public class ArcanePotions {
 
 		// Interestingly, setting the colour to black stops the particles from rendering.
 
-		registerPotion(registry, "inferno_form", infernoForm); // Colour was 0x38ddec (was arbitrary anyway)
-
-
-		/*registerPotion(registry, "fireskin", new PotionMagicEffectParticles(false, 0,
-				new ResourceLocation(Wizardry.MODID, "textures/gui/potion_icon_fireskin.png")) {
-			@Override
-			public void spawnCustomParticle(World world, double x, double y, double z) {
-				world.spawnParticle(EnumParticleTypes.FLAME, x, y, z, 0, 0, 0);
-			}
-
-			@Override
-			public void performEffect(EntityLivingBase entitylivingbase, int strength) {
-				entitylivingbase.extinguish(); // Stops melee mobs that are on fire from setting the player on fire,
-				// without allowing the player to actually stand in fire or swim in lava without taking damage.
-			}
-		}.setBeneficial()); // 0xff2f02**/
-
-
+		registerPotion(registry, "inferno_form", infernoForm);
+		registerPotion(registry, "frost_form", frostForm);
 
 	}
 }

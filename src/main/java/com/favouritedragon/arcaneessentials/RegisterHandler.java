@@ -12,6 +12,7 @@ import com.favouritedragon.arcaneessentials.common.spell.earth.Shake;
 import com.favouritedragon.arcaneessentials.common.spell.earth.SolarBeam;
 import com.favouritedragon.arcaneessentials.common.spell.fire.*;
 import com.favouritedragon.arcaneessentials.common.spell.ice.BlizzardBeam;
+import com.favouritedragon.arcaneessentials.common.spell.ice.FrostForm;
 import com.favouritedragon.arcaneessentials.common.spell.necromancy.*;
 import com.favouritedragon.arcaneessentials.common.spell.sorcery.FlashStep;
 import com.favouritedragon.arcaneessentials.common.spell.storm.LightningVortex;
@@ -109,6 +110,7 @@ public class RegisterHandler {
 
 	//Used for when spell properties are needed outside of the spell class
 	public static final Spell inferno_form = new InfernoForm();
+	public static final Spell frost_form = new FrostForm();
 
 	@SubscribeEvent
 	public static void register(RegistryEvent.Register<Spell> event) {
@@ -119,6 +121,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new FlashStep());
 		event.getRegistry().register(new Frizz());
 		event.getRegistry().register(new Frizzle());
+		event.getRegistry().register(frost_form);
 		event.getRegistry().register(inferno_form);
 		event.getRegistry().register(new InfernoPillar());
 		event.getRegistry().register(new KaFrizz());
