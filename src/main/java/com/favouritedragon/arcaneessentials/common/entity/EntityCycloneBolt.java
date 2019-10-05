@@ -3,14 +3,12 @@ package com.favouritedragon.arcaneessentials.common.entity;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.util.MagicDamage;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
@@ -47,12 +45,6 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 		this.damage = damage;
 	}
 
-	@Override
-	protected void onBlockHit(RayTraceResult hit) {
-		if (hit.typeOfHit == RayTraceResult.Type.BLOCK && canCollideWithSolid(world.getBlockState(hit.getBlockPos()))) {
-			Dissipate();
-		}
-	}
 
 	@Override
 	public int getLifetime() {
@@ -96,23 +88,21 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 				}
 			}
 		}
-		setDead();
+		this.isDead = true;
 	}
 
-	@Override
-	protected void onEntityHit(EntityLivingBase entityHit) {
-		if (canCollideWithEntity(entityHit))
-			Dissipate();
-	}
 
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if (getLifetime() >= 100 && ticksExisted >= getLifetime()) {
-			Dissipate();
-		}
 		if (ArcaneUtils.getMagnitude(new Vec3d(motionX, motionY, motionZ)) <= 0.4F) {
-			Dissipate();
+			setDead();
 		}
+	}
+
+	@Override
+	public void setDead() {
+		Dissipate();
+		super.setDead();
 	}
 }

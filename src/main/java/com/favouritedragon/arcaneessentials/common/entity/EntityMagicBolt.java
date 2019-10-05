@@ -57,6 +57,8 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 	 * The damage multiplier for the projectile.
 	 */
 	public float damageMultiplier = 1.0f;
+	//How much to expand the hitbox by when looking for blocks
+	public float blockBoxX, blockBoxY, blockBoxZ;
 	int ticksInGround;
 	int ticksInAir;
 	private int blockX = -1;
@@ -93,6 +95,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 		super(world);
 		this.setSize(0.5F, 0.5F);
 		this.noClip = false;
+		this.blockBoxX = this.blockBoxY = this.blockBoxZ = 0.125F;
 	}
 
 	public float getSize() {
@@ -290,7 +293,9 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 	 *            example.
 	 */
 	protected void onBlockHit(RayTraceResult hit) {
-		if (hit.typeOfHit == RayTraceResult.Type.BLOCK && canCollideWithSolid(world.getBlockState(hit.getBlockPos()))) {
+		if (hit.typeOfHit == RayTraceResult.Type.BLOCK && canCollideWithSolid(world.getBlockState(hit.getBlockPos())) ||
+				world.collidesWithAnyBlock(getEntityBoundingBox().grow(blockBoxX, blockBoxY, blockBoxZ))) {
+			onGround = true;
 			setDead();
 		}
 	}
@@ -608,7 +613,8 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 					double y = boundingBox.minY + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxY - boundingBox.minY);
 					double z = boundingBox.minZ + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxZ - boundingBox.minZ);
 					BlockPos pos = new BlockPos(x, y, z);
-					if (canCollideWithSolid(world.getBlockState(pos))) {
+					if (canCollideWithSolid(world.getBlockState(pos)) || world.collidesWithAnyBlock(getEntityBoundingBox().grow(blockBoxX, blockBoxY, blockBoxZ))) {
+						onGround = true;
 						setDead();
 					}
 				}

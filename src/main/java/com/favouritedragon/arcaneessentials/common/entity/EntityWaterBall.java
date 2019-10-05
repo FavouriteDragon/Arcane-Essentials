@@ -21,6 +21,7 @@ public class EntityWaterBall extends EntityMagicBolt {
 
 	public EntityWaterBall(World world) {
 		super(world);
+		this.blockBoxX = blockBoxY = blockBoxZ = getSize() / 20;
 	}
 
 	public void setSpawnWhirlPool(boolean whirlPool) {
@@ -125,13 +126,9 @@ public class EntityWaterBall extends EntityMagicBolt {
 	}
 
 	@Override
-	protected void tickInGround() {
-		setDead();
-	}
-
-	@Override
 	public void setDead() {
 		Splash();
 		super.setDead();
 	}
+
 }
