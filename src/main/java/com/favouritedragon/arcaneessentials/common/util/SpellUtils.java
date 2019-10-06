@@ -41,6 +41,13 @@ public class SpellUtils {
 			return false; //spell.isEnabled(AXES);
 	}
 
+	public static boolean rightClickCastable(Spell spell) {
+		if (spell instanceof IArcaneSpell) {
+			return ((IArcaneSpell) spell).castRightClick();
+		}
+		return true;
+	}
+
 	//TODO: Add spell sources
 
 	//public static final SpellProperties.Context SWORDS = WizardryEnumHelper.addSpellContext("swords", "swords");

@@ -10,17 +10,17 @@
     "trades": true,
     "looting": true
   },
-  "tier": "master",
+  "tier": "apprentice",
   "element": "ice",
   "type": "attack",
-  "cost": 90,
+  "cost": 30,
   "chargeup": 0,
-  "cooldown": 170,
+  "cooldown": 60,
   "base_properties": {
-    "damage": 13,
-    "range": 6,
+    "damage": 4.5,
+    "range": 2.5,
     "effect_radius": 2,
-    "effect_strength": 4,
+    "effect_strength": 0.625,
     "swords": 1
   }
 }

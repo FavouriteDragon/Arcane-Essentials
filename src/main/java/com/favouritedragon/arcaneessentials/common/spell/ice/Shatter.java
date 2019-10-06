@@ -48,7 +48,7 @@ public class Shatter extends SpellRay {
 					target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FROST), getProperty(DAMAGE).floatValue()
 							* getProperty(POTENCY).floatValue());
 					if (world.isRemote)
-						ParticleBuilder.create(ParticleBuilder.Type.ICE).time(13).collide(true).pos(hit).target(target).scale(getProperty(EFFECT_STRENGTH).floatValue()).spawn(world);
+						ParticleBuilder.create(ParticleBuilder.Type.ICE).time(30).collide(true).pos(hit).target(target).scale(getProperty(EFFECT_STRENGTH).floatValue() * 2).spawn(world);
 
 				}
 				return true;
@@ -67,7 +67,7 @@ public class Shatter extends SpellRay {
 					EntityLivingBase target = ((TileEntityStatue) world.getTileEntity(pos)).creature;
 					if (target.getHealth() <= 4) {
 						if (world.isRemote)
-							ParticleBuilder.create(ParticleBuilder.Type.ICE).time(13).collide(true).pos(origin.add(direction)).target(target).scale(getProperty(EFFECT_STRENGTH).floatValue()).spawn(world);
+							ParticleBuilder.create(ParticleBuilder.Type.ICE).time(26).collide(true).pos(origin.add(direction)).target(target).scale(getProperty(EFFECT_STRENGTH).floatValue() * 2).spawn(world);
 					}
 					target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FROST), getProperty(DAMAGE).floatValue()
 							* getProperty(POTENCY).floatValue());

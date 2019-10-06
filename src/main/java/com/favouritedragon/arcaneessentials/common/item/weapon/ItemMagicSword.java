@@ -315,6 +315,34 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 		return (this.element == null ? "" : this.element.getFormattingCode()) + super.getItemStackDisplayName(stack);
 	}
 
+	@Override
+	public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack) {
+
+		// Alternate left-click functions for spells
+		EnumHand hand = EnumHand.MAIN_HAND;
+		if (entityLiving instanceof EntityPlayer) {
+			Spell spell = WandHelper.getCurrentSpell(stack);
+			SpellModifiers modifiers = this.calculateModifiers(stack, (EntityPlayer) entityLiving, spell);
+
+			if (canCast(stack, spell, (EntityPlayer) entityLiving, hand, 0, modifiers) && !SpellUtils.rightClickCastable(spell)) {
+				// Now we can cast continuous spells with scrolls!
+				if (spell.isContinuous) {
+					if (!entityLiving.isHandActive()) {
+						entityLiving.setActiveHand(hand);
+						// Store the modifiers for use each tick
+						if (WizardData.get((EntityPlayer) entityLiving) != null) WizardData.get((EntityPlayer) entityLiving).itemCastingModifiers = modifiers;
+						// Return the player's held item so spells can change it if they wish (e.g. possession)
+						return true;
+					}
+				} else {
+					return cast(stack, spell, (EntityPlayer) entityLiving, hand, 0, modifiers);
+				}
+			}
+		}
+
+		return false;
+	}
+
 	// Continuous spells use the onUsingItemTick method instead of this one.
 	/* An important thing to note about this method: it is only called on the server and the client of the player
 	 * holding the item (I call this client-inconsistency). This means if you spawn particles here they will not show up
@@ -330,7 +358,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 		Spell spell = WandHelper.getCurrentSpell(stack);
 		SpellModifiers modifiers = this.calculateModifiers(stack, player, spell);
 
-		if(canCast(stack, spell, player, hand, 0, modifiers)){
+		if(canCast(stack, spell, player, hand, 0, modifiers) && SpellUtils.rightClickCastable(spell)) {
 			// Now we can cast continuous spells with scrolls!
 			if(spell.isContinuous){
 				if(!player.isHandActive()){
@@ -340,8 +368,8 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 					// Return the player's held item so spells can change it if they wish (e.g. possession)
 					return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 				}
-			}else{
-				if(cast(stack, spell, player, hand, 0, modifiers)){
+			} else {
+				if (cast(stack, spell, player, hand, 0, modifiers)) {
 					return new ActionResult<>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 				}
 			}
