@@ -24,7 +24,7 @@ import static com.favouritedragon.arcaneessentials.common.util.DamageSources.SPL
 public class OceanBurst extends ArcaneSpell {
 
 	public OceanBurst() {
-		super(ArcaneEssentials.MODID, "ocean_burst", EnumAction.BOW, false);
+		super("ocean_burst", EnumAction.BOW, false);
 		addProperties(DAMAGE, RANGE, EFFECT_STRENGTH, EFFECT_RADIUS);
 	}
 

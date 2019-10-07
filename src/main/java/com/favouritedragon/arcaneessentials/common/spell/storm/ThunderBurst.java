@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 public class ThunderBurst extends ArcaneSpell {
 
 	public ThunderBurst() {
-		super(ArcaneEssentials.MODID, "thunder_burst", EnumAction.BOW, false);
+		super("thunder_burst", EnumAction.BOW, false);
 	}
 	//TODO: Config for particles
 	@Override

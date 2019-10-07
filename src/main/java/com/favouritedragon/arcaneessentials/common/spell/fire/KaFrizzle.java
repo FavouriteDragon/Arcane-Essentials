@@ -31,7 +31,7 @@ import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SIZE;
 public class KaFrizzle extends ArcaneSpell {
 
 	public KaFrizzle() {
-		super(ArcaneEssentials.MODID, "kafrizzle", EnumAction.BOW, false);
+		super("kafrizzle", EnumAction.BOW, false);
 		addProperties(DAMAGE, RANGE, BURN_DURATION, SIZE);
 		soundValues(2.0F, 0.9F, 0.15F);
 	}

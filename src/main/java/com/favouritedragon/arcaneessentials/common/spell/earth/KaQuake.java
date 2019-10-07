@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 public class KaQuake extends ArcaneSpell {
 
 	public KaQuake() {
-		super(ArcaneEssentials.MODID, "kaquake", EnumAction.BOW, false);
+		super("kaquake", EnumAction.BOW, false);
 		addProperties(DAMAGE, DURATION, RANGE, BLAST_RADIUS);
 	}
 

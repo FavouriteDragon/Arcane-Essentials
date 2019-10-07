@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 public class InfernoForm extends ArcaneSpell {
 
 	public InfernoForm() {
-		super(ArcaneEssentials.MODID, "inferno_form", EnumAction.BOW, false);
+		super("inferno_form", EnumAction.BOW, false);
 		addProperties(BURN_DURATION, DAMAGE, EFFECT_RADIUS, EFFECT_DURATION);
 		soundValues(2.0F, 0.7F, 0.15F);
 	}

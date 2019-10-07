@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 public class InfernoPillar extends ArcaneSpell {
 
 	public InfernoPillar() {
-			super(ArcaneEssentials.MODID, "inferno_pillar", EnumAction.BOW, false);
+			super("inferno_pillar", EnumAction.BOW, false);
 			addProperties(DAMAGE, EFFECT_RADIUS, EFFECT_DURATION, RANGE);
 			soundValues(1.5F, 0.8F, 0.15F);
 	}

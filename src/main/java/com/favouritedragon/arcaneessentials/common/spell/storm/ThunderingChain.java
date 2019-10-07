@@ -1,11 +1,9 @@
 package com.favouritedragon.arcaneessentials.common.spell.storm;
 
-import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityLightningSpawner;
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
-import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,7 +16,7 @@ import net.minecraft.world.World;
 public class ThunderingChain extends ArcaneSpell {
 
 	public ThunderingChain() {
-		super(ArcaneEssentials.MODID, "thundering_chain", EnumAction.BOW, false);
+		super("thundering_chain", EnumAction.BOW, false);
 		addProperties(DURATION, DAMAGE, EFFECT_DURATION);
 	}
 

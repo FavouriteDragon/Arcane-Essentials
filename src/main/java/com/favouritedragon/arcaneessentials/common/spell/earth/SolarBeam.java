@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 public class SolarBeam extends ArcaneSpell {
 
 	public SolarBeam() {
-		super(ArcaneEssentials.MODID, "solar_beam", EnumAction.BOW, false);
+		super("solar_beam", EnumAction.BOW, false);
 		addProperties(DAMAGE, RANGE, EFFECT_RADIUS, EFFECT_DURATION);
 	}
 

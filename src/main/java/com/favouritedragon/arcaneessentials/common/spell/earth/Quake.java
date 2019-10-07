@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class Quake extends ArcaneSpell {
 
 	public Quake() {
-		super(ArcaneEssentials.MODID, "quake", EnumAction.BOW, false);
+		super("quake", EnumAction.BOW, false);
 		addProperties(DAMAGE, DURATION, RANGE, BLAST_RADIUS);
 	}
 

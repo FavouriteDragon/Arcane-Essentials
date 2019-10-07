@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.spell;
 
+import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellProperties;
@@ -12,12 +13,7 @@ public abstract class ArcaneSpell extends Spell implements IArcaneSpell {
 	public static final String SHIELDS = "shields";
 
 	public ArcaneSpell(String name, EnumAction action, boolean isContinuous) {
-		super(name, action, isContinuous);
-		addProperties(SWORDS);
-	}
-
-	public ArcaneSpell(String modID, String name, EnumAction action, boolean isContinuous) {
-		super(modID, name, action, isContinuous);
+		super(ArcaneEssentials.MODID, name, action, isContinuous);
 		addProperties(SWORDS);
 	}
 

@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 public class Whirlpool extends ArcaneSpell {
 
 	public Whirlpool() {
-		super(ArcaneEssentials.MODID, "whirlpool", EnumAction.BOW, false);
+		super("whirlpool", EnumAction.BOW, false);
 		addProperties(RANGE, DAMAGE);
 	}
 

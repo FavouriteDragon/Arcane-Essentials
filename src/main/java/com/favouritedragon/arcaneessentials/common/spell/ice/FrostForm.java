@@ -1,27 +1,20 @@
 package com.favouritedragon.arcaneessentials.common.spell.ice;
 
-import com.favouritedragon.arcaneessentials.ArcaneEssentials;
-import com.favouritedragon.arcaneessentials.common.entity.EntityFlamePillar;
 import com.favouritedragon.arcaneessentials.common.potion.ArcanePotions;
-import electroblob.wizardry.registry.WizardryItems;
+import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.registry.WizardrySounds;
-import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
-public class FrostForm extends Spell {
+public class FrostForm extends ArcaneSpell {
 
 	public FrostForm() {
-		super(ArcaneEssentials.MODID, "frost_form", EnumAction.BOW, false);
+		super("frost_form", EnumAction.BOW, false);
 		addProperties(DIRECT_EFFECT_DURATION, DAMAGE, EFFECT_RADIUS, EFFECT_STRENGTH, EFFECT_DURATION);
 		soundValues(2.0F, 0.7F, 0.15F);
 	}

@@ -25,7 +25,7 @@ import java.util.List;
 public class StormBlink extends ArcaneSpell {
 
 	public StormBlink() {
-		super(ArcaneEssentials.MODID, "storm_blink", EnumAction.BOW, false);
+		super("storm_blink", EnumAction.BOW, false);
 		addProperties(EFFECT_RADIUS, RANGE, DAMAGE);
 	}
 

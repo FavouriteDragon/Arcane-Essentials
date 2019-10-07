@@ -24,7 +24,7 @@ public class FlashStep extends ArcaneSpell {
 	private static final String TELEPORT_NUMBER = "teleport_count";
 
 	public FlashStep() {
-		super(ArcaneEssentials.MODID, "flash_step", EnumAction.BOW, false);
+		super( "flash_step", EnumAction.BOW, false);
 		addProperties(RANGE, TELEPORT_NUMBER);
 	}
 

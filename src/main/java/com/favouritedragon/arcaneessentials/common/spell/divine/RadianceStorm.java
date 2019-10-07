@@ -29,7 +29,7 @@ public class RadianceStorm extends ArcaneSpell {
 	private static final float CENTRE_RADIUS_FRACTION = 0.5f;
 
 	public RadianceStorm() {
-		super(ArcaneEssentials.MODID, "radiance_storm", EnumAction.BOW, false);
+		super("radiance_storm", EnumAction.BOW, false);
 		addProperties(DAMAGE, EFFECT_RADIUS, BLAST_RADIUS, BURN_DURATION, KNOCKBACK_MULT, LIGHT_BEAMS,
 				EXPLOSION_DAMAGE);
 	}

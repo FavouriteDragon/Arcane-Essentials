@@ -27,7 +27,7 @@ public class KaThwack extends ArcaneSpell {
 	private static final String DEATH_CHANCE = "death_chance";
 
 	public KaThwack() {
-		super(ArcaneEssentials.MODID, "kathwack", EnumAction.BOW, false);
+		super("kathwack", EnumAction.BOW, false);
 		this.soundValues(2, 0.8f, 0.3F);
 		addProperties(BLAST_RADIUS, DAMAGE, DEATH_CHANCE);
 	}

@@ -1,6 +1,5 @@
 package com.favouritedragon.arcaneessentials.common.spell.ice;
 
-import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardryItems;
@@ -20,7 +19,7 @@ import net.minecraft.world.World;
 public class FrostBlast extends ArcaneSpell {
 
 	public FrostBlast() {
-		super(ArcaneEssentials.MODID, "frost_blast", EnumAction.BOW, false);
+		super("frost_blast", EnumAction.BOW, false);
 		addProperties(DAMAGE, RANGE, EFFECT_STRENGTH, EFFECT_RADIUS);
 	}
 
@@ -69,17 +68,18 @@ public class FrostBlast extends ArcaneSpell {
 		//if (!caster.isSwingInProgress)
 		//	caster.swingArm(hand);
 
+		caster.playSound(WizardrySounds.MISC_FREEZE, 2.0F,
+				world.rand.nextFloat() * 0.2F + 1.0F);
+		caster.playSound(WizardrySounds.ENTITY_ICEBALL_HIT, 0.8F,
+				world.rand.nextFloat() * 0.2F + 1.0F);
+		caster.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH, 2.0F,
+				world.rand.nextFloat() * 0.2F + 1.0F);
+
 		if (!world.isRemote) {
 			Vec3d startPos = new Vec3d(caster.posX, eyepos, caster.posZ);
 			Vec3d endPos = startPos.add(caster.getLookVec().scale(mult * range));
 			ArcaneUtils.vortexEntityCollision(world, caster, null, startPos, endPos, getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(SpellModifiers.POTENCY),
 					damage, look.scale(mult / 0.6 * 2), MagicDamage.DamageType.FROST, true);
-			caster.playSound(WizardrySounds.MISC_FREEZE, 2.0F,
-					world.rand.nextFloat() * 0.2F + 1.0F);
-			caster.playSound(WizardrySounds.ENTITY_ICEBALL_HIT, 0.8F,
-					world.rand.nextFloat() * 0.2F + 1.0F);
-			caster.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH, 2.0F,
-					world.rand.nextFloat() * 0.2F + 1.0F);
 
 			return true;
 		}

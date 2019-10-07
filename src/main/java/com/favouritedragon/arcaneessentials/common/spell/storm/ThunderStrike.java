@@ -14,7 +14,7 @@ public class ThunderStrike extends ArcaneSpell {
 
 	private static final IVariable<Boolean> IS_POWERED = new IVariable.Variable<Boolean>(Persistence.DIMENSION_CHANGE);
 	public ThunderStrike() {
-		super(ArcaneEssentials.MODID, "thunder_strike", EnumAction.BOW, false);
+		super("thunder_strike", EnumAction.BOW, false);
 	}
 
 	@Override

@@ -20,7 +20,7 @@ import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SIZE;
 public class KaFrizz extends ArcaneSpell {
 
 	public KaFrizz() {
-		super(ArcaneEssentials.MODID, "kafrizz", EnumAction.BOW, false);
+		super("kafrizz", EnumAction.BOW, false);
 		addProperties(DAMAGE, RANGE, BURN_DURATION, SIZE);
 		soundValues(1.75F, 1.0F, 0.15F);
 	}

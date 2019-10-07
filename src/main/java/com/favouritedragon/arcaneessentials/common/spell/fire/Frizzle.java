@@ -20,7 +20,7 @@ import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SIZE;
 public class Frizzle extends ArcaneSpell {
 
 	public Frizzle() {
-		super(ArcaneEssentials.MODID, "frizzle", EnumAction.BOW, false);
+		super("frizzle", EnumAction.BOW, false);
 		addProperties(DAMAGE, RANGE, BURN_DURATION, SIZE);
 		soundValues(1.5F, 1.0F, 0.15F);
 	}

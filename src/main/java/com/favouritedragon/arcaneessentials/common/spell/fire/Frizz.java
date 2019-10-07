@@ -21,7 +21,7 @@ import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SIZE;
 public class Frizz extends ArcaneSpell {
 
 	public Frizz() {
-		super(ArcaneEssentials.MODID, "frizz", EnumAction.BOW, false);
+		super("frizz", EnumAction.BOW, false);
 		addProperties(DAMAGE, RANGE, BURN_DURATION, SIZE);
 		soundValues(1.25F, 1.0F, 0.15F);
 	}

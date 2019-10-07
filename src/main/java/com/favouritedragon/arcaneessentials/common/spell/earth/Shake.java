@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 public class Shake extends ArcaneSpell {
 
 	public Shake() {
-		super(ArcaneEssentials.MODID, "shake", EnumAction.BOW, false);
+		super("shake", EnumAction.BOW, false);
 		addProperties(DAMAGE, DURATION, RANGE, BLAST_RADIUS);
 	}
 

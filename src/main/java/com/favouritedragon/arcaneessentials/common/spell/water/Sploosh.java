@@ -19,7 +19,7 @@ import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SIZE;
 public class Sploosh extends ArcaneSpell {
 
 	public Sploosh() {
-		super(ArcaneEssentials.MODID, "sploosh", EnumAction.BOW, false);
+		super("sploosh", EnumAction.BOW, false);
 		addProperties(DAMAGE, EFFECT_STRENGTH, RANGE, SIZE);
 	}
 

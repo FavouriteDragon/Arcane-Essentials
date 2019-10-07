@@ -25,7 +25,7 @@ import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SPEED;
 public class LightningVortex extends ArcaneSpell {
 
 	public LightningVortex() {
-		super(ArcaneEssentials.MODID, "lightning_vortex", EnumAction.BOW, false);
+		super("lightning_vortex", EnumAction.BOW, false);
 		addProperties(DAMAGE, RANGE, SPEED);
 	}
 

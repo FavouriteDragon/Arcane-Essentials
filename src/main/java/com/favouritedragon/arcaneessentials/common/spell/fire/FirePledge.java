@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class FirePledge extends ArcaneSpell {
 
 	public FirePledge() {
-		super(ArcaneEssentials.MODID, "fire_pledge", EnumAction.BOW, false);
+		super("fire_pledge", EnumAction.BOW, false);
 		addProperties(DAMAGE, EFFECT_DURATION, RANGE);
 	}
 

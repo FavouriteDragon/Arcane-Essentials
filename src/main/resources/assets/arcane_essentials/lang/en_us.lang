@@ -19,6 +19,9 @@ spell.arcane_essentials:frizz.desc=Singe enemies with a small fireball.
 spell.arcane_essentials:frizzle=Frizzle
 spell.arcane_essentials:frizzle.desc=Burn enemies with a fireball.
 
+spell.arcane_essentials:frost_blast=Frost Blast
+spell.arcane_essentials:frost_blast.desc=Left click to strike enemies in front of you with an burst of frigid air!
+
 spell.arcane_essentials:inferno_form=Inferno Form
 spell.arcane_essentials:inferno_form.desc=Become one with the power of flame, turning into a living inferno for 12 seconds! Enemies within a 2 block radius will be pushed back, projectiles are blocked, and there's a chance for you to phase through attacks!
 

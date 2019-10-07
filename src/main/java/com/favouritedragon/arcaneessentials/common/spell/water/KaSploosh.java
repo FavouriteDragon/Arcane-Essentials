@@ -19,7 +19,7 @@ import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SIZE;
 public class KaSploosh extends ArcaneSpell {
 
 	public KaSploosh() {
-		super(ArcaneEssentials.MODID, "kasploosh", EnumAction.BOW, false);
+		super("kasploosh", EnumAction.BOW, false);
 		addProperties(DAMAGE, EFFECT_STRENGTH, RANGE, SIZE);
 	}
 

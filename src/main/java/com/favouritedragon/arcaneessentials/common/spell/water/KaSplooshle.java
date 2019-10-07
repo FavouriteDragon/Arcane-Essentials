@@ -20,7 +20,7 @@ import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SIZE;
 public class KaSplooshle extends ArcaneSpell {
 
 	 public KaSplooshle() {
-		super(ArcaneEssentials.MODID, "kasplooshle", EnumAction.BOW, false);
+		super("kasplooshle", EnumAction.BOW, false);
 		addProperties(DAMAGE, EFFECT_STRENGTH, RANGE, SIZE);
 	}
 

@@ -20,7 +20,7 @@ public class Splash extends ArcaneSpell {
 
 
 	public Splash() {
-		super(ArcaneEssentials.MODID, "splash", EnumAction.BOW, false);
+		super("splash", EnumAction.BOW, false);
 		addProperties(DAMAGE, EFFECT_STRENGTH, RANGE, SIZE);
 	}
 

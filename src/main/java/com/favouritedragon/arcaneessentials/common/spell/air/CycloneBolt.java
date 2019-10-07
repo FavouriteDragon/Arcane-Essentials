@@ -1,6 +1,5 @@
 package com.favouritedragon.arcaneessentials.common.spell.air;
 
-import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityCycloneBolt;
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.registry.WizardryItems;
@@ -20,7 +19,7 @@ import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SPEED;
 public class CycloneBolt extends ArcaneSpell {
 
 	public CycloneBolt() {
-		super(ArcaneEssentials.MODID, "cyclone_bolt", EnumAction.BOW, false);
+		super("cyclone_bolt", EnumAction.BOW, false);
 		addProperties(DAMAGE, SPEED, LIFETIME);
 		//soundValues(2F, 1.0F, 0.15F);
 	}
