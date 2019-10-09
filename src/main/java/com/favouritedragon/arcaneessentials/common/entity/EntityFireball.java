@@ -8,6 +8,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -110,5 +112,20 @@ public class EntityFireball extends EntityMagicBolt {
 		super.onEntityHit(entityHit);
 		if (canCollideWithEntity(entityHit))
 			entityHit.setFire((int) getSize() * 5);
+	}
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+		for (int i = 0; i < getSize() * 10; i++) {
+			if (world.isRemote) {
+				AxisAlignedBB boundingBox = getEntityBoundingBox();
+				double spawnX = boundingBox.minX + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxX - boundingBox.minX);
+				double spawnY = boundingBox.minY + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxY - boundingBox.minY);
+				double spawnZ = boundingBox.minZ + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxZ - boundingBox.minZ);
+				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).vel(new Vec3d(motionX, motionY, motionZ).scale(world.rand.nextFloat() / 10))
+						.pos(spawnX, spawnY, spawnZ).collide(true).time(5).scale(0.75F + getSize() / 2 + world.rand.nextFloat() / 2).spawn(world);
+			}
+		}
 	}
 }

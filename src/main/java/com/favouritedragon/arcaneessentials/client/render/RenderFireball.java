@@ -112,18 +112,6 @@ public class RenderFireball extends Render<EntityFireball> {
 		drawSphere(radius / 2, latStep, longStep, false, r2, g2, b2, 1.4f * a);
 		GlStateManager.rotate(entity.ticksExisted * 20, 0, 0, 1);
 
-		//Particles
-
-		for (int i = 0; i < entity.getSize() * 10; i++) {
-			if (entity.world.isRemote) {
-				AxisAlignedBB boundingBox = entity.getEntityBoundingBox();
-				double spawnX = boundingBox.minX + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxX - boundingBox.minX);
-				double spawnY = boundingBox.minY + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxY - boundingBox.minY);
-				double spawnZ = boundingBox.minZ + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxZ - boundingBox.minZ);
-				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).vel(new Vec3d(entity.motionX, entity.motionY, entity.motionZ).scale(entity.world.rand.nextFloat() / 10))
-						.pos(spawnX, spawnY, spawnZ).collide(true).time(5).scale(0.75F + entity.getSize() / 2 + entity.world.rand.nextFloat() / 2).spawn(entity.world);
-			}
-		}
 
 
 		GlStateManager.enableLighting();

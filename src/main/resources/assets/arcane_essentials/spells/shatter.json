@@ -18,8 +18,7 @@
   "cooldown": 170,
   "base_properties": {
     "damage": 13,
-    "range": 6,
-    "effect_radius": 2,
+    "effect_radius": 5,
     "effect_strength": 4,
     "swords": 1
   }

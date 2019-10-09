@@ -1,80 +1,114 @@
 package com.favouritedragon.arcaneessentials.common.spell.ice;
 
-import com.favouritedragon.arcaneessentials.ArcaneEssentials;
-import com.favouritedragon.arcaneessentials.common.spell.SpellRay;
+import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.registry.WizardryBlocks;
 import electroblob.wizardry.tileentity.TileEntityStatue;
+import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
-import net.minecraft.entity.Entity;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-
-import javax.annotation.Nullable;
-import java.util.Objects;
 
 import static electroblob.wizardry.util.SpellModifiers.POTENCY;
 
-public class Shatter extends SpellRay {
+public class Shatter extends ArcaneSpell {
 
 	//Shatters frozen entities
 	public Shatter() {
-		super(ArcaneEssentials.MODID, "shatter", false, EnumAction.BOW);
-		addProperties(DAMAGE, EFFECT_STRENGTH);
+		super("shatter", EnumAction.BOW, false);
+		addProperties(DAMAGE, EFFECT_STRENGTH, EFFECT_RADIUS);
 	}
 
 	@Override
-	public void playSound(World world, EntityLivingBase caster) {
+	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+		double range = getProperty(EFFECT_RADIUS).floatValue() * modifiers.get(POTENCY);
+		float damage = getProperty(DAMAGE).floatValue() * modifiers.get(POTENCY);
+		float particleSize = getProperty(EFFECT_STRENGTH).floatValue();
 
-	}
-
-	@Override
-	protected boolean onEntityHit(World world, Entity target, Vec3d hit, @Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
-		return false;
-	}
-
-	@Override
-	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit, @Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
-		if (world.getTileEntity(pos) instanceof TileEntityStatue && world.getBlockState(pos).getBlock() == WizardryBlocks.ice_statue) {
-			if (((TileEntityStatue) Objects.requireNonNull(world.getTileEntity(pos))).isIce) {
-				world.getBlockState(pos).getBlock().breakBlock(world, pos, world.getBlockState(pos));
-				if (((TileEntityStatue) world.getTileEntity(pos)).creature != null) {
-					EntityLivingBase target = ((TileEntityStatue) world.getTileEntity(pos)).creature;
-					target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FROST), getProperty(DAMAGE).floatValue()
-							* getProperty(POTENCY).floatValue());
-					if (world.isRemote)
-						ParticleBuilder.create(ParticleBuilder.Type.ICE).time(30).collide(true).pos(hit).target(target).scale(getProperty(EFFECT_STRENGTH).floatValue() * 2).spawn(world);
-
-				}
-				return true;
-			}
-		}
-		return false;
-	}
-
-	@Override
-	protected boolean onMiss(World world, @Nullable EntityLivingBase caster, Vec3d origin, Vec3d direction, int ticksInUse, SpellModifiers modifiers) {
-		BlockPos pos = new BlockPos(origin.add(direction).x, origin.add(direction).y, origin.add(direction).z);
-		if (world.getTileEntity(pos) instanceof TileEntityStatue && world.getBlockState(pos).getBlock() == WizardryBlocks.ice_statue) {
-			if (((TileEntityStatue) Objects.requireNonNull(world.getTileEntity(pos))).isIce) {
-				world.getBlockState(pos).getBlock().breakBlock(world, pos, world.getBlockState(pos));
-				if (((TileEntityStatue) world.getTileEntity(pos)).creature != null) {
-					EntityLivingBase target = ((TileEntityStatue) world.getTileEntity(pos)).creature;
-					if (target.getHealth() <= 4) {
+		/*List<EntityLivingBase> nearby = WizardryUtilities.getEntitiesWithinRadius(range, caster.posX, caster.getEntityBoundingBox().minY, caster.posZ, world);
+		if (!nearby.isEmpty()) {
+			for (Entity hit : nearby) {
+				BlockPos pos = hit.getPosition();
+				int height = hit.height < 1 ? 1 : (int) hit.height;
+				for (int i = 0; i < height; i++) {
+					if (world.getBlockState(pos.up(i)).getBlock() == WizardryBlocks.ice_statue) {
+						Block block = world.getBlockState(pos.up(i)).getBlock();
+						block.breakBlock(world, pos, world.getBlockState(pos.up(i)));
 						if (world.isRemote)
-							ParticleBuilder.create(ParticleBuilder.Type.ICE).time(26).collide(true).pos(origin.add(direction)).target(target).scale(getProperty(EFFECT_STRENGTH).floatValue() * 2).spawn(world);
+							ParticleBuilder.create(ParticleBuilder.Type.ICE, world.rand, hit.posX, hit.getEyeHeight() + hit.getEntityBoundingBox().minY,
+									hit.posZ, hit.getEntityBoundingBox().maxX - hit.getEntityBoundingBox().minX, true).time(40)
+									.scale(particleSize * 5).spawn(world);
+						if (AllyDesignationSystem.isValidTarget(caster, hit)) {
+							if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, hit)) {
+								hit.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FROST), damage);
+								if (world.isRemote) {
+									ParticleBuilder.create(ParticleBuilder.Type.ICE, world.rand, hit.posX, hit.getEyeHeight() + hit.getEntityBoundingBox().minY,
+											hit.posZ, hit.getEntityBoundingBox().maxX - hit.getEntityBoundingBox().minX, false).time(30)
+											.scale(particleSize * 5).target(hit).collide(true).spawn(world);
+								}
+							}
+						}
 					}
-					target.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FROST), getProperty(DAMAGE).floatValue()
-							* getProperty(POTENCY).floatValue());
 				}
-				return true;
+			}
+		}**/ // else {
+		for (int i = 0; i <= range; i++) {
+			for (int angle = 0; angle < 360; angle++) {
+				double radians = Math.toRadians(angle);
+				double x = i * Math.cos(radians);
+				double z = i * Math.sin(radians);
+				double y = caster.getEntityBoundingBox().minY - range / 2;
+				for (int j = 0; j < i; j++) {
+					y += j;
+					BlockPos pos = new BlockPos(x + caster.posX, y, z + caster.posZ);
+					if (world.getBlockState(pos).getBlock() == WizardryBlocks.ice_statue) {
+						if (world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileEntityStatue) {
+							TileEntityStatue statue = (TileEntityStatue) world.getTileEntity(pos);
+							if (statue != null && statue.creature != null) {
+								EntityLivingBase hit = statue.creature;
+								int height = hit.height < 1 ? 1 : (int) hit.height;
+								for (int h = 0; h < height; h++) {
+									Block block = world.getBlockState(pos.up(h)).getBlock();
+									block.breakBlock(world, pos, world.getBlockState(pos.up(h)));
+									statue.setLifetime(0);
+									if (world.getTileEntity(pos.up(h)) != null && world.getTileEntity(pos.up(h)) instanceof TileEntityStatue)
+										((TileEntityStatue) world.getTileEntity(pos.up(h))).setLifetime(0);
+								}
+								for (int p = 0; p < 8; p++) {
+									if (world.isRemote)
+										ParticleBuilder.create(ParticleBuilder.Type.ICE, world.rand, hit.posX, hit.getEyeHeight() + hit.getEntityBoundingBox().minY,
+												hit.posZ, hit.getEntityBoundingBox().maxX - hit.getEntityBoundingBox().minX, true).time(20)
+												.scale(particleSize);//spawn(world);
+								}
+								if (AllyDesignationSystem.isValidTarget(caster, hit)) {
+									if (!MagicDamage.isEntityImmune(MagicDamage.DamageType.FROST, hit)) {
+										if (!world.isRemote)
+											hit.attackEntityFrom(MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FROST), damage);
+										if (world.isRemote) {
+										/*for (int p = 0; p < 8; p++) {
+											Vec3d randPos = hit.getPositionVector().add(world.rand.nextGaussian(), world.rand.nextGaussian(), world.rand.nextGaussian());
+											ParticleBuilder.create(ParticleBuilder.Type.ICE, world.rand, hit.posX, hit.getEyeHeight() + hit.getEntityBoundingBox().minY,
+													hit.posZ, hit.getEntityBoundingBox().maxX - hit.getEntityBoundingBox().minX, false).time(20)
+													.scale(particleSize / 2).tvel(hit.getPositionVector().subtract(randPos).scale(particleSize * 15)).collide(true).spawn(world);
+										}**/
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
-		return false;
+		//	}
+		caster.swingArm(hand);
+
+		return true;
 	}
 }
