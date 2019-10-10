@@ -27,12 +27,12 @@ public class ArcticStormBolt extends SpellRay {
 
 	@Override
 	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit, @Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
-		return false;
+		return true;
 	}
 
 	@Override
 	protected boolean onMiss(World world, @Nullable EntityLivingBase caster, Vec3d origin, Vec3d direction, int ticksInUse, SpellModifiers modifiers) {
-		return false;
+		return true;
 	}
 
 	@Override
