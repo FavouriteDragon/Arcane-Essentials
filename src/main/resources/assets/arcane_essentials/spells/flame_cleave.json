@@ -19,8 +19,9 @@
   "base_properties": {
     "damage": 4,
     "range": 2.5,
-    "effect_radius": 2,
-    "effect_strength": 0.625,
+    "size": 1,
+    "burn_duration": 8,
+    "effect_strength": 0.4,
     "swords": 1
   }
 }

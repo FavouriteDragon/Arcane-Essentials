@@ -118,6 +118,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new CycloneBolt());
 		event.getRegistry().register(new CycloneShield());
 		event.getRegistry().register(new FirePledge());
+		event.getRegistry().register(new FlameCleave());
 		event.getRegistry().register(new FlashStep());
 		event.getRegistry().register(new Frizz());
 		event.getRegistry().register(new Frizzle());

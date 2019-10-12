@@ -1,13 +1,20 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
+import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 //Entity for FlameCleave.
 public class EntityFlameSlash extends EntityMagicBolt {
+
+	private float damage;
+	private int lifetime;
+	private int burnDuration;
 
 	/**
 	 * Creates a new projectile in the given world.
@@ -18,15 +25,8 @@ public class EntityFlameSlash extends EntityMagicBolt {
 		super(world);
 	}
 
-	private float damage;
-	private int lifetime;
-
-	public void setDamage(float damage) {
-		this.damage = damage;
-	}
-
-	public void setLifetime(int lifetime) {
-		this.lifetime = lifetime;
+	public void setBurnDuration(int burnDuration) {
+		this.burnDuration = burnDuration;
 	}
 
 	@Override
@@ -34,9 +34,17 @@ public class EntityFlameSlash extends EntityMagicBolt {
 		return damage;
 	}
 
+	public void setDamage(float damage) {
+		this.damage = damage;
+	}
+
 	@Override
 	public int getLifetime() {
 		return lifetime;
+	}
+
+	public void setLifetime(int lifetime) {
+		this.lifetime = lifetime;
 	}
 
 	@Override
@@ -67,5 +75,33 @@ public class EntityFlameSlash extends EntityMagicBolt {
 			ArcaneUtils.spawnDirectionalHorizontalBlade(world, this, null, 1, getSize() * 2, ticksExisted, getSize() / 2,
 					ParticleBuilder.Type.MAGIC_FIRE, getPositionVector(), Vec3d.ZERO, rgb, getSize(), (int) (getSize() * 20));
 		}
+	}
+
+	private void Dissipate() {
+
+		world.playSound(null, posX, posY, posZ, WizardrySounds.ENTITY_FIREBOMB_FIRE, SoundCategory.PLAYERS, 1.0F + world.rand.nextFloat() / 10,
+				0.8F + world.rand.nextFloat() / 10F);
+		if (world.isRemote) {
+			float[] rgb = new float[3];
+			rgb[0] = -1;
+			rgb[1] = -1;
+			rgb[2] = -1;
+			ArcaneUtils.spawnDirectionalHorizontalBlade(world, this, null, 1, getSize() * 2, 0, getSize() / 2,
+					ParticleBuilder.Type.MAGIC_FIRE, getPositionVector(), new Vec3d(world.rand.nextGaussian() / 80, world.rand.nextGaussian() / 80,world.rand.nextGaussian() / 80),
+					rgb, getSize(), (int) (getSize() * 20));
+		}
+		this.isDead = true;
+	}
+
+	@Override
+	public void setDead() {
+		Dissipate();
+		super.setDead();
+	}
+
+	@Override
+	protected void onEntityHit(EntityLivingBase entityHit) {
+		super.onEntityHit(entityHit);
+		entityHit.setFire(burnDuration);
 	}
 }
