@@ -1,3 +1,7 @@
+
+spell.arcane_essentials:absolute_zero=Absolute Zero
+spell.arcane_esentials:absolute_zero.desc=Unleash a wave of arctic air that instantly freezes all enemies within a 3-block radius!
+
 spell.arcane_essentials:blizzard_beam=Blizzard Beam
 spell.arcane_essentials:blizzard_beam.desc=Fire a beam of piercing cold, slowing all enemies it touches! MWAHAHAHAHA
 
@@ -8,7 +12,7 @@ spell.arcane_essentials:cyclone_shield=Cyclone Shield
 spell.arcane_essentials:cyclone_shield.desc=Create a spinning tornado of air around where you're standing! Deflects projectiles, slowly hits enemies repeatedly, then shoots all nearby enemies away on death.
 
 spell.arcane_essentials:fire_pledge=Fire Pledge
-spell.arcane_essentials:fire_pledge.desc=BBBBBBBBBBBBBBBBBBBBBBUUUUUUUUUUUUUUUURRRRRRNNNNNNNNNNNNNNNN Summon geysers of fire in front of you, like the pokemon move! Gen 6, anybody?
+spell.arcane_essentials:fire_pledge.desc=BBBBBBBBBBBBBBBBBBBBBBUUUUUUUUUUUUUUUURRRRRRNNNNNNNNNNNNNNNN! Summon geysers of fire in front of you, like the pokemon move! Gen 6, anybody?
 
 spell.arcane_essentials:flash_step=Flash Step
 spell.arcane_essentials:flash_step.desc=Teleport up to two times a short distnace in front of you! Allows you to teleport into the air.
@@ -21,6 +25,9 @@ spell.arcane_essentials:frizzle.desc=Burn enemies with a fireball.
 
 spell.arcane_essentials:frost_blast=Frost Blast
 spell.arcane_essentials:frost_blast.desc=Left click to strike enemies in front of you with an burst of frigid air!
+
+spell.arcane_essentials:frost_form=Frost Form
+spell.arcane_essentials:frost_form.desc=Turn into an Antartic god, slowing all enemies around you! Push enemies back, freeze enemies that stay too close, and take less damage froma attacks!
 
 spell.arcane_essentials:inferno_form=Inferno Form
 spell.arcane_essentials:inferno_form.desc=Become one with the power of flame, turning into a living inferno for 12 seconds! Enemies within a 2 block radius will be pushed back, projectiles are blocked, and there's a chance for you to phase through attacks!
@@ -73,6 +80,9 @@ spell.arcane_essentials:radiant_beam.desc=Fire a beam of holy energy where you'r
 
 spell.arcane_essentials:shake=Shake
 spell.arcane_essentials:shake.desc=Create a split in the earth, knocking enemies back!
+
+spell.arcane_essentials:shatter=Shatter
+spell.arcane_essentials:shatter.desc=Eviscerate all nearby enemies encased in ice, and rend nearby ice apart.
 
 spell.arcane_essentials:solar_beam=Solar Beam
 spell.arcane_essentials:solar_beam.desc=Unleash a massive mult-hitting laser in the direction you're looking! Use the powers of nature to crush your enemies!
