@@ -13,18 +13,6 @@ public class RadiantDamageModifier {
 
 	@SubscribeEvent
 	public static void radianceHurtEvent(LivingHurtEvent event) {
-		if (event.getEntity() instanceof EntityLivingBase) {
-			EntityLivingBase entity = event.getEntityLiving();
-			if (event.getSource() instanceof IElementalDamage) {
-				IElementalDamage source = (IElementalDamage) event.getSource();
-				if (source.getType() == MagicDamage.DamageType.RADIANT) {
-					if (entity.isEntityUndead()) {
-						event.setAmount(event.getAmount() * 1.5F);
 
-					}
-				}
-
-			}
-		}
 	}
 }

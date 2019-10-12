@@ -2,6 +2,7 @@ package com.favouritedragon.arcaneessentials.common.spell.fire;
 
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.util.SpellModifiers;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumHand;
@@ -15,6 +16,10 @@ public class FlameCleave extends ArcaneSpell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+		return false;
+	}
+
+	private boolean cast(World world, EntityLivingBase caster, SpellModifiers modifiers) {
 		return false;
 	}
 

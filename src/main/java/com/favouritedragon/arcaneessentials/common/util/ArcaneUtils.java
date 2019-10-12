@@ -1,7 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.util;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
-import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.RayTracer;
@@ -67,6 +66,42 @@ public class ArcaneUtils {
 
 	//NOTE: ONLY USE ENUMPARTICLETYPE SPAWN METHODS IN RENDERING FILES. DUE TO VANILLA'S WEIRD PARTICLE SPAWNING SYSTEM,
 	//YOU CANNOT SPAWN PARTICLES IN ENTITY CLASSES AND SUCH RELIABLY. CUSTOM PARTICLES IN THIS CASE ARE FINE, THOUGH.
+
+	//Spawns a directional sword beam.
+
+	/**
+	 *
+	 * @param world The world the blade will be spawned in.
+	 * @param entity The entity that will be spawning the blade beam.
+	 * @param direction The direction vector that will offset how it's spawned.
+	 * @param particleAmount How many particles to spawn per location. Keeping it lower is better.
+	 * @param bladeLength How long the blade is horizontally.
+	 * @param entityLifetime How long the entity spawning it has been alive. Good for getting finer angle increments.
+	 * @param height How tall the blade is.
+	 * @param type The particle type.
+	 * @param pos The normal position.
+	 * @param vel The velocity of the particles.
+	 * @param rgb The array of floats to use for r, g, b, in that order.
+	 * @param size The size of the particle.
+	 * @param lifetime The lifetime of the particles.
+	 */
+	public static void spawnDirectionalHorizontalBlade(World world, Entity entity, @Nullable Vec3d direction, int particleAmount, double bladeLength, int entityLifetime, double height,
+													   ResourceLocation type, Vec3d pos, Vec3d vel, float[] rgb, float size, int lifetime)  {
+		direction = direction == null ? Vec3d.ZERO : direction;
+		int amount = (int) (30 * Math.round(bladeLength) + lifetime);
+		for (double j = 0; j < height; j += 0.1) {
+			for (int i = 0; i < amount; i++) {
+				Vec3d spawnPos = ArcaneUtils.getVectorForRotation((float) Math.toRadians(entity.rotationPitch - amount + i), (float) Math.toRadians(entity.rotationYaw));
+				for (int h = 0; h < particleAmount; h++) {
+					if (rgb[0] == -1 && rgb[1] == -1 && rgb[2] == -1)
+						ParticleBuilder.create(type).entity(entity).time(lifetime).vel(vel).pos(spawnPos.add(pos.add(direction))).scale(size).spawn(world);
+					else
+						ParticleBuilder.create(type).entity(entity).time(lifetime).vel(vel).pos(spawnPos.add(pos.add(direction))).scale(size).clr(rgb[0], rgb[1], rgb[2]).spawn(world);
+				}
+			}
+		}
+	}
+
 	public static void spawnDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int particleAmount, double vortexLength, double minRadius, double radiusScale, EnumParticleTypes particle, double posX, double posY, double posZ,
 											  double velX, double velY, double velZ) {
 		for (int angle = 0; angle < particleAmount; angle++) {
