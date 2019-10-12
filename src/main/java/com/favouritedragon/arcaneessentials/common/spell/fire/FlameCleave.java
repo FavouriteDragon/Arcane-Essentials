@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
@@ -17,7 +18,7 @@ public class FlameCleave extends ArcaneSpell {
 
 	public FlameCleave() {
 		super("flame_cleave", EnumAction.NONE, false);
-		addProperties(DAMAGE, RANGE, BURN_DURATION, SIZE);
+		addProperties(DAMAGE, RANGE, BURN_DURATION, SIZE, EFFECT_STRENGTH);
 	}
 
 	@Override
@@ -26,7 +27,7 @@ public class FlameCleave extends ArcaneSpell {
 	}
 
 	private boolean cast(World world, EntityLivingBase caster, SpellModifiers modifiers) {
-		float size = getProperty(SIZE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
+		float size = getProperty(SIZE).floatValue();
 		float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
 		int burnDuration = getProperty(BURN_DURATION).intValue() * (int) modifiers.get(SpellModifiers.POTENCY);
 		world.playSound(caster.posX, caster.posY, caster.posZ, SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.PLAYERS,
@@ -59,4 +60,5 @@ public class FlameCleave extends ArcaneSpell {
 	public boolean isWandCastable() {
 		return false;
 	}
+
 }

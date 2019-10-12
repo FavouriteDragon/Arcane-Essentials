@@ -89,6 +89,7 @@ public class RegisterHandler {
 		//Projectiles
 		registerEntity(EntityCycloneBolt.class, "CycloneBolt", ++id, 128, PROJECTILE_UPDATE_INTERVAL, true);
 		registerEntity(EntityFireball.class, "Fireball", ++id, 128, PROJECTILE_UPDATE_INTERVAL, true);
+		registerEntity(EntityFlameSlash.class, "FlameSlash", ++id, 128, PROJECTILE_UPDATE_INTERVAL, true);
 		registerEntity(EntityFloatingBlock.class, "FloatingBlock", ++id, 128, PROJECTILE_UPDATE_INTERVAL, true);
 		registerEntity(EntityWaterBall.class, "Waterball", ++id, 128, PROJECTILE_UPDATE_INTERVAL, true);
 

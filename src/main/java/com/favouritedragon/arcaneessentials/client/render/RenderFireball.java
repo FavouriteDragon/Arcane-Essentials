@@ -5,6 +5,7 @@ import com.favouritedragon.arcaneessentials.common.entity.EntityFireball;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;
@@ -108,9 +109,9 @@ public class RenderFireball extends Render<EntityFireball> {
 				}
 				drawSphere(radius, latStep, longStep, false, red, green, blue, alpha);
 			}
-		drawSphere(radius - 0.05f, latStep, longStep, true, r1, g1, b1, a * 1F);
-		drawSphere(radius / 2, latStep, longStep, false, r2, g2, b2, 1.4f * a);
-		GlStateManager.rotate(entity.ticksExisted * 20, 0, 0, 1);
+		//drawSphere(radius - 0.05f, latStep, longStep, true, r1, g1, b1, a * 1F);
+		//drawSphere(radius / 2, latStep, longStep, false, r2, g2, b2, 1.4f * a);
+		//GlStateManager.rotate(entity.ticksExisted * 20, 0, 0, 1);
 
 
 

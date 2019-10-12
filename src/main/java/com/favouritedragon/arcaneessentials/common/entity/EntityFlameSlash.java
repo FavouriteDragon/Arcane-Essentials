@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 public class EntityFlameSlash extends EntityMagicBolt {
 
 	private float damage;
-	private int lifetime;
+	private int lifetime = 60;
 	private int burnDuration;
 
 	/**
@@ -67,18 +67,19 @@ public class EntityFlameSlash extends EntityMagicBolt {
 		super.onUpdate();
 		//Render code. Uh-oh.
 		if (world.isRemote) {
-			//We don't want to override the default flame particle colouring.
-			float[] rgb = new float[3];
-			rgb[0] = -1;
-			rgb[1] = -1;
-			rgb[2] = -1;
-			ArcaneUtils.spawnDirectionalHorizontalBlade(world, this, null, 1, getSize() * 2, ticksExisted, getSize() / 2,
-					ParticleBuilder.Type.MAGIC_FIRE, getPositionVector(), Vec3d.ZERO, rgb, getSize(), (int) (getSize() * 20));
+			if (ticksExisted >= 1) {
+				//We don't want to override the default flame particle colouring.
+				float[] rgb = new float[3];
+				rgb[0] = -1;
+				rgb[1] = -1;
+				rgb[2] = -1;
+				ArcaneUtils.spawnDirectionalHorizontalBlade(world, this, null, 8, getSize() * 6, ticksExisted,
+						ParticleBuilder.Type.MAGIC_FIRE, ArcaneUtils.getMiddleOfEntity(this), Vec3d.ZERO, rgb, getSize() * 4, (int) (getSize() * 15));
+			}
 		}
 	}
 
 	private void Dissipate() {
-
 		world.playSound(null, posX, posY, posZ, WizardrySounds.ENTITY_FIREBOMB_FIRE, SoundCategory.PLAYERS, 1.0F + world.rand.nextFloat() / 10,
 				0.8F + world.rand.nextFloat() / 10F);
 		if (world.isRemote) {
@@ -86,9 +87,9 @@ public class EntityFlameSlash extends EntityMagicBolt {
 			rgb[0] = -1;
 			rgb[1] = -1;
 			rgb[2] = -1;
-			ArcaneUtils.spawnDirectionalHorizontalBlade(world, this, null, 1, getSize() * 2, 0, getSize() / 2,
-					ParticleBuilder.Type.MAGIC_FIRE, getPositionVector(), new Vec3d(world.rand.nextGaussian() / 80, world.rand.nextGaussian() / 80,world.rand.nextGaussian() / 80),
-					rgb, getSize(), (int) (getSize() * 20));
+			ArcaneUtils.spawnDirectionalHorizontalBlade(world, this, null, 3, getSize() * 2, 0,
+					ParticleBuilder.Type.MAGIC_FIRE, ArcaneUtils.getMiddleOfEntity(this), new Vec3d(world.rand.nextGaussian() / 60, world.rand.nextGaussian() / 60,world.rand.nextGaussian() / 60),
+					rgb, getSize() * 6, (int) (getSize() * 20));
 		}
 		this.isDead = true;
 	}
@@ -97,6 +98,8 @@ public class EntityFlameSlash extends EntityMagicBolt {
 	public void setDead() {
 		Dissipate();
 		super.setDead();
+		if (isDead && !world.isRemote)
+			Thread.dumpStack();
 	}
 
 	@Override

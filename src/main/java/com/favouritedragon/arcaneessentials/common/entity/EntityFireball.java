@@ -117,6 +117,33 @@ public class EntityFireball extends EntityMagicBolt {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
+			if (ticksExisted <= 1 || ticksExisted % 10 == 0) {
+				if (world.isRemote) {
+				double x1, y1, z1, xVel, yVel, zVel;
+				Vec3d prevPos = Vec3d.ZERO;
+				for (double theta = 0; theta <= 180; theta += 1) {
+					double dphi = (47 - getSize() * 5) / Math.sin(Math.toRadians(theta));
+					for (double phi = 0; phi < 360; phi += dphi) {
+						double rphi = Math.toRadians(phi);
+						double rtheta = Math.toRadians(theta);
+
+						x1 = getSize() / 2.25 * Math.cos(rphi) * Math.sin(rtheta);
+						y1 = getSize() / 2.25 * Math.sin(rphi) * Math.sin(rtheta);
+						z1 = getSize() / 2.25 * Math.cos(rtheta);
+
+						if (prevPos != Vec3d.ZERO)
+							ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).collide(true).vel(motionX + world.rand.nextGaussian() / 80,
+									motionY + world.rand.nextGaussian() / 80, motionZ + world.rand.nextGaussian() / 80).scale(getSize())
+									.time(10).pos(ArcaneUtils.getMiddleOfEntity(this).add(new Vec3d(x1, y1, z1))).spawn(world);
+						else ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).entity(this).collide(true).vel(motionX + world.rand.nextGaussian() / 80,
+								motionY + world.rand.nextGaussian() / 80, motionZ + world.rand.nextGaussian() / 80).target(prevPos).scale(getSize())
+								.time(10).pos(ArcaneUtils.getMiddleOfEntity(this).add(new Vec3d(x1, y1, z1))).spawn(world);
+						prevPos = new Vec3d(x1, y1, z1).add(ArcaneUtils.getMiddleOfEntity(this));
+
+					}
+				}
+			}
+		}
 		for (int i = 0; i < getSize() * 10; i++) {
 			if (world.isRemote) {
 				AxisAlignedBB boundingBox = getEntityBoundingBox();

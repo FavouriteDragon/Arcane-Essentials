@@ -54,6 +54,7 @@ import java.util.Random;
 import static com.favouritedragon.arcaneessentials.common.spell.arcane.ElementArcane.ARCANE;
 
 public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellCastingItem, IManaStoringItem {
+	//TODO: Fix spells casting when right-clicking workbenches.
 
 	//It works! Gonna leave it alone for now until eb adds proper context support
 
@@ -414,9 +415,9 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 
 		// Spells can only be cast if the casting events aren't cancelled...
 		if(castingTick == 0){
-			if(MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Pre(SpellCastEvent.Source.WAND, spell, caster, modifiers))) return false;
+			if(MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Pre(SpellCastEvent.Source.OTHER, spell, caster, modifiers))) return false;
 		}else{
-			if(MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Tick(SpellCastEvent.Source.WAND, spell, caster, modifiers, castingTick))) return false;
+			if(MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Tick(SpellCastEvent.Source.OTHER, spell, caster, modifiers, castingTick))) return false;
 		}
 
 		int cost = (int)(spell.getCost() * modifiers.get(SpellModifiers.COST));
@@ -447,7 +448,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 
 		if(spell.cast(world, caster, hand, castingTick, modifiers)){
 
-			if(castingTick == 0) MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(SpellCastEvent.Source.WAND, spell, caster, modifiers));
+			if(castingTick == 0) MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Post(SpellCastEvent.Source.OTHER, spell, caster, modifiers));
 
 			if(!world.isRemote){
 
@@ -528,7 +529,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 			// handled separately.
 			if(spell.isContinuous && spell.getTier().level <= this.tier.level && cost <= this.getMana(stack)){
 
-				MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Finish(SpellCastEvent.Source.WAND, spell, player, modifiers, castingTick));
+				MinecraftForge.EVENT_BUS.post(new SpellCastEvent.Finish(SpellCastEvent.Source.OTHER, spell, player, modifiers, castingTick));
 				spell.finishCasting(world, player, Double.NaN, Double.NaN, Double.NaN, null, castingTick, modifiers);
 
 				if(!player.isCreative()){ // Spells only have a cooldown in survival
@@ -821,5 +822,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 			}
 		}
 	}
+
+
 
 }

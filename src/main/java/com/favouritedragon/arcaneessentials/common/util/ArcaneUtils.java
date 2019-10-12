@@ -64,41 +64,56 @@ public class ArcaneUtils {
 		return new Vec3d(x, y, v.z);
 	}
 
+	//Returns the exact middle of the entity.
+	public static Vec3d getMiddleOfEntity(Entity entity) {
+		double x = entity.getEntityBoundingBox().maxX - entity.getEntityBoundingBox().minX;
+		double y = entity.getEntityBoundingBox().maxY - entity.getEntityBoundingBox().minY;
+		double z = entity.getEntityBoundingBox().maxZ - entity.getEntityBoundingBox().minZ;
+
+		return new Vec3d(x / 2 + entity.getEntityBoundingBox().minX, y / 2 + entity.getEntityBoundingBox().minY,
+				z / 2 + entity.getEntityBoundingBox().minZ);
+	}
+
+	//Returns the exact pos, with the y value being the minY and the x and z being the centre of it.
+	public static Vec3d getEntityPos(Entity entity) {
+		double x = entity.getEntityBoundingBox().maxX - entity.getEntityBoundingBox().minX;
+		double z = entity.getEntityBoundingBox().maxZ - entity.getEntityBoundingBox().minZ;
+
+		return new Vec3d(x / 2 + entity.getEntityBoundingBox().minX, entity.getEntityBoundingBox().minY,
+				z / 2 + entity.getEntityBoundingBox().minZ);
+	}
+
 	//NOTE: ONLY USE ENUMPARTICLETYPE SPAWN METHODS IN RENDERING FILES. DUE TO VANILLA'S WEIRD PARTICLE SPAWNING SYSTEM,
 	//YOU CANNOT SPAWN PARTICLES IN ENTITY CLASSES AND SUCH RELIABLY. CUSTOM PARTICLES IN THIS CASE ARE FINE, THOUGH.
 
 	//Spawns a directional sword beam.
 
 	/**
-	 *
-	 * @param world The world the blade will be spawned in.
-	 * @param entity The entity that will be spawning the blade beam.
-	 * @param direction The direction vector that will offset how it's spawned.
-	 * @param particleAmount How many particles to spawn per location. Keeping it lower is better.
-	 * @param bladeLength How long the blade is horizontally.
-	 * @param entityLifetime How long the entity spawning it has been alive. Good for getting finer angle increments.
-	 * @param height How tall the blade is.
-	 * @param type The particle type.
-	 * @param pos The normal position.
-	 * @param vel The velocity of the particles.
-	 * @param rgb The array of floats to use for r, g, b, in that order.
-	 * @param size The size of the particle.
-	 * @param lifetime The lifetime of the particles.
+	 * @param world              The world the blade will be spawned in.
+	 * @param entity             The entity that will be spawning the blade beam.
+	 * @param direction          The direction vector that will offset how it's spawned.
+	 * @param particleController How many particles to spawn per location. Keeping it lower spawns more particles, while higher spawns less.
+	 * @param bladeLength        How long the blade is horizontally.
+	 * @param entityLifetime     How long the entity spawning it has been alive. Good for getting finer angle increments.
+	 * @param type               The particle type.
+	 * @param pos                The normal position.
+	 * @param vel                The velocity of the particles.
+	 * @param rgb                The array of floats to use for r, g, b, in that order.
+	 * @param size               The size of the particle. Also used for height.
+	 * @param lifetime           The lifetime of the particles.
 	 */
-	public static void spawnDirectionalHorizontalBlade(World world, Entity entity, @Nullable Vec3d direction, int particleAmount, double bladeLength, int entityLifetime, double height,
-													   ResourceLocation type, Vec3d pos, Vec3d vel, float[] rgb, float size, int lifetime)  {
+	public static void spawnDirectionalHorizontalBlade(World world, Entity entity, @Nullable Vec3d direction, double particleController, double bladeLength, int entityLifetime,
+													   ResourceLocation type, Vec3d pos, Vec3d vel, float[] rgb, float size, int lifetime) {
+		//TODO: Rotate the axis so it actually works.
 		direction = direction == null ? Vec3d.ZERO : direction;
-		int amount = (int) (30 * Math.round(bladeLength) + lifetime);
-		for (double j = 0; j < height; j += 0.1) {
-			for (int i = 0; i < amount; i++) {
-				Vec3d spawnPos = ArcaneUtils.getVectorForRotation((float) Math.toRadians(entity.rotationPitch - amount + i), (float) Math.toRadians(entity.rotationYaw));
-				for (int h = 0; h < particleAmount; h++) {
-					if (rgb[0] == -1 && rgb[1] == -1 && rgb[2] == -1)
-						ParticleBuilder.create(type).entity(entity).time(lifetime).vel(vel).pos(spawnPos.add(pos.add(direction))).scale(size).spawn(world);
-					else
-						ParticleBuilder.create(type).entity(entity).time(lifetime).vel(vel).pos(spawnPos.add(pos.add(direction))).scale(size).clr(rgb[0], rgb[1], rgb[2]).spawn(world);
-				}
-			}
+		int amount = (int) (30 * Math.round(bladeLength) + entityLifetime);
+		for (double i = 0; i < amount; i += particleController) {
+			Vec3d spawnPos = ArcaneUtils.toRectangular(Math.toRadians(entity.rotationPitch - amount / 2F + i), 0);
+			spawnPos = ArcaneUtils.rotateAroundAxisY(spawnPos, entity.rotationYaw);
+			if (rgb[0] == -1 && rgb[1] == -1 && rgb[2] == -1)
+				ParticleBuilder.create(type).time(lifetime).vel(vel).pos(spawnPos.add(pos.add(direction))).scale(size).collide(true).spawn(world);
+			else
+				ParticleBuilder.create(type).time(lifetime).vel(vel).pos(spawnPos.add(pos.add(direction))).scale(size).clr(rgb[0], rgb[1], rgb[2]).collide(true).spawn(world);
 		}
 	}
 
@@ -420,8 +435,7 @@ public class ArcaneUtils {
 			if (r == -1 && g == -1 && b == -1) {
 				ParticleBuilder.create(particle).pos(x + position.x, y + position.y, z + position.z).spin(radius, particleSpeed)
 						.vel(entitySpeed.scale(particleSpeed)).time(maxAge).scale(scale).spawn(world);
-			}
-			else {
+			} else {
 				ParticleBuilder.create(particle).pos(x + position.x, y + position.y, z + position.z).clr(r, g, b).spin(radius, particleSpeed)
 						.vel(entitySpeed.scale(particleSpeed)).time(maxAge).scale(scale).spawn(world);
 
@@ -967,7 +981,7 @@ public class ArcaneUtils {
 	}
 
 	//Sound stuff
-	public static SoundEvent createSound(String name){
+	public static SoundEvent createSound(String name) {
 		// All the setRegistryName methods delegate to this one, it doesn't matter which you use.
 		return new SoundEvent(new ResourceLocation(ArcaneEssentials.MODID, name)).setRegistryName(name);
 	}
