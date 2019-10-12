@@ -11,10 +11,7 @@ import com.favouritedragon.arcaneessentials.common.spell.earth.Quake;
 import com.favouritedragon.arcaneessentials.common.spell.earth.Shake;
 import com.favouritedragon.arcaneessentials.common.spell.earth.SolarBeam;
 import com.favouritedragon.arcaneessentials.common.spell.fire.*;
-import com.favouritedragon.arcaneessentials.common.spell.ice.BlizzardBeam;
-import com.favouritedragon.arcaneessentials.common.spell.ice.FrostBlast;
-import com.favouritedragon.arcaneessentials.common.spell.ice.FrostForm;
-import com.favouritedragon.arcaneessentials.common.spell.ice.Shatter;
+import com.favouritedragon.arcaneessentials.common.spell.ice.*;
 import com.favouritedragon.arcaneessentials.common.spell.necromancy.*;
 import com.favouritedragon.arcaneessentials.common.spell.sorcery.FlashStep;
 import com.favouritedragon.arcaneessentials.common.spell.storm.LightningVortex;
@@ -116,6 +113,7 @@ public class RegisterHandler {
 
 	@SubscribeEvent
 	public static void register(RegistryEvent.Register<Spell> event) {
+		event.getRegistry().register(new AbsoluteZero());
 		event.getRegistry().register(new BlizzardBeam());
 		event.getRegistry().register(new CycloneBolt());
 		event.getRegistry().register(new CycloneShield());
