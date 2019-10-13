@@ -98,8 +98,6 @@ public class EntityFlameSlash extends EntityMagicBolt {
 	public void setDead() {
 		Dissipate();
 		super.setDead();
-		if (isDead && !world.isRemote)
-			Thread.dumpStack();
 	}
 
 	@Override
