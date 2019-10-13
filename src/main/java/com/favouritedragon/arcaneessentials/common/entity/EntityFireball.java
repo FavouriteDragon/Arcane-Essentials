@@ -117,7 +117,7 @@ public class EntityFireball extends EntityMagicBolt {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-			if (ticksExisted <= 1 || ticksExisted % 10 == 0) {
+			if (ticksExisted <= 1 || ticksExisted % 17 == 0) {
 				if (world.isRemote) {
 				double x1, y1, z1, xVel, yVel, zVel;
 				Vec3d prevPos = Vec3d.ZERO;
@@ -127,17 +127,19 @@ public class EntityFireball extends EntityMagicBolt {
 						double rphi = Math.toRadians(phi);
 						double rtheta = Math.toRadians(theta);
 
+						//Making it spin increases the sphere size
 						x1 = getSize() / 2.25 * Math.cos(rphi) * Math.sin(rtheta);
 						y1 = getSize() / 2.25 * Math.sin(rphi) * Math.sin(rtheta);
 						z1 = getSize() / 2.25 * Math.cos(rtheta);
 
 						if (prevPos != Vec3d.ZERO)
-							ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).collide(true).vel(motionX + world.rand.nextGaussian() / 80,
-									motionY + world.rand.nextGaussian() / 80, motionZ + world.rand.nextGaussian() / 80).scale(getSize())
-									.time(10).pos(ArcaneUtils.getMiddleOfEntity(this).add(new Vec3d(x1, y1, z1))).spawn(world);
-						else ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).entity(this).collide(true).vel(motionX + world.rand.nextGaussian() / 80,
-								motionY + world.rand.nextGaussian() / 80, motionZ + world.rand.nextGaussian() / 80).target(prevPos).scale(getSize())
-								.time(10).pos(ArcaneUtils.getMiddleOfEntity(this).add(new Vec3d(x1, y1, z1))).spawn(world);
+							ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).collide(true).vel(motionX * 1.075 + world.rand.nextGaussian() / 80,
+									motionY * 1.075 + world.rand.nextGaussian() / 80, motionZ * 1.075 + world.rand.nextGaussian() / 80).scale(getSize())
+									.time(20).pos(ArcaneUtils.getMiddleOfEntity(this).add(new Vec3d(x1, y1, z1))).spin(0.1, world.rand.nextGaussian() / 40)
+									.spawn(world);
+						else ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).entity(this).collide(true).vel(motionX * 1.075 + world.rand.nextGaussian() / 40,
+								motionY * 1.075 + world.rand.nextGaussian() / 80, motionZ * 1.075 + world.rand.nextGaussian() / 80).target(prevPos).scale(getSize())
+								.time(20).pos(ArcaneUtils.getMiddleOfEntity(this).add(new Vec3d(x1, y1, z1))).spin(0.1, world.rand.nextGaussian() / 80).spawn(world);
 						prevPos = new Vec3d(x1, y1, z1).add(ArcaneUtils.getMiddleOfEntity(this));
 
 					}

@@ -109,7 +109,6 @@ public class ArcaneUtils {
 		int amount = (int) (30 * Math.round(bladeLength) + entityLifetime);
 		for (double i = 0; i < amount; i += particleController) {
 			Vec3d spawnPos = ArcaneUtils.toRectangular(Math.toRadians(entity.rotationPitch - amount / 2F + i), 0);
-			spawnPos = ArcaneUtils.rotateAroundAxisY(spawnPos, entity.rotationYaw);
 			if (rgb[0] == -1 && rgb[1] == -1 && rgb[2] == -1)
 				ParticleBuilder.create(type).time(lifetime).vel(vel).pos(spawnPos.add(pos.add(direction))).scale(size).collide(true).spawn(world);
 			else
