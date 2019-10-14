@@ -3,6 +3,7 @@ package com.favouritedragon.arcaneessentials;
 import com.favouritedragon.arcaneessentials.common.entity.*;
 import com.favouritedragon.arcaneessentials.common.spell.air.CycloneBolt;
 import com.favouritedragon.arcaneessentials.common.spell.air.CycloneShield;
+import com.favouritedragon.arcaneessentials.common.spell.arcane.Zoom;
 import com.favouritedragon.arcaneessentials.common.spell.divine.RadianceStorm;
 import com.favouritedragon.arcaneessentials.common.spell.divine.RadiantBeam;
 import com.favouritedragon.arcaneessentials.common.spell.divine.WaveOfRelief;
@@ -152,6 +153,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new Whirlpool());
 		event.getRegistry().register(new Zam());
 		event.getRegistry().register(new Zammle());
+		event.getRegistry().register(new Zoom());
 
 	}
 
