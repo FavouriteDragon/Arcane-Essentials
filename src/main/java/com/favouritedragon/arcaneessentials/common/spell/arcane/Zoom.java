@@ -37,7 +37,7 @@ public class Zoom extends ArcaneSpell {
 						pos = pos.up(i);
 						if (ArcaneUtils.attemptGroundedTeleport(player, pos.getX(), pos.getY(), pos.getZ())) {
 							if (player.world.isRemote)
-								ParticleBuilder.create(ParticleBuilder.Type.BEAM).time(10).entity(player)
+								ParticleBuilder.create(ParticleBuilder.Type.BEAM).time(20).entity(player)
 										.clr(0, 222, 255).target(player.getPositionVector().add(0, 30, 0)).scale(10).spawn(player.world);
 							player.world.updateBlockTick(player.getBedLocation(), player.world.getBlockState(player.getBedLocation(player.getSpawnDimension())).getBlock(), 0, 1);
 							WizardData.get(player).setVariable(CHARGE_TIME, null);
@@ -60,7 +60,7 @@ public class Zoom extends ArcaneSpell {
 		WizardData.get(caster).setVariable(CHARGE_TIME, (int) (getProperty(DURATION).floatValue()
 				- modifiers.get(WizardryItems.duration_upgrade)));
 		if (world.isRemote)
-			ParticleBuilder.create(ParticleBuilder.Type.BEAM).time((getProperty(DURATION).intValue() - (int) modifiers.get(WizardryItems.duration_upgrade))).entity(caster)
+			ParticleBuilder.create(ParticleBuilder.Type.BEAM).time((getProperty(DURATION).intValue() - 1 - (int) modifiers.get(WizardryItems.duration_upgrade))).entity(caster)
 					.clr(0, 222, 255).target(caster.getPositionVector().add(0, 30, 0)).scale(20).spawn(world);
 
 		this.playSound(world, caster, ticksInUse, -1, modifiers);

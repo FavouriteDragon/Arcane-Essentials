@@ -10,14 +10,16 @@
     "trades": true,
     "looting": true
   },
-  "tier": "apprentice",
+  "tier": "advanced",
   "element": "sorcery",
-  "type": "defence",
-  "cost": 40,
+  "type": "defense",
+  "cost": 60,
   "chargeup": 0,
-  "cooldown": 65,
+  "cooldown": 90,
   "base_properties": {
-    "swords": 0,
-    "duration": 27
+    "effect_radius": 5,
+    "effect_duration": 4,
+    "effect_strength": 2,
+    "swords": 1
   }
 }

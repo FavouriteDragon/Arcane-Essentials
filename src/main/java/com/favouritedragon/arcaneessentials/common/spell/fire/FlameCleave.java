@@ -35,7 +35,7 @@ public class FlameCleave extends ArcaneSpell {
 		EntityFlameSlash slash = new EntityFlameSlash(world);
 		slash.setCaster(caster);
 		slash.setSize(size);
-		slash.setLifetime(40);
+		slash.setLifetime(20);
 		slash.setKnockbackStrength(getProperty(EFFECT_STRENGTH).floatValue());
 		slash.setDamage(damage);
 		slash.setKnockbackStrength((int) size * 2);

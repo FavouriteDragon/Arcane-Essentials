@@ -19,6 +19,9 @@
   "spell.kafrizzle": {
     "category": "player", "sounds": ["arcane_essentials:kafrizzle"]
   },
+  "spell.kathwack": {
+    "category": "player", "sounds": ["arcane_essentials:kathwack"]
+  },
   "spell.zoom": {
     "category": "player", "sounds": ["arcane_essentials:zoom"]
   }

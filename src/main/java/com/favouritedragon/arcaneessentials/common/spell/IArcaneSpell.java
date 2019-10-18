@@ -21,6 +21,7 @@ public interface IArcaneSpell {
 		return false;
 	}
 
+	//Used for whether swords should right click the spell.
 	default boolean castRightClick() {
 		return true;
 	}

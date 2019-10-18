@@ -18,7 +18,7 @@
   "cooldown": 40,
   "base_properties": {
     "damage": 4,
-    "range": 16,
+    "range": 28,
     "size": 1,
     "burn_duration": 8,
     "effect_strength": 0.4,

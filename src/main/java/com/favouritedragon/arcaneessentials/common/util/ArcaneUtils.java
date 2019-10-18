@@ -4,6 +4,7 @@ import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.RayTracer;
+import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -977,6 +978,21 @@ public class ArcaneUtils {
 
 			return true;
 		}
+	}
+
+	/**
+	 * Shorthand for {@link WizardryUtilities#getEntitiesWithinRadius(double, double, double, double, World, Class)}
+	 * with EntityLivingBase as the entity type. This is by far the most common use for that method.
+	 *
+	 * @param radius The search radius
+	 * @param x The x coordinate to search around
+	 * @param y The y coordinate to search around
+	 * @param z The z coordinate to search around
+	 * @param world The world to search in
+	 */
+	public static List<Entity> getEntitiesWithinRadius(double radius, double x, double y, double z,
+																 World world){
+		return WizardryUtilities.getEntitiesWithinRadius(radius, x, y, z, world, Entity.class);
 	}
 
 	//Sound stuff

@@ -11,8 +11,14 @@ spell.arcane_essentials:cyclone_bolt.desc=Shoot a spinning arrow of air in the d
 spell.arcane_essentials:cyclone_shield=Cyclone Shield
 spell.arcane_essentials:cyclone_shield.desc=Create a spinning tornado of air around where you're standing! Deflects projectiles, slowly hits enemies repeatedly, then shoots all nearby enemies away on death.
 
+spell.arcane_essentials:dragon_roar=Dragon Roar
+spell.arcane_essentials:dragon_roar.desc=Strike fear into the hearts of nearby enemies, paralysing them for a short while! This will also knock nearby projectiles out of the air.
+
 spell.arcane_essentials:fire_pledge=Fire Pledge
 spell.arcane_essentials:fire_pledge.desc=BBBBBBBBBBBBBBBBBBBBBBUUUUUUUUUUUUUUUURRRRRRNNNNNNNNNNNNNNNN! Summon geysers of fire in front of you, like the pokemon move! Gen 6, anybody?
+
+spell.arcane_essentials:flame_cleave=Flame Cleave
+spell.arcane_essentials:flame_cleave.desc=Slice through the air to create a piercing burning disc of flame!
 
 spell.arcane_essentials:flash_step=Flash Step
 spell.arcane_essentials:flash_step.desc=Teleport up to two times a short distnace in front of you! Allows you to teleport into the air.
@@ -113,6 +119,9 @@ spell.arcane_essentials:zam.desc=Burn enemies with a small bolt of darkness.
 
 spell.arcane_essentials:zammle=Zammle
 spell.arcane_essentials:zammle.desc=Strike enemies with black lightning!
+
+spell.arcane_essentials:zoom=Zoom
+spell.arcane_essentials:zoom.desc=Warp from anywhere in the world to your spawn point after a short charge! You must be able to see the sky, though, and you can't be in water.
 
 item.arcane_essentials:sword.spell=Current Spell: %1$s
 item.arcane_essentials:sword.mana=Mana: %1$s/%2$s

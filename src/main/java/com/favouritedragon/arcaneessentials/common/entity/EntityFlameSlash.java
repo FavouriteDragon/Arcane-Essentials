@@ -6,7 +6,6 @@ import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 //Entity for FlameCleave.
@@ -67,14 +66,14 @@ public class EntityFlameSlash extends EntityMagicBolt {
 		super.onUpdate();
 		//Render code. Uh-oh.
 		if (world.isRemote) {
-			if (ticksExisted >= 1) {
-				//We don't want to override the default flame particle colouring.
-				float[] rgb = new float[3];
-				rgb[0] = -1;
-				rgb[1] = -1;
-				rgb[2] = -1;
-				ArcaneUtils.spawnDirectionalHorizontalBlade(world, this, null, 8, getSize() * 6, ticksExisted,
-						ParticleBuilder.Type.MAGIC_FIRE, ArcaneUtils.getMiddleOfEntity(this), Vec3d.ZERO, rgb, getSize() * 4, (int) (getSize() * 15));
+			if (ticksExisted >= 1 || ticksExisted % 20 == 0) {
+				for (int angle = 0; angle < 360; angle += 6) {
+					double radians = Math.toRadians(angle);
+					double x = Math.cos(radians) * .5;
+					double z = Math.sin(radians) * .5;
+					ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).scale(getSize() * 0.75F).time((int) (getSize() * 20)).pos(ArcaneUtils.getMiddleOfEntity(this).add(x, 0, z))
+							.spin(getSize() / 2, -0.075).vel(motionX * 1.05, motionY * 1.05, motionZ * 1.05).spawn(world);
+				}
 			}
 		}
 	}
@@ -83,13 +82,14 @@ public class EntityFlameSlash extends EntityMagicBolt {
 		world.playSound(null, posX, posY, posZ, WizardrySounds.ENTITY_FIREBOMB_FIRE, SoundCategory.PLAYERS, 1.0F + world.rand.nextFloat() / 10,
 				0.8F + world.rand.nextFloat() / 10F);
 		if (world.isRemote) {
-			float[] rgb = new float[3];
-			rgb[0] = -1;
-			rgb[1] = -1;
-			rgb[2] = -1;
-			ArcaneUtils.spawnDirectionalHorizontalBlade(world, this, null, 3, getSize() * 2, 0,
-					ParticleBuilder.Type.MAGIC_FIRE, ArcaneUtils.getMiddleOfEntity(this), new Vec3d(world.rand.nextGaussian() / 60, world.rand.nextGaussian() / 60,world.rand.nextGaussian() / 60),
-					rgb, getSize() * 6, (int) (getSize() * 20));
+			for (int angle = 0; angle < 360; angle += 6) {
+				double radians = Math.toRadians(angle);
+				double x = Math.cos(radians) * .5;
+				double z = Math.sin(radians) * .5;
+				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).scale(getSize()).time((int) (getSize() * 4)).pos(ArcaneUtils.getMiddleOfEntity(this).add(x, 0, z))
+						.spin(getSize(), -0.25).vel(world.rand.nextGaussian() / 10, world.rand.nextGaussian() / 10, world.rand.nextGaussian() / 10).spawn(world);
+
+			}
 		}
 		this.isDead = true;
 	}
