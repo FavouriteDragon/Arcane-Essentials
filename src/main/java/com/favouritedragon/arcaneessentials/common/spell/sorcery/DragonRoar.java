@@ -45,23 +45,24 @@ public class DragonRoar extends ArcaneSpell {
 				double x = Math.cos(radians);
 				double z = Math.sin(radians);
 				//On the client, the posY is the eye position.
-				ParticleBuilder.create(ParticleBuilder.Type.FLASH).pos(x + caster.posX, caster.posY - 0.2, z + caster.posZ).vel(x * radius, 0, z * radius)
-				.time(8).clr(155, 6, 185).spawn(world);
+				ParticleBuilder.create(ParticleBuilder.Type.FLASH).pos(x + caster.posX, caster.posY + 0.5, z + caster.posZ).vel(x * radius / 10,
+						0, z * radius / 10).time(6).clr(155, 6, 185).spawn(world);
 			}
-			ParticleBuilder.create(ParticleBuilder.Type.SPHERE).entity(caster).clr(155, 6, 185).time(8).scale((float) radius).spawn(world);
+			ParticleBuilder.create(ParticleBuilder.Type.SPHERE).entity(caster).clr(155, 6, 185).time(6).scale((float) radius).spawn(world);
 		}
 		List<Entity> nearby = ArcaneUtils.getEntitiesWithinRadius(radius, caster.posX, caster.posY, caster.posZ, world);
 		nearby.remove(caster);
 		for (Entity target : nearby) {
-			if (!AllyDesignationSystem.isValidTarget(caster, target) && target != caster && target.canBePushed() && target.canBeCollidedWith()) {
+			if (AllyDesignationSystem.isValidTarget(caster, target) && target != caster && target.canBeCollidedWith()) {
 				if (target instanceof EntityLivingBase) {
 					((EntityLivingBase) target).addPotionEffect(new PotionEffect(WizardryPotions.paralysis, duration, amplifier));
 				}
-				if (target instanceof EntityArrow) {
-					target.addVelocity(target.motionX * -1.1, target.motionY * -1.1, target.motionZ * -1.1);
-				}
-				else if (target instanceof EntityThrowable && !(target instanceof EntityMagicProjectile)) {
-					target.addVelocity(target.motionX * -1.6, target.motionY * - 1.6, target.motionZ * - 1.6);
+				if (!world.isRemote) {
+					if (target instanceof EntityArrow) {
+						target.addVelocity(target.motionX * -1.2, target.motionY * -1.2, target.motionZ * -1.2);
+					} else if (target instanceof EntityThrowable && !(target instanceof EntityMagicProjectile)) {
+						target.addVelocity(target.motionX * -3, target.motionY * -3, target.motionZ * -3);
+					}
 				}
 			}
 		}

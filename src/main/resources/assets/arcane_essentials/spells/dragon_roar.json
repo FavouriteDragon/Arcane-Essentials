@@ -12,13 +12,13 @@
   },
   "tier": "advanced",
   "element": "sorcery",
-  "type": "defense",
+  "type": "defence",
   "cost": 60,
   "chargeup": 0,
   "cooldown": 90,
   "base_properties": {
     "effect_radius": 5,
-    "effect_duration": 4,
+    "effect_duration": 100,
     "effect_strength": 2,
     "swords": 1
   }
