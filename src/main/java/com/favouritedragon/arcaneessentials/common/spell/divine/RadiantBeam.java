@@ -67,7 +67,7 @@ public class RadiantBeam extends SpellRay {
 			double y1 = origin.y + direction.y * i / 2
 					+ world.rand.nextFloat() / 5 - 0.1f;
 			double z1 = caster.posZ + direction.z * i / 2 + world.rand.nextFloat() / 5 - 0.1f;
-			ParticleBuilder.create(ParticleBuilder.Type.SPARKLE).pos(x1, y1, z1).vel(world.rand.nextGaussian() / 120,
+			ParticleBuilder.create(ParticleBuilder.Type.FLASH).pos(x1, y1, z1).vel(world.rand.nextGaussian() / 120,
 					world.rand.nextGaussian() / 80, world.rand.nextGaussian() / 120).time(15).clr(1.0F, 1.0F, 0.3F).spawn(world);
 
 		}

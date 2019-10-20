@@ -31,6 +31,7 @@ public class Zoom extends ArcaneSpell {
 		if (chargeTime != null && chargeTime != -1) {
 			player.motionX = player.motionY = player.motionZ = 0;
 			if (chargeTime == 0) {
+				//Ignore what intellij says, not using this will crash mc.
 				if (player.getBedLocation() != null && player.world.canSeeSky(player.getPosition()))
 					for (int i = 0; i < 10; i++) {
 						BlockPos pos = player.getBedLocation(player.getSpawnDimension());
@@ -57,6 +58,7 @@ public class Zoom extends ArcaneSpell {
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 
+		//TODO: Add flash particles as a shrinking circle
 		WizardData.get(caster).setVariable(CHARGE_TIME, (int) (getProperty(DURATION).floatValue()
 				- modifiers.get(WizardryItems.duration_upgrade)));
 		if (world.isRemote)

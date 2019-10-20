@@ -75,9 +75,9 @@ public class BlizzardBeam extends SpellRay {
 		int particles = distance / getProperty(RANGE).floatValue() >= 1 ? 180 : (int) (distance / getProperty(RANGE).floatValue() * 180);
 		ParticleBuilder.create(ParticleBuilder.Type.BEAM).scale(getProperty(EFFECT_RADIUS).floatValue() * 5).pos(origin).target(endPos)
 				.time(15).clr(174, 252, 255).fade(230, 253, 254).collide(true).spawn(world);
-		ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), particles, distance, getProperty(EFFECT_RADIUS).floatValue(),
-				ParticleBuilder.Type.SNOW, origin, new Vec3d(world.rand.nextGaussian() / 80, world.rand.nextGaussian() / 40, world.rand.nextGaussian() / 80),
-				12, -1, -1, -1);
+		ArcaneUtils.spawnDirectionalHelix(world, caster, caster.getLookVec(), particles, distance, getProperty(EFFECT_RADIUS).floatValue() * 0.8,
+				ParticleBuilder.Type.FLASH, origin, new Vec3d(world.rand.nextGaussian() / 80, world.rand.nextGaussian() / 40, world.rand.nextGaussian() / 80),
+				12, 174, 252, 255);
 
 	}
 

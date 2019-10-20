@@ -88,7 +88,7 @@ public class RadianceStorm extends ArcaneSpell {
 					damage, knockBack, true, fireTime, radius, 0, RayTracer.ignoreEntityFilter(caster));
 		}
 		if (world.isRemote) {
-			ArcaneUtils.spawnSpinningHelix(world, 300, 30, radius - 0.1F, ParticleBuilder.Type.SPARKLE, endPos,
+			ArcaneUtils.spawnSpinningHelix(world, 300, 30, radius - 0.1F, ParticleBuilder.Type.FLASH, endPos,
 					1, Vec3d.ZERO, 20, 1.0F, 1.0F, 0.3F, 1);
 			ParticleBuilder.create(ParticleBuilder.Type.BEAM).pos(startPos).target(endPos).scale(radius * 6).clr(1.0F, 1.0F, 0.3F)
 					.fade(1F, 1F, 1F).time(10).spawn(world);
