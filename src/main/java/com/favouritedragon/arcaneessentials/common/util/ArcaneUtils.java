@@ -203,8 +203,54 @@ public class ArcaneUtils {
 					ParticleBuilder.create(particle).pos(pos.add(position).add(direction)).
 							clr(r, g, b).vel(pVel.add(entitySpeed)).time(maxAge).spawn(world);
 				}
-				//	Wizardry.proxy.spawnParticle(particle, world, pos.x + position.x + direction.x, pos.y + position.y + direction.y,
-				//	pos.z + position.z + direction.z, pVel.x + entitySpeed.x, pVel.y + entitySpeed.y, pVel.z + entitySpeed.z, maxAge, r, g, b);
+			}
+		}
+	}
+
+	/**
+	 * Spawns a directional vortex that has rotating particles.
+	 *
+	 * @param world         World the vortex spawns in.
+	 * @param entity        Entity that's spawning the vortex.
+	 * @param direction     The direction that the vortex is spawning in. Although it's just used for proper positioning, use entity.getLookVec()
+	 *                      or some other directional Vec3d.
+	 * @param maxAngle      The amount of particles/the maximum angle that the circle ticks to. 240 would mean there are 240 particles spiraling away.
+	 * @param vortexLength  How long the vortex is. This is initially used at the height, before rotating the vortex.
+	 * @param radiusScale   The maximum radius and how much the radius increases by. Always use your value for the maxAngle here-
+	 *                      otherwise you can get some funky effects. Ex: maxAngle/1.5 would give you a max radius of 1.5 blocks.
+	 *                      Note: It might only be a diamater of 1.5 blocks- if so, uhhh... My bad.
+	 * @param particle      The wizardry particle type. I had to create two methods- for for normal particles, one for wizardry ones.
+	 * @param position      The starting/reference position of the vortex. Used along with the direction position to determine the actual starting position.
+	 * @param particleSpeed How fast the particles are spinning. You don't need to include complex maths here- that's all handled by this method.
+	 * @param entitySpeed   The speed of the entity that is rendering these particles. If the player/entity spawns a tornado, this is the speed of the tornado. If there's no entity,
+	 *                      do Vec3d.ZERO.
+	 * @param maxAge        The maximum age of the particle. Wizardry particles already have a predetermined age, this just adds onto it.
+	 * @param r             The amount of red in the particle. G and B are self-explanatory (green and blue).
+	 */
+	public static void spawnSpinningDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double minRadius, double radiusScale, ResourceLocation particle, Vec3d position,
+													  Vec3d particleSpeed, Vec3d entitySpeed, int maxAge, float r, float g, float b, float scale) {
+		for (int angle = 0; angle < maxAngle; angle++) {
+			double angle2 = world.rand.nextDouble() * Math.PI * 2;
+			double radius = minRadius + (angle / radiusScale);
+			double x = radius * cos(angle);
+			double y = angle / (maxAngle / vortexLength);
+			double z = radius * sin(angle);
+			double speed = world.rand.nextDouble() * 2 + 1;
+			double omega = Math.signum(speed * ((Math.PI * 2) / 20 - speed / (20 * radius)));
+			angle2 += omega;
+			Vec3d pos = new Vec3d(x, y, z);
+			if (entity != null && direction != null) {
+				Vec3d pVel = new Vec3d(particleSpeed.x * radius * omega * Math.cos(angle2), particleSpeed.y, particleSpeed.z * radius * omega * Math.sin(angle2));
+				pVel = ArcaneUtils.rotateAroundAxisX(pVel, entity.rotationPitch - 90);
+				pVel = ArcaneUtils.rotateAroundAxisY(pVel, entity.rotationYaw);
+				pos = ArcaneUtils.rotateAroundAxisX(pos, entity.rotationPitch + 90);
+				pos = ArcaneUtils.rotateAroundAxisY(pos, entity.rotationYaw);
+				if (r == -1 && g == -1 && b == -1) {
+					ParticleBuilder.create(particle).pos(pos.add(position).add(direction)).vel(pVel.add(entitySpeed)).time(maxAge).collide(true).scale(scale).spawn(world);
+				} else {
+					ParticleBuilder.create(particle).pos(pos.add(position).add(direction)).
+							clr(r, g, b).vel(pVel.add(entitySpeed)).time(maxAge).scale(scale).collide(true).spawn(world);
+				}
 			}
 		}
 	}
@@ -287,6 +333,45 @@ public class ArcaneUtils {
 			}
 		}
 	}
+
+
+	/**
+	 * Spawns a directional vortex that has rotating particles.
+	 *
+	 * @param world         World the vortex spawns in.
+	 * @param maxAngle      The amount of particles/the maximum angle that the circle ticks to. 240 would mean there are 240 particles spiraling away.
+	 * @param vortexHeight  How tall the vortex is.
+	 * @param radiusScale   The maximum radius and how much the radius increases by. Always use your value for the maxAngle here-
+	 *                      otherwise you can get some funky effects. Ex: maxAngle/1.5 would give you a max radius of 1.5 blocks.
+	 *                      Note: It might only be a diamater of 1.5 blocks- if so, uhhh... My bad.
+	 * @param particle      The wizardry particle type. I had to create two methods- for for normal particles, one for wizardry ones.
+	 * @param position      The starting/reference position of the vortex. Used along with the direction position to determine the actual starting position.
+	 * @param particleSpeed How fast the particles are spinning. You don't need to include complex maths here- that's all handled by this method.
+	 * @param entitySpeed   The speed of the entity that is spawning the particles. If this is used for a quickburst, just make this 0. This is so
+	 *                      particles move with the entity that's directly spawning it.
+	 * @param maxAge        The maximum age of the particle. Wizardry particles already have a predetermined age, this just adds onto it.
+	 * @param r             The amount of red in the particle. G and B are self-explanatory (green and blue).
+	 */
+	public static void spawnSpinningVortex(World world, int maxAngle, double vortexHeight, double minRadius, double radiusScale, ResourceLocation particle, Vec3d position,
+										   Vec3d particleSpeed, Vec3d entitySpeed, int maxAge, float r, float g, float b, float scale) {
+		Vec3d prevpos = position;
+		for (int angle = 0; angle < maxAngle; angle++) {
+			double radius = minRadius + (angle / radiusScale);
+			double x = radius * cos(angle);
+			double y = angle / (maxAngle / vortexHeight);
+			double z = radius * sin(angle);
+			Vec3d pos = new Vec3d(position.x + x, position.y + y, position.z + z);
+			if (particle.equals(ParticleBuilder.Type.LIGHTNING)) {
+				ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING).vel(entitySpeed).spin(radius, ArcaneUtils.getMagnitude(particleSpeed))
+						.time(maxAge).clr(r, g, b).target(prevpos).pos(pos).scale(scale).spawn(world);
+				prevpos = pos;
+			} else {
+				ParticleBuilder.create(particle).vel(entitySpeed).spin(radius, ArcaneUtils.getMagnitude(particleSpeed))
+						.time(maxAge).clr(r, g, b).pos(pos).scale(scale).collide(true).spawn(world);
+			}
+		}
+	}
+
 
 	/**
 	 * Spawns a directional vortex that has rotating particles.
@@ -575,7 +660,7 @@ public class ArcaneUtils {
 		float f1 = MathHelper.sin(-yaw * 0.017453292F - (float) Math.PI);
 		float f2 = -MathHelper.cos(-pitch * 0.017453292F);
 		float f3 = MathHelper.sin(-pitch * 0.017453292F);
-		return new Vec3d((double) (f1 * f2), (double) f3, (double) (f * f2));
+		return new Vec3d(f1 * f2, f3, f * f2);
 	}
 
 	public static Vec3d toRectangular(double yaw, double pitch) {
@@ -985,13 +1070,13 @@ public class ArcaneUtils {
 	 * with EntityLivingBase as the entity type. This is by far the most common use for that method.
 	 *
 	 * @param radius The search radius
-	 * @param x The x coordinate to search around
-	 * @param y The y coordinate to search around
-	 * @param z The z coordinate to search around
-	 * @param world The world to search in
+	 * @param x      The x coordinate to search around
+	 * @param y      The y coordinate to search around
+	 * @param z      The z coordinate to search around
+	 * @param world  The world to search in
 	 */
 	public static List<Entity> getEntitiesWithinRadius(double radius, double x, double y, double z,
-																 World world){
+													   World world) {
 		return WizardryUtilities.getEntitiesWithinRadius(radius, x, y, z, world, Entity.class);
 	}
 

@@ -2,11 +2,11 @@ package com.favouritedragon.arcaneessentials.client.render;
 
 import com.favouritedragon.arcaneessentials.common.entity.EntityCycloneBolt;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
+import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -62,7 +62,8 @@ public class RenderCycloneBolt extends Render<EntityCycloneBolt> {
 
 		//Particles
 		ArcaneUtils.spawnSpinningDirectionalVortex(entity.world, entity.getCaster(), Vec3d.ZERO, 15, 1, 0, 72,
-				EnumParticleTypes.EXPLOSION_NORMAL, entity.getPositionVector().add(0, entity.height / 2, 0), new Vec3d(0.4, 0.1, 0.4), new Vec3d(entity.motionX, entity.motionY, entity.motionZ));
+				ParticleBuilder.Type.FLASH, entity.getPositionVector().add(0, entity.height / 2, 0), new Vec3d(0.4, 0.1, 0.4), new Vec3d(entity.motionX * 1.05,
+						entity.motionY * 1.05, entity.motionZ * 1.05), 8, 0.85F, 0.85F, 0.85F, 1.5F);
 
 
 		GlStateManager.enableTexture2D();

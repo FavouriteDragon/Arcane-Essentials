@@ -38,30 +38,30 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 		setRadius(radius);
 	}
 
-	private static void Dissipate(EntityCycloneShield shield) {
-		if (!shield.world.isRemote && shield.getCaster() != null) {
-			double x = shield.posX;
-			double y = shield.posY + shield.getCaster().getEyeHeight();
-			double z = shield.posZ;
-			List<EntityLivingBase> targets = WizardryUtilities.getEntitiesWithinRadius(shield.getRadius() * 1.25F, x, y,
-					z, shield.world);
+	private void Dissipate() {
+		if (!world.isRemote && getCaster() != null) {
+			double x = posX;
+			double y = posY + getCaster().getEyeHeight();
+			double z = posZ;
+			List<EntityLivingBase> targets = WizardryUtilities.getEntitiesWithinRadius(getRadius() * 1.25F, x, y,
+					z, world);
 			for (EntityLivingBase target : targets) {
-				if (shield.isValidTarget(target)) {
+				if (isValidTarget(target)) {
 					target.addVelocity((target.posX - x),
 							(target.posY - (y)) + 0.1, (target.posZ - z));
 					// Player motion is handled on that player's client so needs packets
 					if (!MagicDamage.isEntityImmune(PRESSURE, target)) {
-						target.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(shield, shield.getCaster(), PRESSURE), 4 * shield.damageMultiplier);
+						target.attackEntityFrom(MagicDamage.causeIndirectMagicDamage(this, getCaster(), PRESSURE), 4 * damageMultiplier);
 					}
 					target.setEntityInvulnerable(false);
 					ArcaneUtils.applyPlayerKnockback(target);
 				}
 			}
-			AxisAlignedBB box = new AxisAlignedBB(x + shield.getRadius() * 1.5F, y + shield.getRadius() * 1.5F, z + shield.getRadius() * 1.5F, x - shield.getRadius() * 1.5F,
-					y - shield.getRadius() * 1.5F, z - shield.getRadius() * 1.5F);
-			List<Entity> projectiles = shield.world.getEntitiesWithinAABB(Entity.class, box);
+			AxisAlignedBB box = new AxisAlignedBB(x + getRadius() * 1.5F, y + getRadius() * 1.5F, z + getRadius() * 1.5F, x - getRadius() * 1.5F,
+					y - getRadius() * 1.5F, z - getRadius() * 1.5F);
+			List<Entity> projectiles = world.getEntitiesWithinAABB(Entity.class, box);
 			for (Entity projectile : projectiles) {
-				if((projectile.canBeCollidedWith() && projectile.canBePushed() || projectile instanceof EntityArrow || projectile instanceof EntityThrowable) &&
+				if ((projectile.canBeCollidedWith() && projectile.canBePushed() || projectile instanceof EntityArrow || projectile instanceof EntityThrowable) &&
 						!(projectile instanceof EntityLivingBase)) {
 					projectile.motionX = projectile.posX - x;
 					projectile.motionY = projectile.posY - y;
@@ -139,7 +139,7 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 					y - getRadius() * 1.25F, z - getRadius() * 1.25F);
 			List<Entity> projectiles = world.getEntitiesWithinAABB(Entity.class, box);
 			for (Entity projectile : projectiles) {
-				if((projectile.canBeCollidedWith() && projectile.canBePushed() || projectile instanceof EntityArrow || projectile instanceof EntityThrowable) &&
+				if ((projectile.canBeCollidedWith() && projectile.canBePushed() || projectile instanceof EntityArrow || projectile instanceof EntityThrowable) &&
 						!(projectile instanceof EntityLivingBase)) {
 					double multiplier = (getRadius() - projectile.getDistance(x, y, z)) * 0.0025;
 					projectile.setVelocity((projectile.posX - x) * multiplier,
@@ -155,13 +155,9 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 
 	@Override
 	public void setDead() {
-		if (!world.isRemote) {
-			Dissipate(this);
-		}
-		this.isDead = true;
-
+		Dissipate();
+		super.setDead();
 	}
-
 
 
 }
