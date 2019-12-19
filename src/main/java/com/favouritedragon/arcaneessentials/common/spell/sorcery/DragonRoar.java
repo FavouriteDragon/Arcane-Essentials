@@ -46,7 +46,7 @@ public class DragonRoar extends ArcaneSpell {
 				double z = Math.sin(radians);
 				//On the client, the posY is the eye position.
 				ParticleBuilder.create(ParticleBuilder.Type.FLASH).pos(x + caster.posX, caster.posY + 0.5, z + caster.posZ).vel(x * radius / 10,
-						0, z * radius / 10).time(6).clr(155, 6, 185).spawn(world);
+						world.rand.nextGaussian() / 10 * radius, z * radius / 10).time(14).clr(155, 6, 185).scale((float) (radius / 2F)).spawn(world);
 			}
 			ParticleBuilder.create(ParticleBuilder.Type.SPHERE).entity(caster).clr(155, 6, 185).time(6).scale((float) radius).spawn(world);
 		}

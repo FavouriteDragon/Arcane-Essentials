@@ -102,11 +102,11 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 			for (int i = 0; i < getSize() * 10; i++) {
 				if (world.isRemote) {
 					AxisAlignedBB boundingBox = getEntityBoundingBox();
-					double spawnX = boundingBox.minX + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxX - boundingBox.minX);
-					double spawnY = boundingBox.minY + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxY - boundingBox.minY);
-					double spawnZ = boundingBox.minZ + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxZ - boundingBox.minZ);
+					double spawnX = boundingBox.getCenter().x + world.rand.nextGaussian() / 10;
+					double spawnY = boundingBox.getCenter().y + world.rand.nextGaussian() / 10;
+					double spawnZ = boundingBox.getCenter().z + world.rand.nextGaussian() / 10;
 					ParticleBuilder.create(ParticleBuilder.Type.FLASH).vel(new Vec3d(motionX, motionY, motionZ).scale(world.rand.nextFloat() / 10))
-							.pos(spawnX, spawnY, spawnZ).collide(true).time(5).scale(0.75F + getSize() / 2 + world.rand.nextFloat() / 2).spawn(world);
+							.pos(spawnX, spawnY, spawnZ).collide(true).time(5).clr(0.85F, 0.85F, 0.85F).scale(0.75F + getSize() / 2 + world.rand.nextFloat() / 2).spawn(world);
 				}
 			}
 		}

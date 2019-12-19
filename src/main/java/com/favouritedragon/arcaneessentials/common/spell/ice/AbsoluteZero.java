@@ -43,6 +43,14 @@ public class AbsoluteZero extends ArcaneSpell {
 			}
 		}
 		if (world.isRemote) {
+			for (int angle = 0; angle < 360; angle++) {
+				double radians = Math.toRadians(angle);
+				double x = Math.cos(radians);
+				double z = Math.sin(radians);
+				//On the client, the posY is the eye position.
+				ParticleBuilder.create(ParticleBuilder.Type.FLASH).pos(x + caster.posX, caster.posY + 0.5, z + caster.posZ).vel(x * range / 10,
+						world.rand.nextGaussian() / 10 * range, z * range / 10).time(14).clr(205, 254, 255).scale((float) (particleSize)).spawn(world);
+			}
 			ParticleBuilder.create(ParticleBuilder.Type.SPHERE).entity(caster).time(6).scale((float) range * 1.25F).clr(205, 254, 255).spawn(world);
 		}
 		caster.swingArm(hand);

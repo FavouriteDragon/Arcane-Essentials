@@ -111,8 +111,8 @@ public class RegisterHandler {
 	//TIL Why you have static final spells.
 
 	//Used for when spell properties are needed outside of the spell class
-	public static final Spell inferno_form = new InfernoForm();
-	public static final Spell frost_form = new FrostForm();
+	public static Spell inferno_form = null;
+	public static Spell frost_form = null;
 
 	@SubscribeEvent
 	public static void register(RegistryEvent.Register<Spell> event) {
@@ -128,8 +128,8 @@ public class RegisterHandler {
 		event.getRegistry().register(new Frizzle());
 		event.getRegistry().register(new FrostBlast());
 		//event.getRegistry().register(new FrostFan());
-		event.getRegistry().register(frost_form);
-		event.getRegistry().register(inferno_form);
+		event.getRegistry().register(frost_form = new FrostForm());
+		event.getRegistry().register(inferno_form = new InfernoForm());
 		event.getRegistry().register(new InfernoPillar());
 		event.getRegistry().register(new KaFrizz());
 		event.getRegistry().register(new KaFrizzle());

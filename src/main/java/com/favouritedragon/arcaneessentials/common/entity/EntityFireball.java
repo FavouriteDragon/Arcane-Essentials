@@ -122,7 +122,7 @@ public class EntityFireball extends EntityMagicBolt {
 				double x1, y1, z1, xVel, yVel, zVel;
 				Vec3d prevPos = Vec3d.ZERO;
 				for (double theta = 0; theta <= 180; theta += 1) {
-					double dphi = (47 - getSize() * 5) / Math.sin(Math.toRadians(theta));
+					double dphi = (49 - getSize() * 4) / Math.sin(Math.toRadians(theta));
 					for (double phi = 0; phi < 360; phi += dphi) {
 						double rphi = Math.toRadians(phi);
 						double rtheta = Math.toRadians(theta);

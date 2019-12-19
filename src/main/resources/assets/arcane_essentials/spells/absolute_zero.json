@@ -19,7 +19,7 @@
   "base_properties": {
     "effect_duration": 10,
     "effect_radius": 3.5,
-    "effect_strength": 1,
+    "effect_strength": 3,
     "swords": 0
   }
 }
