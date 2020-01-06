@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.spell.ice;
 
+import com.favouritedragon.arcaneessentials.common.item.weapon.ItemMagicSword;
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardryItems;
@@ -25,11 +26,15 @@ public class FrostBlast extends ArcaneSpell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+		if (!(caster.getHeldItem(hand).getItem() instanceof ItemMagicSword))
+			caster.swingArm(hand);
 		return cast(world, caster, hand, modifiers);
 	}
 
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
+		if (!(caster.getHeldItem(hand).getItem() instanceof ItemMagicSword))
+			caster.swingArm(hand);
 		return cast(world, caster, hand, modifiers);
 	}
 

@@ -22,6 +22,9 @@
   "spell.kathwack": {
     "category": "player", "sounds": ["arcane_essentials:kathwack"]
   },
+  "spell.unrelenting_force": {
+    "category": "player", "sounds": ["arcane_essentials:unrelenting_force"]
+  },
   "spell.zoom": {
     "category": "player", "sounds": ["arcane_essentials:zoom"]
   }

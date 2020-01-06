@@ -30,7 +30,7 @@ public class PerfectStorm extends Spell {
 		@Override
 		public Behaviour onUpdate(EntityMagicConstruct entity) {
 			if (entity instanceof EntityMagicSpawner) {
-
+				//Spawn a bunch of ice lances periodically that rain down
 			}
 			return this;
 		}

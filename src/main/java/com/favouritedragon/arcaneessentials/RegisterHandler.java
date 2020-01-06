@@ -16,6 +16,7 @@ import com.favouritedragon.arcaneessentials.common.spell.ice.*;
 import com.favouritedragon.arcaneessentials.common.spell.necromancy.*;
 import com.favouritedragon.arcaneessentials.common.spell.sorcery.DragonRoar;
 import com.favouritedragon.arcaneessentials.common.spell.sorcery.FlashStep;
+import com.favouritedragon.arcaneessentials.common.spell.sorcery.UnrelentingForce;
 import com.favouritedragon.arcaneessentials.common.spell.storm.LightningVortex;
 import com.favouritedragon.arcaneessentials.common.spell.storm.StormBlink;
 import com.favouritedragon.arcaneessentials.common.spell.storm.ThunderBurst;
@@ -126,6 +127,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new FlashStep());
 		event.getRegistry().register(new Frizz());
 		event.getRegistry().register(new Frizzle());
+		event.getRegistry().register(new FrostFan());
 		event.getRegistry().register(new FrostBlast());
 		//event.getRegistry().register(new FrostFan());
 		event.getRegistry().register(frost_form = new FrostForm());
@@ -152,6 +154,7 @@ public class RegisterHandler {
 		event.getRegistry().register(new StormBlink());
 		event.getRegistry().register(new ThunderBurst());
 		event.getRegistry().register(new ThunderingChain());
+		event.getRegistry().register(new UnrelentingForce());
 		event.getRegistry().register(new WaveOfRelief());
 		event.getRegistry().register(new Whirlpool());
 		event.getRegistry().register(new Zam());

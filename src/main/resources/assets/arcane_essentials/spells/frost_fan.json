@@ -1,0 +1,26 @@
+{
+  "enabled": {
+    "book": true,
+    "scroll": true,
+    "wands": true,
+    "npcs": true,
+    "dispensers": true,
+    "commands": true,
+    "treasure": true,
+    "trades": true,
+    "looting": true
+  },
+  "tier": "advanced",
+  "element": "ice",
+  "type": "projectile",
+  "cost": 60,
+  "chargeup": 0,
+  "cooldown": 80,
+  "base_properties": {
+    "damage": 2,
+    "range": 15,
+    "frost_fans": 5,
+    "effect_strength": 0.625,
+    "swords": 1
+  }
+}

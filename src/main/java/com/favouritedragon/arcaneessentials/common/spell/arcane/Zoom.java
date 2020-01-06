@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class Zoom extends ArcaneSpell {
 
 
-	public static final IVariable<Integer> CHARGE_TIME = new IVariable.Variable<Integer>(Persistence.DIMENSION_CHANGE).withTicker(Zoom::update);
+	private static final IVariable<Integer> CHARGE_TIME = new IVariable.Variable<Integer>(Persistence.DIMENSION_CHANGE).withTicker(Zoom::update);
 
 	public Zoom() {
 		super("zoom", EnumAction.NONE, false);
@@ -57,8 +57,6 @@ public class Zoom extends ArcaneSpell {
 
 	@Override
 	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-
-		//TODO: Add flash particles as a shrinking circle
 		WizardData.get(caster).setVariable(CHARGE_TIME, (int) (getProperty(DURATION).floatValue()
 				- modifiers.get(WizardryItems.duration_upgrade)));
 		if (world.isRemote)
@@ -66,7 +64,6 @@ public class Zoom extends ArcaneSpell {
 					.clr(0, 222, 255).target(caster.getPositionVector().add(0, 30, 0)).scale(20).spawn(world);
 
 		this.playSound(world, caster, ticksInUse, -1, modifiers);
-
 		return true;
 	}
 
