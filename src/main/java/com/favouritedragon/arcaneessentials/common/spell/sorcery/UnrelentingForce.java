@@ -11,6 +11,7 @@ import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
@@ -77,6 +78,7 @@ public class UnrelentingForce extends ArcaneSpell {
 
 		caster.playSound(WizardrySounds.ENTITY_FORCEFIELD_DEFLECT, 0.2F,
 				world.rand.nextFloat() * 0.05F + 0.025F);
+		caster.playSound(SoundEvents.ENTITY_LIGHTNING_IMPACT, 0.4F, world.rand.nextFloat() / 10 + 0.5F);
 
 		if (!world.isRemote) {
 			Vec3d startPos = new Vec3d(caster.posX, eyepos, caster.posZ);

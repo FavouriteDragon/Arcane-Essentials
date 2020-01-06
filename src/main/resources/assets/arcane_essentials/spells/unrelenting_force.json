@@ -20,7 +20,7 @@
     "damage": 4,
     "range": 8,
     "effect_radius": 1.5,
-    "effect_strength": 0.875,
+    "effect_strength": 1.25,
     "swords": 1
   }
 }
