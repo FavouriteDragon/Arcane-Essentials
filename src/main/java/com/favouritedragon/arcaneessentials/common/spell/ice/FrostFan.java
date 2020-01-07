@@ -37,8 +37,10 @@ public class FrostFan extends ArcaneSpell {
 
 	private boolean cast(World world, EntityLivingBase caster, SpellModifiers modifiers) {
 		int fans = getProperty(FROST_FANS).intValue();
+		//noinspection IntegerDivisionInFloatingPointContext
+		double totalAngle = fans % 2 == 0 ? (float) fans / 2 * 15 - 7.5 : fans / 2 * 15;
 			for (//noinspection IntegerDivisionInFloatingPointContext
-					double angle = fans % 2 == 0 ? (float) fans / 2F * -15 - 7.5 : (fans / 2) * -15; angle < getProperty(FROST_FANS).intValue() * 15; angle += 15) {
+					double angle = fans % 2 == 0 ? (float) fans / 2F * -15 + 7.5 : (fans / 2) * -15; angle <= totalAngle; angle += 15) {
 				EntityIceLance lance = new EntityIceLance(world);
 				aim(caster.rotationPitch, caster.rotationYaw + (float) angle, caster, calculateVelocity(lance, modifiers, caster.getEyeHeight()
 						- (float)EntityMagicArrow.LAUNCH_Y_OFFSET), lance);

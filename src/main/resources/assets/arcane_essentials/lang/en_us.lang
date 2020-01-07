@@ -32,6 +32,9 @@ spell.arcane_essentials:frizzle.desc=Burn enemies with a fireball.
 spell.arcane_essentials:frost_blast=Frost Blast
 spell.arcane_essentials:frost_blast.desc=Left click to strike enemies in front of you with an burst of frigid air!
 
+spell.arcane_essentials:frost_fan=Frost Fan
+spell.arcane_essentials:frost_fan.desc=Shoot an array of icicles out at your opponents! Left click with a sword, right click with a wand.
+
 spell.arcane_essentials:frost_form=Frost Form
 spell.arcane_essentials:frost_form.desc=Turn into an Antartic god, slowing all enemies around you! Push enemies back, freeze enemies that stay too close, and take less damage froma attacks!
 

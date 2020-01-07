@@ -57,18 +57,14 @@ public class UnrelentingForce extends ArcaneSpell {
 		if (world.isRemote) {
 			//Spawn particles
 			for (int i = 0; i < 80; i++) {
-				double x1 = caster.posX + look.x + world.rand.nextFloat() / 20 - look.x + world.rand.nextFloat() / 20;
-				double y1 = eyepos - 0.4F + world.rand.nextFloat() / 20 - look.y + world.rand.nextFloat() / 20;
-				double z1 = caster.posZ + look.z + world.rand.nextFloat() / 20 - look.z + world.rand.nextFloat() / 20;
+				double x1 = caster.posX + look.z;
+				double y1 = eyepos - 0.4F;
+				double z1 = caster.posZ + look.z;
 
 				//Using the random function each time ensures a different number for every value, making the ability "feel" better.
-				ParticleBuilder.create(ParticleBuilder.Type.FLASH).pos(x1, y1, z1).vel(look.x * mult * ArcaneUtils.getRandomNumberInRange(1, 2)
-								+ ArcaneUtils.getRandomNumberInRange(min, max) / 80F,
-						look.y * mult * ArcaneUtils.getRandomNumberInRange(1, 2)
-								+ ArcaneUtils.getRandomNumberInRange(min, max) / 80F,
-						look.z * mult * ArcaneUtils.getRandomNumberInRange(1, 2)
-								+ ArcaneUtils.getRandomNumberInRange(min, max) / 80F)
-						.face(caster.rotationYaw, caster.rotationPitch).clr(0x04ffb4).time(20).spawn(world);
+				ParticleBuilder.create(ParticleBuilder.Type.FLASH).pos(x1, y1, z1).vel(look.x * mult * ArcaneUtils.getRandomNumberInRange(1, 2),
+						look.y * mult * ArcaneUtils.getRandomNumberInRange(1, 2),
+						look.z * mult * ArcaneUtils.getRandomNumberInRange(1, 2)).clr(0x04ffb4).time(20).scale(getProperty(EFFECT_STRENGTH).floatValue() * 3).spawn(world);
 			}
 		}
 

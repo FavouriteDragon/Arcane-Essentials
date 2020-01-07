@@ -3,6 +3,7 @@ package com.favouritedragon.arcaneessentials.common.spell.ice;
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.block.BlockStatue;
 import electroblob.wizardry.registry.WizardryBlocks;
+import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
@@ -21,7 +22,6 @@ import static electroblob.wizardry.util.SpellModifiers.POTENCY;
 public class AbsoluteZero extends ArcaneSpell {
 
 	//Freezes all enemies within a small radius, and slows enemies outside of it.
-	//Shatters frozen entities
 	public AbsoluteZero() {
 		super("absolute_zero", EnumAction.BOW, false);
 		addProperties(EFFECT_STRENGTH, EFFECT_RADIUS, EFFECT_DURATION);
@@ -53,6 +53,8 @@ public class AbsoluteZero extends ArcaneSpell {
 			}
 			ParticleBuilder.create(ParticleBuilder.Type.SPHERE).entity(caster).time(6).scale((float) range * 1.25F).clr(205, 254, 255).spawn(world);
 		}
+		caster.playSound(WizardrySounds.MISC_FREEZE, 3.0F, 1.0F);
+		caster.playSound(WizardrySounds.ENTITY_ICE_WRAITH_AMBIENT, 2.0F, 1.0F);
 		caster.swingArm(hand);
 
 		return true;
