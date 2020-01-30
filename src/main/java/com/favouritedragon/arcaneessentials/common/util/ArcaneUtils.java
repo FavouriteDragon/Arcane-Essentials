@@ -106,7 +106,7 @@ public class ArcaneUtils {
 	public static void spawnDirectionalHorizontalBlade(World world, Entity entity, @Nullable Vec3d direction, double particleController, double bladeLength, int entityLifetime,
 													   ResourceLocation type, Vec3d pos, Vec3d vel, float[] rgb, float size, int lifetime) {
 		if (!world.isRemote) return;
-		 	
+
 		//TODO: Rotate the axis so it actually works.
 		direction = direction == null ? Vec3d.ZERO : direction;
 		int amount = (int) (30 * Math.round(bladeLength) + entityLifetime);
@@ -1107,8 +1107,8 @@ public class ArcaneUtils {
 	}
 
 
-	public static Entity getEntityFromStringID(String UUID) {
-		return FMLCommonHandler.instance().getMinecraftServerInstance().getEntityFromUuid(java.util.UUID.fromString(UUID));
+	public static Entity getEntityFromStringID(World world, String UUID) {
+		return WizardryUtilities.getEntityByUUID(world, java.util.UUID.fromString(UUID));
 	}
 
 	public static EntityPlayer getPlayerFromStringID(String UUID) {
