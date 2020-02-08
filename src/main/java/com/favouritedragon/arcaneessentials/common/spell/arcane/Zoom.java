@@ -46,7 +46,7 @@ public class Zoom extends ArcaneSpell {
 							return chargeTime;
 						}
 					}
-				player.world.updateBlockTick(player.getBedLocation(), player.world.getBlockState(player.getBedLocation(player.getSpawnDimension())).getBlock(), 0, 1);
+				//player.world.updateBlockTick(player.getBedLocation(), player.world.getBlockState(player.getBedLocation(player.getSpawnDimension())).getBlock(), 0, 1);
 				WizardData.get(player).setVariable(CHARGE_TIME, null);
 				chargeTime = -1;
 				return chargeTime;
