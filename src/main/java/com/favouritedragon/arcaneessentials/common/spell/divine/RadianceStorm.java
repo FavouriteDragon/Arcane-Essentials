@@ -93,8 +93,8 @@ public class RadianceStorm extends ArcaneSpell {
 			ParticleBuilder.create(ParticleBuilder.Type.BEAM).pos(startPos).target(endPos).scale(radius * 6).clr(1.0F, 1.0F, 0.3F)
 					.fade(1F, 1F, 1F).time(10).spawn(world);
 		}
-		world.playSound(endPos.x, endPos.y, endPos.z, WizardrySounds.BLOCK_ARCANE_WORKBENCH_SPELLBIND, SoundCategory.PLAYERS, 1.5F, 1F, true);
-		world.playSound(endPos.x, endPos.y, endPos.z, WizardrySounds.ENTITY_HAMMER_EXPLODE, SoundCategory.PLAYERS, 1.5F, 1F, true);
+		world.playSound(endPos.x, endPos.y, endPos.z, WizardrySounds.BLOCK_ARCANE_WORKBENCH_SPELLBIND, SoundCategory.PLAYERS, 1.25F, 1F, true);
+		world.playSound(endPos.x, endPos.y, endPos.z, WizardrySounds.ENTITY_HAMMER_EXPLODE, SoundCategory.PLAYERS, 1.25F, 1F, true);
 	}
 
 	private void handleSphericalExplosion(World world, EntityLivingBase caster, Vec3d position, float radius, float damage, Vec3d knockBackScale, int fireTime) {
