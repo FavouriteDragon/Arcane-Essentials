@@ -2,6 +2,7 @@ package com.favouritedragon.arcaneessentials.common.spell.divine;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import electroblob.wizardry.registry.WizardryItems;
+import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
@@ -11,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
 import java.util.Collection;
@@ -55,6 +57,10 @@ public class WaveOfRelief extends Spell {
 			}
 		}
 
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_HEAL_AURA_AMBIENT, SoundCategory.PLAYERS, 1.5F, 0.9F + world.rand.nextFloat() / 10, false);
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_FORCEFIELD_DEFLECT, SoundCategory.PLAYERS, 0.675F + world.rand.nextFloat() / 10, 0.7F + world.rand.nextFloat() / 10, false);
+
+
 		caster.swingArm(hand);
 		return true;
 	}
@@ -88,6 +94,9 @@ public class WaveOfRelief extends Spell {
 				}
 			}
 		}
+
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_HEAL_AURA_AMBIENT, SoundCategory.PLAYERS, 1.5F, 0.9F + world.rand.nextFloat() / 10, false);
+		world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_FORCEFIELD_DEFLECT, SoundCategory.PLAYERS, 0.675F + world.rand.nextFloat() / 10, 0.875F + world.rand.nextFloat() / 10, false);
 
 		caster.swingArm(hand);
 		return true;
