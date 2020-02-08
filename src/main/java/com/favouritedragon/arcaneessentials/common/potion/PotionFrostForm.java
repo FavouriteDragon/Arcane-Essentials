@@ -49,6 +49,7 @@ public class PotionFrostForm extends PotionMagicEffect implements ISyncedPotion 
 		if (event.getEntityLiving() != null) {
 			EntityLivingBase entity = event.getEntityLiving();
 			if (entity.isPotionActive(ArcanePotions.frostForm)) {
+				entity.setInvisible(entity.isPotionActive(ArcanePotions.frostForm));
 				if (entity.world.isRemote) {
 					assert entity.getActivePotionEffect(ArcanePotions.frostForm) != null;
 					if (Objects.requireNonNull(entity.getActivePotionEffect(ArcanePotions.frostForm)).getIsPotionDurationMax()
