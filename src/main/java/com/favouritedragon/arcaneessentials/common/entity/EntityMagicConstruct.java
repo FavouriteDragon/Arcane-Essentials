@@ -70,8 +70,6 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 		dataManager.register(SYNC_BEHAVIOUR, new MagicConstructBehaviour.Idle());
 	}
 
-
-
 	@Override
 	public UUID getOwnerId() {
 		return UUID.fromString(dataManager.get(SYNC_OWNER_ID));
@@ -80,7 +78,7 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 	@Nullable
 	@Override
 	public Entity getOwner() {
-		return ArcaneUtils.getEntityFromStringID(dataManager.get(SYNC_OWNER_ID));
+		return ArcaneUtils.getEntityFromStringID(world, dataManager.get(SYNC_OWNER_ID));
 	}
 
 	@Nullable
@@ -99,7 +97,6 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 		}
 
 	}
-
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound nbttagcompound){
