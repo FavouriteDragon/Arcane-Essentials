@@ -1,6 +1,5 @@
 package com.favouritedragon.arcaneessentials.common.spell.earth;
 
-import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityFallingBlockSpawner;
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.registry.WizardryItems;
@@ -37,7 +36,8 @@ public class Shake extends ArcaneSpell {
 			spawner.motionZ = look.z;
 			spawner.setRenderSize(getProperty(BLAST_RADIUS).floatValue());
 			caster.swingArm(hand);
-			return 	world.spawnEntity(spawner);
+			if (!world.isRemote)
+				return world.spawnEntity(spawner);
 		}
 		return false;
 	}
@@ -64,7 +64,7 @@ public class Shake extends ArcaneSpell {
 			spawner.motionZ = look.z;
 			spawner.setSize(getProperty(BLAST_RADIUS).floatValue());
 			caster.swingArm(hand);
-			return 	world.spawnEntity(spawner);
+			return world.spawnEntity(spawner);
 		}
 		return false;
 	}

@@ -1,19 +1,16 @@
 package com.favouritedragon.arcaneessentials.common.spell.earth;
 
-import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityFallingBlockSpawner;
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -42,7 +39,7 @@ public class KaQuake extends ArcaneSpell {
 				spawner.motionY = 0;
 				spawner.motionZ = look.z;
 				spawner.setRenderSize(getProperty(BLAST_RADIUS).floatValue());
-				//if (!world.isRemote)
+				if (!world.isRemote)
 					world.spawnEntity(spawner);
 			}
 			return true;
