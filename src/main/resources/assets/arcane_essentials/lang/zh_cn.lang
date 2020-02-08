@@ -1,0 +1,114 @@
+spell.arcane_essentials:blizzard_beam=暴雪光束
+spell.arcane_essentials:blizzard_beam.desc=发射一束刺骨的寒冷，使所有接触到的敌人减速！ MWAHAHAHAHA
+
+spell.arcane_essentials:cyclone_bolt=飓风流弹
+spell.arcane_essentials:cyclone_bolt.desc=向着你所指的地方发射一个强力的空气弹。
+
+spell.arcane_essentials:cyclone_shield=飓风守护
+spell.arcane_essentials:cyclone_shield.desc=在你所站立的地方创造一场风暴气旋，气旋可以偏转弹射物并缓慢的对附近的敌人造成伤害
+
+spell.arcane_essentials:fire_pledge=火之誓约
+spell.arcane_essentials:fire_pledge.desc=焚毁一切！在你面前召唤出一列间歇的火焰柱。
+
+spell.arcane_essentials:flash_step=瞬步
+spell.arcane_essentials:flash_step.desc=连续两次向前传送一小段距离。
+
+spell.arcane_essentials:frizz=小火球术
+spell.arcane_essentials:frizz.desc=发射一枚小火球
+
+spell.arcane_essentials:frizzle=火球术
+spell.arcane_essentials:frizzle.desc=发射一枚足以烧焦敌人的火球
+
+spell.arcane_essentials:inferno_form=地狱火形态
+spell.arcane_essentials:inferno_form.desc=操控火焰的力量, 将自身转变为地狱火形态! 两格内的敌人将会被推开,并阻挡弹射物, 同时有一定几率让你免疫i攻击!
+spell.arcane_essentials:inferno_pillar=狱火喷涌
+spell.arcane_essentials:inferno_pillar.desc=创造出熊熊燎燃的火焰柱,吸引并点燃你的敌人,被烈火缠身的敌人将会在刹那间化为焦炭
+
+spell.arcane_essentials:kafrizz=大火球术
+spell.arcane_essentials:kafrizz.desc=焚为灰烬。。。
+
+spell.arcane_essentials:kafrizzle=究级火球术
+spell.arcane_essentials:kafrizzle.desc=为你的敌人准备好火焰的葬礼吧！
+
+spell.arcane_essentials:kasploosh=水球术
+spell.arcane_essentials:kasploosh.desc=发射一个巨大的水球, 落地会生成漩涡!
+
+spell.arcane_essentials:kasplooshle=大水球术
+spell.arcane_essentials:kasplooshle.desc=波塞冬的怒火!
+
+spell.arcane_essentials:kathwack=心脏骤停
+spell.arcane_essentials:kathwack.desc=释放出一道衰败的波动, 造成5伤害, 有20%的几率即死.
+
+spell.arcane_essentials:kazam=暗黑雷霆
+spell.arcane_essentials:kazam.desc=召唤一道自迷失的灵魂中滋生的雷电，然后重击敌人!
+
+spell.arcane_essentials:kazammle=地狱审判
+spell.arcane_essentials:kazammle.desc=从地狱的深处召唤出黑色雷电，然后彻底消灭敌人!
+
+spell.arcane_essentials:lightning_vortex=闪电涡流
+spell.arcane_essentials:lightning_vortex.desc=在你所指向的地方制造一个旋转的闪电漩涡!持续约5秒，并点燃敌人!
+
+spell.arcane_essentials:ocean_burst=深海爆破
+spell.arcane_essentials:ocean_burst.desc=Unleash a powerful burst of water that blasts enemies away!
+
+spell.arcane_essentials:radiance_storm=光辉风暴
+spell.arcane_essentials:radiance_storm.desc=在你的周围释放出耀眼的光柱,持续伤害附近的生物, 穿刺他们的身体,击飞他们到空中
+
+spell.arcane_essentials:radiant_beam=光芒四射
+spell.arcane_essentials:radiant_beam.desc=向你所看到的地方发射一束神圣的光束，点燃敌人并对亡灵生物造成额外的伤害.
+
+spell.arcane_essentials:solar_beam=太阳光束
+spell.arcane_essentials:solar_beam.desc=Unleash a massive mult-hitting laser in the direction you're looking! Use the powers of nature to crush your enemies!
+
+spell.arcane_essentials:splash=水花四溅
+spell.arcane_essentials:splash.desc=向你的敌人发射一个水球!
+
+spell.arcane_essentials:sploosh=漩涡水弹
+spell.arcane_essentials:sploosh.desc=向你的敌人发射一枚水弹，并在落地处生成一个漩涡!
+
+spell.arcane_essentials:storm_blink=风暴闪现
+spell.arcane_essentials:storm_blink.desc=向着你所的敌人突进一段距离,并且将会短暂的点燃你的敌人
+
+spell.arcane_essentials:thunder_burst=雷光喷涌
+spell.arcane_essentials:thunder_burst.desc=将自然界中最原始的闪电汇聚成一股冲击波，然后击飞敌人!
+
+spell.arcane_essentials:thundering_chain=连环闪电
+spell.arcane_essentials:thundering_chain.desc=从天空中释放闪电，打击在一条线上的所有敌人!
+
+spell.arcane_essentials:whirlpool=涡流
+spell.arcane_essentials:whirlpool.desc=在世界之中创造旋涡,摇摆,破碎,激荡.所有被困住的敌人都只能做无用的困兽之斗!
+
+spell.arcane_essentials:zam=暗黑雷光
+spell.arcane_essentials:zam.desc=用一小束黑暗雷霆攻击敌人.
+
+spell.arcane_essentials:zammle=暗黑雷电
+spell.arcane_essentials:zammle.desc=用暗黑雷霆攻击敌人!
+
+item.arcane_essentials:sword.spell=当前法术: %1$s
+item.arcane_essentials:sword.mana=魔力值: %1$s/%2$s
+item.arcane_essentials:sword.levelup=%1$s 已经可以升级到 %2$s 了
+item.arcane_essentials:sword.buff=+%1$s %2$s 能力
+item.arcane_essentials:sword.progression=进度: %1$s/%2$s
+
+item.arcane_essentials:novice_lightning_sword.name=新手闪电剑
+item.arcane_essentials:apprentice_lightning_sword.name=学徒闪电剑
+item.arcane_essentials:advanced_lightning_sword.name=暴风之剑
+item.arcane_essentials:master_lightning_sword.name=雷霆之怒，逐风者的祝福之剑
+
+item.arcane_essentials:master_sorcery_sword.name=奥术晨曦,世界之钻的碎片
+
+item.arcane_essentials:master_nature_sword.name=艾克雷斯,创世者
+
+item.arcane_essentials:master_fire_sword.name=烈焰之击
+
+item.arcane_essentials:master_ice_sword.name=黑檀之寒
+
+item.arcane_essentials:master_healing_sword.name="美德"
+
+item.arcane_essentials:master_necromancy_sword.name=霜之哀伤
+
+potion.arcane_essentials:inferno_form=地狱火形态
+
+
+element.water=水占
+element.air=大气
