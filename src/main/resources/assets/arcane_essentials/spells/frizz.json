@@ -15,12 +15,12 @@
   "type": "projectile",
   "cost": 10,
   "chargeup": 0,
-  "cooldown": 30,
+  "cooldown": 15,
   "base_properties": {
-    "damage": 4,
+    "damage": 5,
     "burn_duration": 4,
-    "range": 10,
-    "size": 0.5,
+    "range": 11,
+    "size": 0.575,
     "swords": 0
   }
 }

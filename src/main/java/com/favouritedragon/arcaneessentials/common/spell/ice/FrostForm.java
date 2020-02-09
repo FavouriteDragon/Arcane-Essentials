@@ -27,6 +27,7 @@ public class FrostForm extends ArcaneSpell {
 		int duration = getProperty(DIRECT_EFFECT_DURATION).intValue();
 		caster.addPotionEffect(new PotionEffect(ArcanePotions.frostForm, duration, 0, false, false));
 		caster.playSound(WizardrySounds.MISC_FREEZE, 1.0F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
+		caster.playSound(WizardrySounds.ENTITY_ICE_WRAITH_AMBIENT, 2.0F, 1.0F);
 		caster.swingArm(hand);
 		playSound(world, caster, ticksInUse, -1, modifiers);
 		return true;

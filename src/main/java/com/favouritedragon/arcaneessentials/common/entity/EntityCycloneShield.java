@@ -142,8 +142,9 @@ public class EntityCycloneShield extends EntityMagicConstruct {
 				if ((projectile.canBeCollidedWith() && projectile.canBePushed() || projectile instanceof EntityArrow || projectile instanceof EntityThrowable) &&
 						!(projectile instanceof EntityLivingBase)) {
 					double multiplier = (getRadius() - projectile.getDistance(x, y, z)) * 0.0025;
-					projectile.setVelocity((projectile.posX - x) * multiplier,
-							(projectile.posY - (y)) * multiplier, (projectile.posZ - z) * multiplier);
+					projectile.motionX = (projectile.posX - x) * multiplier;
+					projectile.motionY = (projectile.posY - (y)) * multiplier;
+					projectile.motionZ = (projectile.posZ - z) * multiplier;
 				}
 			}
 

@@ -57,7 +57,7 @@ public class UnrelentingForce extends ArcaneSpell {
 		if (world.isRemote) {
 			//Spawn particles
 			for (int i = 0; i < 80; i++) {
-				double x1 = caster.posX + look.z;
+				double x1 = caster.posX + look.x;
 				double y1 = eyepos - 0.4F;
 				double z1 = caster.posZ + look.z;
 

@@ -9,6 +9,7 @@ import electroblob.wizardry.potion.ISyncedPotion;
 import electroblob.wizardry.potion.PotionMagicEffect;
 import electroblob.wizardry.registry.WizardryBlocks;
 import electroblob.wizardry.registry.WizardryPotions;
+import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.IElementalDamage;
@@ -49,6 +50,8 @@ public class PotionFrostForm extends PotionMagicEffect implements ISyncedPotion 
 		if (event.getEntityLiving() != null) {
 			EntityLivingBase entity = event.getEntityLiving();
 			if (entity.isPotionActive(ArcanePotions.frostForm)) {
+				entity.playSound(WizardrySounds.ENTITY_ICE_WRAITH_AMBIENT, 0.5F, 1.0F);
+				entity.setInvisible(entity.isPotionActive(ArcanePotions.frostForm));
 				if (entity.world.isRemote) {
 					assert entity.getActivePotionEffect(ArcanePotions.frostForm) != null;
 					if (Objects.requireNonNull(entity.getActivePotionEffect(ArcanePotions.frostForm)).getIsPotionDurationMax()

@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
 public class ArcanePotions {
 
 	public static final Potion infernoForm = new PotionInfernoForm(false, 0xFc191);
-	public static final Potion frostForm = new PotionInfernoForm(false, 0xCDFEFF);
+	public static final Potion frostForm = new PotionFrostForm(false, 0xCDFEFF);
 
 	private ArcanePotions() {
 	} // No instances!

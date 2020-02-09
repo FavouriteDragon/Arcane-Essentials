@@ -105,6 +105,8 @@ public class ArcaneUtils {
 	 */
 	public static void spawnDirectionalHorizontalBlade(World world, Entity entity, @Nullable Vec3d direction, double particleController, double bladeLength, int entityLifetime,
 													   ResourceLocation type, Vec3d pos, Vec3d vel, float[] rgb, float size, int lifetime) {
+		if (!world.isRemote) return;
+
 		//TODO: Rotate the axis so it actually works.
 		direction = direction == null ? Vec3d.ZERO : direction;
 		int amount = (int) (30 * Math.round(bladeLength) + entityLifetime);
@@ -181,6 +183,8 @@ public class ArcaneUtils {
 	 */
 	public static void spawnSpinningDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double minRadius, double radiusScale, ResourceLocation particle, Vec3d position,
 													  Vec3d particleSpeed, Vec3d entitySpeed, int maxAge, float r, float g, float b) {
+		if (!world.isRemote) return;
+
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double angle2 = world.rand.nextDouble() * Math.PI * 2;
 			double radius = minRadius + (angle / radiusScale);
@@ -229,6 +233,8 @@ public class ArcaneUtils {
 	 */
 	public static void spawnSpinningDirectionalVortex(World world, EntityLivingBase entity, Vec3d direction, int maxAngle, double vortexLength, double minRadius, double radiusScale, ResourceLocation particle, Vec3d position,
 													  Vec3d particleSpeed, Vec3d entitySpeed, int maxAge, float r, float g, float b, float scale) {
+		if (!world.isRemote) return;
+
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double angle2 = world.rand.nextDouble() * Math.PI * 2;
 			double radius = minRadius + (angle / radiusScale);
@@ -316,6 +322,8 @@ public class ArcaneUtils {
 	 */
 	public static void spawnSpinningVortex(World world, int maxAngle, double vortexHeight, double minRadius, double radiusScale, ResourceLocation particle, Vec3d position,
 										   Vec3d particleSpeed, Vec3d entitySpeed, int maxAge, float r, float g, float b) {
+		if (!world.isRemote) return;
+
 		Vec3d prevpos = position;
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double radius = minRadius + (angle / radiusScale);
@@ -354,6 +362,8 @@ public class ArcaneUtils {
 	 */
 	public static void spawnSpinningVortex(World world, int maxAngle, double vortexHeight, double minRadius, double radiusScale, ResourceLocation particle, Vec3d position,
 										   Vec3d particleSpeed, Vec3d entitySpeed, int maxAge, float r, float g, float b, float scale) {
+		if (!world.isRemote) return;
+
 		Vec3d prevpos = position;
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double radius = minRadius + (angle / radiusScale);
@@ -392,6 +402,8 @@ public class ArcaneUtils {
 	 */
 	public static void spawnSpinningVortex(World world, int maxAngle, double vortexHeight, double minRadius, double radiusScale, ResourceLocation particle, Vec3d position,
 										   double particleSpeed, Vec3d entitySpeed, int maxAge) {
+		if (!world.isRemote) return;
+
 		Vec3d prevpos = position;
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double radius = minRadius + (angle / radiusScale);
@@ -431,6 +443,8 @@ public class ArcaneUtils {
 
 	public static void spawnDirectionalHelix(World world, Entity entity, Vec3d direction, int maxAngle, double vortexLength, double radius, EnumParticleTypes particle, Vec3d position,
 											 Vec3d particleSpeed) {
+		if (!world.isRemote) return;
+
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double x = radius * cos(angle);
 			double y = angle / (maxAngle / vortexLength);
@@ -450,6 +464,8 @@ public class ArcaneUtils {
 
 	public static void spawnDirectionalHelix(World world, Entity entity, Vec3d direction, int maxAngle, double vortexLength, double radius, ResourceLocation particle, Vec3d position,
 											 Vec3d particleSpeed, int maxAge, float r, float g, float b) {
+		if (!world.isRemote) return;
+
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double x = radius * cos(angle);
 			double y = angle / (maxAngle / vortexLength);
@@ -472,6 +488,8 @@ public class ArcaneUtils {
 
 	public static void spawnSpinningDirectionalHelix(World world, Entity entity, Vec3d direction, Vec3d entitySpeed, int maxAngle, double vortexLength, double radius, ResourceLocation particle, Vec3d position,
 													 Vec3d particleSpeed, int maxAge, float r, float g, float b) {
+		if (!world.isRemote) return;
+
 		Vec3d prevPos = position;
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double angle2 = world.rand.nextDouble() * Math.PI * 2;
@@ -513,6 +531,8 @@ public class ArcaneUtils {
 
 	public static void spawnSpinningHelix(World world, int maxAngle, double vortexLength, double radius, ResourceLocation particle, Vec3d position,
 										  double particleSpeed, Vec3d entitySpeed, int maxAge, float r, float g, float b, float scale) {
+		if (!world.isRemote) return;
+
 		for (int angle = 0; angle < maxAngle; angle++) {
 			double x = radius * cos(angle);
 			double y = angle / (maxAngle / vortexLength);
@@ -1087,8 +1107,8 @@ public class ArcaneUtils {
 	}
 
 
-	public static Entity getEntityFromStringID(String UUID) {
-		return FMLCommonHandler.instance().getMinecraftServerInstance().getEntityFromUuid(java.util.UUID.fromString(UUID));
+	public static Entity getEntityFromStringID(World world, String UUID) {
+		return WizardryUtilities.getEntityByUUID(world, java.util.UUID.fromString(UUID));
 	}
 
 	public static EntityPlayer getPlayerFromStringID(String UUID) {

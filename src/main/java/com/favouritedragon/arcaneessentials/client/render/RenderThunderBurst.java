@@ -3,7 +3,6 @@ package com.favouritedragon.arcaneessentials.client.render;
 import com.favouritedragon.arcaneessentials.common.entity.EntityThunderBurst;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
@@ -25,7 +24,7 @@ public class RenderThunderBurst extends Render<EntityThunderBurst> {
 		GlStateManager.disableTexture2D();
 		GlStateManager.disableLighting();
 		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
+//		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
 		assert entity.getCaster() != null;
 		if (entity.ticksExisted <= 1) {
 			for (double theta = 0; theta <= 180; theta += 1) {
@@ -53,9 +52,9 @@ public class RenderThunderBurst extends Render<EntityThunderBurst> {
 			}
 
 		}
-		RenderUtils.drawSphere(entity.ticksExisted * 0.7F, (float) Math.PI / 20, (float) Math.PI / 20, false, 138 / 255F, 1F, 1F,
-				0.55F, null);
-		GlStateManager.enableTexture2D();
+//		RenderUtils.drawSphere(entity.ticksExisted * 0.7F, (float) Math.PI / 20, (float) Math.PI / 20, false, 138 / 255F, 1F, 1F,
+//				0.55F, null);
+//		GlStateManager.enableTexture2D();
 		GlStateManager.enableLighting();
 		GlStateManager.disableBlend();
 

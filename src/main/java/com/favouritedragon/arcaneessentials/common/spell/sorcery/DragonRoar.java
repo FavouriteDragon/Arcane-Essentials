@@ -66,6 +66,7 @@ public class DragonRoar extends ArcaneSpell {
 				}
 			}
 		}
+		caster.playSound(SoundEvents.ENTITY_LIGHTNING_IMPACT, 1.5F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
 		caster.playSound(SoundEvents.ENTITY_ENDERDRAGON_GROWL, 1.5F + world.rand.nextFloat() / 10, 0.75F + world.rand.nextFloat() / 10);
 		return true;
 	}

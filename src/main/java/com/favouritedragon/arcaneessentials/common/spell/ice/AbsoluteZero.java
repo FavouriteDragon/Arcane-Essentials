@@ -54,7 +54,7 @@ public class AbsoluteZero extends ArcaneSpell {
 			ParticleBuilder.create(ParticleBuilder.Type.SPHERE).entity(caster).time(6).scale((float) range * 1.25F).clr(205, 254, 255).spawn(world);
 		}
 		caster.playSound(WizardrySounds.MISC_FREEZE, 3.0F, 1.0F);
-		caster.playSound(WizardrySounds.ENTITY_ICE_WRAITH_AMBIENT, 2.0F, 1.0F);
+		caster.playSound(WizardrySounds.ENTITY_ICE_LANCE_SMASH, 2.0F, 1.0F);
 		caster.swingArm(hand);
 
 		return true;

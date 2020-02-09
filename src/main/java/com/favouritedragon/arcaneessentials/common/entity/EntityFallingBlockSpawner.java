@@ -4,12 +4,14 @@ import com.favouritedragon.arcaneessentials.common.entity.data.Behaviour;
 import com.favouritedragon.arcaneessentials.common.entity.data.MagicConstructBehaviour;
 import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.MagicDamage;
+import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -57,7 +59,19 @@ public class EntityFallingBlockSpawner extends EntityMagicSpawner {
 	@Override
 	protected boolean spawnEntity() {
 		if (!world.isRemote) {
-			EntityFloatingBlock block = new EntityFloatingBlock(world, posX, posY + 0.5, posZ, getCaster(),
+			BlockPos pos = new BlockPos(posX, posY, posZ);
+
+			if (!WizardryUtilities.isBlockUnbreakable(world, pos.down()) && !world.isAirBlock(pos.down()) && world.isBlockNormalCube(pos.down(), false)
+					// Checks that the block above is not solid, since this causes the falling sand to vanish.
+					&& !world.isBlockNormalCube(pos, false)) {
+
+				// Falling blocks do the setting block to air themselves.
+				EntityFallingBlock fallingblock = new EntityFallingBlock(world, posX, posY - 1, posZ,
+						world.getBlockState(new BlockPos(posX, posY - 1, posZ)));
+				fallingblock.motionY = 0.3;
+				return world.spawnEntity(fallingblock);
+			}
+			/*EntityFloatingBlock block = new EntityFloatingBlock(world, posX, posY + 0.5, posZ, getCaster(),
 					damageMultiplier, (int) (30 * getRenderSize()), world.getBlockState(getPosition().down()).getBlock());
 			//Fall ticks upwards, so if you make it positive, it'll stay for a long time.
 			//block.fallTime = MathHelper.clamp((int) (-10 * getRenderSize() + getRenderSize() > 0 ? (10 * getRenderSize()) % 10 : 0), -40, -10);
@@ -70,8 +84,8 @@ public class EntityFallingBlockSpawner extends EntityMagicSpawner {
 
 			//System.out.println(block);
 			//System.out.println(world.spawnEntity(block));
-			return world.spawnEntity(block);
-		} else return false;
+			return world.spawnEntity(block);**/
+		} return false;
 	}
 
 	@Override
