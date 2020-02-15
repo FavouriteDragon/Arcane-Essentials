@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class WaveOfRelief extends Spell {
 
@@ -78,10 +79,12 @@ public class WaveOfRelief extends Spell {
 		if (!nearby.isEmpty()) {
 			for (EntityLivingBase ally : nearby) {
 				if (ally.getTeam() != null && ally.getTeam() == caster.getTeam() || caster == ally) {
-					Collection<PotionEffect> potions = ally.getActivePotionEffects();
-					for (PotionEffect effect : potions) {
-						if (effect.getPotion().isBadEffect()) {
-							ally.removePotionEffect(effect.getPotion());
+					List<PotionEffect> potions = ally.getActivePotionEffects().stream().filter(potionEffect -> potionEffect.getPotion().isBadEffect()).collect(Collectors.toList());
+					if (!potions.isEmpty()) {
+						for (PotionEffect effect : potions) {
+							if (effect.getPotion().isBadEffect()) {
+								ally.removePotionEffect(effect.getPotion());
+							}
 						}
 					}
 					ally.heal(healAmount);

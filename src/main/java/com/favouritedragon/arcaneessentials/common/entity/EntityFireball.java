@@ -85,7 +85,7 @@ public class EntityFireball extends EntityMagicBolt {
 		}
 
 		if (world.isRemote) {
-			for (int i = 0; i < 60 - getSize(); i++) {
+			for (int i = 0; i < 50 - getSize(); i++) {
 				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).pos(getPositionVector()).time(10)
 						.vel(world.rand.nextGaussian() / 10 * getSize(), world.rand.nextGaussian() / 10
 								* getSize(), world.rand.nextGaussian() / 10 * getSize()).
@@ -122,7 +122,7 @@ public class EntityFireball extends EntityMagicBolt {
 				double x1, y1, z1, xVel, yVel, zVel;
 				Vec3d prevPos = Vec3d.ZERO;
 				for (double theta = 0; theta <= 180; theta += 1) {
-					double dphi = (50 - getSize() * 4) / Math.sin(Math.toRadians(theta));
+					double dphi = (45 - getSize() * 5) / Math.sin(Math.toRadians(theta));
 					for (double phi = 0; phi < 360; phi += dphi) {
 						double rphi = Math.toRadians(phi);
 						double rtheta = Math.toRadians(theta);
