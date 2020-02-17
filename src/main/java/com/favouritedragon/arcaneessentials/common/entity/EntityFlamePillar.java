@@ -1,6 +1,5 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
-import electroblob.wizardry.entity.projectile.EntityMagicArrow;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.MagicDamage;
@@ -17,9 +16,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
 import java.util.List;
-import java.util.UUID;
 
 public class EntityFlamePillar extends EntityMagicConstruct {
 

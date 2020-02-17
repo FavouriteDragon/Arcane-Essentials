@@ -1,7 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.entity.data;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
-import electroblob.wizardry.Wizardry;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;

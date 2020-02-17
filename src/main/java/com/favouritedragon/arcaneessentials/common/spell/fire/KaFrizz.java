@@ -1,6 +1,5 @@
 package com.favouritedragon.arcaneessentials.common.spell.fire;
 
-import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityFireball;
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.registry.WizardrySounds;

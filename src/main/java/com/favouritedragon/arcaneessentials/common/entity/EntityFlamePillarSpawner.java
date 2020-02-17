@@ -2,11 +2,8 @@ package com.favouritedragon.arcaneessentials.common.entity;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
-
-import javax.annotation.Nonnull;
 
 public class EntityFlamePillarSpawner extends EntityMagicSpawner {
 
