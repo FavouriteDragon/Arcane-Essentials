@@ -10,7 +10,7 @@
     "trades": true,
     "looting": true
   },
-  "tier": "apprentice",
+  "tier": "advanced",
   "element": "sorcery",
   "type": "defence",
   "cost": 40,
