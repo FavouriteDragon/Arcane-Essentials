@@ -1,1 +1,160 @@
 
+spell.arcane_essentials:absolute_zero=Абсолютный Ноль
+spell.arcane_essentials:absolute_zero.desc=Запустите волну арктического ветра, который мгновенно заморозит всех существ в радиусе 3 блоков!
+
+spell.arcane_essentials:blizzard_beam=Вьюжный Луч
+spell.arcane_essentials:blizzard_beam.desc=Излучайте струёй пронзительного холода, замораживая всех врагов! МВАХАХАХАХА
+
+spell.arcane_essentials:cyclone_bolt=Циклонический Снаряд
+spell.arcane_essentials:cyclone_bolt.desc=Выстрелите вращающующейся стрелой воздуха туда, куда Вы смотрите!
+
+spell.arcane_essentials:cyclone_shield=Циклонический Щит
+spell.arcane_essentials:cyclone_shield.desc=Создайте вращающийся вихрь рядом с Вами! Отражает снаряды, медленно наносит удары по врагам, а затем отстреливает всех ближайших врагов.
+
+spell.arcane_essentials:dragon_roar=Рёв Дракона
+spell.arcane_essentials:dragon_roar.desc=Вселите страх в сердца ближайших врагов, ненадолго парализовав их! Это также остановит ближайшие летящие снаряды.
+
+spell.arcane_essentials:fire_pledge=Огненная Клятва
+spell.arcane_essentials:fire_pledge.desc=УУУМРИИИИИИИИИИИИИИИИИИИИИИИИИИИИИ! Призовите огненные гейзеры перед собой, как в покемонах! Есть у кого ген 6?
+
+spell.arcane_essentials:flame_cleave=Пламенный Раскол
+spell.arcane_essentials:flame_cleave.desc=Разрежьте воздух и запустите горящий диск пламени!
+
+spell.arcane_essentials:flash_step=Сверкающий Шаг
+spell.arcane_essentials:flash_step.desc=Телепортируйтесь на пару шагов вперёд! Позволяет телепортироваться по воздуху.
+
+spell.arcane_essentials:frizz=Завиток
+spell.arcane_essentials:frizz.desc=Опалите врагов небольшим огненным шаром.
+
+spell.arcane_essentials:frizzle=Завивание
+spell.arcane_essentials:frizzle.desc=Сожгите врагов огненным шаром.
+
+spell.arcane_essentials:frost_blast=Морозный Взрыв
+spell.arcane_essentials:frost_blast.desc=Поразите врагов взрывом холодного воздуха!
+
+spell.arcane_essentials:frost_fan=Морозный Веер
+spell.arcane_essentials:frost_fan.desc=Стреляйте сосульками в своих врагов! Левый клик мечём, правым для жезла.
+
+spell.arcane_essentials:frost_form=Морозная Форма
+spell.arcane_essentials:frost_form.desc=Превратитесь в Бога Антарктики, замедлив окружающих существ! Отталкивайте ближайших врагов, и получайте меньше урона от атак!
+
+spell.arcane_essentials:inferno_form=Пламенная Форма
+spell.arcane_essentials:inferno_form.desc=Стань единым с силой пламени, превратившись в живое пламя на 12 секунд! Враги в радиусе 2-х блоков будут отброшены, снаряды заблокированы, а у Вас будет шанс отразить атаки!
+
+spell.arcane_essentials:inferno_pillar=Пламенная Колонна
+spell.arcane_essentials:inferno_pillar.desc=Создайте вокруг себя массивную пылающую колонну! Эта колонна сжигает врагов и отражает снаряды на пару секунд, отлично подходит для защиты от этих надоедливых скелетов!
+
+spell.arcane_essentials:kafrizz=KaFrizz
+spell.arcane_essentials:kafrizz.desc=Сожги врагов огромным огненным шаром!
+
+spell.arcane_essentials:kafrizzle=KaFrizzle
+spell.arcane_essentials:kafrizzle.desc=Кремируйте врагов огромным огненным шаром!
+
+spell.arcane_essentials:kaquake=KaQuake
+spell.arcane_essentials:kaquake.desc=Разорвите землю перед собой, мгновенно создав несколько расщелин!
+
+spell.arcane_essentials:kaquakele.desc=KaQuakele
+spell.arcane_Essentials:kaquakele.desc=Создайте солнечную волну, которая рассечёт землю надвое!
+
+spell.arcane_essentials:kasploosh=KaSploosh
+spell.arcane_essentials:kasploosh.desc=Запустите огромный гидро-шар на Ваших врагов, с гигантским водоворотом!
+
+spell.arcane_essentials:kasplooshle=KaSplooshle
+spell.arcane_essentials:kasplooshle.desc=Высвободите силу гнева Посейдона, заключенного в огромный водяной пузырь!
+
+#Если написать только один знак процента - %, возникнет ошибка форматирования.
+spell.arcane_essentials:kathwack=KaThwack
+spell.arcane_essentials:kathwack.desc=Выпустите волну смерти вокруг Вас, наносящую около 5 урона, с 20%%-ной вероятностью убить любого врага, стоящего рядом с Вами.
+
+spell.arcane_essentials:kazam=KaZam
+spell.arcane_essentials:kazam.desc=Уничтожьте врагов молнией, рождённой от потерянных душ!
+
+spell.arcane_essentials:kazammle=KaZammle
+spell.arcane_essentials:kazammle.desc=Совершенно уничтожьте врагов с помощью стигийского грома из глубин ада!
+
+spell.arcane_essentials:lightning_vortex=Вихрь молний
+spell.arcane_essentials:lightning_vortex.desc=Создайте вращающийся вихрь молнии там, куда Вы смотрите! Длится около 5 секунд и поджигает врагов!
+
+spell.arcane_essentials:ocean_burst=Океанический Взрыв
+spell.arcane_essentials:ocean_burst.desc=Дайте волю мощному взрыву воды, который уничтожит врагов!
+
+spell.arcane_essentials:quake=Дрожь
+spell.arcane_essentials:quake.desc=Разорвите землю перед вами, отбросив врагов назад!
+
+spell.arcane_essentials:radiance_storm=Сияющий Шторм
+spell.arcane_essentials:radiance_storm.desc=Высвободите столбы божественного света вокруг себя, нанося серьезный урон мобам.
+
+spell.arcane_essentials:radiant_beam=Сияющее Излучение
+spell.arcane_essentials:radiant_beam.desc=Запустите луч святой энергии туда, куда вы смотрите, поджигая врагов и нанося дополнительный урон нежити.
+
+spell.arcane_essentials:shake=Встряска
+spell.arcane_essentials:shake.desc=Создайте раскол в земле и отбросьте врагов назад!
+
+spell.arcane_essentials:shatter=Дробление
+spell.arcane_essentials:shatter.desc=Потрошите всех врагов поблизости, заключенных в лёд, и разорвите лёд на части.
+
+spell.arcane_essentials:solar_beam=Солнечный Луч
+spell.arcane_essentials:solar_beam.desc=Дайте волю мощному многозарядному лазеру в том направлении, куда вы смотрите! Используйте силы природы, чтобы сокрушить своих врагов!
+
+spell.arcane_essentials:splash=Плевок
+spell.arcane_essentials:splash.desc=Стреляйте маленьким водяным шариком в своих врагов!
+
+spell.arcane_essentials:sploosh=Всплеск
+spell.arcane_essentials:sploosh.desc=Стреляйте водной ракетой по своим врагам с помощью прочного водоворота!
+
+spell.arcane_essentials:storm_blink=Штормовой Блинк
+spell.arcane_essentials:storm_blink.desc=Телепортируйтесь туда, куда вы смотрите на расстоянии 60 блоков, выпуская небольшой взрыв молнии в вашу цель.
+
+spell.arcane_essentials:thunder_burst=Громовой Взрыв
+spell.arcane_essentials:thunder_burst.desc=Выпустите ударную волну сырой молнии, которая взорвёт врагов!
+
+spell.arcane_essentials:thundering_chain=Громовая Цепь
+spell.arcane_essentials:thundering_chain.desc=Выпусти в небо проливную молнию, поражающую всех врагов в ряд!
+
+spell.arcane_essentials:unrelenting_force=Неумолимая Сила
+spell.arcane_essentials:unrelenting_force.desc=Фус Ро Да! Выпустите взрыв чистой силы, который отбрасывает врагов далекооооо и наносит урон!
+
+spell.arcane_essentials:wave_of_relief=Волна Облегчения
+spell.arcane_essentials:wave_of_relief.desc=Выпустите волну успокаивающей энергии, удалив все плохие эффекты зелья и немного исцелив союзников!
+
+spell.arcane_essentials:whirlpool=Джакузи
+spell.arcane_essentials:whirlpool.desc=Создайте кружащийся вихрь воды там, куда Вы смотрите ИЛИ перед Вами! Тянет врагов внутрь и медленно их повреждает - отлично подходит для ловли жертв на ВЗРЫВЫ!
+
+spell.arcane_essentials:zam=Бззз
+spell.arcane_essentials:zam.desc=Сжигайте врагов маленьким зарядом тьмы.
+
+spell.arcane_essentials:zammle=Бзззаммм
+spell.arcane_essentials:zammle.desc=Ударьте врагов черной молнией!
+
+spell.arcane_essentials:zoom=Пора Домой
+spell.arcane_essentials:zoom.desc=Телепортируйтесь из любой точки мира к точке возрождения! Над Вашей головой должно быть небо, и Вы не должны быть в воде.
+
+item.arcane_essentials:sword.spell=Текущее заклинание: %1$s
+item.arcane_essentials:sword.mana=Мана: %1$s/%2$s
+item.arcane_essentials:sword.levelup=%1$s готов повысить увроень до %2$s tier
+item.arcane_essentials:sword.buff=+%1$s %2$s мощь
+item.arcane_essentials:sword.progression=Прогресс: %1$s/%2$s
+
+item.arcane_essentials:novice_lightning_sword.name=Меч Молнии Новичка
+item.arcane_essentials:apprentice_lightning_sword.name=Меч Молнии Подмастерья
+item.arcane_essentials:advanced_lightning_sword.name=Меч Молнии
+item.arcane_essentials:master_lightning_sword.name=Меч Молнии Мастера
+
+item.arcane_essentials:master_sorcery_sword.name=Меч Мастера Колдуна
+
+item.arcane_essentials:master_nature_sword.name=Меч Мастера Земли
+
+item.arcane_essentials:master_fire_sword.name=Меч Мастера Огня
+
+item.arcane_essentials:master_ice_sword.name=Меч Мастера Льда
+
+item.arcane_essentials:master_healing_sword.name=Меч Мастера Целителя
+
+item.arcane_essentials:master_necromancy_sword.name=Меч Мастера Некромантии
+
+potion.arcane_essentials:inferno_form=Пламенная Форма
+potion.arcane_essentials:frost_form=Морозная Форма
+
+
+element.water=Водичька
+element.air=Воздух
