@@ -1,6 +1,5 @@
 package com.favouritedragon.arcaneessentials.common.spell.sorcery;
 
-import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.data.IVariable;

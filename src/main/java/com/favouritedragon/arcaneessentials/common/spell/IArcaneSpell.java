@@ -1,7 +1,5 @@
 package com.favouritedragon.arcaneessentials.common.spell;
 
-import net.minecraft.util.EnumHand;
-
 //Temporary interface until the proper spell contexts are implemented
 public interface IArcaneSpell {
 

@@ -1,11 +1,9 @@
 package com.favouritedragon.arcaneessentials.common.spell.water;
 
-import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityWaterBall;
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
-import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;

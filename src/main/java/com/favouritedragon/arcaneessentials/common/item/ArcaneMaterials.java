@@ -1,10 +1,8 @@
 package com.favouritedragon.arcaneessentials.common.item;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
-import com.favouritedragon.arcaneessentials.common.item.armour.ItemManaArmour;
 import electroblob.wizardry.registry.WizardrySounds;
 import net.minecraft.item.ItemArmor;
-import net.minecraft.util.SoundCategory;
 import net.minecraftforge.common.util.EnumHelper;
 
 public class ArcaneMaterials {

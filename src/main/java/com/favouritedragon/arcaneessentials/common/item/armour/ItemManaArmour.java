@@ -1,13 +1,8 @@
 package com.favouritedragon.arcaneessentials.common.item.armour;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
-import electroblob.wizardry.Wizardry;
-import electroblob.wizardry.constants.Element;
-import electroblob.wizardry.constants.Tier;
 import electroblob.wizardry.item.ItemWand;
-import electroblob.wizardry.item.ItemWizardArmour;
 import electroblob.wizardry.registry.WizardryTabs;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;

@@ -5,13 +5,17 @@ import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.RayTracer;
 import electroblob.wizardry.util.WizardryUtilities;
+import net.minecraft.block.BlockEndPortal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.play.server.SPacketChangeGameState;
+import net.minecraft.network.play.server.SPacketEffect;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
+import net.minecraft.tileentity.TileEntityEndPortal;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
@@ -1056,6 +1060,59 @@ public class ArcaneUtils {
 			return true;
 		}
 	}
+
+	//Copied from the original method, except it doesn't spawn particles
+	//Goes directly to the ground
+	public static boolean attemptDimensionalGroundedTeleport(EntityLivingBase entity, double x, double y, double z, int targetDimension) {
+		double d0 = entity.posX;
+		double d1 = entity.posY;
+		double d2 = entity.posZ;
+		entity.posX = x;
+		entity.posY = y;
+		entity.posZ = z;
+		boolean flag = false;
+		BlockPos blockpos = new BlockPos(entity);
+		World world = entity.world;
+
+		entity.changeDimension(targetDimension);
+
+		if (world.isBlockLoaded(blockpos)) {
+			boolean flag1 = false;
+
+			while (!flag1 && blockpos.getY() > 0) {
+				BlockPos blockpos1 = blockpos.down();
+				IBlockState iblockstate = world.getBlockState(blockpos1);
+
+				if (iblockstate.getMaterial().blocksMovement()) {
+					flag1 = true;
+				} else {
+					--entity.posY;
+					blockpos = blockpos1;
+				}
+			}
+
+			if (flag1) {
+				entity.setPositionAndUpdate(entity.posX, entity.posY, entity.posZ);
+
+				if (world.getCollisionBoxes(entity, entity.getEntityBoundingBox()).isEmpty() && !world.containsAnyLiquid(entity.getEntityBoundingBox())) {
+					flag = true;
+				}
+			}
+		}
+
+		if (!flag) {
+			entity.setPositionAndUpdate(d0, d1, d2);
+			return false;
+		} else {
+
+			if (entity instanceof EntityCreature) {
+				((EntityCreature) entity).getNavigator().clearPath();
+			}
+
+			return true;
+		}
+	}
+
 
 	public static boolean attemptTeleport(EntityLivingBase entity, double x, double y, double z) {
 		double d0 = entity.posX;

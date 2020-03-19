@@ -1,12 +1,7 @@
 package com.favouritedragon.arcaneessentials;
 
 import com.favouritedragon.arcaneessentials.common.entity.data.Behaviour;
-import com.favouritedragon.arcaneessentials.common.spell.arcane.ElementArcane;
 import com.favouritedragon.arcaneessentials.proxy.IProxy;
-import electroblob.wizardry.api.WizardryEnumHelper;
-import electroblob.wizardry.constants.Element;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;

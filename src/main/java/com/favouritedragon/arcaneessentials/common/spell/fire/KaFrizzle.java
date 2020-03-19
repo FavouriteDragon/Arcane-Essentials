@@ -1,13 +1,10 @@
 package com.favouritedragon.arcaneessentials.common.spell.fire;
 
-import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntityFireball;
-import com.favouritedragon.arcaneessentials.common.entity.EntityFlamePillar;
 import com.favouritedragon.arcaneessentials.common.entity.EntityMagicBolt;
 import com.favouritedragon.arcaneessentials.common.entity.data.Behaviour;
 import com.favouritedragon.arcaneessentials.common.entity.data.MagicBoltBehaviour;
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
-import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLiving;
@@ -19,12 +16,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SIZE;
 

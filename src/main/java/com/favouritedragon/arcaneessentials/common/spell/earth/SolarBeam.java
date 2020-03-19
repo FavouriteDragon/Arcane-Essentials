@@ -1,6 +1,5 @@
 package com.favouritedragon.arcaneessentials.common.spell.earth;
 
-import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntitySolarBeam;
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.registry.WizardryItems;

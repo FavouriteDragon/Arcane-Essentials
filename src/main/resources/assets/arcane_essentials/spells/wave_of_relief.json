@@ -18,6 +18,7 @@
   "cooldown": 65,
   "base_properties": {
     "effect_radius": 8,
-    "health": 4
+    "health": 4,
+    "swords": 0
   }
 }

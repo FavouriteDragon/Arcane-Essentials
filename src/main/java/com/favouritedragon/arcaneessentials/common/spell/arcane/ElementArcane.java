@@ -1,10 +1,8 @@
 package com.favouritedragon.arcaneessentials.common.spell.arcane;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
-import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.api.WizardryEnumHelper;
 import electroblob.wizardry.constants.Element;
-import electroblob.wizardry.util.SpellProperties;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 
