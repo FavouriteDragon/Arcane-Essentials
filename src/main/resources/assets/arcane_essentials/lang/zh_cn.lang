@@ -138,19 +138,19 @@ item.arcane_essentials:sword.progression=进度: %1$s/%2$s
 item.arcane_essentials:novice_lightning_sword.name=基础闪电剑
 item.arcane_essentials:apprentice_lightning_sword.name=学徒闪电剑
 item.arcane_essentials:advanced_lightning_sword.name=『进阶』雷光之刃
-item.arcane_essentials:master_lightning_sword.name=『大师』雷霆之怒，逐风者的祝福之剑
+item.arcane_essentials:master_lightning_sword.name=『宗师』雷霆之怒，逐风者的祝福之剑
 
-item.arcane_essentials:master_sorcery_sword.name=『大师』奥术晨曦,世界之钻的碎片
+item.arcane_essentials:master_sorcery_sword.name=『宗师』奥术晨曦,世界之钻的碎片
 
-item.arcane_essentials:master_nature_sword.name=『大师』盖亚之握
+item.arcane_essentials:master_nature_sword.name=『宗师』盖亚之握
 
-item.arcane_essentials:master_fire_sword.name=『大师』烈焰之击
+item.arcane_essentials:master_fire_sword.name=『宗师』烈焰之击
 
-item.arcane_essentials:master_ice_sword.name=『大师』黑檀之寒
+item.arcane_essentials:master_ice_sword.name=『宗师』黑檀之寒
 
-item.arcane_essentials:master_healing_sword.name=『大师』"美德"
+item.arcane_essentials:master_healing_sword.name=『宗师』"美德"
 
-item.arcane_essentials:master_necromancy_sword.name=『大师』霜之哀伤
+item.arcane_essentials:master_necromancy_sword.name=『宗师』霜之哀伤
 
 potion.arcane_essentials:inferno_form=地狱火形态
 potion.arcane_essentials:frost_form=寒霜形态
