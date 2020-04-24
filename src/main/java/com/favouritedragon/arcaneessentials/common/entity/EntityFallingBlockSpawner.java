@@ -71,20 +71,6 @@ public class EntityFallingBlockSpawner extends EntityMagicSpawner {
 				fallingblock.motionY = 0.3;
 				return world.spawnEntity(fallingblock);
 			}
-			/*EntityFloatingBlock block = new EntityFloatingBlock(world, posX, posY + 0.5, posZ, getCaster(),
-					damageMultiplier, (int) (30 * getRenderSize()), world.getBlockState(getPosition().down()).getBlock());
-			//Fall ticks upwards, so if you make it positive, it'll stay for a long time.
-			//block.fallTime = MathHelper.clamp((int) (-10 * getRenderSize() + getRenderSize() > 0 ? (10 * getRenderSize()) % 10 : 0), -40, -10);
-			block.motionX = block.motionZ = 0;
-			block.motionY = 0.675 * MathHelper.clamp(0.3 * getRenderSize(), 0.25F, 1.5F);
-			block.setBehaviour(new FallingBlockBehaviour());
-			block.setBlockState(world.getBlockState(getPosition().down()));
-			block.setSize(getRenderSize());
-			//block.shouldDropItem = false;
-
-			//System.out.println(block);
-			//System.out.println(world.spawnEntity(block));
-			return world.spawnEntity(block);**/
 		} return false;
 	}
 

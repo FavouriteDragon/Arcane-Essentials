@@ -747,7 +747,7 @@ public class ArcaneUtils {
 				hit.motionX += knockBack.x * kM.x;
 				hit.motionY += knockBack.y * kM.y;
 				hit.motionZ += knockBack.z * kM.z;
-				hit.setEntityInvulnerable(invulnerable);
+				hit.setEntityInvulnerable(false);
 				applyPlayerKnockback(hit);
 				filter = filter.or(e -> e == hit);
 			}
