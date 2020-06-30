@@ -132,6 +132,7 @@ public class RegisterHandler {
         event.getRegistry().register(new FrostBlast());
         //event.getRegistry().register(new FrostFan());
         event.getRegistry().register(frost_form = new FrostForm());
+        event.getRegistry().register(new IcicleStorm());
         event.getRegistry().register(inferno_form = new InfernoForm());
         event.getRegistry().register(new InfernoPillar());
         event.getRegistry().register(new KaFrizz());

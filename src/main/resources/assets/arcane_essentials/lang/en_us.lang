@@ -38,6 +38,9 @@ spell.arcane_essentials:frost_fan.desc=Shoot an array of icicles out at your opp
 spell.arcane_essentials:frost_form=Frost Form
 spell.arcane_essentials:frost_form.desc=Turn into an Antartic god, slowing all enemies around you! Push enemies back, freeze enemies that stay too close, and take less damage froma attacks!
 
+spell.arcane_essentials:icicle_storm=Icicle Storm
+spell.arcane_essentials:icicle_storm.desc=Unleash the raw power of snow and frost, harnessing the might of an ice dragon's breath!
+
 spell.arcane_essentials:inferno_form=Inferno Form
 spell.arcane_essentials:inferno_form.desc=Become one with the power of flame, turning into a living inferno for 12 seconds! Enemies within a 2 block radius will be pushed back, projectiles are blocked, and there's a chance for you to phase through attacks!
 
