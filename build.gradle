@@ -8,8 +8,6 @@ buildscript {
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
-//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-
 
 version = "1.0.0-alpha-6"
 group = "com.favouritedragon.arcane_essentials" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -23,7 +21,7 @@ compileJava {
 minecraft {
     version = "1.12.2-14.23.5.2814"
     runDir = "run"
-    
+
     // the mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   snapshot are built nightly.
     // stable_#            stables are built at the discretion of the MCP team.
@@ -38,12 +36,25 @@ configurations {
     compile.extendsFrom shade
 }
 
+repositories {
+    jcenter()
+    mavenCentral()
+
+}
+
+// This makes IDEA recognize the assets folder
+idea {
+    module {
+        inheritOutputDirs = true
+    }
+}
+
 dependencies {
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
     //compile "some.group:artifact:version"
-      
+
     // real examples
     //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
@@ -59,13 +70,14 @@ dependencies {
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-    
+
     shade group: 'org.joml', name: 'joml-jdk8', version: '1.9.17'
 }
 
+
 jar {
     configurations.shade.each { dep ->
-        from(project.zipTree(dep)){
+        from(project.zipTree(dep)) {
             exclude 'META-INF', 'META-INF/**'
         }
     }
@@ -79,13 +91,15 @@ processResources {
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-                
+
         // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        expand 'version': project.version, 'mcversion': project.minecraft.version
     }
-        
+
     // copy everything else except the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
 }
+
+

@@ -1,31 +1,63 @@
 {
-
-  "entity.InfernoPillar" : {},
+  "entity.InfernoPillar": {},
   "spell.frizz": {
-    "category": "player", "sounds": ["arcane_essentials:kafrizzle"]
+    "category": "player",
+    "sounds": [
+      "arcane_essentials:kafrizzle"
+    ]
   },
   "spell.frizzle": {
-    "category": "player", "sounds": ["arcane_essentials:kafrizzle"]
+    "category": "player",
+    "sounds": [
+      "arcane_essentials:kafrizzle"
+    ]
   },
   "spell.inferno_form": {
-    "category": "player", "sounds": ["arcane_essentials:inferno_form"]
+    "category": "player",
+    "sounds": [
+      "arcane_essentials:inferno_form"
+    ]
   },
   "spell.inferno_pillar": {
-    "category": "player", "sounds": ["arcane_essentials:inferno_pillar"]
+    "category": "player",
+    "sounds": [
+      "arcane_essentials:inferno_pillar"
+    ]
   },
   "spell.kafrizz": {
-    "category": "player", "sounds": ["arcane_essentials:kafrizzle"]
+    "category": "player",
+    "sounds": [
+      "arcane_essentials:kafrizzle"
+    ]
   },
   "spell.kafrizzle": {
-    "category": "player", "sounds": ["arcane_essentials:kafrizzle"]
+    "category": "player",
+    "sounds": [
+      "arcane_essentials:kafrizzle"
+    ]
   },
   "spell.kathwack": {
-    "category": "player", "sounds": ["arcane_essentials:kathwack"]
+    "category": "player",
+    "sounds": [
+      "arcane_essentials:kathwack"
+    ]
+  },
+  "spell.oomph": {
+    "category": "player",
+    "sounds": [
+      "arcane_essentials:oomph"
+    ]
   },
   "spell.unrelenting_force": {
-    "category": "player", "sounds": ["arcane_essentials:unrelenting_force"]
+    "category": "player",
+    "sounds": [
+      "arcane_essentials:unrelenting_force"
+    ]
   },
   "spell.zoom": {
-    "category": "player", "sounds": ["arcane_essentials:zoom"]
+    "category": "player",
+    "sounds": [
+      "arcane_essentials:zoom"
+    ]
   }
 }

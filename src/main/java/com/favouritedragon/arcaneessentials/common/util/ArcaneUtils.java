@@ -809,14 +809,14 @@ public class ArcaneUtils {
 	public static void handlePiercingBeamCollision(World world, EntityLivingBase caster, Vec3d startPos, Vec3d endPos, float borderSize, Entity spellEntity, DamageSource damageSource,
 												   float damage, Vec3d knockBack, boolean invulnerable, int fireTime, float radius, float lifeSteal,
 												   Predicate<? super Entity> filter) {
-		filter.or(entity1 -> entity1 == caster || entity1 == spellEntity);
+		filter = filter.or(entity1 -> entity1 == caster || entity1 == spellEntity);
 		RayTraceResult result = standardEntityRayTrace(world, startPos, endPos, filter, false, borderSize, true, false);
 		if (result != null && result.entityHit instanceof EntityLivingBase && result.entityHit != caster && result.entityHit != spellEntity) {
 			EntityLivingBase hit = (EntityLivingBase) result.entityHit;
 			hit.setFire(fireTime);
 			caster.heal(damage * lifeSteal);
 			hit.attackEntityFrom(damageSource, damage);
-			filter.or(entity1 -> entity1 == hit);
+			filter =  filter.or(entity1 -> entity1 == hit);
 			Vec3d kM = endPos.subtract(startPos).scale(.01);
 			hit.motionX += knockBack.x * kM.x;
 			hit.motionY += knockBack.y * kM.y;
@@ -838,7 +838,7 @@ public class ArcaneUtils {
 						e.motionY += knockBack.y;
 						e.motionZ += knockBack.z;
 						applyPlayerKnockback(e);
-						filter.or(entity1 -> entity1 == e);
+						filter = filter.or(entity1 -> entity1 == e);
 					}
 				}
 			} else {
@@ -954,12 +954,12 @@ public class ArcaneUtils {
 										   float borderSize, HashSet<Entity> excluded, boolean collideablesOnly, boolean raytraceNonSolidBlocks) {
 		Vec3d startVec = new Vec3d(x, y, z);
 		Vec3d endVec = new Vec3d(tx, ty, tz);
-		float minX = x < tx ? x : tx;
-		float minY = y < ty ? y : ty;
-		float minZ = z < tz ? z : tz;
-		float maxX = x > tx ? x : tx;
-		float maxY = y > ty ? y : ty;
-		float maxZ = z > tz ? z : tz;
+		float minX = Math.min(x, tx);
+		float minY = Math.min(y, ty);
+		float minZ = Math.min(z, tz);
+		float maxX = Math.max(x, tx);
+		float maxY = Math.max(y, ty);
+		float maxZ = Math.max(z, tz);
 		AxisAlignedBB bb = new AxisAlignedBB(minX, minY, minZ, maxX, maxY, maxZ).grow(borderSize, borderSize,
 				borderSize);
 		List<Entity> allEntities = world.getEntitiesWithinAABBExcludingEntity(null, bb);
