@@ -42,12 +42,6 @@ repositories {
 
 }
 
-// This makes IDEA recognize the assets folder
-idea {
-    module {
-        inheritOutputDirs = true
-    }
-}
 
 dependencies {
     // you may put jars on which you depend on in ./libs
@@ -99,6 +93,14 @@ processResources {
     // copy everything else except the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
+    }
+
+
+    //Intellij is arse
+    sourceSets {
+        main {
+            output.resourcesDir = output.classesDir
+        }
     }
 }
 

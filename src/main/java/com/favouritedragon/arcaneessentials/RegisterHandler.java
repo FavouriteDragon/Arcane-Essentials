@@ -145,7 +145,7 @@ public class RegisterHandler {
         event.getRegistry().register(new LightningVortex());
         event.getRegistry().register(new OceanBurst());
         event.getRegistry().register(new SpellBuff(ArcaneEssentials.MODID,"oomph", 1F, 90 / 255F, 0,
-                () -> MobEffects.STRENGTH).soundValues(1, 1.6f, 0.4f));
+                () -> MobEffects.STRENGTH).soundValues(1, 0.8f, 0.2f));
         event.getRegistry().register(new Quake());
         event.getRegistry().register(new RadianceStorm());
         event.getRegistry().register(new RadiantBeam());
