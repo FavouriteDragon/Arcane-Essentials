@@ -19,6 +19,7 @@ import electroblob.wizardry.packet.WizardryPacketHandler;
 import electroblob.wizardry.registry.*;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.*;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -38,7 +39,9 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -808,10 +811,11 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
 				// If the wand is powerful enough for the spell, it's not already bound to that slot and it's enabled for wands
 				//TODO: Change the context to swords, add a fail message
 				if (!(spell.getTier().level > this.tier.level) && spells[i] != spell && SpellUtils.isSwordCastable(spell) &&
-						(spell.getElement() == this.element || spell.getElement().equals(Element.MAGIC) || spell.getElement().equals(ARCANE))) {
+						(spell.getElement() == this.element || spell.getElement().equals(Element.MAGIC))) {
 					spells[i] = spell;
 					changed = true;
 				}
+				else player.sendMessage(new TextComponentTranslation(I18n.format("This spell is incompatible with that sword!", TextFormatting.BOLD)));
 			}
 		}
 
