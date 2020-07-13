@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " d ",
+    "dld",
+    " s "
+  ],
+  "key": {
+    "d": {
+      "item": "minecraft:diamond"
+    },
+    "s": {
+      "item": "minecraft:stick"
+    },
+    "l": {
+      "item": "ebwizardry:master_sorcery_wand"
+    }
+  },
+  "result": {
+    "item": "arcane_essentials:master_sorcery_sword"
+  }
+}
