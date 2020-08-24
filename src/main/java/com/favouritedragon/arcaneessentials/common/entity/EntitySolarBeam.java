@@ -87,5 +87,17 @@ public class EntitySolarBeam extends EntityMagicConstruct {
 	public boolean isInRangeToRenderDist(double distance) {
 		return true;
 	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public boolean shouldRenderInPass(int pass) {
+		return true;
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public boolean isInRangeToRender3d(double x, double y, double z) {
+		return true;
+	}
 }
 

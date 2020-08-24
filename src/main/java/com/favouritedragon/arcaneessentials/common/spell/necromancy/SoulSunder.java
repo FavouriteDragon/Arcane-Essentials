@@ -11,10 +11,12 @@ public class SoulSunder extends ArcaneSpell {
 
     public SoulSunder() {
         super("soul_sunder", EnumAction.NONE, false);
+        npcSelector = npcSelector.negate();
     }
 
     @Override
     public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+
         return false;
     }
 
