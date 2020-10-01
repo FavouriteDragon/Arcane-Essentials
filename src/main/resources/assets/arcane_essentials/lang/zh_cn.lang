@@ -140,7 +140,7 @@ item.arcane_essentials:apprentice_lightning_sword.name=『学徒』雷电剑
 item.arcane_essentials:advanced_lightning_sword.name=『进阶』驱雷之刃
 item.arcane_essentials:master_lightning_sword.name=『大师』驱雷掣电之剑
 
-item.arcane_essentials:master_sorcery_sword.name=『大师』星光璀璨之剑
+item.arcane_essentials:master_sorcery_sword.name=『大师』秘术统御之剑
 
 item.arcane_essentials:master_nature_sword.name=『大师』复息自然之剑
 
@@ -150,7 +150,7 @@ item.arcane_essentials:master_ice_sword.name=『大师』凛寒冰封之剑
 
 item.arcane_essentials:master_healing_sword.name=『大师』圣境升华之剑
 
-item.arcane_essentials:master_necromancy_sword.name=『大师』泣鬼斩灵之剑
+item.arcane_essentials:master_necromancy_sword.name=『大师』冥域噬魂之剑
 
 potion.arcane_essentials:inferno_form=地狱火形态
 potion.arcane_essentials:frost_form=寒霜形态
