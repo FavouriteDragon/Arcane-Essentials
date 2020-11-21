@@ -81,6 +81,14 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
         dataManager.set(SYNC_BEHAVIOUR, behaviour);
     }
 
+    public void setLifetime(int lifetime) {
+        this.lifetime = lifetime;
+    }
+
+    public int getLifetime() {
+        return this.lifetime;
+    }
+
     @Override
     protected void entityInit() {
         //Random UUID
@@ -110,6 +118,7 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
             this.despawn();
         }
 
+        setSize(getSize(), getSize());
 
 
     }
@@ -132,6 +141,7 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
         damageMultiplier = nbttagcompound.getFloat("damageMultiplier");
     }
 
+    //Caster is null client side
     @Override
     protected void writeEntityToNBT(@Nonnull NBTTagCompound nbttagcompound) {
         if (this.getCaster() != null) {

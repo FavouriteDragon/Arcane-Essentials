@@ -74,10 +74,6 @@ public class WaveOfRelief extends ArcaneSpell {
 		return true;
 	}
 
-	@Override
-	public boolean canBeCastByNPCs() {
-		return true;
-	}
 
 
 }

@@ -6,6 +6,7 @@ import com.favouritedragon.arcaneessentials.common.spell.air.CycloneShield;
 import com.favouritedragon.arcaneessentials.common.spell.arcane.Zoom;
 import com.favouritedragon.arcaneessentials.common.spell.divine.RadianceStorm;
 import com.favouritedragon.arcaneessentials.common.spell.divine.RadiantBeam;
+import com.favouritedragon.arcaneessentials.common.spell.divine.SaintessSun;
 import com.favouritedragon.arcaneessentials.common.spell.divine.WaveOfRelief;
 import com.favouritedragon.arcaneessentials.common.spell.earth.KaQuake;
 import com.favouritedragon.arcaneessentials.common.spell.earth.Quake;
@@ -88,6 +89,7 @@ public class RegisterHandler {
         registerEntity(EntityCycloneShield.class, "CyloneShield", ++id, 128, LIVING_UPDATE_INTERVAL, false);
         registerEntity(EntitySolarBeam.class, "SolarBeam", ++id, 128, LIVING_UPDATE_INTERVAL, false);
         registerEntity(EntityMagicLightning.class, "MagicLightning", ++id, 128, LIVING_UPDATE_INTERVAL, false);
+        registerEntity(EntitySaintessSun.class, "SaintessSun", ++id, 128, LIVING_UPDATE_INTERVAL, true);
 
         //Spawners
         registerEntity(EntityFlamePillarSpawner.class, "FlamePillarSpawner", ++id, 128, PROJECTILE_UPDATE_INTERVAL, true);
@@ -145,6 +147,7 @@ public class RegisterHandler {
         event.getRegistry().register(new KaZammle());
         event.getRegistry().register(new LightningVortex());
         event.getRegistry().register(new OceanBurst());
+        event.getRegistry().register(new SaintessSun());
         event.getRegistry().register(new SpellBuff(ArcaneEssentials.MODID,"oomph", 1F, 90 / 255F, 0,
                 () -> MobEffects.STRENGTH).soundValues(1, 0.8f, 0.2f));
         event.getRegistry().register(new Quake());

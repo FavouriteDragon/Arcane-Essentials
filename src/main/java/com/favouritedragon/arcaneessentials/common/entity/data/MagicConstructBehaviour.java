@@ -2,6 +2,7 @@ package com.favouritedragon.arcaneessentials.common.entity.data;
 
 import com.favouritedragon.arcaneessentials.common.entity.EntityFallingBlockSpawner;
 import com.favouritedragon.arcaneessentials.common.entity.EntityMagicConstruct;
+import com.favouritedragon.arcaneessentials.common.spell.divine.SaintessSun;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataSerializer;
@@ -15,6 +16,7 @@ public abstract class MagicConstructBehaviour extends Behaviour<EntityMagicConst
 		DataSerializers.registerSerializer(DATA_SERIALIZER);
 		registerBehaviour(MagicConstructBehaviour.Idle.class);
 		registerBehaviour(EntityFallingBlockSpawner.FallingBlockBehaviour.class);
+		registerBehaviour(SaintessSun.SaintessSunBehaviour.class);
 	}
 
 	public static class Idle extends MagicConstructBehaviour {
