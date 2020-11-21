@@ -3,7 +3,7 @@ package com.favouritedragon.arcaneessentials.common.entity;
 import com.favouritedragon.arcaneessentials.common.entity.data.MagicConstructBehaviour;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.util.AllyDesignationSystem;
-import electroblob.wizardry.util.WizardryUtilities;
+import electroblob.wizardry.util.EntityUtils;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -81,12 +81,12 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
         dataManager.set(SYNC_BEHAVIOUR, behaviour);
     }
 
-    public void setLifetime(int lifetime) {
-        this.lifetime = lifetime;
-    }
-
     public int getLifetime() {
         return this.lifetime;
+    }
+
+    public void setLifetime(int lifetime) {
+        this.lifetime = lifetime;
     }
 
     @Override
@@ -185,7 +185,7 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
     @Nullable
     public EntityLivingBase getCaster() { // Kept despite the above method because it returns an EntityLivingBase
 
-        Entity entity = WizardryUtilities.getEntityByUUID(world, getOwnerId());
+        Entity entity = EntityUtils.getEntityByUUID(world, getOwnerId());
 
         if (entity != null && !(entity instanceof EntityLivingBase)) { // Should never happen
             Wizardry.logger.warn("{} has a non-living owner!", this);

@@ -1,10 +1,7 @@
 package com.favouritedragon.arcaneessentials.common.util;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
-import electroblob.wizardry.util.MagicDamage;
-import electroblob.wizardry.util.ParticleBuilder;
-import electroblob.wizardry.util.RayTracer;
-import electroblob.wizardry.util.WizardryUtilities;
+import electroblob.wizardry.util.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -1141,7 +1138,7 @@ public class ArcaneUtils {
     }
 
     /**
-     * Shorthand for {@link WizardryUtilities#getEntitiesWithinRadius(double, double, double, double, World, Class)}
+     * Shorthand for {@link EntityUtils#getEntitiesWithinRadius(double, double, double, double, World, Class)}
      * with EntityLivingBase as the entity type. This is by far the most common use for that method.
      *
      * @param radius The search radius
@@ -1152,7 +1149,7 @@ public class ArcaneUtils {
      */
     public static List<Entity> getEntitiesWithinRadius(double radius, double x, double y, double z,
                                                        World world) {
-        return WizardryUtilities.getEntitiesWithinRadius(radius, x, y, z, world, Entity.class);
+        return EntityUtils.getEntitiesWithinRadius(radius, x, y, z, world, Entity.class);
     }
 
     //Sound stuff
@@ -1163,7 +1160,7 @@ public class ArcaneUtils {
 
 
     public static Entity getEntityFromStringID(World world, String UUID) {
-        return WizardryUtilities.getEntityByUUID(world, java.util.UUID.fromString(UUID));
+        return EntityUtils.getEntityByUUID(world, java.util.UUID.fromString(UUID));
     }
 
     public static EntityPlayer getPlayerFromStringID(String UUID) {

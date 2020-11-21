@@ -37,9 +37,10 @@ configurations {
 }
 
 repositories {
-    jcenter()
     mavenCentral()
-
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
 }
 
 
@@ -65,7 +66,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
-    shade group: 'org.joml', name: 'joml-jdk8', version: '1.9.17'
+    shade group: 'org.joml', name: 'joml-jdk8', version: '1.9.25'
 }
 
 

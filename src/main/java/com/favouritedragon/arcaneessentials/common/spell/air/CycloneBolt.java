@@ -54,9 +54,4 @@ public class CycloneBolt extends ArcaneSpell {
 		return false;
 	}
 
-	@Override
-	public boolean canBeCastByNPCs() {
-		return true;
-	}
-
 }
