@@ -58,7 +58,7 @@ public class RadianceStorm extends ArcaneSpell {
 
                 double x = caster.posX + radius * MathHelper.cos(angle);
                 double z = caster.posZ + radius * MathHelper.sin(angle);
-                Integer y = WizardryUtilities.getNearestFloor(world, new BlockPos(x, caster.posY, z), (int) maxRadius);
+                Integer y = BlockUtils.getNearestFloor(world, new BlockPos(x, caster.posY, z), (int) maxRadius);
 
                 if (y != null) {
 
@@ -130,10 +130,5 @@ public class RadianceStorm extends ArcaneSpell {
             ParticleBuilder.create(ParticleBuilder.Type.SPHERE).pos(position).scale(radius).clr(1.0F, 1.0F, 0.3F)
                     .spawn(world);
         }
-    }
-
-    @Override
-    public boolean canBeCastByNPCs() {
-        return true;
     }
 }

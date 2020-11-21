@@ -79,11 +79,6 @@ public class RadiantBeam extends SpellRay {
 	}
 
 	@Override
-	public boolean canBeCastByNPCs() {
-		return true;
-	}
-
-	@Override
 	public boolean isSwordCastable() {
 		return true;
 	}

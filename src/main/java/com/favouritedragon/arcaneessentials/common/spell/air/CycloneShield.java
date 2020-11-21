@@ -52,10 +52,6 @@ public class CycloneShield extends ArcaneSpell {
 		return false;
 	}
 
-	@Override
-	public boolean canBeCastByNPCs() {
-		return true;
-	}
 
 	@Override
 	public boolean isShieldCastable() {
