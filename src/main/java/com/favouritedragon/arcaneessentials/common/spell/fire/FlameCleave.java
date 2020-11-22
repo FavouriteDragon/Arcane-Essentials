@@ -46,11 +46,6 @@ public class FlameCleave extends ArcaneSpell {
 	}
 
 	@Override
-	public boolean canBeCastByNPCs() {
-		return false;
-	}
-
-	@Override
 	public boolean castRightClick() {
 		return false;
 	}

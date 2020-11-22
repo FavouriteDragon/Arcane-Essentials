@@ -3,10 +3,10 @@ package com.favouritedragon.arcaneessentials.common.spell.ice;
 import com.favouritedragon.arcaneessentials.common.spell.SpellRay;
 import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.registry.WizardrySounds;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,7 +42,7 @@ public class IcicleStorm extends SpellRay {
             } else if (ticksInUse % ((EntityLivingBase) target).maxHurtResistantTime == 1) {
                 ((EntityLivingBase) target).addPotionEffect(new PotionEffect(WizardryPotions.frost,
                         getProperty(EFFECT_DURATION).intValue(), getProperty(EFFECT_STRENGTH).intValue(), false, false));
-                WizardryUtilities.attackEntityWithoutKnockback(target,
+                EntityUtils.attackEntityWithoutKnockback(target,
                         MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.FROST),
                         getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY));
             }

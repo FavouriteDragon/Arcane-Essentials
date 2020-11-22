@@ -140,6 +140,8 @@ item.arcane_essentials:sword.mana=Mana: %1$s/%2$s
 item.arcane_essentials:sword.levelup=%1$s is ready to upgrade to %2$s tier
 item.arcane_essentials:sword.buff=+%1$s %2$s potency
 item.arcane_essentials:sword.progression=Progression: %1$s/%2$s
+item.arcane_essentials:sword.addally=%1$s has been added to your list of allies
+item.arcane_essentials:sword.removeally=%1$s has been removed from your list of allies
 
 item.arcane_essentials:novice_lightning_sword.name=Novice Lightning Sword
 item.arcane_essentials:apprentice_lightning_sword.name=Apprentice Lightning Sword

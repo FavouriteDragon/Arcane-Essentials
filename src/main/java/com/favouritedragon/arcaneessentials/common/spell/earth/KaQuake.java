@@ -47,12 +47,6 @@ public class KaQuake extends ArcaneSpell {
 		return false;
 	}
 
-
-	@Override
-	public boolean canBeCastByNPCs() {
-		return true;
-	}
-
 	@Override
 	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
 		if (world.getBlockState(caster.getPosition().offset(EnumFacing.DOWN)).isFullBlock()) {

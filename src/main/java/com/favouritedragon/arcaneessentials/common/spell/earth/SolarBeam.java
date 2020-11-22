@@ -82,10 +82,5 @@ public class SolarBeam extends ArcaneSpell {
 		return false;
 	}
 
-	@Override
-	public boolean canBeCastByNPCs() {
-		return true;
-	}
-
 
 }

@@ -7,8 +7,8 @@ import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
@@ -19,41 +19,36 @@ import net.minecraft.world.World;
 
 public class FlashStep extends ArcaneSpell {
 
-	private static final IVariable<Integer> TELEPORTS = new IVariable.Variable<>(Persistence.DIMENSION_CHANGE);
-	private static final String TELEPORT_NUMBER = "teleport_count";
+    private static final IVariable<Integer> TELEPORTS = new IVariable.Variable<>(Persistence.DIMENSION_CHANGE);
+    private static final String TELEPORT_NUMBER = "teleport_count";
 
-	public FlashStep() {
-		super( "flash_step", EnumAction.BOW, false);
-		addProperties(RANGE, TELEPORT_NUMBER);
-	}
+    public FlashStep() {
+        super("flash_step", EnumAction.BOW, false);
+        addProperties(RANGE, TELEPORT_NUMBER);
+    }
 
-	@Override
-	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		if (WizardData.get(caster) != null)
-			if (WizardData.get(caster).getVariable(TELEPORTS) == null || WizardData.get(caster).getVariable(TELEPORTS) < 1)
-				WizardData.get(caster).setVariable(TELEPORTS, getProperty(TELEPORT_NUMBER).intValue());
+    @Override
+    public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+        if (WizardData.get(caster) != null)
+            if (WizardData.get(caster).getVariable(TELEPORTS) == null || WizardData.get(caster).getVariable(TELEPORTS) < 1)
+                WizardData.get(caster).setVariable(TELEPORTS, getProperty(TELEPORT_NUMBER).intValue());
 
-		double range = getProperty(RANGE).doubleValue() * modifiers.get(WizardryItems.range_upgrade);
-		RayTraceResult result = ArcaneUtils.standardEntityRayTrace(world, caster, null, caster.getPositionVector().add(0, caster.getEyeHeight(), 0),
-				range, false, 0, true, false);
-		Vec3d tPos = caster.getLookVec().scale(range).add(caster.getPositionVector().add(0, caster.getEyeHeight(), 0));
-		if (result != null) {
-			tPos = result.hitVec.add(0, 1, 0);
-		}
-		if (ArcaneUtils.attemptTeleport(caster, tPos.x, tPos.y, tPos.z)) {
-			//spawn particles, play sounds
-			WizardryUtilities.playSoundAtPlayer(caster, WizardrySounds.ENTITY_FORCE_ORB_HIT_BLOCK, 1.0F + world.rand.nextFloat() / 10,
-					0.8F + world.rand.nextFloat() / 10);
-			caster.playSound(SoundEvents.ENTITY_ENDERMEN_TELEPORT, 0.5F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
+        double range = getProperty(RANGE).doubleValue() * modifiers.get(WizardryItems.range_upgrade);
+        RayTraceResult result = ArcaneUtils.standardEntityRayTrace(world, caster, null, caster.getPositionVector().add(0, caster.getEyeHeight(), 0),
+                range, false, 0, true, false);
+        Vec3d tPos = caster.getLookVec().scale(range).add(caster.getPositionVector().add(0, caster.getEyeHeight(), 0));
+        if (result != null) {
+            tPos = result.hitVec.add(0, 1, 0);
+        }
+        if (ArcaneUtils.attemptTeleport(caster, tPos.x, tPos.y, tPos.z)) {
+            //spawn particles, play sounds
+            EntityUtils.playSoundAtPlayer(caster, WizardrySounds.ENTITY_FORCE_ORB_HIT_BLOCK, 1.0F + world.rand.nextFloat() / 10,
+                    0.8F + world.rand.nextFloat() / 10);
+            caster.playSound(SoundEvents.ENTITY_ENDERMEN_TELEPORT, 0.5F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
 
-		}
-		WizardData.get(caster).setVariable(TELEPORTS, WizardData.get(caster).getVariable(TELEPORTS) - 1);
+        }
+        WizardData.get(caster).setVariable(TELEPORTS, WizardData.get(caster).getVariable(TELEPORTS) - 1);
 
-		return WizardData.get(caster).getVariable(TELEPORTS) < 1;
-	}
-
-	@Override
-	public boolean canBeCastByNPCs() {
-		return false;
-	}
+        return WizardData.get(caster).getVariable(TELEPORTS) < 1;
+    }
 }

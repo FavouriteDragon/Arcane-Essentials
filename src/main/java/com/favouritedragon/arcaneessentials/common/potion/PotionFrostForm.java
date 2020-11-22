@@ -84,7 +84,7 @@ public class PotionFrostForm extends PotionMagicEffect implements ISyncedPotion 
 												((EntityLivingBase) hit).addPotionEffect(new PotionEffect(WizardryPotions.frost,  RegisterHandler.frost_form.getProperty(Spell.EFFECT_DURATION).intValue() / 8,
 														effectLevel + 1));
 												if (effectLevel == 7 - RegisterHandler.frost_form.getProperty(Spell.EFFECT_STRENGTH).intValue()) {
-													((BlockStatue) WizardryBlocks.ice_statue).convertToStatue((EntityLiving) hit, RegisterHandler.frost_form.getProperty(Spell.EFFECT_DURATION).intValue());
+													((BlockStatue) WizardryBlocks.ice_statue).convertToStatue((EntityLiving) hit, entity, RegisterHandler.frost_form.getProperty(Spell.EFFECT_DURATION).intValue());
 												}
 
 											}

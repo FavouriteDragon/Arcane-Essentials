@@ -61,11 +61,6 @@ public class FirePledge extends ArcaneSpell {
 	}
 
 	@Override
-	public boolean canBeCastByNPCs() {
-		return true;
-	}
-
-	@Override
 	public boolean isAxeCastable() {
 		return true;
 	}

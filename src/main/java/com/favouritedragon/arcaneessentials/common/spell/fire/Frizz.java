@@ -76,14 +76,4 @@ public class Frizz extends ArcaneSpell {
 		return false;
 	}
 
-	@Override
-	public boolean canBeCastByNPCs() {
-		return true;
-	}
-
-	@Override
-	public boolean canBeCastByDispensers() {
-		return true;
-	}
-
 }

@@ -1,17 +1,16 @@
 package com.favouritedragon.arcaneessentials.common.spell.storm;
 
-import com.favouritedragon.arcaneessentials.common.spell.IArcaneSpell;
+import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.data.IVariable;
 import electroblob.wizardry.data.Persistence;
 import electroblob.wizardry.data.WizardData;
 import electroblob.wizardry.registry.Spells;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.spell.Charge;
-import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
-import electroblob.wizardry.util.WizardryUtilities;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -26,101 +25,99 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.List;
 
-public class StormAssault extends Spell implements IArcaneSpell {
+public class StormAssault extends ArcaneSpell {
 
-	private static final IVariable<Integer> ASSAULT_TIME = new IVariable.Variable<Integer>(Persistence.NEVER).withTicker(StormAssault::update);
-	private static final IVariable<SpellModifiers> STORM_MODIFIERS = new IVariable.Variable<>(Persistence.NEVER);
+    private static final IVariable<SpellModifiers> STORM_MODIFIERS = new IVariable.Variable<>(Persistence.NEVER);
+    private static final String NUMBER_OF_STRIKES = "strike_count";
+    private static final double EXTRA_HIT_MARGIN = 1;
+    private static final IVariable<Integer> ASSAULT_TIME = new IVariable.Variable<Integer>(Persistence.NEVER).withTicker(StormAssault::update);
 
-	private static final String NUMBER_OF_STRIKES = "strike_count";
+    public StormAssault() {
+        super("storm_assault", EnumAction.NONE, false);
+        addProperties(NUMBER_OF_STRIKES, DURATION, DAMAGE, EFFECT_STRENGTH);
+        this.soundValues(0.6f, 1, 0);
+    }
 
-	private static final double EXTRA_HIT_MARGIN = 1;
+    private static int update(EntityPlayer player, Integer chargeTime) {
 
-	public StormAssault(){
-		super("storm_assault", EnumAction.NONE, false);
-		addProperties(NUMBER_OF_STRIKES, DURATION, DAMAGE, EFFECT_STRENGTH);
-		this.soundValues(0.6f, 1, 0);
-	}
+        if (chargeTime == null) chargeTime = 0;
 
-	@Override
-	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers){
+        if (chargeTime > 0) {
 
-		WizardData.get(caster).setVariable(ASSAULT_TIME, (int)(getProperty(DURATION).floatValue()
-				* modifiers.get(WizardryItems.duration_upgrade)));
+            SpellModifiers modifiers = WizardData.get(player).getVariable(STORM_MODIFIERS);
+            if (modifiers == null) modifiers = new SpellModifiers();
 
-		WizardData.get(caster).setVariable(STORM_MODIFIERS, modifiers);
+            Vec3d look = player.getLookVec();
 
-		this.playSound(world, caster, ticksInUse, -1, modifiers);
+            float speed = Spells.charge.getProperty(Charge.CHARGE_SPEED).floatValue() * modifiers.get(WizardryItems.range_upgrade);
 
-		return true;
-	}
+            player.motionX = look.x * speed;
+            player.motionZ = look.z * speed;
 
-	private static int update(EntityPlayer player, Integer chargeTime){
+            if (player.world.isRemote) {
+                for (int i = 0; i < 5; i++) {
+                    ParticleBuilder.create(ParticleBuilder.Type.SPARK, player).spawn(player.world);
+                }
+            }
 
-		if(chargeTime == null) chargeTime = 0;
+            List<EntityLivingBase> collided = player.world.getEntitiesWithinAABB(EntityLivingBase.class, player.getEntityBoundingBox().grow(EXTRA_HIT_MARGIN));
 
-		if(chargeTime > 0) {
+            collided.remove(player);
 
-			SpellModifiers modifiers = WizardData.get(player).getVariable(STORM_MODIFIERS);
-			if(modifiers == null) modifiers = new SpellModifiers();
+            float damage = Spells.charge.getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
+            float knockback = Spells.charge.getProperty(EFFECT_STRENGTH).floatValue();
 
-			Vec3d look = player.getLookVec();
+            collided.forEach(e -> e.attackEntityFrom(MagicDamage.causeDirectMagicDamage(player, MagicDamage.DamageType.SHOCK), damage));
+            collided.forEach(e -> e.addVelocity(player.motionX * knockback, player.motionY * knockback + 0.3f, player.motionZ * knockback));
 
-			float speed = Spells.charge.getProperty(Charge.CHARGE_SPEED).floatValue() * modifiers.get(WizardryItems.range_upgrade);
+            if (player.world.isRemote) player.world.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE,
+                    player.posX + player.motionX, player.posY + player.height / 2, player.posZ + player.motionZ, 0, 0, 0);
 
-			player.motionX = look.x * speed;
-			player.motionZ = look.z * speed;
+            if (collided.isEmpty()) chargeTime--;
+            else {
+                EntityUtils.playSoundAtPlayer(player, SoundEvents.ENTITY_GENERIC_HURT, 1, 1);
+                chargeTime = 0;
+            }
+        }
 
-			if(player.world.isRemote){
-				for(int i = 0; i < 5; i++){
-					ParticleBuilder.create(ParticleBuilder.Type.SPARK, player).spawn(player.world);
-				}
-			}
+        return chargeTime;
+    }
 
-			List<EntityLivingBase> collided = player.world.getEntitiesWithinAABB(EntityLivingBase.class, player.getEntityBoundingBox().grow(EXTRA_HIT_MARGIN));
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    public static void onLivingAttackEvent(LivingAttackEvent event) {
+        // Players are immune to melee damage while charging
+        if (event.getEntity() instanceof EntityPlayer && event.getSource().getTrueSource() instanceof EntityLivingBase) {
 
-			collided.remove(player);
+            EntityPlayer player = (EntityPlayer) event.getEntity();
+            EntityLivingBase attacker = (EntityLivingBase) event.getSource().getTrueSource();
 
-			float damage = Spells.charge.getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
-			float knockback = Spells.charge.getProperty(EFFECT_STRENGTH).floatValue();
+            if (WizardData.get(player) != null) {
 
-			collided.forEach(e -> e.attackEntityFrom(MagicDamage.causeDirectMagicDamage(player, MagicDamage.DamageType.SHOCK), damage));
-			collided.forEach(e -> e.addVelocity(player.motionX * knockback, player.motionY * knockback + 0.3f, player.motionZ * knockback));
+                Integer chargeTime = WizardData.get(player).getVariable(ASSAULT_TIME);
 
-			if(player.world.isRemote) player.world.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE,
-					player.posX + player.motionX, player.posY + player.height/2, player.posZ + player.motionZ, 0, 0, 0);
+                if (chargeTime != null && chargeTime > 0
+                        && player.getEntityBoundingBox().grow(EXTRA_HIT_MARGIN).intersects(attacker.getEntityBoundingBox())) {
+                    event.setCanceled(true);
+                }
+            }
+        }
+    }
 
-			if(collided.isEmpty()) chargeTime--;
-			else{
-				WizardryUtilities.playSoundAtPlayer(player, SoundEvents.ENTITY_GENERIC_HURT, 1, 1);
-				chargeTime = 0;
-			}
-		}
+    @Override
+    public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 
-		return chargeTime;
-	}
+        WizardData.get(caster).setVariable(ASSAULT_TIME, (int) (getProperty(DURATION).floatValue()
+                * modifiers.get(WizardryItems.duration_upgrade)));
 
-	@SubscribeEvent(priority = EventPriority.HIGH)
-	public static void onLivingAttackEvent(LivingAttackEvent event){
-		// Players are immune to melee damage while charging
-		if(event.getEntity() instanceof EntityPlayer && event.getSource().getTrueSource() instanceof EntityLivingBase){
+        WizardData.get(caster).setVariable(STORM_MODIFIERS, modifiers);
 
-			EntityPlayer player = (EntityPlayer)event.getEntity();
-			EntityLivingBase attacker = (EntityLivingBase)event.getSource().getTrueSource();
+        this.playSound(world, caster, ticksInUse, -1, modifiers);
 
-			if(WizardData.get(player) != null){
+        return true;
+    }
 
-				Integer chargeTime = WizardData.get(player).getVariable(ASSAULT_TIME);
-
-				if(chargeTime != null && chargeTime > 0
-						&& player.getEntityBoundingBox().grow(EXTRA_HIT_MARGIN).intersects(attacker.getEntityBoundingBox())){
-					event.setCanceled(true);
-				}
-			}
-		}
-	}
-
-	@Override
-	public boolean isSwordCastable() {
-		return true;
-	}
+    @Override
+    public boolean isSwordCastable() {
+        return true;
+    }
 }
