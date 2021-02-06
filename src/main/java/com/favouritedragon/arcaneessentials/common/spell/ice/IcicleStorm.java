@@ -1,6 +1,7 @@
 package com.favouritedragon.arcaneessentials.common.spell.ice;
 
 import com.favouritedragon.arcaneessentials.common.spell.SpellRay;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryPotions;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.EntityUtils;
@@ -22,7 +23,7 @@ import net.minecraft.world.World;
 public class IcicleStorm extends SpellRay {
 
     public IcicleStorm() {
-        super("icicle_storm", true, EnumAction.NONE);
+        super("icicle_storm", SpellActions.POINT, true);
         this.particleVelocity(1);
         this.particleJitter(0.3);
         this.particleSpacing(0.125);

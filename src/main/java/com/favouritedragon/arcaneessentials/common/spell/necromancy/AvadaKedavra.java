@@ -15,8 +15,9 @@ import javax.annotation.Nullable;
 
 public class AvadaKedavra extends SpellRay {
 
-	public AvadaKedavra(String name, boolean isContinuous, EnumAction action) {
-		super(name, isContinuous, action);
+
+	public AvadaKedavra(String name, EnumAction action, boolean isContinuous) {
+		super(name, action, isContinuous);
 	}
 
 	@Override

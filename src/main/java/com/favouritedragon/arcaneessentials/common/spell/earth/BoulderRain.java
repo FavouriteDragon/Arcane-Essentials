@@ -14,8 +14,9 @@ import javax.annotation.Nullable;
 
 public class BoulderRain extends SpellRay {
 
-    public BoulderRain() {
-        super("boulder_rain", false, EnumAction.BOW);
+
+    public BoulderRain(String name, EnumAction action, boolean isContinuous) {
+        super(name, action, isContinuous);
     }
 
     @Override

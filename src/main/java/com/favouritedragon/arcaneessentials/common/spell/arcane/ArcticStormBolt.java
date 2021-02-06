@@ -15,10 +15,10 @@ import javax.annotation.Nullable;
 
 public class ArcticStormBolt extends SpellRay {
 
-	public ArcticStormBolt() {
-		super(ArcaneEssentials.MODID, false, EnumAction.BOW);
-	}
 
+	public ArcticStormBolt(String name, EnumAction action, boolean isContinuous) {
+		super(name, action, isContinuous);
+	}
 
 	@Override
 	protected boolean onEntityHit(World world, Entity target, Vec3d hit, @Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {

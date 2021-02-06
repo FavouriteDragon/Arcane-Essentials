@@ -38,11 +38,6 @@ public class FrostBlast extends ArcaneSpell {
 		return cast(world, caster, hand, modifiers);
 	}
 
-	@Override
-	public boolean canBeCastByNPCs() {
-		return true;
-	}
-
 	private boolean cast(World world, EntityLivingBase caster, EnumHand hand, SpellModifiers modifiers) {
 		double range = getProperty(RANGE).doubleValue() * modifiers.get(WizardryItems.range_upgrade);
 		Vec3d look = caster.getLookVec();

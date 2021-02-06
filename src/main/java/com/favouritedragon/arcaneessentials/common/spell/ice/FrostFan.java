@@ -65,16 +65,6 @@ public class FrostFan extends ArcaneSpell {
 	}
 
 	@Override
-	public boolean canBeCastByNPCs() {
-		return true;
-	}
-
-	@Override
-	public boolean canBeCastByDispensers() {
-		return true;
-	}
-
-	@Override
 	public boolean castRightClick() {
 		return false;
 	}

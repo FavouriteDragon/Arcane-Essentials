@@ -3,6 +3,7 @@ package com.favouritedragon.arcaneessentials.common.spell.divine;
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.spell.SpellRay;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
+import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
@@ -23,7 +24,7 @@ import static com.favouritedragon.arcaneessentials.common.util.ArcaneUtils.apply
 public class RadiantBeam extends SpellRay {
 
 	public RadiantBeam() {
-		super(ArcaneEssentials.MODID, "radiant_beam", false, EnumAction.BOW);
+		super("radiant_beam", SpellActions.POINT, false);
 		addProperties(DAMAGE, EFFECT_STRENGTH, BURN_DURATION);
 	}
 

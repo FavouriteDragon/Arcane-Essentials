@@ -44,7 +44,7 @@ public class KaThwack extends ArcaneSpell {
 	private boolean doCast(World world, EntityLivingBase caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
 		double radius = getProperty(BLAST_RADIUS).floatValue() * modifiers.get(WizardryItems.blast_upgrade);
 
-		List<EntityLivingBase> targets = WizardryUtilities.getEntitiesWithinRadius(radius, caster.posX, caster.posY, caster.posZ, world);
+		List<EntityLivingBase> targets = EntityUtils.getEntitiesWithinRadius(radius, caster.posX, caster.posY, caster.posZ, world, EntityLivingBase.class);
 
 		for (EntityLivingBase target : targets) {
 
@@ -69,7 +69,7 @@ public class KaThwack extends ArcaneSpell {
 						target.getHealth() <= getProperty(DAMAGE).floatValue() * proximity * (modifiers.get(SpellModifiers.POTENCY))) {
 					if (target.getHealth() > 0 || !target.isDead) {
 						caster.heal(target.getHealth());
-						WizardryUtilities.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER),
+						EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER),
 								target.getHealth() + 1);
 						if (world.isRemote) {
 							for (int i = 0; i < 80; i++) {
@@ -83,7 +83,7 @@ public class KaThwack extends ArcaneSpell {
 				}
 				else {
 					if (!world.isRemote)
-						WizardryUtilities.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER),
+						EntityUtils.attackEntityWithoutKnockback(target, MagicDamage.causeDirectMagicDamage(caster, MagicDamage.DamageType.WITHER),
 								getProperty(DAMAGE).floatValue() * proximity * modifiers.get(SpellModifiers.POTENCY));
 				}
 			}
@@ -97,7 +97,7 @@ public class KaThwack extends ArcaneSpell {
 
 				particleX = caster.posX - 1.0d + 2 * world.rand.nextDouble();
 				particleZ = caster.posZ - 1.0d + 2 * world.rand.nextDouble();
-				IBlockState block = WizardryUtilities.getBlockEntityIsStandingOn(caster);
+				IBlockState block = BlockUtils.getBlockEntityIsStandingOn(caster);
 
 				if (block != null) {
 					world.spawnParticle(EnumParticleTypes.BLOCK_DUST, particleX, caster.getEntityBoundingBox().minY,
@@ -124,11 +124,6 @@ public class KaThwack extends ArcaneSpell {
 
 		caster.swingArm(hand);
 		playSound(world, caster, ticksInUse, -1, modifiers);
-		return true;
-	}
-
-	@Override
-	public boolean canBeCastByNPCs() {
 		return true;
 	}
 }

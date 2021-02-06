@@ -1,6 +1,8 @@
 package com.favouritedragon.arcaneessentials.common.item.weapon;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
+import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
+import com.favouritedragon.arcaneessentials.common.spell.SpellRay;
 import com.google.common.collect.Multimap;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.client.DrawingUtils;
@@ -350,7 +352,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
             return;
         }
         // +0.5f is necessary due to the error in the way floats are calculated.
-        if (element != null) text.add(Wizardry.proxy.translate("item." + Wizardry.MODID + ":wand.buff",
+        if (element != null) text.add(Wizardry.proxy.translate("item." + ArcaneEssentials.MODID + ":sword.buff",
                 new Style().setColor(TextFormatting.DARK_GRAY),
                 (int) ((tier.level + 1) * Constants.POTENCY_INCREASE_PER_TIER * 100 + 0.5f), element.getDisplayName()));
 
@@ -362,15 +364,15 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
             discovered = false;
         }
 
-        text.add(Wizardry.proxy.translate("item." + Wizardry.MODID + ":wand.spell", new Style().setColor(TextFormatting.GRAY),
+        text.add(Wizardry.proxy.translate("item." + ArcaneEssentials.MODID + ":sword.spell", new Style().setColor(TextFormatting.GRAY),
                 discovered ? spell.getDisplayNameWithFormatting() : "#" + TextFormatting.BLUE + SpellGlyphData.getGlyphName(spell, player.world)));
 
         if (advanced.isAdvanced()) {
             // Advanced tooltips for debugging
-            text.add(Wizardry.proxy.translate("item." + Wizardry.MODID + ":wand.mana", new Style().setColor(TextFormatting.BLUE),
+            text.add(Wizardry.proxy.translate("item." + ArcaneEssentials.MODID + ":sword.mana", new Style().setColor(TextFormatting.BLUE),
                     this.getMana(stack), this.getManaCapacity(stack)));
 
-            text.add(Wizardry.proxy.translate("item." + Wizardry.MODID + ":wand.progression", new Style().setColor(TextFormatting.GRAY),
+            text.add(Wizardry.proxy.translate("item." + ArcaneEssentials.MODID + ":sword.progression", new Style().setColor(TextFormatting.GRAY),
                     WandHelper.getProgression(stack), this.tier.level < Tier.MASTER.level ? tier.next().getProgression() : 0));
         }
     }
@@ -820,8 +822,13 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
                 Spell spell = Spell.byMetadata(spellBooks[i].getStack().getItemDamage());
                 // If the wand is powerful enough for the spell, it's not already bound to that slot and it's enabled for wands
                 if (!(spell.getTier().level > this.tier.level) && spells[i] != spell && spell.isEnabled(SpellProperties.Context.WANDS)) {
-                    spells[i] = spell;
-                    changed = true;
+                    if (!(spell instanceof ArcaneSpell || spell instanceof SpellRay) || spell instanceof ArcaneSpell && ((ArcaneSpell) spell).isSwordCastable()) {
+                        if (spell.getElement() == element || spell.getElement() == Element.MAGIC) {
+                            spells[i] = spell;
+                            changed = true;
+                        }
+                        //TODO: Error message when applying non-compatible spells
+                    }
                 }
             }
         }
