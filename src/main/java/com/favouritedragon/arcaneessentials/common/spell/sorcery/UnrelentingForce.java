@@ -8,6 +8,7 @@ import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,6 +24,7 @@ public class UnrelentingForce extends ArcaneSpell {
 		super("unrelenting_force", EnumAction.BOW, false);
 		addProperties(DAMAGE, RANGE, EFFECT_STRENGTH, EFFECT_RADIUS);
 		this.soundValues(5.0f, 1.125F, 0.0875F);
+		this.npcSelector = npcSelector.or((entityLiving, aBoolean) -> entityLiving != null);
 	}
 
 	@Override
@@ -39,11 +41,6 @@ public class UnrelentingForce extends ArcaneSpell {
 			caster.swingArm(hand);
 		this.playSound(world, caster, ticksInUse, -1, modifiers);
 		return cast(world, caster, hand, modifiers);
-	}
-
-	@Override
-	public boolean canBeCastByNPCs() {
-		return true;
 	}
 
 	private boolean cast(World world, EntityLivingBase caster, EnumHand hand, SpellModifiers modifiers) {

@@ -1,6 +1,5 @@
 package com.favouritedragon.arcaneessentials.common.spell.necromancy;
 
-import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.spell.SpellRay;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.*;
@@ -22,7 +21,7 @@ import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.LIFE_S
 public class KaZammle extends SpellRay {
 
 	public KaZammle() {
-		super(ArcaneEssentials.MODID, "kazammle", false, EnumAction.BOW);
+		super("kazammle", EnumAction.BOW, false);
 		addProperties(DAMAGE, LIFE_STEAL, EFFECT_STRENGTH);
 	}
 
@@ -62,7 +61,7 @@ public class KaZammle extends SpellRay {
 
 	@Override
 	protected boolean onBlockHit(World world, BlockPos pos, EnumFacing side, Vec3d hit, @Nullable EntityLivingBase caster, Vec3d origin, int ticksInUse, SpellModifiers modifiers) {
-		Vec3d vec = hit.add(new Vec3d(side.getDirectionVec()).scale(WizardryUtilities.ANTI_Z_FIGHTING_OFFSET));
+		Vec3d vec = hit.add(new Vec3d(side.getDirectionVec()).scale(GeometryUtils.ANTI_Z_FIGHTING_OFFSET));
 		if (world.isRemote) {
 			ParticleBuilder.create(ParticleBuilder.Type.SCORCH).pos(vec).face(side).clr(33, 0, 71).scale(6).time(45).spawn(world);
 		}

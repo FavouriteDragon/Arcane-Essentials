@@ -18,42 +18,40 @@ import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.SIZE;
 public class Splash extends ArcaneSpell {
 
 
-	public Splash() {
-		super("splash", EnumAction.BOW, false);
-		addProperties(DAMAGE, EFFECT_STRENGTH, RANGE, SIZE);
-	}
+    public Splash() {
+        super("splash", EnumAction.BOW, false);
+        addProperties(DAMAGE, EFFECT_STRENGTH, RANGE, SIZE);
+        this.npcSelector = npcSelector.or((entityLiving, aBoolean) -> entityLiving != null);
+    }
 
-	@Override
-	public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
-		return cast(world, caster, modifiers);
-	}
+    @Override
+    public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+        return cast(world, caster, modifiers);
+    }
 
-	@Override
-	public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
-		return cast(world, caster, modifiers);
-	}
+    @Override
+    public boolean cast(World world, EntityLiving caster, EnumHand hand, int ticksInUse, EntityLivingBase target, SpellModifiers modifiers) {
+        return cast(world, caster, modifiers);
+    }
 
-	private boolean cast(World world, EntityLivingBase caster, SpellModifiers modifiers) {
-		float speed, damage, knockback, size;
-		damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
-		size = getProperty(SIZE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
-		speed = getProperty(RANGE).floatValue() / 13 * modifiers.get(WizardryItems.range_upgrade);
-		knockback = getProperty(EFFECT_STRENGTH).floatValue() / 2 * modifiers.get(WizardryItems.blast_upgrade);
-		caster.playSound(SoundEvents.ENTITY_GENERIC_SWIM, 0.8F + world.rand.nextFloat() / 10, 0.6F + world.rand.nextFloat() / 10);
-		caster.playSound(WizardrySounds.ENTITY_MAGIC_SLIME_ATTACK, 1.0F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
-		if (!world.isRemote) {
-			EntityWaterBall ball = new EntityWaterBall(world);
-			ball.setCaster(caster);
-			ball.setSize(size);
-			ball.setDamage(damage);
-			ball.setKnockbackStrength((int) knockback);
-			ball.aim(caster, speed, 0F);
-			return world.spawnEntity(ball);
-		}
-		return false;
-	}
-	@Override
-	public boolean canBeCastByNPCs() {
-		return true;
-	}
+    private boolean cast(World world, EntityLivingBase caster, SpellModifiers modifiers) {
+        float speed, damage, knockback, size;
+        damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
+        size = getProperty(SIZE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
+        speed = getProperty(RANGE).floatValue() / 13 * modifiers.get(WizardryItems.range_upgrade);
+        knockback = getProperty(EFFECT_STRENGTH).floatValue() / 2 * modifiers.get(WizardryItems.blast_upgrade);
+        caster.playSound(SoundEvents.ENTITY_GENERIC_SWIM, 0.8F + world.rand.nextFloat() / 10, 0.6F + world.rand.nextFloat() / 10);
+        caster.playSound(WizardrySounds.ENTITY_MAGIC_SLIME_ATTACK, 1.0F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10);
+        if (!world.isRemote) {
+            EntityWaterBall ball = new EntityWaterBall(world);
+            ball.setCaster(caster);
+            ball.setSize(size);
+            ball.setDamage(damage);
+            ball.setKnockbackStrength((int) knockback);
+            ball.aim(caster, speed, 0F);
+            return world.spawnEntity(ball);
+        }
+        return false;
+    }
+
 }

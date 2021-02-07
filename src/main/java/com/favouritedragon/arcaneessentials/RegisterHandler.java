@@ -147,15 +147,15 @@ public class RegisterHandler {
         event.getRegistry().register(new KaZammle());
         event.getRegistry().register(new LightningVortex());
         event.getRegistry().register(new OceanBurst());
-        event.getRegistry().register(new SaintessSun());
-        event.getRegistry().register(new SpellBuff(ArcaneEssentials.MODID,"oomph", 1F, 90 / 255F, 0,
-                () -> MobEffects.STRENGTH).soundValues(1, 0.8f, 0.2f));
         event.getRegistry().register(new Quake());
         event.getRegistry().register(new RadianceStorm());
         event.getRegistry().register(new RadiantBeam());
+      //  event.getRegistry().register(new SaintessSun());
         event.getRegistry().register(new Shake());
         event.getRegistry().register(new Shatter());
         event.getRegistry().register(new SolarBeam());
+        event.getRegistry().register(new SpellBuff(ArcaneEssentials.MODID, "oomph", 1F, 90 / 255F, 0,
+                () -> MobEffects.STRENGTH).soundValues(1, 0.8f, 0.2f));
         event.getRegistry().register(new Splash());
         event.getRegistry().register(new Sploosh());
         event.getRegistry().register(new StormBlink());

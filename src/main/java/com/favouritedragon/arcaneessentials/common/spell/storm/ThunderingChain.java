@@ -18,6 +18,7 @@ public class ThunderingChain extends ArcaneSpell {
 	public ThunderingChain() {
 		super("thundering_chain", EnumAction.BOW, false);
 		addProperties(DURATION, DAMAGE, EFFECT_DURATION);
+		this.npcSelector = npcSelector.or((entityLiving, aBoolean) -> entityLiving != null);
 	}
 
 	@Override
@@ -52,10 +53,5 @@ public class ThunderingChain extends ArcaneSpell {
 			return world.spawnEntity(spawner);
 		}
 		return false;
-	}
-
-	@Override
-	public boolean canBeCastByNPCs() {
-		return true;
 	}
 }

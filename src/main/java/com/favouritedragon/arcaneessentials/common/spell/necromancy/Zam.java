@@ -23,7 +23,7 @@ import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.LIFE_S
 public class Zam extends SpellRay {
 
 	public Zam() {
-		super(ArcaneEssentials.MODID, "zam", false, EnumAction.BOW);
+		super("zam",EnumAction.BOW, false);
 		addProperties(DAMAGE, LIFE_STEAL, EFFECT_STRENGTH);
 	}
 
