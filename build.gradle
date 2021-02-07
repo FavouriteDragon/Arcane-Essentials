@@ -9,9 +9,10 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
+apply plugin: "idea"
 apply plugin: "net.minecraftforge.gradle.forge"
 
-version = "1.0.0-alpha-6"
+version = "1.0.0-alpha-7"
 group = "com.favouritedragon.arcane_essentials" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Arcane Essentials"
 
@@ -39,10 +40,10 @@ configurations {
 }
 
 repositories {
-    maven {
-        name = "Curseforge Maven"
-        url = "https://minecraft.curseforge.com/api/maven/"
-    }
+//    maven {
+//        name = "Curseforge Maven"
+//        url = "https://minecraft.curseforge.com/api/maven/"
+//    }
     maven {
         url = "https://oss.sonatype.org/content/repositories/snapshots/"
     }
@@ -93,20 +94,12 @@ processResources {
         include 'mcmod.info'
 
         // replace version and mcversion
-        expand 'version': project.version, 'mcversion': project.minecraft.version
+        expand 'version':project.version, 'mcversion':project.minecraft.version
     }
 
     // copy everything else except the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
-    }
-
-
-    //Intellij is arse
-    sourceSets {
-        main {
-            output.resourcesDir = output.classesDir
-        }
     }
 }
 
