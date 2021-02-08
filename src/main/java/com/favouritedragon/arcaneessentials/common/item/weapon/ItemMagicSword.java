@@ -19,6 +19,7 @@ import electroblob.wizardry.packet.WizardryPacketHandler;
 import electroblob.wizardry.registry.*;
 import electroblob.wizardry.spell.Spell;
 import electroblob.wizardry.util.*;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -827,7 +828,8 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
                             spells[i] = spell;
                             changed = true;
                         }
-                        //TODO: Error message when applying non-compatible spells
+                        else player.sendMessage(new TextComponentTranslation(
+                                I18n.format("This spell is incompatible with that sword!", TextFormatting.BOLD)));
                     }
                 }
             }
