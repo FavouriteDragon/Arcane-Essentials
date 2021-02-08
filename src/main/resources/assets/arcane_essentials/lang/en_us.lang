@@ -63,7 +63,7 @@ spell.arcane_essentials:kasploosh=KaSploosh
 spell.arcane_essentials:kasploosh.desc=Launch a huge hydraulic orb at your enemies, with a giant whirlpool!
 
 spell.arcane_essentials:kasplooshle=KaSplooshle
-spell.arcane_essentials:kasplooshle.desc=Release the power of posiedon's wrath contained in an enormous water bubble!
+spell.arcane_essentials:kasplooshle.desc=Release the power of Poseidon's wrath contained in an enormous water bubble!
 
 #If you just use a single %, it causes a format error.
 spell.arcane_essentials:kathwack=KaThwack
@@ -92,6 +92,9 @@ spell.arcane_essentials:radiance_storm.desc=Unleash pillars of divine light arou
 
 spell.arcane_essentials:radiant_beam=Radiant Beam
 spell.arcane_essentials:radiant_beam.desc=Fire a beam of holy energy where you're looking, setting enemies on fire and doing extra damage to undead.
+
+spell.arcane_essentials:saintess_sun=Saintess' Sun
+spell.arcane_essentials:saintess_sun.desc=Summon the power of a god, and unleash divine fury on your enemies! A miniature sun casts judgement on those it deems unworthy.
 
 spell.arcane_essentials:shake=Shake
 spell.arcane_essentials:shake.desc=Create a split in the earth, knocking enemies back!
