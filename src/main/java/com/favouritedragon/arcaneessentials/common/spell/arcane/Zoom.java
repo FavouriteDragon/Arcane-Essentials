@@ -47,12 +47,12 @@ public class Zoom extends ArcaneSpell {
                         }
                     }
                 else {
-                    player.changeDimension(player.getSpawnDimension(), (world, entity, yaw) -> {
-                        //This doesn't always work ;-;
-                        for (int i = 0; i < 10; i++) {
-                            BlockPos pos = player.getBedLocation(player.getSpawnDimension());
-                            //Intellij is bad, ignore this warning. It has, does, and will crash.
-                            if (pos != null) {
+                    //Intellij is bad, ignore this warning. It has, does, and will crash.
+                    if (player.getBedLocation() != null && player.getBedLocation(player.getSpawnDimension()) != null) {
+                        player.changeDimension(player.getSpawnDimension(), (world, entity, yaw) -> {
+                            //This doesn't always work ;-;
+                            for (int i = 0; i < 10; i++) {
+                                BlockPos pos = player.getBedLocation(player.getSpawnDimension());
                                 pos = pos.up(i);
                                 player.world.updateBlockTick(player.getBedLocation(), player.world.getBlockState(player.getBedLocation(player.getSpawnDimension())).getBlock(), 0, 1);
                                 if (ArcaneUtils.attemptGroundedTeleport(player, pos.getX(), pos.getY(), pos.getZ())) {
@@ -63,24 +63,24 @@ public class Zoom extends ArcaneSpell {
 
                                 }
                             }
-                        }
-                    });
-                    //Make sure the player goes to their bed!
-                    for (int i = 0; i < 10; i++) {
-                        BlockPos pos = player.getBedLocation(player.getSpawnDimension());
-                        pos = pos.up(i);
-                        player.world.updateBlockTick(player.getBedLocation(), player.world.getBlockState(player.getBedLocation(player.getSpawnDimension())).getBlock(), 0, 1);
-                        if (ArcaneUtils.attemptGroundedTeleport(player, pos.getX(), pos.getY(), pos.getZ())) {
-                            if (player.world.isRemote)
-                                ParticleBuilder.create(ParticleBuilder.Type.BEAM).time(20).entity(player)
-                                        .clr(0, 222, 255).target(player.getPositionVector().add(0, 30, 0)).scale(10).spawn(player.world);
+                        });
+                        //Make sure the player goes to their bed!
+                        for (int i = 0; i < 10; i++) {
+                            BlockPos pos = player.getBedLocation(player.getSpawnDimension());
+                            pos = pos.up(i);
                             player.world.updateBlockTick(player.getBedLocation(), player.world.getBlockState(player.getBedLocation(player.getSpawnDimension())).getBlock(), 0, 1);
+                            if (ArcaneUtils.attemptGroundedTeleport(player, pos.getX(), pos.getY(), pos.getZ())) {
+                                if (player.world.isRemote)
+                                    ParticleBuilder.create(ParticleBuilder.Type.BEAM).time(20).entity(player)
+                                            .clr(0, 222, 255).target(player.getPositionVector().add(0, 30, 0)).scale(10).spawn(player.world);
+                                player.world.updateBlockTick(player.getBedLocation(), player.world.getBlockState(player.getBedLocation(player.getSpawnDimension())).getBlock(), 0, 1);
 
+                            }
                         }
+                        WizardData.get(player).setVariable(CHARGE_TIME, null);
+                        chargeTime = -1;
+                        return chargeTime;
                     }
-                    WizardData.get(player).setVariable(CHARGE_TIME, null);
-                    chargeTime = -1;
-                    return chargeTime;
                 }
                 //player.world.updateBlockTick(player.getBedLocation(), player.world.getBlockState(player.getBedLocation(player.getSpawnDimension())).getBlock(), 0, 1);
                 WizardData.get(player).setVariable(CHARGE_TIME, null);

@@ -56,7 +56,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
     /**
      * The number of spell slots a wand has with no attunement upgrades applied.
      */
-    public static final int BASE_SPELL_SLOTS = 5;
+    public static final int BASE_SPELL_SLOTS = 3;
 
     /**
      * The number of ticks between each time a continuous spell is added to the player's recently-cast spells.
@@ -267,7 +267,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
             // This check doesn't affect the damage output, but it does stop a blank line from appearing in the tooltip.
             if (level > 0 && !this.isManaEmpty(stack)) {
                 multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(),
-                        new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Melee upgrade modifier", 2 * level, 0));
+                        new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Melee upgrade modifier", level + (tier.level + 1)  + getAttackDamage(), 0));
                 multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Melee upgrade modifier", -2.4000000953674316D, 0));
             }
         }
