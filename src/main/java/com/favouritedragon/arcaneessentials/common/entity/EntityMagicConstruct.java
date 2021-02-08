@@ -192,11 +192,16 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
             entity = null;
         }
 
+        if (entity == null)
+            entity = EntityUtils.getEntityByUUID(world, UUID.fromString(dataManager.get(SYNC_OWNER_ID)));
+
         return (EntityLivingBase) entity;
     }
 
     public void setCaster(@Nullable EntityLivingBase caster) {
         this.casterUUID = caster == null ? null : caster.getUniqueID();
+        if (caster != null)
+            setOwner(caster);
     }
 
     /**
@@ -207,4 +212,9 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
         return AllyDesignationSystem.isValidTarget(this.getCaster(), target);
     }
 
+    //MWAHAHAHAHAH
+    @Override
+    public boolean shouldRenderInPass(int pass) {
+        return true;
+    }
 }

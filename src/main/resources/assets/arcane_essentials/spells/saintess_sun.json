@@ -14,7 +14,7 @@
   "element": "healing",
   "type": "attack",
   "cost": 120,
-  "chargeup": 10,
+  "chargeup": 60,
   "cooldown": 140,
   "base_properties": {
     "damage": 8,

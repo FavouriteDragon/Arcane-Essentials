@@ -4,10 +4,9 @@ import com.favouritedragon.arcaneessentials.common.entity.EntityMagicConstruct;
 import com.favouritedragon.arcaneessentials.common.entity.EntitySaintessSun;
 import com.favouritedragon.arcaneessentials.common.entity.data.MagicConstructBehaviour;
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
-import com.favouritedragon.arcaneessentials.common.spell.necromancy.AvadaKedavra;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardryItems;
-import electroblob.wizardry.spell.Spell;
+import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
@@ -24,6 +23,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class SaintessSun extends ArcaneSpell {
@@ -33,17 +33,27 @@ public class SaintessSun extends ArcaneSpell {
         addProperties(EFFECT_RADIUS, BURN_DURATION, DAMAGE, EFFECT_DURATION);
     }
 
-    private static void shootBeam(EntityLivingBase caster, EntitySaintessSun source, Entity target) {
-        World world = caster.world;
+    @Nullable
+    public static void shootBeam(EntityLivingBase caster, EntitySaintessSun source, Entity target) {
 
-        if (world.isRemote)
-            ParticleBuilder.create(ParticleBuilder.Type.BEAM).time(10 + ArcaneUtils.getRandomNumberInRange(0, 4))
-                    .clr(1.0F, 1.0F, 0.3F).entity(source).target(target.getPositionVector().add(0, target.getEyeHeight(), 0))
-                    .spawn(world);
-        else {
+        World world = source.world;
+
+        if (caster != null && world.isRemote) {
+            ParticleBuilder.create(ParticleBuilder.Type.BEAM).time(12 + ArcaneUtils.getRandomNumberInRange(0, 4))
+                    .clr(1.0F, 1.0F, 0.3F).entity(caster).pos(ArcaneUtils.getMiddleOfEntity(source)
+                    .subtract(caster.getPositionVector())).target(target.getPositionVector().add(0, target.getEyeHeight() / 2, 0))
+                    .scale(source.getSize()).spawn(source.world);
+            world.playSound(target.posX, target.posY, target.posZ, WizardrySounds.ENTITY_HAMMER_EXPLODE,
+                    WizardrySounds.SPELLS, 1.5F + world.rand.nextFloat() / 4, 0.75F + world.rand.nextFloat() / 4, true);
+            world.playSound(target.posX, target.posY, target.posZ, WizardrySounds.ENTITY_FORCEFIELD_DEFLECT,
+                    WizardrySounds.SPELLS, 1.5F + world.rand.nextFloat() / 4, 0.875F + world.rand.nextFloat() / 4, true);
+
+        }
+        if (caster != null && !world.isRemote) {
             DamageSource damageSource = MagicDamage.causeIndirectMagicDamage(source, caster, MagicDamage.DamageType.RADIANT);
             float damage = source.getDamage();
-            if (target.attackEntityFrom(damageSource, damage)) {
+            if (!target.getIsInvulnerable() && !MagicDamage.isEntityImmune(MagicDamage.DamageType.RADIANT, target)
+                    && target.attackEntityFrom(damageSource, damage / 4)) {
                 target.setFire(source.getFireTime());
 
                 Vec3d entityPos = target.getPositionVector();
@@ -52,14 +62,13 @@ public class SaintessSun extends ArcaneSpell {
 
                 target.addVelocity(vel.x, vel.y + 0.15, vel.z);
 
-            }
-            if (!target.attackEntityFrom(damageSource, damage) && target instanceof EntityDragon) {
+            } else if (!target.attackEntityFrom(damageSource, damage) && target instanceof EntityDragon) {
                 if (((EntityDragon) target).attackEntityFromPart(((EntityDragon) target).dragonPartBody, damageSource, damage)) {
                     target.setFire(source.getFireTime());
                 }
             }
-
         }
+
     }
 
     private boolean cast(World world, EntityLivingBase caster, SpellModifiers modifiers) {
@@ -85,8 +94,13 @@ public class SaintessSun extends ArcaneSpell {
         sun.setBehaviour(new SaintessSunBehaviour());
         sun.setCaster(caster);
         if (!world.isRemote)
-           return world.spawnEntity(sun);
-        return false;
+            world.spawnEntity(sun);
+        world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_STORMCLOUD_THUNDER,
+                WizardrySounds.SPELLS, 2.0F, 0.675F + world.rand.nextFloat() / 4, false);
+        world.playSound(caster.posX, caster.posY, caster.posZ, WizardrySounds.ENTITY_FORCEFIELD_DEFLECT,
+                WizardrySounds.SPELLS, 2.0F, 0.875F + world.rand.nextFloat() / 4, false);
+
+        return true;
     }
 
     @Override
@@ -103,34 +117,28 @@ public class SaintessSun extends ArcaneSpell {
                 EntityLivingBase caster = entity.getCaster();
                 World world = entity.world;
 
-                float height = entity.getSize() * 2;
+                float height = entity.getSize() * 1.5F;
 
                 Vec3d targetPos = ArcaneUtils.getEntityPos(caster).add(0, height, 0);
                 Vec3d entityPos = entity.getPositionVector();
                 Vec3d targetVelocity = targetPos.subtract(entityPos).scale(0.1);
                 entity.setVelocity(targetVelocity.x, targetVelocity.y, targetVelocity.z);
 
-                List<Entity> targets = world.getEntitiesWithinAABB(Entity.class, entity.getEntityBoundingBox().grow(height));
+                List<Entity> targets = world.getEntitiesWithinAABB(Entity.class, entity.getEntityBoundingBox()
+                        .grow(height * 1.25F));
                 if (!targets.isEmpty()) {
                     for (Entity target : targets) {
                         if (entity.isValidTarget(target) && target != entity && target != caster) {
-                            shootBeam(caster, (EntitySaintessSun) entity, target);
+                            if (target instanceof EntityLivingBase && ((EntityLivingBase) target).hurtTime == 0)
+                                shootBeam(caster, (EntitySaintessSun) entity, target);
                         }
                     }
                 }
 
-                if (world.isRemote) {
-                    System.out.println("Hm");
-                    for (double i = 0; i < entity.width; i += 0.15) {
-                        ParticleBuilder.create(ParticleBuilder.Type.FLASH).pos(entityPos).clr(1.0F, 1.0F, 0.3F)
-                                .time(12 + ArcaneUtils.getRandomNumberInRange(2, 4)).scale(entity.getSize()).vel(world.rand.nextGaussian() / 20,
-                                world.rand.nextGaussian() / 20, world.rand.nextGaussian() / 20)
-                                .spawn(world);
-                    }
-                    ParticleBuilder.create(ParticleBuilder.Type.SPHERE).clr(1.0F, 1.0F, 0.3F)
-                            .entity(entity).pos(entityPos).time(20 + ArcaneUtils.getRandomNumberInRange(0, 2))
-                            .scale(entity.getSize()).spawn(world);
-                }
+                if (entity.ticksExisted < 2)
+                    world.playSound(entity.posX, entity.posY, entity.posZ, WizardrySounds.ENTITY_RADIANT_TOTEM_AMBIENT,
+                            WizardrySounds.SPELLS, 3.0F, 1.5F, false);
+
 
             }
             entity.move(MoverType.SELF, entity.motionX, entity.motionY, entity.motionZ);

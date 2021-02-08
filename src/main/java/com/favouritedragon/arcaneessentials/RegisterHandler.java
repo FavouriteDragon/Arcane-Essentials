@@ -89,7 +89,7 @@ public class RegisterHandler {
         registerEntity(EntityCycloneShield.class, "CyloneShield", ++id, 128, LIVING_UPDATE_INTERVAL, false);
         registerEntity(EntitySolarBeam.class, "SolarBeam", ++id, 128, LIVING_UPDATE_INTERVAL, false);
         registerEntity(EntityMagicLightning.class, "MagicLightning", ++id, 128, LIVING_UPDATE_INTERVAL, false);
-        registerEntity(EntitySaintessSun.class, "SaintessSun", ++id, 128, LIVING_UPDATE_INTERVAL, true);
+        registerEntity(EntitySaintessSun.class, "SaintessSun", ++id, 128, LIVING_UPDATE_INTERVAL * 1000, true);
 
         //Spawners
         registerEntity(EntityFlamePillarSpawner.class, "FlamePillarSpawner", ++id, 128, PROJECTILE_UPDATE_INTERVAL, true);
@@ -130,9 +130,8 @@ public class RegisterHandler {
         event.getRegistry().register(new FlashStep());
         event.getRegistry().register(new Frizz());
         event.getRegistry().register(new Frizzle());
-        event.getRegistry().register(new FrostFan());
         event.getRegistry().register(new FrostBlast());
-        //event.getRegistry().register(new FrostFan());
+        event.getRegistry().register(new FrostFan());
         event.getRegistry().register(frost_form = new FrostForm());
         event.getRegistry().register(new IcicleStorm());
         event.getRegistry().register(inferno_form = new InfernoForm());
@@ -150,7 +149,7 @@ public class RegisterHandler {
         event.getRegistry().register(new Quake());
         event.getRegistry().register(new RadianceStorm());
         event.getRegistry().register(new RadiantBeam());
-      //  event.getRegistry().register(new SaintessSun());
+        event.getRegistry().register(new SaintessSun());
         event.getRegistry().register(new Shake());
         event.getRegistry().register(new Shatter());
         event.getRegistry().register(new SolarBeam());

@@ -1,7 +1,9 @@
 package com.favouritedragon.arcaneessentials.client.render;
 
-import com.favouritedragon.arcaneessentials.common.entity.EntityFireball;
+import com.favouritedragon.arcaneessentials.ArcaneEssentials;
+import com.favouritedragon.arcaneessentials.common.entity.EntitySaintessSun;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;
@@ -14,22 +16,22 @@ import javax.annotation.Nullable;
 
 import static com.favouritedragon.arcaneessentials.client.render.RenderUtils.drawSphere;
 
-public class RenderFireball extends Render<EntityFireball> {
+public class RenderSaintessSun extends Render<EntitySaintessSun> {
     private static final float EXPANSION_TIME = 3;
 
-    public RenderFireball(RenderManager renderManager) {
+    public RenderSaintessSun(RenderManager renderManager) {
         super(renderManager);
     }
 
     //Copied from the forcefield class
     @Override
-    public void doRender(@Nonnull EntityFireball entity, double x, double y, double z, float entityYaw, float partialTicks) {
-        super.doRender(entity, x, y, z, entityYaw, partialTicks);
+    public void doRender(@Nonnull EntitySaintessSun entity, double x, double y, double z, float entityYaw, float partialTicks) {
+      //  super.doRender(entity, x, y, z, entityYaw, partialTicks);
         GlStateManager.pushMatrix();
 
         GlStateManager.enableBlend();
         GlStateManager.disableLighting();
-        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
 
         GlStateManager.translate(x, y + entity.getSize() / 1.75, z);
@@ -43,23 +45,23 @@ public class RenderFireball extends Render<EntityFireball> {
         float r1 = 1F, g1 = 175 / 255F, b1 = 51 / 255F;
         float r2 = 252 / 255F, g2 = 1F, b2 = 51 / 255F;
 
-        float radius = entity.getSize() / 2;
+        float radius = entity.getSize() / 1.75F;
         float a = 0.5f;
 
-        if (entity.ticksExisted > entity.getLifetime() - EXPANSION_TIME) {
-            radius *= 1 + 0.2f * (entity.ticksExisted + partialTicks - (entity.getLifetime() - EXPANSION_TIME)) / EXPANSION_TIME;
-            a *= Math.max(0, 1 - (entity.ticksExisted + partialTicks - (entity.getLifetime() - EXPANSION_TIME)) / EXPANSION_TIME);
-        } else if (entity.ticksExisted < EXPANSION_TIME) {
-            radius *= 1 - (EXPANSION_TIME - entity.ticksExisted - partialTicks) / EXPANSION_TIME;
-            a *= 1 - (EXPANSION_TIME - entity.ticksExisted - partialTicks) / EXPANSION_TIME;
-        }
+//        if (entity.ticksExisted > entity.getLifetime() - EXPANSION_TIME) {
+//            radius *= 1 + 0.2f * (entity.ticksExisted + partialTicks - (entity.getLifetime() - EXPANSION_TIME)) / EXPANSION_TIME;
+//            a *= Math.max(0, 1 - (entity.ticksExisted + partialTicks - (entity.getLifetime() - EXPANSION_TIME)) / EXPANSION_TIME);
+//        } else if (entity.ticksExisted < EXPANSION_TIME) {
+//            radius *= 1 - (EXPANSION_TIME - entity.ticksExisted - partialTicks) / EXPANSION_TIME;
+//            a *= 1 - (EXPANSION_TIME - entity.ticksExisted - partialTicks) / EXPANSION_TIME;
+//        }
 
         //Colour shifting;
-        float range = 0.15F;
+        float range = 0.005F;
         float rInitial = 245 / 255F;
-        float gInitial = 0.05f;
-        float bInitial = 0;
-        float aInitial = 0.5F;
+        float gInitial = 245 / 255f;
+        float bInitial = 0.3F;
+        float aInitial = 2F;
         float red = rInitial, green = gInitial, blue = bInitial, alpha = aInitial;
         for (int i = 0; i < 4; i++) {
             float rMin = rInitial - range;
@@ -92,19 +94,9 @@ public class RenderFireball extends Render<EntityFireball> {
                     blue = MathHelper.clamp(blue, bMin, bMax);
                     break;
 
-                case 3:
-                    float amountA = ArcaneUtils.getRandomNumberInRange(0,
-                            (int) (100 / aMax)) / 100F * 0.025F;
-                    alpha = entity.world.rand.nextBoolean() ? aInitial + amountA : aInitial - amountA;
-                    alpha = MathHelper.clamp(alpha, aMin, aMax);
-                    break;
             }
             drawSphere(radius, latStep, longStep, false, red, green, blue, alpha);
         }
-        //drawSphere(radius - 0.05f, latStep, longStep, true, r1, g1, b1, a * 1F);
-        //drawSphere(radius / 2, latStep, longStep, false, r2, g2, b2, 1.4f * a);
-        //GlStateManager.rotate(entity.ticksExisted * 20, 0, 0, 1);
-
 
         GlStateManager.enableLighting();
         GlStateManager.disableBlend();
@@ -115,7 +107,8 @@ public class RenderFireball extends Render<EntityFireball> {
 
     @Nullable
     @Override
-    protected ResourceLocation getEntityTexture(@Nonnull EntityFireball entity) {
+    protected ResourceLocation getEntityTexture(@Nonnull EntitySaintessSun entity) {
         return null;
     }
 }
+
