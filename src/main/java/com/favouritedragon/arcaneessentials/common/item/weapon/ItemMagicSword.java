@@ -3,6 +3,7 @@ package com.favouritedragon.arcaneessentials.common.item.weapon;
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import com.favouritedragon.arcaneessentials.common.spell.SpellRay;
+import com.favouritedragon.arcaneessentials.common.util.SpellUtils;
 import com.google.common.collect.Multimap;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.client.DrawingUtils;
@@ -268,7 +269,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
             // This check doesn't affect the damage output, but it does stop a blank line from appearing in the tooltip.
             if (level > 0 && !this.isManaEmpty(stack)) {
                 multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(),
-                        new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Melee upgrade modifier", level + (tier.level + 1)  + getAttackDamage(), 0));
+                        new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Melee upgrade modifier", level + (tier.level + 1) + getAttackDamage(), 0));
                 multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Melee upgrade modifier", -2.4000000953674316D, 0));
             }
         }
@@ -398,7 +399,8 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
         Spell spell = WandHelper.getCurrentSpell(stack);
         SpellModifiers modifiers = this.calculateModifiers(stack, player, spell);
 
-        if (canCast(stack, spell, player, hand, 0, modifiers)) {
+        if (canCast(stack, spell, player, hand, 0, modifiers) && SpellUtils.isSwordCastable(spell)
+                && !SpellUtils.rightClickCastable(spell)) {
             // Need to account for the modifier since it could be zero even if the original charge-up wasn't
             int chargeup = (int) (spell.getChargeup() * modifiers.get(SpellModifiers.CHARGEUP));
 
@@ -490,6 +492,8 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
         return cost <= this.getMana(stack) // This comes first because it changes over time
                 // ...and the wand is the same tier as the spell or higher...
                 && spell.getTier().level <= this.tier.level
+                // ... and the spell can be cast be swords
+                && SpellUtils.isSwordCastable(spell)
                 // ...and either the spell is not in cooldown or the player is in creative mode
                 && (WandHelper.getCurrentCooldown(stack) == 0 || caster.isCreative());
     }
@@ -594,6 +598,40 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack) {
+
+        World world = entityLiving.world;
+        EnumHand hand = entityLiving.swingingHand;
+
+        if (entityLiving instanceof EntityPlayer) {
+            Spell spell = WandHelper.getCurrentSpell(stack);
+            SpellModifiers modifiers = this.calculateModifiers(stack, (EntityPlayer) entityLiving, spell);
+
+            if (canCast(stack, spell, (EntityPlayer) entityLiving, hand, 0, modifiers)
+                    && !SpellUtils.rightClickCastable(spell)) {
+                // Need to account for the modifier since it could be zero even if the original charge-up wasn't
+                int chargeup = (int) (spell.getChargeup() * modifiers.get(SpellModifiers.CHARGEUP));
+
+                if (spell.isContinuous || chargeup > 0) {
+                    // Spells that need the mouse to be held (continuous, charge-up or both)
+                    if (!entityLiving.isHandActive()) {
+                        entityLiving.setActiveHand(hand);
+                        // Store the modifiers for use later
+                        if (WizardData.get((EntityPlayer) entityLiving) != null)
+                            WizardData.get((EntityPlayer) entityLiving).itemCastingModifiers = modifiers;
+                        if (chargeup > 0 && world.isRemote) Wizardry.proxy.playChargeupSound(entityLiving);
+                        return true;
+                    }
+                } else {
+                    // All other (instant) spells
+                    return cast(stack, spell, (EntityPlayer) entityLiving, hand, 0, modifiers);
+                }
+            }
+        }
+        return super.onEntitySwing(entityLiving, stack);
     }
 
     @Override
@@ -827,8 +865,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
                         if (spell.getElement() == element || spell.getElement() == Element.MAGIC) {
                             spells[i] = spell;
                             changed = true;
-                        }
-                        else player.sendMessage(new TextComponentTranslation(
+                        } else player.sendMessage(new TextComponentTranslation(
                                 I18n.format("This spell is incompatible with that sword!", TextFormatting.BOLD)));
                     }
                 }
