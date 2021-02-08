@@ -51,14 +51,17 @@ public class Zoom extends ArcaneSpell {
                         //This doesn't always work ;-;
                         for (int i = 0; i < 10; i++) {
                             BlockPos pos = player.getBedLocation(player.getSpawnDimension());
-                            pos = pos.up(i);
-                            player.world.updateBlockTick(player.getBedLocation(), player.world.getBlockState(player.getBedLocation(player.getSpawnDimension())).getBlock(), 0, 1);
-                            if (ArcaneUtils.attemptGroundedTeleport(player, pos.getX(), pos.getY(), pos.getZ())) {
-                                if (player.world.isRemote)
-                                    ParticleBuilder.create(ParticleBuilder.Type.BEAM).time(20).entity(player)
-                                            .clr(0, 222, 255).target(player.getPositionVector().add(0, 30, 0)).scale(10).spawn(player.world);
+                            //Intellij is bad, ignore this warning. It has, does, and will crash.
+                            if (pos != null) {
+                                pos = pos.up(i);
                                 player.world.updateBlockTick(player.getBedLocation(), player.world.getBlockState(player.getBedLocation(player.getSpawnDimension())).getBlock(), 0, 1);
+                                if (ArcaneUtils.attemptGroundedTeleport(player, pos.getX(), pos.getY(), pos.getZ())) {
+                                    if (player.world.isRemote)
+                                        ParticleBuilder.create(ParticleBuilder.Type.BEAM).time(20).entity(player)
+                                                .clr(0, 222, 255).target(player.getPositionVector().add(0, 30, 0)).scale(10).spawn(player.world);
+                                    player.world.updateBlockTick(player.getBedLocation(), player.world.getBlockState(player.getBedLocation(player.getSpawnDimension())).getBlock(), 0, 1);
 
+                                }
                             }
                         }
                     });
