@@ -4,9 +4,14 @@ import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.util.SpellModifiers;
 import electroblob.wizardry.util.SpellProperties;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -19,8 +24,15 @@ public abstract class SpellRay extends electroblob.wizardry.spell.SpellRay imple
 
     public SpellRay(String name, EnumAction action, boolean isContinuous) {
         super(ArcaneEssentials.MODID, name, action, isContinuous);
+        addProperties(EFFECT_RADIUS);
     }
 
+
+    @Override
+    public boolean cast(World world, EntityPlayer caster, EnumHand hand, int ticksInUse, SpellModifiers modifiers) {
+        playSound(world, caster);
+        return super.cast(world, caster, hand, ticksInUse, modifiers);
+    }
 
     public boolean isPiercing() {
         return false;
@@ -42,4 +54,5 @@ public abstract class SpellRay extends electroblob.wizardry.spell.SpellRay imple
     public boolean isWandCastable() {
         return isEnabled(SpellProperties.Context.WANDS);
     }
+
 }

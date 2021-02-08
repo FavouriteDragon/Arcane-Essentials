@@ -14,7 +14,7 @@
   "element": "fire",
   "type": "alteration",
   "cost": 140,
-  "chargeup": 0,
+  "chargeup": 45,
   "cooldown": 220,
   "base_properties": {
     "damage": 1.5,
