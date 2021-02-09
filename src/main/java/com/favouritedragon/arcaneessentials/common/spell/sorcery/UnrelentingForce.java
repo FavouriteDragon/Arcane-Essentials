@@ -48,27 +48,21 @@ public class UnrelentingForce extends ArcaneSpell {
         double mult = getProperty(EFFECT_STRENGTH).doubleValue() * 0.5 * modifiers.get(SpellModifiers.POTENCY);
         double eyepos = caster.getEyeHeight() + caster.getEntityBoundingBox().minY;
         float damage = getProperty(DAMAGE).floatValue() * modifiers.get(SpellModifiers.POTENCY);
-        int min = -10 * getProperty(EFFECT_RADIUS).intValue();
-        int max = 10 * getProperty(EFFECT_RADIUS).intValue();
         if (world.isRemote) {
             //Spawn particles
-            for (int i = 0; i < 80; i++) {
-                double x1 = caster.posX + look.x * 0.1;
+            for (int i = 0; i < 400; i++) {
+                double x1 = caster.posX + look.x * 0.1 + world.rand.nextGaussian() / 8;
                 double y1 = eyepos - 0.4F;
-                double z1 = caster.posZ + look.z * 0.1;
+                double z1 = caster.posZ + look.z * 0.1 + world.rand.nextGaussian() / 8;
 
                 //Using the random function each time ensures a different number for every value, making the ability "feel" better.
-                ParticleBuilder.create(ParticleBuilder.Type.FLASH).pos(x1, y1, z1).vel(look.x * mult * ArcaneUtils.getRandomNumberInRange(1, 2),
-                        look.y * mult * ArcaneUtils.getRandomNumberInRange(1, 2),
-                        look.z * mult * ArcaneUtils.getRandomNumberInRange(1, 2)).clr(ArcaneUtils.getRandomNumberInRange(0, 255),
+                ParticleBuilder.create(ParticleBuilder.Type.FLASH).pos(x1, y1, z1).vel(look.x * mult + world.rand.nextGaussian() / 4,
+                        look.y * mult + world.rand.nextGaussian() / 4,
+                        look.z * mult + world.rand.nextGaussian() / 4).clr(ArcaneUtils.getRandomNumberInRange(0, 255),
                         255, 171 + ArcaneUtils.getRandomNumberInRange(0, 84))
-                        .time(15 + ArcaneUtils.getRandomNumberInRange(0, 10)).scale(getProperty(EFFECT_STRENGTH).floatValue()).spawn(world);
+                        .collide(true).time(15 + ArcaneUtils.getRandomNumberInRange(0, 10)).scale(getProperty(EFFECT_STRENGTH).floatValue() / 1.5F).spawn(world);
             }
         }
-
-        //Used through left-click on swords.
-        //if (!caster.isSwingInProgress)
-        //	caster.swingArm(hand);
 
         caster.playSound(WizardrySounds.ENTITY_FORCEFIELD_DEFLECT, 0.2F,
                 world.rand.nextFloat() * 0.05F + 0.025F);

@@ -399,8 +399,8 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
         Spell spell = WandHelper.getCurrentSpell(stack);
         SpellModifiers modifiers = this.calculateModifiers(stack, player, spell);
 
-        if (canCast(stack, spell, player, hand, 0, modifiers) && SpellUtils.isSwordCastable(spell)
-                && !SpellUtils.rightClickCastable(spell)) {
+        if (canCast(stack, spell, player, hand, 0, modifiers)
+                && SpellUtils.rightClickCastable(spell)) {
             // Need to account for the modifier since it could be zero even if the original charge-up wasn't
             int chargeup = (int) (spell.getChargeup() * modifiers.get(SpellModifiers.CHARGEUP));
 
@@ -604,7 +604,7 @@ public class ItemMagicSword extends ItemSword implements IWorkbenchItem, ISpellC
     public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack) {
 
         World world = entityLiving.world;
-        EnumHand hand = entityLiving.swingingHand;
+        EnumHand hand = entityLiving.getActiveHand();
 
         if (entityLiving instanceof EntityPlayer) {
             Spell spell = WandHelper.getCurrentSpell(stack);

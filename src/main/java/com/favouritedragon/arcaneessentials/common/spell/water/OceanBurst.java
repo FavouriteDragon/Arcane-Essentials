@@ -108,4 +108,9 @@ public class OceanBurst extends ArcaneSpell {
 
         return false;
     }
+
+    @Override
+    public boolean castRightClick() {
+        return false;
+    }
 }
