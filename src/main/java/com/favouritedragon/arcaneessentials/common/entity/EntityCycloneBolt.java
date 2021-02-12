@@ -109,6 +109,12 @@ public class EntityCycloneBolt extends EntityMagicBolt {
 							.pos(spawnX, spawnY, spawnZ).collide(true).time(5).clr(0.85F, 0.85F, 0.85F).scale(0.75F + getSize() / 2 + world.rand.nextFloat() / 2).spawn(world);
 				}
 			}
+			//Particles
+			ArcaneUtils.spawnSpinningDirectionalVortex(world, getCaster(), Vec3d.ZERO, 15,
+					1, 0, 72, ParticleBuilder.Type.FLASH,
+					getPositionVector().add(0, height / 2, 0), new Vec3d(0.4, 0.1, 0.4), new Vec3d(motionX * 1.05,
+							motionY * 1.05, motionZ * 1.05), 8, 0.85F, 0.85F, 0.85F, 1.5F);
+
 		}
 	}
 

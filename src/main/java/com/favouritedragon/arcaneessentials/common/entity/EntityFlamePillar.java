@@ -1,8 +1,10 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
+import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.MagicDamage;
+import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -14,6 +16,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -79,6 +82,13 @@ public class EntityFlamePillar extends EntityMagicConstruct {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
+
+		if (world.isRemote) {
+			ArcaneUtils.spawnSpinningHelix(world, getParticleAmount() * 2 / 3, getVortexHeight(),
+					getRadius() * 0.5F, ParticleBuilder.Type.MAGIC_FIRE,getPositionVector(),
+					-0.05, Vec3d.ZERO, 10, 1.0F, 1.0F, 1.0F,
+					2.0F + world.rand.nextFloat());
+		}
 
 		if (ticksExisted % 5 == 0) {
 			world.playSound(posX, posY, posZ, WizardrySounds.ENTITY_FIRE_RING_AMBIENT, SoundCategory.PLAYERS, 1 + world.rand.nextFloat() / 10, 0.5F + world.rand.nextFloat() / 10, false);

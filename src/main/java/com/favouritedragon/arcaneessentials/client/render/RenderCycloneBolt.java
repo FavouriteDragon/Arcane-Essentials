@@ -60,11 +60,6 @@ public class RenderCycloneBolt extends Render<EntityCycloneBolt> {
 		drawSphere(radius - 0.1f - 0.025f * pulse, latStep, longStep, false, 1, 1, 1, a * 0.7F);
 		drawSphere(radius, latStep, longStep, false, r, g, b, 0.7f * a);
 
-		//Particles
-		ArcaneUtils.spawnSpinningDirectionalVortex(entity.world, entity.getCaster(), Vec3d.ZERO, 15, 1, 0, 72,
-				ParticleBuilder.Type.FLASH, entity.getPositionVector().add(0, entity.height / 2, 0), new Vec3d(0.4, 0.1, 0.4), new Vec3d(entity.motionX * 1.05,
-						entity.motionY * 1.05, entity.motionZ * 1.05), 8, 0.85F, 0.85F, 0.85F, 1.5F);
-
 
 		GlStateManager.enableTexture2D();
 		GlStateManager.disableBlend();

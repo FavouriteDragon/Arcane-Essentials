@@ -9,7 +9,6 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
-apply plugin: "idea"
 apply plugin: "net.minecraftforge.gradle.forge"
 
 version = "1.0.0-alpha-8"
@@ -19,6 +18,13 @@ archivesBaseName = "Arcane Essentials"
 sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
+}
+
+// This makes IDEA recognize the assets folder
+idea {
+    module {
+        inheritOutputDirs = true
+    }
 }
 
 minecraft {
@@ -83,6 +89,12 @@ jar {
         }
     }
 }
+// This makes IDEA recognize the assets folder
+idea {
+    module {
+        inheritOutputDirs = true
+    }
+}
 
 processResources {
     // this will ensure that this task is redone when the versions change.
@@ -101,7 +113,6 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
-
     //Intellij is arse
     sourceSets {
         main {
