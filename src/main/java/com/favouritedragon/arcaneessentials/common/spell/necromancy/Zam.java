@@ -1,6 +1,5 @@
 package com.favouritedragon.arcaneessentials.common.spell.necromancy;
 
-import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.spell.SpellRay;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.AllyDesignationSystem;

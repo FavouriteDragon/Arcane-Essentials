@@ -2,13 +2,8 @@ package com.favouritedragon.arcaneessentials.common.entity;
 
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.util.ParticleBuilder;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-
-import java.util.List;
-
-import static com.favouritedragon.arcaneessentials.common.spell.divine.SaintessSun.shootBeam;
 
 public class EntitySaintessSun extends EntityMagicConstruct {
 

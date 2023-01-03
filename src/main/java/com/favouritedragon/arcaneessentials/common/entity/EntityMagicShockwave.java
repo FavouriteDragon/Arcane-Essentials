@@ -2,7 +2,6 @@ package com.favouritedragon.arcaneessentials.common.entity;
 
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 

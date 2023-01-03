@@ -1,9 +1,7 @@
 package com.favouritedragon.arcaneessentials.client.render;
 
-import com.favouritedragon.arcaneessentials.ArcaneEssentials;
 import com.favouritedragon.arcaneessentials.common.entity.EntitySaintessSun;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;

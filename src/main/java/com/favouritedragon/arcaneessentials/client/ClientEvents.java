@@ -10,8 +10,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-import java.util.Objects;
-
 import static com.favouritedragon.arcaneessentials.common.item.ArcaneItems.*;
 
 @Mod.EventBusSubscriber(value = Side.CLIENT, modid = ArcaneEssentials.MODID)
