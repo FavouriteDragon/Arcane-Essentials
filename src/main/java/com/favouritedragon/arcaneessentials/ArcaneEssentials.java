@@ -18,8 +18,8 @@ public class ArcaneEssentials {
     public static final String VERSION = "1.0";
     public static final String MC_VERSION = "1.12.2";
 
-    public static final String CLIENT = "com.favouritedragon.arcane_essentials.client.ClientProxy";
-    public static final String SERVER = "com.favouritedragon.arcane_essentials.proxy.ServerProxy";
+    public static final String CLIENT = "com.favouritedragon.arcaneessentials.client.ClientProxy";
+    public static final String SERVER = "com.favouritedragon.arcaneessentials.proxy.ServerProxy";
 
     public static Logger logger;
 
