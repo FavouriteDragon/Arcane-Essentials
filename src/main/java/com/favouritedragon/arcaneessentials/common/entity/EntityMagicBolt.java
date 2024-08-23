@@ -107,7 +107,16 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
     }
 
     public MagicBoltBehaviour getBehaviour() {
-        return dataManager.get(SYNC_BEHAVIOUR);
+        try {
+            return dataManager.get(SYNC_BEHAVIOUR);
+        }
+        catch (ClassCastException exception) {
+            exception.printStackTrace();
+            setDead();
+        }
+        //Idle by default; if it's causing an exception, something has gone
+        //seriously wrong.
+        return new MagicBoltBehaviour.Idle();
     }
 
     public void setBehaviour(MagicBoltBehaviour behaviour) {

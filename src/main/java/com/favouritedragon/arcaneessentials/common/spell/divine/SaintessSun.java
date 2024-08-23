@@ -5,6 +5,7 @@ import com.favouritedragon.arcaneessentials.common.entity.EntitySaintessSun;
 import com.favouritedragon.arcaneessentials.common.entity.data.MagicConstructBehaviour;
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
+import com.sun.istack.internal.Nullable;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
@@ -23,7 +24,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class SaintessSun extends ArcaneSpell {
@@ -122,7 +122,10 @@ public class SaintessSun extends ArcaneSpell {
                 Vec3d targetPos = ArcaneUtils.getEntityPos(caster).add(0, height, 0);
                 Vec3d entityPos = entity.getPositionVector();
                 Vec3d targetVelocity = targetPos.subtract(entityPos).scale(0.1);
-                entity.setVelocity(targetVelocity.x, targetVelocity.y, targetVelocity.z);
+                entity.motionX = targetVelocity.x;
+                entity.motionY = targetVelocity.y;
+                entity.motionZ = targetVelocity.z;
+                entity.velocityChanged = true;
 
                 List<Entity> targets = world.getEntitiesWithinAABB(Entity.class, entity.getEntityBoundingBox()
                         .grow(height * 1.25F));
