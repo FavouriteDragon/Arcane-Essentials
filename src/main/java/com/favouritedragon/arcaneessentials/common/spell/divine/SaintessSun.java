@@ -5,7 +5,6 @@ import com.favouritedragon.arcaneessentials.common.entity.EntitySaintessSun;
 import com.favouritedragon.arcaneessentials.common.entity.data.MagicConstructBehaviour;
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
-import com.sun.istack.internal.Nullable;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.MagicDamage;
@@ -24,6 +23,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class SaintessSun extends ArcaneSpell {

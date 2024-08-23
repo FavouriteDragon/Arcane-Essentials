@@ -1,7 +1,10 @@
 package com.favouritedragon.arcaneessentials.common.util;
 
 import com.favouritedragon.arcaneessentials.ArcaneEssentials;
-import electroblob.wizardry.util.*;
+import electroblob.wizardry.util.EntityUtils;
+import electroblob.wizardry.util.MagicDamage;
+import electroblob.wizardry.util.ParticleBuilder;
+import electroblob.wizardry.util.RayTracer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -100,7 +103,7 @@ public class ArcaneUtils {
      * @param size               The size of the particle. Also used for height.
      * @param lifetime           The lifetime of the particles.
      */
-    public static void spawnDirectionalHorizontalBlade(World world, Entity entity, @Nullable Vec3d direction, double particleController, double bladeLength, int entityLifetime,
+    public static void spawnDirectionalHorizontalBlade(World world, Entity entity, Vec3d direction, double particleController, double bladeLength, int entityLifetime,
                                                        ResourceLocation type, Vec3d pos, Vec3d vel, float[] rgb, float size, int lifetime) {
         if (!world.isRemote) return;
 
