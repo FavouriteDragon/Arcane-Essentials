@@ -4,65 +4,44 @@ buildscript {
     repositories {
         gradlePluginPortal()
         mavenCentral()
-        maven {
-            name 'MinecraftForge'
-            url 'https://maven.minecraftforge.net/'
-        }
-        maven {
-            name 'Garden of Fancy'
-            url 'https://maven.gofancy.wtf/releases'
-        }
-        maven {
-            name 'Sponge'
-            url 'https://repo.spongepowered.org/repository/maven-public/'
-        }
-        // Shading
-        maven {
-            url 'https://plugins.gradle.org/m2/'
-        }
+        maven { name 'MinecraftForge'; url 'https://maven.minecraftforge.net/' }
+        maven { name 'Garden of Fancy'; url 'https://maven.gofancy.wtf/releases' }
+        maven { name 'Sponge'; url 'https://repo.spongepowered.org/repository/maven-public/' }
+        maven { url 'https://plugins.gradle.org/m2/' } // For Shadow plugin
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:5.+'
-        classpath 'org.ajoberstar.grgit:grgit-gradle:3.1.1'
-        classpath group: 'wtf.gofancy.fancygradle', name: 'wtf.gofancy.fancygradle.gradle.plugin', version: '1.1.+'
-        classpath 'gradle.plugin.com.github.johnrengelman:shadow:7.1.2'
-    }
-
-    repositories.each {
-        if (it instanceof MavenArtifactRepository && it.url.toString() == "https://files.minecraftforge.net/maven") {
-            it.url = "https://maven.minecraftforge.net"
-        }
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+//        classpath group: 'wtf.gofancy.fancygradle', name: 'wtf.gofancy.fancygradle.gradle.plugin', version: '1.1.+'
+        classpath "com.github.jengelman.gradle.plugins:shadow:4.0.3"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7"
     }
 }
 
-apply plugin: 'com.github.johnrengelman.shadow'
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'idea'
-apply plugin: 'wtf.gofancy.fancygradle'
 apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: "org.sonarqube"
+
+//apply plugin: 'wtf.gofancy.fancygradle'
+
+
+ext.config = parseConfig(file("build.properties"))
+ext.dependenciesConfig = parseConfig(file("dependencies.properties"))
+ext.secrets = parseConfig(file("secrets.properties"))
 
 
 version = "1.0.2"
-group = "com.favouritedragon.arcane_essentials" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = "com.favouritedragon.arcane_essentials"
 archivesBaseName = "ArcaneEssentials"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
-minecraft {
-    mappings channel: "stable", version: "39-1.12"
 
-    runs {
-        client {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'info'
-        }
-
-        server {
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'info'
-        }
+// This makes IDEA recognize the assets folder
+idea {
+    module {
+        inheritOutputDirs = true
     }
 }
 
@@ -71,82 +50,122 @@ repositories {
     mavenCentral()
     jcenter()
     maven {
-        url = uri('https://www.cursemaven.com')
-        content {
-            includeGroup 'curse.maven'
-        }
+        name = "Curse Maven"
+        url = "https://cursemaven.com"
     }
     maven {
-        name = 'Modrinth'
-        url = uri('https://api.modrinth.com/maven')
-        content {
-            includeGroup 'maven.modrinth'
-        }
+        name = "Gradle Plugins"
+        url = "https://plugins.gradle.org/m2/"
     }
+
     maven {
-        name = 'Sponge'
-        url = uri('https://repo.spongepowered.org/maven')
-    }
-    maven {
-        url = uri('https://maven.blamejared.com')
-    }
-    maven {
-        url = uri('https://m2.dv8tion.net/releases')
-    }
-    maven {
-        url = uri('https://jitpack.io')
+        name = "MinecraftForge Maven"
+        url = "https://maven.minecraftforge.net"
     }
 }
+
+configurations {
+    shadow
+
+    compile.extendsFrom provided
+    provided.extendsFrom shadow
+}
+
+task useDeobfDependencies {
+    dependenciesConfig.obfuscated = false
+}
+
+//tasks.runClient.dependsOn tasks.useDeobfDependencies
+//tasks.runServer.dependsOn tasks.useDeobfDependencies
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${project.mc_version}-${project.forge_version}"
+    provided fileTree(dir: dependenciesConfig.libraries + (dependenciesConfig.obfuscated ? "" : "Deobf"), include: ["*.jar"])
+//    minecraft "net.minecraftforge:forge:${project.mc_version}-${project.forge_version}"
 
-    // Add your mod's dependencies here, for example:
-//    implementation fg.deobf("curse.maven:baubles-${baubles_projectid}:${baubles_fileid}")
-//    implementation fg.deobf("mezz.jei:jei_${mc_version}:${jei_version}")
-//    implementation fg.deobf("curse.maven:antique-atlas-${antiqueatlas_projectid}:${antiqueatlas_fileid}")
+    // Use implementation to ensure it gets shaded into the jar
+    shadow "org.joml:joml:1.10.1"
 
-    // Shading JOML package
-    implementation group: 'org.joml', name: 'joml', version: '1.10.1'
-
-    // Wizardry Dep
-    // External dependency that should be provided by the player (not included in the build)
-    compileOnly files('libs/ElectroblobsWizardry-4.3.9.jar') // Replace with the correct path to your external JAR
+    // External dependency provided by the player, not included in the build
+    compileOnly files('libs/ElectroblobsWizardry-4.3.9.jar') // Replace with the correct path
 }
 
-task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    classifier = 'deobf'
+
+minecraft {
+    version = config.forge_version
+    mappings = config.mappings
 }
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.favouritedragon.arcaneessentials.Main', // Adjust the main class if needed
+                'Implementation-Title': project.name,
+                'Implementation-Version': project.version
+        )
+    }
+    from("./") {
+        include "*.md"
+    }
+}
+
+shadowJar {
+    // Overwrite the default file
+    classifier = null
+    configurations = [project.configurations.shadow]
+
+    from(sourceSets.main.allJava) {
+        include "*"
+    }
+    from("./") {
+        include "*.md"
+    }
+
+    relocate "org.joml", "com.favouritedraogn.arcane_essentials.joml"
+}
+
+reobf {
+    shadowJar {
+        mappingType = "SEARGE"
+    }
+}
+tasks.reobfShadowJar.mustRunAfter shadowJar
+
 
 processResources {
     from(sourceSets.main.resources.srcDirs) {
         include 'pack.mcmeta'
         include 'mcmod.info'
     }
-
     duplicatesStrategy = 'include'
 }
 
-shadowJar {
-    archiveClassifier.set('')
-    configurations = [project.configurations.runtimeClasspath]
-    relocate 'org.joml', 'com.favouritedragon.arcane_essentials.shaded.org.joml'
-}
 
-//jar {
-//    configurations.runtimeClasspath.each { file ->
-//        from(zipTree(file.absolutePath)) {
-//            include 'org/joml/**'
-//            exclude 'META-INF/', 'META-INF/**'
-//        }
-//    }
-//}
-
-fancyGradle {
-    patches {
-        resources
-        coremods
-        asm
+static def parseConfig(File config) {
+    config.withReader {
+        def prop = new Properties()
+        prop.load(it)
+        return (new ConfigSlurper().parse(prop))
     }
 }
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+}
+//fancyGradle {
+//    patches {
+//        resources
+//        coremods
+//        asm
+//    }
+//}
