@@ -35,10 +35,11 @@ public class ArcaneEssentials {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
+        // Register custom synced behaviour serializers before any entity class initialization.
+        Behaviour.registerBehaviours();
         proxy.preInit(event);
         proxy.registerRender();
         RegisterHandler.registerAll();
-        Behaviour.registerBehaviours();
     }
 
     @EventHandler
