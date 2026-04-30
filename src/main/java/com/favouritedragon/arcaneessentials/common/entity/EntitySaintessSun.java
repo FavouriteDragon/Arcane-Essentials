@@ -4,6 +4,8 @@ import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntitySaintessSun extends EntityMagicConstruct {
 
@@ -41,6 +43,7 @@ public class EntitySaintessSun extends EntityMagicConstruct {
         this.knockback = knockback;
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public boolean isInRangeToRenderDist(double distance) {
         return true;
@@ -85,6 +88,7 @@ public class EntitySaintessSun extends EntityMagicConstruct {
         super.resetPositionToBB();
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public boolean shouldRenderInPass(int pass) {
         return super.shouldRenderInPass(pass) || pass == 1;
