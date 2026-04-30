@@ -132,6 +132,42 @@ public class EntityWaterBall extends EntityMagicBolt {
 	}
 
 	@Override
+	protected void tickInAir() {
+		if (world.isRemote) {
+			float size = getSize();
+			// Water drop trail — 1-2 droplets per tick, drifting slightly backward
+			int drops = 1 + (int) size;
+			for (int i = 0; i < drops; i++) {
+				world.spawnParticle(EnumParticleTypes.WATER_DROP,
+						posX + world.rand.nextGaussian() * 0.15 * size,
+						posY + world.rand.nextGaussian() * 0.15 * size,
+						posZ + world.rand.nextGaussian() * 0.15 * size,
+						-motionX * 0.25, world.rand.nextDouble() * 0.05, -motionZ * 0.25);
+			}
+			// Splash droplets every other tick
+			if (ticksExisted % 2 == 0) {
+				world.spawnParticle(EnumParticleTypes.WATER_SPLASH,
+						posX + world.rand.nextGaussian() * 0.2 * size,
+						posY + world.rand.nextGaussian() * 0.2 * size,
+						posZ + world.rand.nextGaussian() * 0.2 * size,
+						world.rand.nextGaussian() * 0.04, 0.04 + world.rand.nextDouble() * 0.06,
+						world.rand.nextGaussian() * 0.04);
+			}
+			// Rising magic bubbles every 3 ticks for a watery shimmer
+			if (ticksExisted % 3 == 0) {
+				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_BUBBLE)
+						.pos(getPositionVector())
+						.vel(world.rand.nextGaussian() * 0.02 * size,
+								0.02 + world.rand.nextDouble() * 0.025,
+								world.rand.nextGaussian() * 0.02 * size)
+						.time(6 + (int) (size * 2))
+						.scale(0.1F + size * 0.12F)
+						.spawn(world);
+			}
+		}
+	}
+
+	@Override
 	public void setDead() {
 		Splash();
 		super.setDead();

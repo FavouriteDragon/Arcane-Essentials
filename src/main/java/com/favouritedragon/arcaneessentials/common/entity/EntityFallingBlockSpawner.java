@@ -1,7 +1,5 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
-import com.favouritedragon.arcaneessentials.common.entity.data.Behaviour;
-import com.favouritedragon.arcaneessentials.common.entity.data.MagicConstructBehaviour;
 import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.BlockUtils;
 import electroblob.wizardry.util.MagicDamage;
@@ -9,8 +7,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -78,40 +74,5 @@ public class EntityFallingBlockSpawner extends EntityMagicSpawner {
     @Override
     public void playSound() {
         playSound(SoundEvents.BLOCK_SAND_FALL, 1.0F + world.rand.nextFloat() / 10, 0.8F + world.rand.nextFloat() / 10F);
-    }
-
-    public static class FallingBlockBehaviour extends MagicConstructBehaviour {
-
-        @Override
-        public Behaviour onUpdate(EntityMagicConstruct entity) {
-            if (entity instanceof EntityFloatingBlock) {
-                entity.motionY -= 0.0240;
-                if (entity.collided) {
-                    entity.setDead();
-
-                }
-            }
-            return this;
-        }
-
-        @Override
-        public void fromBytes(PacketBuffer buf) {
-
-        }
-
-        @Override
-        public void toBytes(PacketBuffer buf) {
-
-        }
-
-        @Override
-        public void load(NBTTagCompound nbt) {
-
-        }
-
-        @Override
-        public void save(NBTTagCompound nbt) {
-
-        }
     }
 }

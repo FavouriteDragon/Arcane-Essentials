@@ -1,7 +1,9 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
-import com.favouritedragon.arcaneessentials.common.spell.fire.KaFrizzle;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import electroblob.wizardry.util.MagicDamage;
 import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.entity.Entity;
@@ -16,6 +18,8 @@ import java.util.List;
 
 public class EntityFireball extends EntityMagicBolt {
 
+	private static final DataParameter<Boolean> SYNC_KA_FRIZZLE = EntityDataManager.createKey(EntityFireball.class, DataSerializers.BOOLEAN);
+
 	private float damage;
 	private int lifetime = 40;
 	private int burnDuration;
@@ -23,6 +27,20 @@ public class EntityFireball extends EntityMagicBolt {
 
 	public EntityFireball(World world) {
 		super(world);
+	}
+
+	@Override
+	protected void entityInit() {
+		super.entityInit();
+		dataManager.register(SYNC_KA_FRIZZLE, false);
+	}
+
+	public boolean isKaFrizzle() {
+		return dataManager.get(SYNC_KA_FRIZZLE);
+	}
+
+	public void setKaFrizzle(boolean value) {
+		dataManager.set(SYNC_KA_FRIZZLE, value);
 	}
 
 	public void setBurnDuration(int duration) {
@@ -62,7 +80,7 @@ public class EntityFireball extends EntityMagicBolt {
 		if (exploded) return;
 		exploded = true;
 
-		boolean kaFrizzle = getBehaviour() instanceof KaFrizzle.KaFrizzleBehaviour;
+		boolean kaFrizzle = isKaFrizzle();
 		boolean heavyOrb = kaFrizzle || getLifetime() >= 70;
 
 		if (!world.isRemote) {
@@ -127,7 +145,7 @@ public class EntityFireball extends EntityMagicBolt {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		boolean kaFrizzle = getBehaviour() instanceof KaFrizzle.KaFrizzleBehaviour;
+		boolean kaFrizzle = isKaFrizzle();
 		boolean heavyOrb = kaFrizzle || getLifetime() >= 70;
 			if (ticksExisted == 1) {
 				if (world.isRemote) {

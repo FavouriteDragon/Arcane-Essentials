@@ -1,8 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.spell.fire;
 
 import com.favouritedragon.arcaneessentials.common.entity.EntityFireball;
-import com.favouritedragon.arcaneessentials.common.entity.EntityMagicBolt;
-import com.favouritedragon.arcaneessentials.common.entity.data.MagicBoltBehaviour;
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.SpellModifiers;
@@ -11,8 +9,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3i;
@@ -50,7 +46,7 @@ public class KaFrizzle extends ArcaneSpell {
         fireball.setKnockbackStrength((int) size * 2);
         fireball.setBurnDuration(burnDuration);
         fireball.aim(caster, getProperty(RANGE).floatValue() / 50, 0F);
-        fireball.setBehaviour(new KaFrizzleBehaviour());
+        fireball.setKaFrizzle(true);
         if (!world.isRemote)
             return world.spawnEntity(fireball);
         return false;
@@ -73,41 +69,11 @@ public class KaFrizzle extends ArcaneSpell {
         fireball.setDamage(damage);
         fireball.setPosition(x, y, z);
         fireball.shoot(dir.getX(), dir.getY(), dir.getZ(), getProperty(RANGE).floatValue(), 0F);
-        fireball.setBehaviour(new KaFrizzleBehaviour());
+        fireball.setKaFrizzle(true);
         playSound(world, x, y, z, ticksInUse, -1, modifiers);
         if (!world.isRemote)
             return world.spawnEntity(fireball);
 
         return false;
-    }
-
-    public static class KaFrizzleBehaviour extends MagicBoltBehaviour {
-
-        @Override
-        public MagicBoltBehaviour onUpdate(EntityMagicBolt entity) {
-            //Actual code is relegated to the entity class, due to how the entity is coded.
-            //TODO: Properly rewrite the entity code
-            return this;
-        }
-
-        @Override
-        public void fromBytes(PacketBuffer buf) {
-
-        }
-
-        @Override
-        public void toBytes(PacketBuffer buf) {
-
-        }
-
-        @Override
-        public void load(NBTTagCompound nbt) {
-
-        }
-
-        @Override
-        public void save(NBTTagCompound nbt) {
-
-        }
     }
 }

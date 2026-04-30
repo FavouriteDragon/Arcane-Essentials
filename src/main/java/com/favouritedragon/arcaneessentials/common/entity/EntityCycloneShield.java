@@ -12,8 +12,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import electroblob.wizardry.util.ParticleBuilder;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -151,6 +153,10 @@ public class EntityCycloneShield extends EntityMagicConstruct {
         }
         if (ticksExisted % 4 == 0 && getCaster() != null) {
             world.playSound(getCaster().posX, getCaster().posY, getCaster().posZ, WizardrySounds.ENTITY_BLIZZARD_AMBIENT, SoundCategory.PLAYERS, 0.5F + world.rand.nextFloat() / 20, 2.0F + world.rand.nextFloat() / 20, true);
+        }
+        if (world.isRemote && ticksExisted % 2 == 0) {
+            ArcaneUtils.spawnSpinningVortex(world, 60, getRadius() + 1.75, getRadius(), 60, ParticleBuilder.Type.FLASH, getPositionVector(),
+                    new Vec3d(0.005, 0, 0.005), Vec3d.ZERO, 12, 0.85F, 0.85F, 0.85F, getRadius() * 0.75F);
         }
     }
 

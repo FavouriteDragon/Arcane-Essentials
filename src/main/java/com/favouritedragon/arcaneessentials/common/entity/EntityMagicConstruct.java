@@ -1,6 +1,5 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
-import com.favouritedragon.arcaneessentials.common.entity.data.MagicConstructBehaviour;
 import electroblob.wizardry.Wizardry;
 import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.EntityUtils;
@@ -30,9 +29,6 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
     //This is used for when the entity renders too big to fit normal hitboxes.
     private static final DataParameter<Float> SYNC_RENDER_SIZE = EntityDataManager.createKey(EntityMagicConstruct.class,
             DataSerializers.FLOAT);
-
-    private static final DataParameter<MagicConstructBehaviour> SYNC_BEHAVIOUR = EntityDataManager.createKey(EntityMagicConstruct.class,
-            MagicConstructBehaviour.DATA_SERIALIZER);
     /**
      * The time in ticks this magical construct lasts for; defaults to 600 (30 seconds). If this is -1 the construct
      * doesn't despawn.
@@ -73,14 +69,6 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
         dataManager.set(SYNC_RENDER_SIZE, size);
     }
 
-    public MagicConstructBehaviour getBehaviour() {
-        return dataManager.get(SYNC_BEHAVIOUR);
-    }
-
-    public void setBehaviour(MagicConstructBehaviour behaviour) {
-        dataManager.set(SYNC_BEHAVIOUR, behaviour);
-    }
-
     public int getLifetime() {
         return this.lifetime;
     }
@@ -96,7 +84,6 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
 
         dataManager.register(SYNC_SIZE, 1.0F);
         dataManager.register(SYNC_RENDER_SIZE, 1.0F);
-        dataManager.register(SYNC_BEHAVIOUR, new MagicConstructBehaviour.Idle());
     }
 
     // Overrides the original to stop the entity moving when it intersects stuff. The default arrow does this to allow
@@ -111,8 +98,6 @@ public abstract class EntityMagicConstruct extends electroblob.wizardry.entity.c
     @Override
     public void onUpdate() {
         super.onUpdate();
-
-        setBehaviour((MagicConstructBehaviour) getBehaviour().onUpdate(this));
 
         if (this.ticksExisted > lifetime && lifetime != -1) {
             this.despawn();

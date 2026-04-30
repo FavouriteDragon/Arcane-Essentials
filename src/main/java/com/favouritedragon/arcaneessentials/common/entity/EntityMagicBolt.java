@@ -1,6 +1,5 @@
 package com.favouritedragon.arcaneessentials.common.entity;
 
-import com.favouritedragon.arcaneessentials.common.entity.data.MagicBoltBehaviour;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.entity.projectile.EntityMagicProjectile;
 import electroblob.wizardry.item.ItemArtefact;
@@ -44,8 +43,6 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
     public static final DataParameter<Float> SYNC_SIZE = EntityDataManager.createKey(EntityMagicBolt.class,
             DataSerializers.FLOAT);
-    public static final DataParameter<MagicBoltBehaviour> SYNC_BEHAVIOUR = EntityDataManager.createKey(EntityMagicBolt.class,
-            MagicBoltBehaviour.DATA_SERIALIZER);
 
     public static final double LAUNCH_Y_OFFSET = 0.2;
     public static final int SEEKING_TIME = 15;
@@ -104,23 +101,6 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
     public void setSize(float size) {
         dataManager.set(SYNC_SIZE, size);
-    }
-
-    public MagicBoltBehaviour getBehaviour() {
-        try {
-            return dataManager.get(SYNC_BEHAVIOUR);
-        }
-        catch (ClassCastException exception) {
-            exception.printStackTrace();
-            setDead();
-        }
-        //Idle by default; if it's causing an exception, something has gone
-        //seriously wrong.
-        return new MagicBoltBehaviour.Idle();
-    }
-
-    public void setBehaviour(MagicBoltBehaviour behaviour) {
-        dataManager.set(SYNC_BEHAVIOUR, behaviour);
     }
 
     // Initialiser methods
@@ -335,7 +315,6 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
         //super.onUpdate();
 
-        setBehaviour((MagicBoltBehaviour) getBehaviour().onUpdate(this));
         setSize(getSize(), getSize());
         // Projectile disappears after its lifetime (if it has one) has elapsed
         if (getLifetime() > 0 && this.ticksExisted > getLifetime()) {
@@ -830,7 +809,6 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
     protected void entityInit() {
         super.entityInit();
         dataManager.register(SYNC_SIZE, 1.0F);
-        dataManager.register(SYNC_BEHAVIOUR, new MagicBoltBehaviour.Idle());
     }
 
     @Override

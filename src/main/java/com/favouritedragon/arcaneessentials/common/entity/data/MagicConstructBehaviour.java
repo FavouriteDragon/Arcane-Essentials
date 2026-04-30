@@ -1,62 +1,8 @@
 package com.favouritedragon.arcaneessentials.common.entity.data;
 
-import com.favouritedragon.arcaneessentials.common.entity.EntityFallingBlockSpawner;
 import com.favouritedragon.arcaneessentials.common.entity.EntityMagicConstruct;
-import com.favouritedragon.arcaneessentials.common.spell.divine.SaintessSun;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.datasync.DataSerializer;
-import net.minecraft.network.datasync.DataSerializers;
 
+/** @deprecated Behaviour framework removed. Use direct entity state instead. */
+@Deprecated
 public abstract class MagicConstructBehaviour extends Behaviour<EntityMagicConstruct> {
-	public static final DataSerializer<MagicConstructBehaviour> DATA_SERIALIZER = new Behaviour.BehaviorSerializer<>();
-	private static boolean serializerRegistered;
-
-	static {
-		ensureSerializerRegistered();
-	}
-
-	private static void ensureSerializerRegistered() {
-		if (!serializerRegistered) {
-			DataSerializers.registerSerializer(DATA_SERIALIZER);
-			serializerRegistered = true;
-		}
-	}
-
-
-	public static void register() {
-		ensureSerializerRegistered();
-		registerBehaviour(MagicConstructBehaviour.Idle.class);
-		registerBehaviour(EntityFallingBlockSpawner.FallingBlockBehaviour.class);
-		registerBehaviour(SaintessSun.SaintessSunBehaviour.class);
-	}
-
-	public static class Idle extends MagicConstructBehaviour {
-
-		@Override
-		public Behaviour onUpdate(EntityMagicConstruct entity) {
-			return this;
-		}
-
-		@Override
-		public void fromBytes(PacketBuffer buf) {
-
-		}
-
-		@Override
-		public void toBytes(PacketBuffer buf) {
-
-		}
-
-		@Override
-		public void load(NBTTagCompound nbt) {
-
-		}
-
-		@Override
-		public void save(NBTTagCompound nbt) {
-
-		}
-	}
-
 }
