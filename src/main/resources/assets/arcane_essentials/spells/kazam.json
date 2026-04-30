@@ -17,7 +17,7 @@
   "chargeup": 15,
   "cooldown": 90,
   "base_properties": {
-    "damage": 13,
+    "damage": 9,
     "life_steal": 0.6,
     "range": 25,
     "effect_radius": 1.375,
