@@ -52,7 +52,7 @@ public class FlameCleave extends ArcaneSpell {
 
 	@Override
 	public boolean isWandCastable() {
-		return false;
+		return true;
 	}
 
 }
