@@ -10,10 +10,10 @@
     "trades": true,
     "looting": true
   },
-  "tier": "advanced",
+  "tier": "master",
   "element": "lightning",
   "type": "attack",
-  "cost": 70,
+  "cost": 100,
   "chargeup": 10,
   "cooldown": 120,
   "base_properties": {
