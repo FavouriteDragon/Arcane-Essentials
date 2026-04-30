@@ -13,15 +13,15 @@
   "tier": "master",
   "element": "necromancy",
   "type": "attack",
-  "cost": 120,
+  "cost": 150,
   "chargeup": 20,
   "cooldown": 140,
   "base_properties": {
-    "damage": 19,
+    "damage": 13,
     "life_steal": 0.8,
     "range": 35,
     "effect_radius": 1.75,
-    "effect_strength": 5,
+    "effect_strength": 4,
     "swords": 1
   }
 }
