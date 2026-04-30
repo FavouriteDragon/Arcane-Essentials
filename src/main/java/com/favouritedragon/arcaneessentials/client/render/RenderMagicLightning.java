@@ -22,10 +22,20 @@ public class RenderMagicLightning extends Render<EntityMagicLightning> {
     @Override
     public void doRender(@Nonnull EntityMagicLightning entity, double x, double y, double z, float entityYaw, float partialTicks) {
         super.doRender(entity, x, y, z, entityYaw, partialTicks);
-        ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING, entity).pos(entity.getPositionVector().add(0, 120, 0)).target(entity.getPositionVector())
-                .scale(4).spawn(entity.world);
-        Vec3d pos = entity.getPositionVector().add(new Vec3d(EnumFacing.UP.getDirectionVec()).scale(ANTI_Z_FIGHTING_OFFSET));
-        ParticleBuilder.create(ParticleBuilder.Type.SCORCH, entity).pos(pos).scale(2).spawn(entity.world);
+        long tick = entity.world.getTotalWorldTime();
+        if (entity.getEntityData().getLong("ae_last_tc_lightning_particle_tick") == tick) {
+            return;
+        }
+        entity.getEntityData().setLong("ae_last_tc_lightning_particle_tick", tick);
+
+        if (entity.ticksExisted % 4 == 0) {
+            ParticleBuilder.create(ParticleBuilder.Type.LIGHTNING, entity).pos(entity.getPositionVector().add(0, 120, 0)).target(entity.getPositionVector())
+                    .scale(4).spawn(entity.world);
+        }
+        if (entity.ticksExisted % 6 == 0) {
+            Vec3d pos = entity.getPositionVector().add(new Vec3d(EnumFacing.UP.getDirectionVec()).scale(ANTI_Z_FIGHTING_OFFSET));
+            ParticleBuilder.create(ParticleBuilder.Type.SCORCH, entity).pos(pos).scale(2).spawn(entity.world);
+        }
     }
 
     @Nullable

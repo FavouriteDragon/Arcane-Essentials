@@ -45,6 +45,7 @@ public class PotionInfernoForm extends PotionMagicEffect implements ISyncedPotio
 		if (event.getEntityLiving() != null) {
 			EntityLivingBase entity = event.getEntityLiving();
 			if (entity.isPotionActive(ArcanePotions.infernoForm)) {
+				if (RegisterHandler.inferno_form == null) return;
 				entity.setInvisible(entity.isPotionActive(ArcanePotions.infernoForm));
 				if (entity.world.isRemote) {
 					assert entity.getActivePotionEffect(ArcanePotions.infernoForm) != null;

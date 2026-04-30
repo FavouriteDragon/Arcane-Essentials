@@ -19,6 +19,7 @@ public class EntityFireball extends EntityMagicBolt {
 	private float damage;
 	private int lifetime = 40;
 	private int burnDuration;
+	private boolean exploded;
 
 	public EntityFireball(World world) {
 		super(world);
@@ -58,6 +59,12 @@ public class EntityFireball extends EntityMagicBolt {
 
 
 	private void Explode() {
+		if (exploded) return;
+		exploded = true;
+
+		boolean kaFrizzle = getBehaviour() instanceof KaFrizzle.KaFrizzleBehaviour;
+		boolean heavyOrb = kaFrizzle || getLifetime() >= 70;
+
 		if (!world.isRemote) {
 			world.playSound(null, posX, posY, posZ, SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.PLAYERS, 1.0F + world.rand.nextFloat() / 10,
 					0.8F + world.rand.nextFloat() / 10F);
@@ -76,16 +83,19 @@ public class EntityFireball extends EntityMagicBolt {
 				}
 			}
 		}
-		if (getBehaviour() instanceof KaFrizzle.KaFrizzleBehaviour) {
+		if (kaFrizzle) {
 			EntityFlamePillar pillar = new EntityFlamePillar(world, posX, posY, posZ, getCaster(),
 					(int) getSize() * 30, (float) getDamage() / 6F, getSize() / 2, getSize() * 5,
-					120 + (int) (getSize() * 5));
+					60 + (int) (getSize() * 2));
 			if (!world.isRemote)
 				world.spawnEntity(pillar);
 		}
 
 		if (world.isRemote) {
-			for (int i = 0; i < 50 - getSize(); i++) {
+			int explosionParticles = heavyOrb
+					? Math.max(8, Math.min(20, 24 - (int) getSize()))
+					: Math.max(16, 50 - (int) getSize());
+			for (int i = 0; i < explosionParticles; i++) {
 				ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).pos(getPositionVector()).time(10)
 						.vel(world.rand.nextGaussian() / 10 * getSize(), world.rand.nextGaussian() / 10
 								* getSize(), world.rand.nextGaussian() / 10 * getSize()).
@@ -117,12 +127,21 @@ public class EntityFireball extends EntityMagicBolt {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
+		boolean kaFrizzle = getBehaviour() instanceof KaFrizzle.KaFrizzleBehaviour;
+		boolean heavyOrb = kaFrizzle || getLifetime() >= 70;
 			if (ticksExisted == 1) {
 				if (world.isRemote) {
 				double x1, y1, z1;
 				Vec3d prevPos = Vec3d.ZERO;
-				for (double theta = 0; theta <= 180; theta += 1) {
-					double dphi = (50 - getSize() * 6) / Math.sin(Math.toRadians(theta));
+				int shellBudget = heavyOrb ? 140 : 420;
+				int spawned = 0;
+				double thetaStep = heavyOrb ? 6 : 3;
+				for (double theta = 0; theta <= 180 && spawned < shellBudget; theta += thetaStep) {
+					double sinTheta = Math.sin(Math.toRadians(theta));
+					if (Math.abs(sinTheta) < 1.0E-6) sinTheta = 1.0E-6;
+					double dphi = (50 - getSize() * 6) / sinTheta;
+					dphi = Math.max(dphi, heavyOrb ? 18 : 10);
+					if (!Double.isFinite(dphi) || dphi <= 0) dphi = heavyOrb ? 18 : 10;
 					for (double phi = 0; phi < 360; phi += dphi) {
 						double rphi = Math.toRadians(phi);
 						double rtheta = Math.toRadians(theta);
@@ -134,20 +153,24 @@ public class EntityFireball extends EntityMagicBolt {
 
 						if (prevPos != Vec3d.ZERO)
 							ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).collide(true).vel(motionX * 1.05 + world.rand.nextGaussian() / 160,
-									motionY * 1.05 + world.rand.nextGaussian() / 160, motionZ * 1.05 + world.rand.nextGaussian() / 160).scale(getSize())
+									motionY * 1.05 + world.rand.nextGaussian() / 160, motionZ * 1.05 + world.rand.nextGaussian() / 160).target(prevPos).scale(getSize())
 									.time(lifetime).pos(ArcaneUtils.getMiddleOfEntity(this).add(new Vec3d(x1, y1, z1))).spin(0.1, world.rand.nextGaussian() / 40)
 									.spawn(world);
 						else ParticleBuilder.create(ParticleBuilder.Type.MAGIC_FIRE).collide(true).vel(motionX * 1.05 + world.rand.nextGaussian() / 160,
-								motionY * 1.05 + world.rand.nextGaussian() / 160, motionZ * 1.05 + world.rand.nextGaussian() / 160).target(prevPos).scale(getSize())
+								motionY * 1.05 + world.rand.nextGaussian() / 160, motionZ * 1.05 + world.rand.nextGaussian() / 160).scale(getSize())
 								.time(lifetime).pos(ArcaneUtils.getMiddleOfEntity(this).add(new Vec3d(x1, y1, z1))).spin(0.1, world.rand.nextGaussian() / 40).spawn(world);
 						prevPos = new Vec3d(x1, y1, z1).add(ArcaneUtils.getMiddleOfEntity(this));
+						spawned++;
+						if (spawned >= shellBudget) break;
 
 					}
 				}
 			}
 		}
 
-		for (int i = 0; i < getSize() * 10; i++) {
+		int trailParticles = (int) (getSize() * (heavyOrb ? 3 : 6));
+		trailParticles = Math.max(2, Math.min(trailParticles, heavyOrb ? 5 : 12));
+		for (int i = 0; i < trailParticles; i++) {
 			if (world.isRemote) {
 				AxisAlignedBB boundingBox = getEntityBoundingBox();
 				double spawnX = boundingBox.minX + ArcaneUtils.getRandomNumberInRange(1, 10) / 10F * (boundingBox.maxX - boundingBox.minX);

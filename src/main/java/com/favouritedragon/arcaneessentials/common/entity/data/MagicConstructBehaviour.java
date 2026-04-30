@@ -10,10 +10,22 @@ import net.minecraft.network.datasync.DataSerializers;
 
 public abstract class MagicConstructBehaviour extends Behaviour<EntityMagicConstruct> {
 	public static final DataSerializer<MagicConstructBehaviour> DATA_SERIALIZER = new Behaviour.BehaviorSerializer<>();
+	private static boolean serializerRegistered;
+
+	static {
+		ensureSerializerRegistered();
+	}
+
+	private static void ensureSerializerRegistered() {
+		if (!serializerRegistered) {
+			DataSerializers.registerSerializer(DATA_SERIALIZER);
+			serializerRegistered = true;
+		}
+	}
 
 
 	public static void register() {
-		DataSerializers.registerSerializer(DATA_SERIALIZER);
+		ensureSerializerRegistered();
 		registerBehaviour(MagicConstructBehaviour.Idle.class);
 		registerBehaviour(EntityFallingBlockSpawner.FallingBlockBehaviour.class);
 		registerBehaviour(SaintessSun.SaintessSunBehaviour.class);

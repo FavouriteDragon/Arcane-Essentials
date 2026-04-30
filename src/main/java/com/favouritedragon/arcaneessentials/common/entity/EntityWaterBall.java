@@ -21,6 +21,7 @@ public class EntityWaterBall extends EntityMagicBolt {
 	private float damage = 5;
 	private boolean spawnWhirlPool;
 	private boolean spawnGeysers;
+	private boolean splashed;
 
 	public EntityWaterBall(World world) {
 		super(world);
@@ -60,6 +61,8 @@ public class EntityWaterBall extends EntityMagicBolt {
 	}
 
 	private void Splash() {
+		if (splashed) return;
+		splashed = true;
 
 		world.playSound(null, posX, posY, posZ, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.PLAYERS, 1.0F + world.rand.nextFloat() / 10,
 				0.8F + world.rand.nextFloat() / 10F);

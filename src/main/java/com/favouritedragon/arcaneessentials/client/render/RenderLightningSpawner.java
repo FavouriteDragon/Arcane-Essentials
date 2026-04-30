@@ -19,8 +19,18 @@ public class RenderLightningSpawner extends Render<EntityLightningSpawner> {
 	@Override
 	public void doRender(@Nonnull EntityLightningSpawner entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
-		ParticleBuilder.create(ParticleBuilder.Type.SPARK).entity(entity).scale(2.0F).spawn(entity.world);
-		entity.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, entity.posX, entity.posY, entity.posZ, 0, 0, 0);
+		long tick = entity.world.getTotalWorldTime();
+		if (entity.getEntityData().getLong("ae_last_tc_spawner_particle_tick") == tick) {
+			return;
+		}
+		entity.getEntityData().setLong("ae_last_tc_spawner_particle_tick", tick);
+
+		if (entity.ticksExisted % 5 == 0) {
+			ParticleBuilder.create(ParticleBuilder.Type.SPARK).entity(entity).scale(2.0F).spawn(entity.world);
+		}
+		if (entity.ticksExisted % 8 == 0) {
+			entity.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, entity.posX, entity.posY, entity.posZ, 0, 0, 0);
+		}
 	}
 
 	@Nullable

@@ -50,6 +50,7 @@ public class PotionFrostForm extends PotionMagicEffect implements ISyncedPotion 
 		if (event.getEntityLiving() != null) {
 			EntityLivingBase entity = event.getEntityLiving();
 			if (entity.isPotionActive(ArcanePotions.frostForm)) {
+				if (RegisterHandler.frost_form == null) return;
 				entity.playSound(WizardrySounds.ENTITY_ICE_WRAITH_AMBIENT, 0.5F, 1.0F);
 				entity.setInvisible(entity.isPotionActive(ArcanePotions.frostForm));
 				if (entity.world.isRemote) {
@@ -83,7 +84,8 @@ public class PotionFrostForm extends PotionMagicEffect implements ISyncedPotion 
 												int effectLevel = effect == null ? 0 : effect.getAmplifier();
 												((EntityLivingBase) hit).addPotionEffect(new PotionEffect(WizardryPotions.frost,  RegisterHandler.frost_form.getProperty(Spell.EFFECT_DURATION).intValue() / 8,
 														effectLevel + 1));
-												if (effectLevel == 7 - RegisterHandler.frost_form.getProperty(Spell.EFFECT_STRENGTH).intValue()) {
+												if (hit instanceof EntityLiving
+														&& effectLevel == 7 - RegisterHandler.frost_form.getProperty(Spell.EFFECT_STRENGTH).intValue()) {
 													((BlockStatue) WizardryBlocks.ice_statue).convertToStatue((EntityLiving) hit, entity, RegisterHandler.frost_form.getProperty(Spell.EFFECT_DURATION).intValue());
 												}
 
