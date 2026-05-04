@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.spell.ice;
 
+import com.favouritedragon.arcaneessentials.common.spell.IArcaneSpell;
 import com.favouritedragon.arcaneessentials.common.spell.SpellRay;
 import electroblob.wizardry.item.SpellActions;
 import electroblob.wizardry.registry.WizardryPotions;
@@ -19,14 +20,16 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
-public class IcicleStorm extends SpellRay {
+import static com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell.SWORDS;
+
+public class IcicleStorm extends SpellRay implements IArcaneSpell {
 
     public IcicleStorm() {
         super("icicle_storm", SpellActions.POINT, true);
         this.particleVelocity(1);
         this.particleJitter(0.3);
         this.particleSpacing(0.125);
-        addProperties(DAMAGE, EFFECT_STRENGTH, EFFECT_DURATION);
+        addProperties(DAMAGE, EFFECT_STRENGTH, EFFECT_DURATION, SWORDS);
     }
 
     @Override

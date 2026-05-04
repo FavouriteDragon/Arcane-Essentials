@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.spell.ice;
 
+import com.favouritedragon.arcaneessentials.common.spell.IArcaneSpell;
 import com.favouritedragon.arcaneessentials.common.spell.SpellRay;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.item.SpellActions;
@@ -20,13 +21,14 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
+import static com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell.SWORDS;
 import static com.favouritedragon.arcaneessentials.common.util.ArcaneUtils.applyPlayerKnockback;
 
-public class BlizzardBeam extends SpellRay {
+public class BlizzardBeam extends SpellRay implements IArcaneSpell {
 
     public BlizzardBeam() {
         super("blizzard_beam", SpellActions.POINT, false);
-        addProperties(DAMAGE, EFFECT_DURATION, EFFECT_STRENGTH, DIRECT_EFFECT_STRENGTH);
+        addProperties(DAMAGE, EFFECT_DURATION, EFFECT_STRENGTH, DIRECT_EFFECT_STRENGTH, SWORDS);
     }
 
 
