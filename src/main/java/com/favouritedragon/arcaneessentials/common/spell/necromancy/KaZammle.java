@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.spell.necromancy;
 
+import com.favouritedragon.arcaneessentials.common.spell.IArcaneSpell;
 import com.favouritedragon.arcaneessentials.common.spell.SpellRay;
 import electroblob.wizardry.registry.WizardrySounds;
 import electroblob.wizardry.util.*;
@@ -15,14 +16,15 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
+import static com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell.SWORDS;
 import static com.favouritedragon.arcaneessentials.common.util.SpellUtils.LIFE_STEAL;
 
 
-public class KaZammle extends SpellRay {
+public class KaZammle extends SpellRay implements IArcaneSpell {
 
 	public KaZammle() {
 		super("kazammle", EnumAction.BOW, false);
-		addProperties(DAMAGE, LIFE_STEAL, EFFECT_STRENGTH);
+		addProperties(DAMAGE, LIFE_STEAL, EFFECT_STRENGTH, SWORDS);
 	}
 
 
