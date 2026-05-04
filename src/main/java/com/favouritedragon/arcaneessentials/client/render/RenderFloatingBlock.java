@@ -25,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderFloatingBlock extends Render {
 	// [1.10] Find out substitution for Renderblocks- maybe ModelLoader?
-	private static final String __OBFID = "CL_00000994";
+	//private static final String __OBFID = "CL_00000994";
 
 	public RenderFloatingBlock(RenderManager renderManager) {
 		super(renderManager);
