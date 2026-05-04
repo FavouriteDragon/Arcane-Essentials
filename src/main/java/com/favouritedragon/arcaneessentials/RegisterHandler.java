@@ -102,6 +102,7 @@ public class RegisterHandler {
         registerEntity(EntityFlameSlash.class, "FlameSlash", ++id, 128, PROJECTILE_UPDATE_INTERVAL, true);
         registerEntity(EntityFloatingBlock.class, "FloatingBlock", ++id, 128, PROJECTILE_UPDATE_INTERVAL, true);
         registerEntity(EntityWaterBall.class, "Waterball", ++id, 128, PROJECTILE_UPDATE_INTERVAL, true);
+        registerEntity(EntityWaterWall.class, "WaterWall", ++id, 128, LIVING_UPDATE_INTERVAL, true);
 
     }
 
@@ -162,6 +163,7 @@ public class RegisterHandler {
         event.getRegistry().register(new ThunderingChain());
         event.getRegistry().register(new UnrelentingForce());
         event.getRegistry().register(new WaveOfRelief());
+        event.getRegistry().register(new WaterWall());
         event.getRegistry().register(new Whirlpool());
         event.getRegistry().register(new Zam());
         event.getRegistry().register(new Zammle());

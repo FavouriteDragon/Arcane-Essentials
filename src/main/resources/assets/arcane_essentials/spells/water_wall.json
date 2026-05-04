@@ -1,0 +1,24 @@
+{
+  "enabled": {
+    "book": true,
+    "scroll": true,
+    "wands": true,
+    "npcs": true,
+    "dispensers": true,
+    "commands": true,
+    "treasure": true,
+    "trades": true,
+    "looting": true
+  },
+  "tier": "apprentice",
+  "element": "earth",
+  "type": "utility",
+  "cost": 50,
+  "chargeup": 20,
+  "cooldown": 120,
+  "base_properties": {
+    "size": 4,
+    "lifetime": 260,
+    "swords": 0
+  }
+}
