@@ -23,12 +23,14 @@ public class EntityLightningSpawner extends EntityMagicSpawner {
 
 	@Override
 	protected void readEntityFromNBT(@Nonnull NBTTagCompound compound) {
-
+		super.readEntityFromNBT(compound);
+		burnTime = compound.getInteger("burnTime");
 	}
 
 	@Override
 	protected void writeEntityToNBT(@Nonnull NBTTagCompound compound) {
-
+		super.writeEntityToNBT(compound);
+		compound.setInteger("burnTime", burnTime);
 	}
 
 	@Override

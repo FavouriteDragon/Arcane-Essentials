@@ -724,7 +724,7 @@ public abstract class EntityMagicBolt extends EntityMagicProjectile {
 
     @Override
     public void writeEntityToNBT(NBTTagCompound tag) {
-        super.readEntityFromNBT(tag);
+        super.writeEntityToNBT(tag);
         tag.setShort("xTile", (short) this.blockX);
         tag.setShort("yTile", (short) this.blockY);
         tag.setShort("zTile", (short) this.blockZ);

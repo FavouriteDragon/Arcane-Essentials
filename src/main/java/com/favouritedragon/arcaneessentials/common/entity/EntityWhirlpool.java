@@ -8,7 +8,6 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -17,7 +16,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 import static com.favouritedragon.arcaneessentials.common.util.DamageSources.SPLASH;
@@ -39,16 +37,6 @@ public class EntityWhirlpool extends EntityMagicConstruct {
 
     public void setVortexHeight(float height) {
         dataManager.set(SYNC_VORTEX_HEIGHT, height);
-    }
-
-    @Override
-    protected void readEntityFromNBT(@Nonnull NBTTagCompound compound) {
-
-    }
-
-    @Override
-    protected void writeEntityToNBT(@Nonnull NBTTagCompound compound) {
-
     }
 
     @Override

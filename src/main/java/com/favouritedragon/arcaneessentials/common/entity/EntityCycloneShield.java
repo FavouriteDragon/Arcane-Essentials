@@ -8,7 +8,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -86,16 +85,6 @@ public class EntityCycloneShield extends EntityMagicConstruct {
     protected void entityInit() {
         super.entityInit();
         dataManager.register(SYNC_RADIUS, 1F);
-    }
-
-    @Override
-    protected void readEntityFromNBT(NBTTagCompound compound) {
-
-    }
-
-    @Override
-    protected void writeEntityToNBT(NBTTagCompound compound) {
-
     }
 
     @Override

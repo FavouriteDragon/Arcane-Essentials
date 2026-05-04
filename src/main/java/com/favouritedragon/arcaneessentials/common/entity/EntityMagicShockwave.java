@@ -2,6 +2,7 @@ package com.favouritedragon.arcaneessentials.common.entity;
 
 import electroblob.wizardry.entity.construct.EntityMagicConstruct;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
@@ -33,7 +34,8 @@ public class EntityMagicShockwave extends EntityMagicConstruct {
 	@Nullable
 	@Override
 	public UUID getOwnerId() {
-		return getCaster().getUniqueID();
+		EntityLivingBase caster = getCaster();
+		return caster != null ? caster.getUniqueID() : null;
 	}
 
 	@Nullable

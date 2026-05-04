@@ -25,12 +25,14 @@ public class EntityArcaneSigil extends EntityMagicConstruct {
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {
-
+		super.readEntityFromNBT(compound);
+		range = compound.getDouble("range");
 	}
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {
-
+		super.writeEntityToNBT(compound);
+		compound.setDouble("range", range);
 	}
 
 	@Override

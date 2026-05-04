@@ -4,7 +4,6 @@ import electroblob.wizardry.util.EntityUtils;
 import electroblob.wizardry.util.MagicDamage;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketEntityVelocity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -63,15 +62,5 @@ public class EntityThunderBurst extends EntityMagicConstruct {
         }
 
     }
-
-    @Override
-    protected void readEntityFromNBT(NBTTagCompound compound) {
-    }
-
-    @Override
-    protected void writeEntityToNBT(NBTTagCompound compound) {
-
-    }
-
 
 }

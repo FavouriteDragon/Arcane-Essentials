@@ -61,12 +61,14 @@ public class EntitySolarBeam extends EntityMagicConstruct {
 
 	@Override
 	protected void readEntityFromNBT(@Nonnull NBTTagCompound compound) {
-
+		super.readEntityFromNBT(compound);
+		damage = compound.getFloat("damage");
 	}
 
 	@Override
 	protected void writeEntityToNBT(@Nonnull NBTTagCompound compound) {
-
+		super.writeEntityToNBT(compound);
+		compound.setFloat("damage", damage);
 	}
 
 	@Override

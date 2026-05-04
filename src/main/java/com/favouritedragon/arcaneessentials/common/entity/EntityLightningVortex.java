@@ -9,7 +9,6 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
 import net.minecraft.init.Blocks;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
@@ -36,16 +35,6 @@ public class EntityLightningVortex extends EntityMagicConstruct {
         this.motionX = velocity.x;
         this.motionY = velocity.y;
         this.motionZ = velocity.z;
-    }
-
-    @Override
-    protected void readEntityFromNBT(NBTTagCompound compound) {
-
-    }
-
-    @Override
-    protected void writeEntityToNBT(NBTTagCompound compound) {
-
     }
 
     @Override

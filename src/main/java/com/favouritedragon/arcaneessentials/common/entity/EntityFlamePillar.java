@@ -10,7 +10,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -122,16 +121,6 @@ public class EntityFlamePillar extends EntityMagicConstruct {
 				}
 			}
 		}
-	}
-
-	@Override
-	protected void readEntityFromNBT(NBTTagCompound compound) {
-
-	}
-
-	@Override
-	protected void writeEntityToNBT(NBTTagCompound compound) {
-
 	}
 
 }

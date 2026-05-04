@@ -35,12 +35,24 @@ public class EntityMagicLightning extends EntityMagicConstruct {
 
 	@Override
 	protected void readEntityFromNBT(@Nonnull NBTTagCompound compound) {
-
+		super.readEntityFromNBT(compound);
+		damage = compound.getFloat("damage");
+		burnTime = compound.getInteger("burnTime");
+		knockback = new Vec3d(
+				compound.getDouble("knockbackX"),
+				compound.getDouble("knockbackY"),
+				compound.getDouble("knockbackZ"));
 	}
 
 	@Override
 	protected void writeEntityToNBT(@Nonnull NBTTagCompound compound) {
-
+		super.writeEntityToNBT(compound);
+		compound.setFloat("damage", damage);
+		compound.setInteger("burnTime", burnTime);
+		Vec3d kb = knockback != null ? knockback : Vec3d.ZERO;
+		compound.setDouble("knockbackX", kb.x);
+		compound.setDouble("knockbackY", kb.y);
+		compound.setDouble("knockbackZ", kb.z);
 	}
 
 	@Override
