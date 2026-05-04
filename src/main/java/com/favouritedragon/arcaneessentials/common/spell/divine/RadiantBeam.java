@@ -1,5 +1,6 @@
 package com.favouritedragon.arcaneessentials.common.spell.divine;
 
+import com.favouritedragon.arcaneessentials.common.spell.IArcaneSpell;
 import com.favouritedragon.arcaneessentials.common.spell.SpellRay;
 import com.favouritedragon.arcaneessentials.common.util.ArcaneUtils;
 import electroblob.wizardry.item.SpellActions;
@@ -17,13 +18,14 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
+import static com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell.SWORDS;
 import static com.favouritedragon.arcaneessentials.common.util.ArcaneUtils.applyPlayerKnockback;
 
-public class RadiantBeam extends SpellRay {
+public class RadiantBeam extends SpellRay  implements IArcaneSpell {
 
 	public RadiantBeam() {
 		super("radiant_beam", SpellActions.POINT, false);
-		addProperties(DAMAGE, EFFECT_STRENGTH, BURN_DURATION);
+		addProperties(DAMAGE, EFFECT_STRENGTH, BURN_DURATION, SWORDS);
 	}
 
 

@@ -3,6 +3,7 @@ package com.favouritedragon.arcaneessentials.common.spell.divine;
 import com.favouritedragon.arcaneessentials.common.spell.ArcaneSpell;
 import electroblob.wizardry.registry.WizardryItems;
 import electroblob.wizardry.registry.WizardrySounds;
+import electroblob.wizardry.util.AllyDesignationSystem;
 import electroblob.wizardry.util.ParticleBuilder;
 import electroblob.wizardry.util.SpellModifiers;
 import net.minecraft.entity.EntityLiving;
@@ -47,7 +48,7 @@ public class WaveOfRelief extends ArcaneSpell {
 		List<EntityLivingBase> nearby = world.getEntitiesWithinAABB(EntityLivingBase.class, caster.getEntityBoundingBox().grow(radius));
 		if (!nearby.isEmpty()) {
 			for (EntityLivingBase ally : nearby) {
-				if (ally != null && (ally.getTeam() != null && ally.getTeam() == caster.getTeam() || caster == ally)) {
+				if (ally != null && AllyDesignationSystem.isAllied(caster, ally)) {
 					List<PotionEffect> potions = ally.getActivePotionEffects().stream().filter(potionEffect -> potionEffect.getPotion().isBadEffect()).collect(Collectors.toList());
 					if (!potions.isEmpty()) {
 						for (PotionEffect effect : potions) {
